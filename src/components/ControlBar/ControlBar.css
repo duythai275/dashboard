@@ -1,0 +1,7 @@
+.control-bar-container {
+  padding: 10px;
+  height: 50px;
+  /* border: 1px solid black; */
+  display: flex;
+  align-items: center;
+}

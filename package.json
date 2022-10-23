@@ -1,0 +1,41 @@
+{
+  "name": "dashboard-env",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "cross-env VITE_MODE=development vite",
+    "server": "cross-env VITE_MODE=development nodemon ./server/server.js",
+    "build": "cross-env VITE_MODE=production vite build",
+    "preview": "vite preview",
+    "create-bundle": "cross-env VITE_MODE=production vite build && node ./scripts/createBundle.js"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/lab": "^5.0.0-alpha.104",
+    "@mui/material": "^5.10.10",
+    "@mui/styled-engine-sc": "^5.10.6",
+    "add": "^2.0.6",
+    "axios": "^1.1.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "i18next": "^22.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^12.0.0",
+    "styled-components": "^5.3.6",
+    "yarn": "^1.22.19",
+    "zustand": "^4.1.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.1.0",
+    "bestzip": "^2.2.1",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.20",
+    "vite": "^3.1.0"
+  }
+}
