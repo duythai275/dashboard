@@ -1,0 +1,80 @@
+import { Typography, IconButton, Popover, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Widgets } from "@mui/icons-material";
+import React, { useState } from "react";
+import "./WidgetContainer.css";
+import useDashboardStore from "@/state/dashboard";
+import shallow from "zustand/shallow";
+
+const WidgetContainer = (props, ref) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { style, className, onMouseDown, onMouseUp, onTouchEnd, dashboardIndex, widgetIndex, childrenWidgets } = props;
+  const { dashboardState, selectWidgetChild } = useDashboardStore(
+    (state) => ({ dashboardState: state.dashboardState, selectWidgetChild: state.selectWidgetChild }),
+    shallow
+  );
+  const selectedChildrenIndex = dashboardState[dashboardIndex].widgets[widgetIndex].selectedChildren;
+  const CurrentChildren = childrenWidgets[selectedChildrenIndex].widget;
+  const currentTitle = childrenWidgets[selectedChildrenIndex].title;
+  const handleClosePopover = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div
+      className={`${className} widget-container`}
+      style={{ ...style }}
+      ref={ref}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      onTouchEnd={onTouchEnd}
+    >
+      <div className="widget-title">
+        <div>
+          <Typography variant="widgetTitle">{currentTitle}</Typography>
+        </div>
+        <div>
+          <IconButton
+            onClick={(event) => {
+              setAnchorEl(event.currentTarget);
+            }}
+          >
+            <Widgets />
+          </IconButton>
+        </div>
+      </div>
+      <div className="widget-content">
+        <CurrentChildren />
+      </div>
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={handleClosePopover}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+      >
+        <div className="widget-children-selector-container">
+          <List>
+            {childrenWidgets.map((child, index) => {
+              return (
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => {
+                      selectWidgetChild(dashboardIndex, widgetIndex, index);
+                      setAnchorEl(null);
+                    }}
+                  >
+                    <ListItemText primary={child.title} />
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
+          </List>
+        </div>
+      </Popover>
+    </div>
+  );
+};
+
+export default React.forwardRef(WidgetContainer);

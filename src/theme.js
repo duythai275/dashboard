@@ -14,6 +14,11 @@ let theme = createTheme({
     button: { textTransform: "none", fontWeight: "bold", fontSize: 15 },
     ERROR: { fontFamily: font, color: red[600], fontSize: 13, fontWeight: "bold" },
     mandatoryStar: { fontFamily: font, color: red[600], fontSize: "20px !important", fontWeight: "bold" },
+    widgetTitle: {
+      fontFamily: font,
+      fontSize: 15
+      // fontWeight: "bold"
+    },
     HELPER: {
       fontFamily: font,
       color: lightBlue[800],
@@ -33,7 +38,7 @@ let theme = createTheme({
       primary: "#424242"
     },
     grey: {
-      main: grey[300],
+      main: grey[700],
       contrastText: "#fff"
     },
     primary: {
@@ -72,6 +77,11 @@ let theme = createTheme({
     MuiButton: {
       defaultProps: {
         disableElevation: true
+      },
+      styleOverrides: {
+        root: {
+          height: 40
+        }
       }
     }
   }

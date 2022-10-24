@@ -7,7 +7,6 @@ const useExternalInitialization = () => {
   const setMetadata = useMetadataStore((state) => state.setMetadata);
 
   useEffect(() => {
-    console.log("load");
     (async () => {
       const result = await externalApi.getOrgUnits();
       setMetadata("orgUnits", result);

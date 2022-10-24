@@ -1,22 +1,10 @@
 import Loader from "@/components/Loader/Loader";
+import InternalContainer from "@/components/App/InternalContainer";
+import ExternalContainer from "@/components/App/ExternalContainer";
 import useExternalInitialization from "@/hooks/App/useExternalInitialization";
 import useInternalInitialization from "@/hooks/App/useInternalInitialization";
 import "./App.css";
-import ControlBar from "@/components/ControlBar/ControlBar";
 const { VITE_MODE } = import.meta.env;
-
-const InternalContainer = () => {
-  return <div></div>;
-};
-
-const ExternalContainer = () => {
-  return (
-    <div className="external-container">
-      <ControlBar />
-      <div className="external-dashboard-content"></div>
-    </div>
-  );
-};
 
 const App = () => {
   const ready = useExternalInitialization();
