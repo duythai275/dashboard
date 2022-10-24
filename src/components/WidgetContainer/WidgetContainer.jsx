@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import "./WidgetContainer.css";
 import useDashboardStore from "@/state/dashboard";
 import shallow from "zustand/shallow";
+import "../Widgets/Widgets.css";
 
 const WidgetContainer = (props, ref) => {
   const [anchorEl, setAnchorEl] = useState(null);

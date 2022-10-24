@@ -11,6 +11,11 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
+import "leaflet/dist/leaflet.css";
+import "@inovua/reactdatagrid-community/index.css";
+
+import { defaults } from "chart.js";
+defaults.font.family = "Roboto";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

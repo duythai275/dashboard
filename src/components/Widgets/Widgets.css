@@ -1,0 +1,84 @@
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+.label-layer-container {
+  padding: 5px;
+  margin: 5px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+}
+.timeline-label-layer-container {
+  bottom: 0;
+  position: absolute;
+  margin-bottom: 52px;
+  width: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timeline-label-layer-container > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  padding: 2px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-layer-container {
+  bottom: 0;
+  position: absolute;
+  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.timeline-layer-container > div:nth-child(1) {
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 8px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+  width: 100px;
+}
+.timeline-layer-container > div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 8px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
+  width: calc(100% - 130px);
+}
+.timeline-item-container {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  height: 18px;
+}
+.timeline-selected {
+  background-color: #0277bd;
+}

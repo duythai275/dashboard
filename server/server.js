@@ -4,7 +4,7 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const port = VITE_MODE === "development" ? 3001 : 80;
-const { getRefreshToken, getOrgUnits } = require("./src/api");
+const { getRefreshToken, getOrgUnits, getGeoJson } = require("./src/api");
 
 const refreshToken = async () => {
   const dhis2Api = await getRefreshToken();
@@ -25,6 +25,10 @@ const startServer = async () => {
 
   app.get("/api/orgUnits", async (req, res) => {
     const result = await getOrgUnits(req.app.get("dhis2Api"));
+    res.json(result);
+  });
+  app.get("/api/orgUnitGeoJson", async (req, res) => {
+    const result = await getGeoJson(req.app.get("dhis2Api"));
     res.json(result);
   });
 

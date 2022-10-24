@@ -28,10 +28,15 @@ const getRefreshToken = async () => {
 };
 
 const getOrgUnits = async (dhis2Api) => {
-  const result = await dhis2Api.get(
-    "/api/organisationUnits?paging=false&fields=id,displayName,parent,path,ancestors,geometry"
-  );
+  const result = await dhis2Api.get("/api/organisationUnits?paging=false&fields=id,displayName,parent,path,ancestors");
   return result.data.organisationUnits;
 };
 
-module.exports = { getRefreshToken, getOrgUnits };
+const getGeoJson = async (dhis2Api) => {
+  const orgUnitLevelsResult = await dhis2Api.get(`/api/organisationUnitLevels.json?fields=level,displayName`);
+  const levelQueryString = orgUnitLevelsResult.data.organisationUnitLevels.map((oul) => "level=" + oul.level);
+  const orgUnitGeoJsonResult = await dhis2Api.get(`/api/organisationUnits.geojson?${levelQueryString.join("&")}`);
+  return orgUnitGeoJsonResult.data;
+};
+
+module.exports = { getRefreshToken, getOrgUnits, getGeoJson };
