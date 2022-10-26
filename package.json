@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "cross-env VITE_MODE=development vite",
-    "server": "cross-env VITE_MODE=development nodemon ./server/server.js",
+    "start": "cross-env VITE_APP_MODE=development vite",
+    "server": "cross-env VITE_APP_MODE=development nodemon ./server/server.js",
     "build": "cross-env VITE_MODE=production vite build",
     "preview": "vite preview",
-    "create-bundle": "cross-env VITE_MODE=production vite build && node ./scripts/createBundle.js"
+    "create-bundle": "cross-env VITE_APP_MODE=production vite build && node ./scripts/createBundle.js"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",

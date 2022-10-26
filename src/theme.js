@@ -17,7 +17,7 @@ let theme = createTheme({
     widgetTitle: {
       fontFamily: font,
       fontSize: 15,
-      fontWeight: "bold"
+      fontWeight: 600
     },
     HELPER: {
       fontFamily: font,
@@ -76,12 +76,12 @@ let theme = createTheme({
     },
     MuiButtonGroup: {
       defaultProps: {
-        disableElevation: true
+        // disableElevation: true
       }
     },
     MuiButton: {
       defaultProps: {
-        disableElevation: true
+        // disableElevation: true
       },
       styleOverrides: {
         root: {

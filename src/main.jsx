@@ -13,9 +13,10 @@ import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 import "leaflet/dist/leaflet.css";
 import "@inovua/reactdatagrid-community/index.css";
-const { VITE_APP_MODE } = import.meta.env;
+const { VITE_APP_MODE, VITE_FONT } = import.meta.env;
 import { defaults } from "chart.js";
-defaults.font.family = "Roboto";
+defaults.font.family = VITE_FONT;
+
 if (VITE_APP_MODE === "development") {
   ReactDOM.createRoot(document.getElementById("root")).render(
     <ThemeProvider theme={theme}>

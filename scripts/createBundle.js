@@ -1,7 +1,5 @@
-import * as dotenv from "dotenv";
 import fs from "fs";
 import zip from "bestzip";
-dotenv.config();
 const dir = "./deploy";
 const distDir = "./dist";
 if (fs.existsSync(dir)) {

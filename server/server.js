@@ -4,10 +4,9 @@ import express from "express";
 import { getRefreshToken, getOrgUnits, getGeoJson } from "./src/api.js";
 dotenv.config();
 const { VITE_APP_MODE, VITE_MODE } = process.env;
+const isProduction = VITE_APP_MODE === "production";
 const app = express();
-const port = VITE_APP_MODE === "development" ? 3001 : 80;
-// const apis = VITE_MODE === "development" ? require("../src/config/apiConfig") : require("./src/dashboardApi");
-// import apis from VITE_MODE === "development" ? "../src/config/apiConfig.js" :""
+const port = isProduction ? 80 : 3001;
 
 const refreshToken = async () => {
   const dhis2Api = await getRefreshToken();
@@ -17,7 +16,7 @@ const refreshToken = async () => {
 const startServer = async () => {
   await refreshToken();
   const { default: defaultImport } = await import(
-    VITE_APP_MODE === "development" ? "../src/config/apiConfig.js" : "./src/dashboardApi.js"
+    isProduction ? "./src/dashboardApi.js" : "../src/config/apiConfig.js"
   );
   app.use("/assets", express.static("assets"));
 
@@ -26,7 +25,7 @@ const startServer = async () => {
   }, 3600000);
 
   app.get("/", (req, res) => {
-    res.sendFile(path.resolve("../index.html"));
+    res.sendFile(path.resolve("./index.html"));
   });
 
   app.get("/api/orgUnits", async (req, res) => {

@@ -17,7 +17,7 @@ const options = {
       offset: -5,
       font: {
         family: VITE_FONT,
-        weight: "bold"
+        weight: 500
       }
     }
   }
