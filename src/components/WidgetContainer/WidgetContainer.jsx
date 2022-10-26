@@ -14,7 +14,6 @@ const WidgetContainer = (props, ref) => {
     shallow
   );
   const selectedChildrenIndex = dashboardState[dashboardIndex].widgets[widgetIndex].selectedChildren;
-  const CurrentChildren = childrenWidgets[selectedChildrenIndex].widget;
   const currentTitle = childrenWidgets[selectedChildrenIndex].title;
   const handleClosePopover = () => {
     setAnchorEl(null);
@@ -29,23 +28,23 @@ const WidgetContainer = (props, ref) => {
       onMouseUp={onMouseUp}
       onTouchEnd={onTouchEnd}
     >
-      <div className="widget-title">
+      <div className="widget-title" style={{ width: childrenWidgets.length === 1 ? "100%" : undefined }}>
         <div>
           <Typography variant="widgetTitle">{currentTitle}</Typography>
         </div>
-        <div>
-          <IconButton
-            onClick={(event) => {
-              setAnchorEl(event.currentTarget);
-            }}
-          >
-            <Widgets />
-          </IconButton>
-        </div>
+        {childrenWidgets.length > 1 && (
+          <div>
+            <IconButton
+              onClick={(event) => {
+                setAnchorEl(event.currentTarget);
+              }}
+            >
+              <Widgets />
+            </IconButton>
+          </div>
+        )}
       </div>
-      <div className="widget-content">
-        <CurrentChildren />
-      </div>
+      <div className="widget-content">{childrenWidgets[selectedChildrenIndex].widget}</div>
       <Popover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}

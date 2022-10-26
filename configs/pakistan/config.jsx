@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import shallow from "zustand/shallow";
 import Dashboard1 from "./Dashboard1/Dashboard1";
 import Dashboard2 from "./Dashboard2/Dashboard2";
+
 const dashboards = [
-  { name: "Flooding Summary National", dashboard: Dashboard1 },
-  { name: "Dashboard2", dashboard: Dashboard2 }
+  { name: "Flooding summary national", dashboard: Dashboard1 },
+  { name: "Flooding yearly comparisons national", dashboard: Dashboard2 }
 ];
 
 const useDashboardInitialization = () => {
@@ -19,9 +20,6 @@ const useDashboardInitialization = () => {
     initDashboardState([
       {
         widgets: [
-          {
-            selectedChildren: 0
-          },
           {
             selectedChildren: 0
           },

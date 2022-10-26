@@ -3,14 +3,21 @@ import BarChart from "@/components/Widgets/BarChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import axios from "axios";
 
-const Widget2_1 = ({ setLoading }) => {
+const Widget2 = ({ setLoading, apiUrl }) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     setLoading(true);
     (async () => {
-      const result = await axios.get("/api/getWidget2Data");
-      setData(result.data);
+      const result = await axios.get(apiUrl);
+      setData(
+        Object.entries(result.data)
+          .sort((a, b) => (a[0] <= b[0] ? -1 : 1))
+          .reduce((acc, pair) => {
+            acc[pair[0]] = pair[1];
+            return acc;
+          }, {})
+      );
       setLoading(false);
     })();
   }, []);
@@ -31,4 +38,4 @@ const Widget2_1 = ({ setLoading }) => {
   return data && <BarChart data={currentData} />;
 };
 
-export default withWidgetChildrenLoader(Widget2_1);
+export default withWidgetChildrenLoader(Widget2);

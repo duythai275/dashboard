@@ -37,6 +37,11 @@ let theme = createTheme({
     text: {
       primary: "#424242"
     },
+    chipSelected: {
+      main: "#2b675c",
+      dark: "#3d9182",
+      contrastText: "#fff"
+    },
     grey: {
       main: grey[700],
       contrastText: "#fff"

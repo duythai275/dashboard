@@ -8,14 +8,18 @@
   border: 1px solid #ededed;
 }
 .widget-title {
-  height: 60px;
+  height: 45px;
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 5px;
-  border-bottom: 1px solid #ededed;
+  border-bottom: 2px solid #ededed;
+  /* background-color: #ededed; */
 }
 .widget-title > div:nth-child(1) {
+  display: flex;
+  justify-content: center;
   width: calc(100% - 50px);
 }
 .widget-title > div:nth-child(2) {
@@ -25,7 +29,7 @@
 .widget-content {
   position: relative;
   padding: 5px;
-  height: calc(100% - 60px);
+  height: calc(100% - 45px);
   width: 100%;
 }
 /* .widget-children-selector-container {

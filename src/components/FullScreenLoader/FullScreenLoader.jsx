@@ -1,6 +1,8 @@
 import { Dialog, CircularProgress, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const FullScreenLoader = ({ open }) => {
+  const { t } = useTranslation();
   return (
     <Dialog open={open}>
       <div
@@ -15,7 +17,7 @@ const FullScreenLoader = ({ open }) => {
       >
         <CircularProgress size={150} thickness={1} />
         <div style={{ marginTop: 20 }}>
-          <Typography>Initialization...</Typography>
+          <Typography>{t("initializing")}</Typography>
         </div>
       </div>
     </Dialog>

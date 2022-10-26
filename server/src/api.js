@@ -1,6 +1,8 @@
+import * as dotenv from "dotenv";
+import axios from "axios";
+import qs from "qs";
+dotenv.config();
 const { VITE_BASE_URL, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_REFRESH_TOKEN } = process.env;
-const axios = require("axios");
-const qs = require("qs");
 
 const getRefreshToken = async () => {
   const data = qs.stringify({
@@ -39,4 +41,4 @@ const getGeoJson = async (dhis2Api) => {
   return orgUnitGeoJsonResult.data;
 };
 
-module.exports = { getRefreshToken, getOrgUnits, getGeoJson };
+export { getRefreshToken, getOrgUnits, getGeoJson };

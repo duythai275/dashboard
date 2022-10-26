@@ -1,5 +1,5 @@
 import { precisionRound } from "d3-format";
-
+import _ from "lodash";
 const numberPrecision = (d) => {
   if (d === undefined) {
     return (n) => n;
@@ -26,8 +26,8 @@ const getIntervals = (interval, num) => {
 };
 
 const getEqualIntervals = (numbers, length) => {
-  const sorted = numbers.sort((a, b) => a - b);
-  const maxValue = sorted[numbers.length - 1];
+  const sorted = _.uniq(numbers.sort((a, b) => a - b));
+  const maxValue = sorted[sorted.length - 1];
   const minValue = sorted[0];
   const bins = [];
   const binSize = (maxValue - minValue) / length;
@@ -48,11 +48,11 @@ const getEqualIntervals = (numbers, length) => {
 };
 
 const getQuantiles = (numbers, length) => {
-  const sorted = numbers.sort((a, b) => a - b);
+  const sorted = _.uniq(numbers.sort((a, b) => a - b));
   const minValue = sorted[0];
-  const maxValue = sorted[numbers.length - 1];
+  const maxValue = sorted[sorted.length - 1];
   const bins = [];
-  const binCount = numbers.length / length;
+  const binCount = sorted.length / length;
   const precision = precisionRound((maxValue - minValue) / length, maxValue);
   const valueFormat = numberPrecision(precision);
 

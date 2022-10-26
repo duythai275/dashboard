@@ -3,15 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import { useMap } from "react-leaflet/hooks";
 import { LEAFLET_CONTROL_POSITIONS } from "./const";
-import { getQuantiles } from "./utils";
+import { getQuantiles, getEqualIntervals } from "./utils";
 
 const GeoJsonLayer = ({ features, data, legend, setLabel }) => {
   const ref = useRef(null);
   const map = useMap();
-  const ranges = getQuantiles(
+  const ranges = getEqualIntervals(
     Object.values(currentData).map((value) => value),
     5
   );
+
   useEffect(() => {
     map.fitBounds(ref.current.getBounds());
   }, []);
@@ -36,9 +37,14 @@ const GeoJsonLayer = ({ features, data, legend, setLabel }) => {
           } else {
             layer.setStyle({
               fillColor: "#4d4d4d",
-              fillOpacity: 0.6
+              fillOpacity: 0.1
             });
           }
+        } else {
+          layer.setStyle({
+            fillColor: "#4d4d4d",
+            fillOpacity: 0.1
+          });
         }
 
         layer.on("mouseover", () => {

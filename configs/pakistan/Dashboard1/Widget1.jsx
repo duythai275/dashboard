@@ -4,7 +4,8 @@ import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenL
 import useMetadataStore from "@/state/metadata";
 import axios from "axios";
 
-const Widget1_1 = ({ setLoading }) => {
+const Widget1 = ({ setLoading, apiUrl }) => {
+  console.log(apiUrl);
   const [data, setData] = useState(null);
   const orgUnitGeoJson = useMetadataStore((state) => state.orgUnitGeoJson);
   const features = orgUnitGeoJson.features.filter((feature) => feature.properties.level === "3");
@@ -12,7 +13,7 @@ const Widget1_1 = ({ setLoading }) => {
   useEffect(() => {
     setLoading(true);
     (async () => {
-      const result = await axios.get("/api/getWidget1Data");
+      const result = await axios.get(apiUrl);
       setData(result.data);
       setLoading(false);
     })();
@@ -29,4 +30,4 @@ const Widget1_1 = ({ setLoading }) => {
   );
 };
 
-export default withWidgetChildrenLoader(Widget1_1);
+export default withWidgetChildrenLoader(Widget1);
