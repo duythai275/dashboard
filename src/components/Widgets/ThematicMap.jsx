@@ -3,9 +3,15 @@ import { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import { useMap } from "react-leaflet/hooks";
 import { LEAFLET_CONTROL_POSITIONS } from "./const";
+import { getQuantiles } from "./utils";
+
 const GeoJsonLayer = ({ features, data, legend, setLabel }) => {
   const ref = useRef(null);
   const map = useMap();
+  const ranges = getQuantiles(
+    Object.values(currentData).map((value) => value),
+    5
+  );
   useEffect(() => {
     map.fitBounds(ref.current.getBounds());
   }, []);
@@ -19,22 +25,13 @@ const GeoJsonLayer = ({ features, data, legend, setLabel }) => {
         layer.setStyle({
           weight: 1
         });
-        let foundData = data[feature.id];
+        let foundData = currentData[feature.id] || null;
         if (foundData) {
-          const foundLegend = legend.find((legend) => {
-            const { max, min } = legend;
-            if (!legend.max) {
-              return foundData >= min;
-            } else if (!legend.min) {
-              return foundData <= max;
-            } else {
-              return foundData <= max && foundData >= min;
-            }
-          });
-          if (foundLegend) {
+          const foundRangeIndex = ranges.findIndex((range) => foundData <= range.max && foundData >= range.min);
+          if (foundRangeIndex !== -1) {
             layer.setStyle({
-              fillColor: foundLegend.color,
-              fillOpacity: 0.6
+              fillColor: legend[foundRangeIndex],
+              fillOpacity: 0.8
             });
           } else {
             layer.setStyle({

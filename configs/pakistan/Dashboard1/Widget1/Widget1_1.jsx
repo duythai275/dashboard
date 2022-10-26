@@ -1,22 +1,32 @@
-import BarChart from "@/components/Widgets/BarChart";
+import { useEffect, useState } from "react";
+import ThematicTimelineMap from "@/components/Widgets/ThematicTimelineMap";
+import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
+import useMetadataStore from "@/state/metadata";
+import axios from "axios";
 
-const Widget1_1 = () => {
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-      {
-        backgroundColor: "red",
-        label: "Dataset 1",
-        data: [1, 2, 3, 4, 5, 6, 7]
-      },
-      {
-        backgroundColor: "blue",
-        label: "Dataset 2",
-        data: [7, 6, 5, 4, 3, 2, 1]
-      }
-    ]
-  };
-  return <BarChart data={data} />;
+const Widget1_1 = ({ setLoading }) => {
+  const [data, setData] = useState(null);
+  const orgUnitGeoJson = useMetadataStore((state) => state.orgUnitGeoJson);
+  const features = orgUnitGeoJson.features.filter((feature) => feature.properties.level === "3");
+
+  useEffect(() => {
+    setLoading(true);
+    (async () => {
+      const result = await axios.get("/api/getWidget1Data");
+      setData(result.data);
+      setLoading(false);
+    })();
+  }, []);
+  return (
+    data && (
+      <ThematicTimelineMap
+        features={features}
+        data={data}
+        timeline={data && Object.keys(data).sort()}
+        legend={["#ffffd4", "#fed98e", "#fe9929", "#d95f0e", "#993404"]}
+      />
+    )
+  );
 };
 
-export default Widget1_1;
+export default withWidgetChildrenLoader(Widget1_1);

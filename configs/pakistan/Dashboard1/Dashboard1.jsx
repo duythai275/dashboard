@@ -2,10 +2,7 @@ import React from "react";
 import RGL, { WidthProvider } from "react-grid-layout";
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
 import Widget1_1 from "./Widget1/Widget1_1";
-import Widget1_2 from "./Widget1/Widget1_2";
-import Widget1_3 from "./Widget1/Widget1_3";
-import Widget1_4 from "./Widget1/Widget1_4";
-import Widget1_5 from "./Widget1/Widget1_5";
+import Widget2_1 from "./Widget2/Widget2_1";
 const ReactGridLayout = WidthProvider(RGL);
 const layout = [
   { i: "1", x: 0, y: 0, w: 6, h: 50 },
@@ -24,13 +21,8 @@ const Dashboard1 = () => {
         widgetIndex={0}
         childrenWidgets={[
           {
-            title:
-              "This is a child name 1 This is a child name 1 This is a child name 1 This is a child name 1 This is a child name 1 ",
+            title: "Flooding 2022 Acute Diarrhoea map timeline",
             widget: Widget1_1
-          },
-          {
-            title: "This is a child name 2",
-            widget: Widget1_2
           }
         ]}
       />
@@ -40,17 +32,12 @@ const Dashboard1 = () => {
         widgetIndex={1}
         childrenWidgets={[
           {
-            title:
-              "This is a child name 1 This is a child name 1 This is a child name 1 This is a child name 1 This is a child name 1 ",
-            widget: Widget1_1
-          },
-          {
-            title: "This is a child name 2",
-            widget: Widget1_2
+            title: "Daily trend in flood-affected areas: Acute Diarrhea (New Cases)",
+            widget: Widget2_1
           }
         ]}
       />
-      <WidgetContainer
+      {/* <WidgetContainer
         key="3"
         dashboardIndex={0}
         widgetIndex={2}
@@ -85,7 +72,7 @@ const Dashboard1 = () => {
             widget: Widget1_5
           }
         ]}
-      />
+      /> */}
     </ReactGridLayout>
   );
 };

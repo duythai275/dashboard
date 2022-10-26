@@ -1,10 +1,11 @@
 require("dotenv").config();
-const { VITE_MODE } = process.env;
+const { VITE_APP_MODE, VITE_MODE } = process.env;
 const path = require("path");
 const express = require("express");
 const app = express();
-const port = VITE_MODE === "development" ? 3001 : 80;
+const port = VITE_APP_MODE === "development" ? 3001 : 80;
 const { getRefreshToken, getOrgUnits, getGeoJson } = require("./src/api");
+const api = VITE_MODE === "development" ? require("../src/config/api") : require("./src/dashboardApi");
 
 const refreshToken = async () => {
   const dhis2Api = await getRefreshToken();
@@ -27,9 +28,17 @@ const startServer = async () => {
     const result = await getOrgUnits(req.app.get("dhis2Api"));
     res.json(result);
   });
+
   app.get("/api/orgUnitGeoJson", async (req, res) => {
     const result = await getGeoJson(req.app.get("dhis2Api"));
     res.json(result);
+  });
+
+  api.forEach((api) => {
+    app.get(api.route, async (req, res) => {
+      const result = await api.handler(req.app.get("dhis2Api"));
+      res.json(result);
+    });
   });
 
   app.listen(port, () => {

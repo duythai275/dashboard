@@ -7,10 +7,14 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import { useMap } from "react-leaflet/hooks";
 import { useInterval } from "usehooks-ts";
 import { LEAFLET_CONTROL_POSITIONS } from "./const";
+import { getQuantiles } from "./utils";
 const GeoJsonLayer = ({ features, currentData, legend, setLabel }) => {
   const ref = useRef(null);
   const map = useMap();
-
+  const ranges = getQuantiles(
+    Object.values(currentData).map((value) => value),
+    5
+  );
   useEffect(() => {
     map.fitBounds(ref.current.getBounds());
   }, []);
@@ -26,20 +30,11 @@ const GeoJsonLayer = ({ features, currentData, legend, setLabel }) => {
         });
         let foundData = currentData[feature.id] || null;
         if (foundData) {
-          const foundLegend = legend.find((legend) => {
-            const { max, min } = legend;
-            if (!legend.max) {
-              return foundData >= min;
-            } else if (!legend.min) {
-              return foundData <= max;
-            } else {
-              return foundData <= max && foundData >= min;
-            }
-          });
-          if (foundLegend) {
+          const foundRangeIndex = ranges.findIndex((range) => foundData <= range.max && foundData >= range.min);
+          if (foundRangeIndex !== -1) {
             layer.setStyle({
-              fillColor: foundLegend.color,
-              fillOpacity: 0.6
+              fillColor: legend[foundRangeIndex],
+              fillOpacity: 0.8
             });
           } else {
             layer.setStyle({
@@ -77,7 +72,7 @@ const LabelLayer = ({ label }) => {
 const TimelineLayer = ({ timeline, setTimelineLabel }) => {
   const timelineRef = useRef(null);
   const [timelineItemWidth, setTimelineItemWidth] = useState(10);
-  const [play, setPlay] = useState(false);
+  const [play, setPlay] = useState(true);
   const [index, setIndex] = useState(0);
 
   useInterval(
@@ -107,24 +102,28 @@ const TimelineLayer = ({ timeline, setTimelineLabel }) => {
   return (
     <div className="timeline-layer-container">
       <div>
-        <IconButton
-          size="small"
-          onClick={() => {
-            if (index < timeline.length - 1) {
-              setPlay(true);
-            }
-          }}
-        >
-          <PlayArrowRoundedIcon fontSize="inherit" color="primary" />
-        </IconButton>
-        <IconButton
-          size="small"
-          onClick={() => {
-            setPlay(false);
-          }}
-        >
-          <PauseRoundedIcon fontSize="inherit" color="primary" />
-        </IconButton>
+        {!play && (
+          <IconButton
+            size="small"
+            onClick={() => {
+              if (index < timeline.length - 1) {
+                setPlay(true);
+              }
+            }}
+          >
+            <PlayArrowRoundedIcon fontSize="inherit" color="primary" />
+          </IconButton>
+        )}
+        {play && (
+          <IconButton
+            size="small"
+            onClick={() => {
+              setPlay(false);
+            }}
+          >
+            <PauseRoundedIcon fontSize="inherit" color="primary" />
+          </IconButton>
+        )}
         <IconButton
           size="small"
           onClick={() => {

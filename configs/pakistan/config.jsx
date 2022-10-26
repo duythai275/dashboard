@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import shallow from "zustand/shallow";
 import Dashboard1 from "./Dashboard1/Dashboard1";
 import Dashboard2 from "./Dashboard2/Dashboard2";
-
 const dashboards = [
-  { name: "Dashboard1", dashboard: Dashboard1 },
+  { name: "Flooding Summary National", dashboard: Dashboard1 },
   { name: "Dashboard2", dashboard: Dashboard2 }
 ];
 

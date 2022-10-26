@@ -4,7 +4,7 @@ import useMetadataStore from "@/state/metadata";
 const Widget1_3 = () => {
   const orgUnitGeoJson = useMetadataStore((state) => state.orgUnitGeoJson);
   const features = orgUnitGeoJson.features.filter((feature) => feature.properties.level === "3");
-
+  console.log(features);
   return (
     <ThematicMap
       features={features}

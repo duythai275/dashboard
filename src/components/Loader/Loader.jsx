@@ -1,24 +1,29 @@
-import { Dialog, CircularProgress, Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
-const Loader = ({ open }) => {
+const Loader = () => {
+  const { t } = useTranslation();
   return (
-    <Dialog open={open}>
-      <div
-        style={{
-          width: 300,
-          height: 300,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column"
-        }}
-      >
-        <CircularProgress size={150} thickness={1} />
-        <div style={{ marginTop: 20 }}>
-          <Typography>Initialization...</Typography>
-        </div>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        zIndex: 9999,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        backgroundColor: "#ffffff"
+      }}
+    >
+      <CircularProgress size={80} thickness={2} />
+      <div style={{ paddingTop: 15 }}>
+        <Typography>{t("loading")}</Typography>
       </div>
-    </Dialog>
+    </div>
   );
 };
 export default Loader;

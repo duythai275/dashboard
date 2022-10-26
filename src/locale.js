@@ -1,6 +1,8 @@
 const resources = {
   en: {
-    translation: {}
+    translation: {
+      loading: "... Loading ..."
+    }
   }
 };
 export default resources;

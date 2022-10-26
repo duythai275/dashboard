@@ -1,4 +1,4 @@
-import Loader from "@/components/Loader/Loader";
+import FullScreenLoader from "@/components/FullScreenLoader/FullScreenLoader";
 import InternalContainer from "@/components/App/InternalContainer";
 import ExternalContainer from "@/components/App/ExternalContainer";
 import useExternalInitialization from "@/hooks/App/useExternalInitialization";
@@ -10,7 +10,15 @@ const App = () => {
   const ready = useExternalInitialization();
   return (
     <div className="App">
-      {ready ? VITE_MODE === "internal" ? <InternalContainer /> : <ExternalContainer /> : <Loader open={!ready} />}
+      {ready ? (
+        VITE_MODE === "internal" ? (
+          <InternalContainer />
+        ) : (
+          <ExternalContainer />
+        )
+      ) : (
+        <FullScreenLoader open={!ready} />
+      )}
     </div>
   );
 };

@@ -57,7 +57,7 @@
   box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
-  width: 100px;
+  width: 70px;
 }
 .timeline-layer-container > div:nth-child(2) {
   display: flex;
@@ -70,7 +70,7 @@
   box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 3px 4px 5px -1px rgba(0, 0, 0, 0.1);
-  width: calc(100% - 130px);
+  width: calc(100% - 100px);
 }
 .timeline-item-container {
   cursor: pointer;

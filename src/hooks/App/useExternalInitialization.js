@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import externalApi from "@/api/externalApi";
 import useMetadataStore from "@/state/metadata";
-import { useEffect, useState } from "react";
 
 const useExternalInitialization = () => {
   const [ready, setReady] = useState(false);

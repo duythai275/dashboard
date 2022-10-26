@@ -1,9 +1,9 @@
+import React, { useState } from "react";
 import { Typography, IconButton, Popover, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { Widgets } from "@mui/icons-material";
-import React, { useState } from "react";
-import "./WidgetContainer.css";
 import useDashboardStore from "@/state/dashboard";
 import shallow from "zustand/shallow";
+import "./WidgetContainer.css";
 import "../Widgets/Widgets.css";
 
 const WidgetContainer = (props, ref) => {

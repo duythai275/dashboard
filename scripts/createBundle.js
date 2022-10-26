@@ -10,7 +10,8 @@ fs.mkdirSync(dir);
 fs.cpSync(distDir, dir, { recursive: true });
 fs.cpSync("./server", dir + "/server/", { recursive: true });
 fs.cpSync("./.env", dir + "/.env");
-fs.appendFileSync(dir + "/.env", "\r\nVITE_MODE=production");
+fs.cpSync("./src/config/api.js", dir + "/server/src/dashboardApi.js");
+fs.appendFileSync(dir + "/.env", "\r\nVITE_APP_MODE=production");
 fs.cpSync("./bundle-package.json", dir + "/package.json");
 zip({
   source: ["*", ".env"],

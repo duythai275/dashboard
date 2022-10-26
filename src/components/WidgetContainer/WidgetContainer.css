@@ -23,6 +23,7 @@
   text-align: right;
 }
 .widget-content {
+  position: relative;
   padding: 5px;
   height: calc(100% - 60px);
   width: 100%;

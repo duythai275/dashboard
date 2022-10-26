@@ -9,9 +9,14 @@ const getGeoJson = async () => {
   return result.data;
 };
 
+const getData = async (api) => {
+  const result = await axios.get(api);
+  return result;
+};
 const externalApi = {
   getOrgUnits,
-  getGeoJson
+  getGeoJson,
+  getData
 };
 
 export default externalApi;
