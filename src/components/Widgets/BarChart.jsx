@@ -24,7 +24,7 @@ const options = {
 };
 
 const BarChart = ({ data }) => {
-  return <Bar options={options} data={data} plugins={[ChartDataLabels]} redraw={true} />;
+  return <Bar options={options} data={data} plugins={[ChartDataLabels]} />;
 };
 
 export default BarChart;

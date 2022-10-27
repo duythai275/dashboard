@@ -167,6 +167,7 @@ const TimelineLayer = ({ timeline, setTimelineLabel }) => {
     </div>
   );
 };
+
 const TimelineLabelLayer = ({ timelineLabel }) => {
   return (
     <div className="timeline-label-layer-container">
@@ -177,11 +178,20 @@ const TimelineLabelLayer = ({ timelineLabel }) => {
   );
 };
 
+const LegendLayer = () => {
+  return (
+    <div className={`${LEAFLET_CONTROL_POSITIONS.topLeft} label-layer-container`}>
+      alksdfasdfjhadjklsfhjadklsfhjkladsfhkladfs
+    </div>
+  );
+};
+
 const ThematicTimelineMap = (props) => {
   const [label, setLabel] = useState("");
   const [timelineLabel, setTimelineLabel] = useState(props.timeline[0]);
   return (
     <MapContainer scrollWheelZoom={false}>
+      <LegendLayer />
       {timelineLabel && <TimelineLabelLayer timelineLabel={timelineLabel} />}
       <TimelineLayer {...props} setTimelineLabel={setTimelineLabel} />
       {label && <LabelLayer label={label} />}
@@ -198,4 +208,5 @@ const ThematicTimelineMap = (props) => {
     </MapContainer>
   );
 };
+
 export default ThematicTimelineMap;

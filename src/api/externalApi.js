@@ -1,11 +1,11 @@
 import axios from "axios";
-
+const { VITE_APP_MODE, VITE_PRODUCTION_BASE } = import.meta.env;
 const getOrgUnits = async () => {
-  const result = await axios.get(`/api/orgUnits`);
+  const result = await axios.get(`${VITE_APP_MODE === "production" ? VITE_PRODUCTION_BASE : ""}/api/orgUnits`);
   return result.data;
 };
 const getGeoJson = async () => {
-  const result = await axios.get(`/api/orgUnitGeoJson`);
+  const result = await axios.get(`${VITE_APP_MODE === "production" ? VITE_PRODUCTION_BASE : ""}/api/orgUnitGeoJson`);
   return result.data;
 };
 

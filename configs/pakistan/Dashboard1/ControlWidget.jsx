@@ -23,6 +23,7 @@ const ControlWidget = () => {
                   selectWidgetChild(0, 1, index);
                   selectWidgetChild(0, 2, index);
                   selectWidgetChild(0, 3, index);
+                  selectWidgetChild(0, 4, index);
                   setSelectedChip(index);
                 }}
               />

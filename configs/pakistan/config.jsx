@@ -31,6 +31,9 @@ const useDashboardInitialization = () => {
           },
           {
             selectedChildren: 0
+          },
+          {
+            selectedChildren: 0
           }
         ]
       },

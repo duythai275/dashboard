@@ -19,9 +19,9 @@ const Widget3 = ({ setLoading, apiUrl }) => {
   let rows = [];
 
   if (data) {
-    columns = Object.keys(data.data).map((column) => ({ defaultFlex: 1, name: column, header: column }));
+    columns = Object.keys(data.data).map((column) => ({ name: column, header: column }));
     columns = sortStringInArrayOfObject(columns, "name");
-    columns.unshift({ defaultFlex: 3, name: "ou", header: "Org units / Period" });
+    columns.unshift({ name: "ou", header: "Org units / Period", width: 400 });
     rows = Object.keys(data.ous)
       .map((ou) => {
         const ouName = data.ous[ou];
