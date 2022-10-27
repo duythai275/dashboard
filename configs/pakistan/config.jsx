@@ -11,8 +11,12 @@ const dashboards = [
 
 const useDashboardInitialization = () => {
   const [ready, setReady] = useState(false);
-  const { initDashboardState, selectDashboard } = useDashboardStore(
-    (state) => ({ initDashboardState: state.initDashboardState, selectDashboard: state.selectDashboard }),
+  const { initDashboardState, selectDashboard, changeAdditionalStateProperty } = useDashboardStore(
+    (state) => ({
+      initDashboardState: state.initDashboardState,
+      selectDashboard: state.selectDashboard,
+      changeAdditionalStateProperty: state.changeAdditionalStateProperty
+    }),
     shallow
   );
 
@@ -46,6 +50,7 @@ const useDashboardInitialization = () => {
       }
     ]);
     selectDashboard({ value: 0, label: dashboards[0].name });
+    changeAdditionalStateProperty("selectedChip", 0);
     setReady(true);
   }, []);
 

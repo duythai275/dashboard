@@ -2,17 +2,23 @@ import { Chip } from "@mui/material";
 import Custom from "@/components/Widgets/Custom";
 import { DISEASES } from "./const";
 import "./ControlWidget.css";
-import { useState } from "react";
 import useDashboardStore from "@/state/dashboard";
+import shallow from "zustand/shallow";
 const ControlWidget = () => {
+  const { additionalState, changeAdditionalStateProperty } = useDashboardStore(
+    (state) => ({
+      additionalState: state.additionalState,
+      changeAdditionalStateProperty: state.changeAdditionalStateProperty
+    }),
+    shallow
+  );
   const selectWidgetChild = useDashboardStore((state) => state.selectWidgetChild);
-  const [selectedChip, setSelectedChip] = useState(0);
 
   return (
     <Custom>
       <div className="chips-container">
         {DISEASES.map((disease, index) => {
-          const selected = index === selectedChip;
+          const selected = index === additionalState.selectedChip;
           const color = selected ? "chipSelected" : undefined;
           return (
             <div>
@@ -24,7 +30,7 @@ const ControlWidget = () => {
                   selectWidgetChild(0, 2, index);
                   selectWidgetChild(0, 3, index);
                   selectWidgetChild(0, 4, index);
-                  setSelectedChip(index);
+                  changeAdditionalStateProperty("selectedChip", index);
                 }}
               />
             </div>
