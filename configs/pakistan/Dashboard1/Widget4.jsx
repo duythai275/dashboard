@@ -19,19 +19,27 @@ const Widget4 = ({ setLoading, apiUrl }) => {
 
   const sortedLabels = data ? Object.keys(data[currentYear]).sort() : [];
 
+  const generateValue = (year, week) => {
+    if (data[year] && data[year][week]) {
+      return data[year][week];
+    } else {
+      return null;
+    }
+  };
+
   const currentData = data
     ? {
         labels: sortedLabels,
         datasets: [
           {
             label: currentYear,
-            data: sortedLabels.map((week) => data[currentYear][week]),
+            data: sortedLabels.map((week) => generateValue(currentYear, week)),
             borderColor: "#0277bd",
             backgroundColor: "#0277bd"
           },
           {
             label: lastYear,
-            data: sortedLabels.map((week) => data[lastYear][week]),
+            data: sortedLabels.map((week) => generateValue(lastYear, week)),
             borderColor: "#2b675c",
             backgroundColor: "#2b675c",
             pointStyle: "triangle"

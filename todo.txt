@@ -1,0 +1,1 @@
+- PAKISTAN: Selected disease not update when navigate to another dashboard and go back

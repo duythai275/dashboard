@@ -17,6 +17,9 @@ const ControlWidget = () => {
   return (
     <Custom>
       <div className="chips-container">
+        <div>
+          <Chip label="All Diseases (coming soon)" />
+        </div>
         {DISEASES.map((disease, index) => {
           const selected = index === additionalState.selectedChip;
           const color = selected ? "chipSelected" : undefined;
@@ -36,9 +39,6 @@ const ControlWidget = () => {
             </div>
           );
         })}
-        <div>
-          <Chip label="TO BE ADDED MORE..." />
-        </div>
       </div>
     </Custom>
   );

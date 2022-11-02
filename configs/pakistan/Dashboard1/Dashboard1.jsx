@@ -13,8 +13,8 @@ const layout = [
   { i: "control", x: 0, y: 0, w: 12, h: 14 },
   { i: "1", x: 0, y: 12, w: 6, h: 48 },
   { i: "2", x: 6, y: 12, w: 6, h: 48 },
-  { i: "3", x: 0, y: 62, w: 6, h: 48 },
-  { i: "4", x: 6, y: 62, w: 6, h: 48 }
+  { i: "3", x: 0, y: 62, w: 12, h: 48 },
+  { i: "4", x: 0, y: 110, w: 12, h: 48 }
 ];
 
 const Dashboard1 = () => {
@@ -63,24 +63,6 @@ const Dashboard1 = () => {
         })}
       />
       <WidgetContainer
-        key="4"
-        dashboardIndex={0}
-        widgetIndex={3}
-        childrenWidgets={DISEASES.map((disease, index) => {
-          return {
-            title: `Trend in flood-affected areas: ${disease.name} - last 14 days`,
-            widget: (
-              <Widget3
-                apiUrl={`${VITE_APP_MODE === "production" ? VITE_PRODUCTION_BASE : ""}/api/getDashboard1Widget3_${
-                  index + 1
-                }Data`}
-                key={"13" + index}
-              />
-            )
-          };
-        })}
-      />
-      <WidgetContainer
         key="3"
         dashboardIndex={0}
         widgetIndex={4}
@@ -93,6 +75,24 @@ const Dashboard1 = () => {
                   index + 1
                 }Data`}
                 key={"14" + index}
+              />
+            )
+          };
+        })}
+      />
+      <WidgetContainer
+        key="4"
+        dashboardIndex={0}
+        widgetIndex={3}
+        childrenWidgets={DISEASES.map((disease, index) => {
+          return {
+            title: `Trend in flood-affected areas: ${disease.name} - last 14 days`,
+            widget: (
+              <Widget3
+                apiUrl={`${VITE_APP_MODE === "production" ? VITE_PRODUCTION_BASE : ""}/api/getDashboard1Widget3_${
+                  index + 1
+                }Data`}
+                key={"13" + index}
               />
             )
           };

@@ -191,7 +191,7 @@ const ThematicTimelineMap = (props) => {
   const [timelineLabel, setTimelineLabel] = useState(props.timeline[0]);
   return (
     <MapContainer scrollWheelZoom={false}>
-      <LegendLayer />
+      {/* <LegendLayer /> */}
       {timelineLabel && <TimelineLabelLayer timelineLabel={timelineLabel} />}
       <TimelineLayer {...props} setTimelineLabel={setTimelineLabel} />
       {label && <LabelLayer label={label} />}
