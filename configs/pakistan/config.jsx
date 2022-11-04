@@ -2,11 +2,11 @@ import useDashboardStore from "@/state/dashboard";
 import { useEffect, useState } from "react";
 import shallow from "zustand/shallow";
 import Dashboard1 from "./Dashboard1/Dashboard1";
-import Dashboard2 from "./Dashboard2/Dashboard2";
+// import Dashboard2 from "./Dashboard2/Dashboard2";
 
 const dashboards = [
-  { name: "Flooding summary national", dashboard: Dashboard1 },
-  { name: "Flooding yearly comparisons national", dashboard: Dashboard2 }
+  { name: "Flooding summary national", dashboard: Dashboard1 }
+  // { name: "Flooding yearly comparisons national", dashboard: Dashboard2 }
 ];
 
 const useDashboardInitialization = () => {
@@ -36,13 +36,6 @@ const useDashboardInitialization = () => {
           {
             selectedChildren: 0
           },
-          {
-            selectedChildren: 0
-          }
-        ]
-      },
-      {
-        widgets: [
           {
             selectedChildren: 0
           }

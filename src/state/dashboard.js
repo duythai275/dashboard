@@ -5,8 +5,15 @@ const useDashboardStore = create((set, get) => ({
   selectedDashboard: null,
   dashboardState: null,
   additionalState: {},
+  layout: null,
   selectDashboard: (dashboard) => set(() => ({ selectedDashboard: dashboard })),
   initDashboardState: (dashboardState) => set(() => ({ dashboardState })),
+  changeDashboardState: (dashboardIndex, newState) =>
+    set(
+      produce((state) => {
+        state.dashboardState[dashboardIndex] = newState;
+      })
+    ),
   selectWidgetChild: (dashboardIndex, widgetIndex, childrenIndex) =>
     set(
       produce((state) => {
@@ -18,7 +25,8 @@ const useDashboardStore = create((set, get) => ({
       produce((state) => {
         state.additionalState[property] = value;
       })
-    )
+    ),
+  changeLayout: (layout) => set(() => ({ layout }))
 }));
 
 export default useDashboardStore;
