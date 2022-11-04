@@ -53,7 +53,7 @@ const ControlWidget = () => {
           return (
             <div>
               <Chip
-                label={selected ? <strong>All Diseases (coming soon)</strong> : "All Diseases"}
+                label={selected ? <strong>All Diseases</strong> : "All Diseases"}
                 color={color}
                 onClick={() => {
                   changeLayout(layout2);
