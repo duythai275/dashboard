@@ -2,26 +2,26 @@ import * as dotenv from "dotenv";
 import axios from "axios";
 import qs from "qs";
 dotenv.config();
-const { VITE_BASE_URL, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_REFRESH_TOKEN } = process.env;
 
-const getRefreshToken = async () => {
+const getRefreshToken = async (config) => {
+  const { baseUrl, clientId, clientSecret, refreshToken } = config;
   const data = qs.stringify({
     grant_type: "refresh_token",
-    refresh_token: VITE_REFRESH_TOKEN
+    refresh_token: refreshToken
   });
 
   const result = await axios({
     method: "post",
-    url: `${VITE_BASE_URL}/uaa/oauth/token`,
+    url: `${baseUrl}/uaa/oauth/token`,
     headers: {
-      Authorization: `Basic ` + Buffer.from(VITE_CLIENT_ID + ":" + VITE_CLIENT_SECRET).toString("base64"),
+      Authorization: `Basic ` + Buffer.from(clientId + ":" + clientSecret).toString("base64"),
       "Content-Type": "application/x-www-form-urlencoded"
     },
     data: data
   });
 
   const dhis2Api = axios.create({
-    baseURL: VITE_BASE_URL,
+    baseURL: baseUrl,
     headers: {
       Authorization: "Bearer " + result.data.access_token
     }

@@ -1,6 +1,6 @@
 import ControlBar from "@/components/ControlBar/ControlBar";
-import { dashboards, useDashboardInitialization } from "@/config/config";
 import useDashboardStore from "@/state/dashboard";
+import { dashboards, useDashboardInitialization } from "@/config/config";
 
 const ExternalContainer = () => {
   const ready = useDashboardInitialization();

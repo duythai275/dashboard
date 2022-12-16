@@ -8,10 +8,10 @@ const useExternalInitialization = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await externalApi.getOrgUnits();
-      const orgUnitGeoJson = await externalApi.getGeoJson();
-      setMetadata("orgUnits", result);
-      setMetadata("orgUnitGeoJson", orgUnitGeoJson);
+      // const result = await externalApi.getOrgUnits();
+      // const orgUnitGeoJson = await externalApi.getGeoJson();
+      // setMetadata("orgUnits", result);
+      // setMetadata("orgUnitGeoJson", orgUnitGeoJson);
       setReady(true);
     })();
   }, []);

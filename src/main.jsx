@@ -16,6 +16,13 @@ import "@inovua/reactdatagrid-community/index.css";
 const { VITE_APP_MODE, VITE_FONT } = import.meta.env;
 import { defaults } from "chart.js";
 defaults.font.family = VITE_FONT;
+const style = document.createElement("style");
+style.innerHTML = `
+  *, * * {
+    font-family: ${VITE_FONT}
+  }
+  `;
+document.head.appendChild(style);
 
 if (VITE_APP_MODE === "development") {
   ReactDOM.createRoot(document.getElementById("root")).render(
