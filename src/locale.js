@@ -4,6 +4,12 @@ const resources = {
       initializing: "... Initializing ...",
       loading: "... Loading ..."
     }
+  },
+  lo: {
+    translation: {
+      initializing: "... Initializing ...",
+      loading: "... Loading ..."
+    }
   }
 };
 export default resources;

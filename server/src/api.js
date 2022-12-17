@@ -30,7 +30,9 @@ const getRefreshToken = async (config) => {
 };
 
 const getOrgUnits = async (dhis2Api) => {
-  const result = await dhis2Api.get("/api/organisationUnits?paging=false&fields=id,displayName,parent,path,ancestors");
+  const result = await dhis2Api.get(
+    "/api/organisationUnits?paging=false&fields=id,name,displayName,parent,path,ancestors,translations"
+  );
   return result.data.organisationUnits;
 };
 

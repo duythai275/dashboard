@@ -1,30 +1,28 @@
 import useSelectionStore from "@/state/selection";
 import { IconButton, Button, Popover, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { useState } from "react";
-const LANGUAGES = [
-  {
-    code: "gb",
-    name: "English"
-  },
-  {
-    code: "pk",
-    name: "اُردُو"
-  }
-];
+import { languages } from "@/config/config";
+import { convertLanguageNametoCountryName } from "@/utils/utils";
 
 const DashboardButtons = () => {
   const { language, selectLanguage } = useSelectionStore((state) => ({
     language: state.language,
     selectLanguage: state.selectLanguage
   }));
-  const selectedLanguage = LANGUAGES[language];
+  console.log(language);
+  const selectedLanguage = languages.find((l) => l.code === language);
   const [anchorEl, setAnchorEl] = useState(null);
 
   return (
     <>
       <Button
         variant="outlined"
-        endIcon={<img src={`https://flagcdn.com/60x45/${selectedLanguage.code}.png`} width="25" />}
+        endIcon={
+          <img
+            src={`https://flagcdn.com/h20/${convertLanguageNametoCountryName(selectedLanguage.code)}.png`}
+            width="25"
+          />
+        }
         onClick={(event) => {
           setAnchorEl(event.currentTarget);
         }}
@@ -43,17 +41,20 @@ const DashboardButtons = () => {
         }}
       >
         <List>
-          {LANGUAGES.map((language, index) => (
+          {languages.map((language, index) => (
             <ListItem
               disablePadding
               onClick={() => {
-                selectLanguage(index);
+                selectLanguage(language.code);
                 setAnchorEl(null);
               }}
             >
               <ListItemButton>
                 <ListItemIcon>
-                  <img src={`https://flagcdn.com/60x45/${language.code}.png`} width="27" />
+                  <img
+                    src={`https://flagcdn.com/h20/${convertLanguageNametoCountryName(language.code)}.png`}
+                    width="25"
+                  />
                 </ListItemIcon>
                 <ListItemText primary={language.name} />
               </ListItemButton>

@@ -1,4 +1,5 @@
 import ControlBar from "@/components/ControlBar/ControlBar";
+import FullScreenLoader from "../FullScreenLoader/FullScreenLoader";
 import useDashboardStore from "@/state/dashboard";
 import { dashboards, useDashboardInitialization } from "@/config/config";
 
@@ -14,6 +15,8 @@ const ExternalContainer = () => {
         <Dashboard />
       </div>
     </div>
-  ) : null;
+  ) : (
+    <FullScreenLoader open={!ready} />
+  );
 };
 export default ExternalContainer;

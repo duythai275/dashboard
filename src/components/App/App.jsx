@@ -1,26 +1,20 @@
-import FullScreenLoader from "@/components/FullScreenLoader/FullScreenLoader";
 import InternalContainer from "@/components/App/InternalContainer";
 import ExternalContainer from "@/components/App/ExternalContainer";
-import useExternalInitialization from "@/hooks/App/useExternalInitialization";
-import useInternalInitialization from "@/hooks/App/useInternalInitialization";
+import useSelectionStore from "@/state/selection";
 import "./App.css";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 const { VITE_MODE } = import.meta.env;
 
 const App = () => {
-  const ready = useExternalInitialization();
-  return (
-    <div className="App">
-      {ready ? (
-        VITE_MODE === "internal" ? (
-          <InternalContainer />
-        ) : (
-          <ExternalContainer />
-        )
-      ) : (
-        <FullScreenLoader open={!ready} />
-      )}
-    </div>
-  );
+  const { i18n } = useTranslation();
+  const language = useSelectionStore((state) => state.language);
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language]);
+
+  return <div className="App">{VITE_MODE === "internal" ? <InternalContainer /> : <ExternalContainer />}</div>;
 };
 
 export default App;
