@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import { useMap } from "react-leaflet/hooks";
 import { getQuantiles, getEqualIntervals } from "./utils";
 import { Typography } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { LEAFLET_CONTROL_POSITIONS } from "./const";
 
 const GeoJsonLayer = ({ features, currentData, legend, setLabel }) => {
@@ -16,6 +18,7 @@ const GeoJsonLayer = ({ features, currentData, legend, setLabel }) => {
   useEffect(() => {
     map.fitBounds(ref.current.getBounds());
   }, []);
+
   return (
     <GeoJSON
       ref={ref}
@@ -70,10 +73,58 @@ const LabelLayer = ({ label }) => {
     </div>
   );
 };
+
+const LegendLayer = ({ data, legend }) => {
+  const ranges = getEqualIntervals(
+    Object.values(data).map((value) => value),
+    legend.length
+  );
+  console.log(ranges);
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  return (
+    <div
+      className="legend-layer-container"
+      ref={ref}
+      onMouseOver={() => {
+        ref.current.style.width = "170px";
+        ref.current.style.height = "200px";
+        ref.current.style.overflow = "auto";
+        setOpen(true);
+      }}
+      onMouseOut={() => {
+        ref.current.style.width = "34px";
+        ref.current.style.height = "34px";
+        ref.current.style.overflow = "hidden";
+        setOpen(false);
+      }}
+    >
+      {open ? (
+        [
+          <strong>Legend</strong>,
+          ranges.map((range, index) => {
+            return (
+              <div className="legend-item">
+                <div style={{ backgroundColor: legend[index] }}></div>
+                <div>
+                  {range.min} - {range.max}
+                </div>
+              </div>
+            );
+          })
+        ]
+      ) : (
+        <FontAwesomeIcon icon={faCircleInfo} />
+      )}
+    </div>
+  );
+};
 const ThematicMap = (props) => {
   const [label, setLabel] = useState("");
   return (
     <MapContainer scrollWheelZoom={false}>
+      <LegendLayer {...props} />
       <TileLayer
         attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`}
         url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"

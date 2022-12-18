@@ -11,7 +11,7 @@ const Widget4 = ({ setLoading }) => {
   const [data, setData] = useState({});
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
-  const legend = ["#fde0dd", "#fa9fb5", "#c51b8a", "#000000", "#ffffff"];
+  const legend = ["#fde0dd", "#fa9fb5", "#c51b8a"];
 
   useEffect(() => {
     (async () => {
@@ -35,7 +35,7 @@ const Widget4 = ({ setLoading }) => {
     data && (
       <ThematicMap
         features={hmisGeoJson.features.filter(
-          (feature) => feature.properties.level === "3" && feature.geometry.type !== "Point"
+          (feature) => feature.properties.level === "2" && feature.geometry.type !== "Point"
         )}
         data={data}
         legend={legend}

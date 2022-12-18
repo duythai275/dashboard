@@ -102,7 +102,7 @@ const apis = [
     route: `/api/getWidget4Data`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get(
-        "/api/analytics.json?dimension=dx:dJhWRKs0fcq&dimension=ou:IWp9dQGM0bS;LEVEL-3&filter=pe:LAST_YEAR&displayProperty=NAME&skipData=false&skipMeta=false"
+        "/api/analytics.json?dimension=dx:dJhWRKs0fcq&dimension=ou:IWp9dQGM0bS;LEVEL-2&filter=pe:LAST_YEAR&displayProperty=NAME&skipData=false&skipMeta=false"
       );
       const response = result.data.rows.map((row) => ({ ou: row[1], value: parseInt(row[2]) }));
       return response;
