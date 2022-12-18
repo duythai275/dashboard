@@ -9,7 +9,6 @@ const DashboardButtons = () => {
     language: state.language,
     selectLanguage: state.selectLanguage
   }));
-  console.log(language);
   const selectedLanguage = languages.find((l) => l.code === language);
   const [anchorEl, setAnchorEl] = useState(null);
 

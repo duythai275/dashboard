@@ -21,6 +21,7 @@ const Widget1 = ({ setLoading }) => {
   }, []);
 
   useEffect(() => {
+    if (!result) return;
     (async () => {
       let currentData = {};
       currentData.labels = result.map((row) => {
@@ -30,15 +31,18 @@ const Widget1 = ({ setLoading }) => {
       });
       currentData.datasets = [
         {
+          datalabels: {
+            color: "#ffffff"
+          },
           label: t("completeness"),
           data: result.map((row) => row.value),
-          borderColor: "rgb(255, 99, 132)",
-          backgroundColor: "rgba(255, 99, 132, 0.5)"
+          borderColor: "#a8bf24",
+          backgroundColor: "#a8bf24"
         }
       ];
       setData({ ...currentData });
     })();
-  }, [i18n.language]);
+  }, [i18n.language, JSON.stringify(result)]);
 
   return data && <HorizontalBarChart data={data} />;
 };

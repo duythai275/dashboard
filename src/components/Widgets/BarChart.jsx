@@ -14,11 +14,10 @@ const options = {
     datalabels: {
       anchor: "end",
       align: "end",
-      offset: -5,
-      font: {
-        family: VITE_FONT,
-        weight: 500
-      }
+      offset: -5
+      // font: {
+      //   weight: 500
+      // }
     }
   }
 };

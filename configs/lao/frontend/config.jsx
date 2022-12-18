@@ -33,10 +33,24 @@ const useDashboardInitialization = () => {
   useEffect(() => {
     (async () => {
       setReady(false);
-      const result = await axios.get("/api/orgUnits");
+      const results = await Promise.all([
+        axios.get("/api/orgUnits"),
+        axios.get("/api/dataItems"),
+        axios.get("/api/indicators"),
+        axios.get("/api/orgUnitGeoJson")
+      ]);
       initDashboardState([
         {
           widgets: [
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
             {
               selectedChildren: 0
             }
@@ -44,7 +58,10 @@ const useDashboardInitialization = () => {
         }
       ]);
       selectDashboard({ value: 0, label: dashboards[0].name });
-      setMetadata("hmisOrgUnits", result.data);
+      setMetadata("hmisOrgUnits", results[0].data);
+      setMetadata("hmisDataItems", results[1].data);
+      setMetadata("hmisIndicators", results[2].data);
+      setMetadata("hmisGeoJson", results[3].data);
       selectLanguage("lo");
       setReady(true);
     })();

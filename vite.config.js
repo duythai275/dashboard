@@ -9,7 +9,7 @@ export default ({ mode }) => {
     plugins: [react()],
     resolve: {
       alias: {
-        "@/config": path.resolve(__dirname, "./configs/lao/frontend"),
+        "@/config": path.resolve(__dirname, `./configs/${process.env.VITE_CONFIG_NAME}/frontend`),
         "@": path.resolve(__dirname, "./src")
       }
     },

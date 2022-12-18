@@ -1,22 +1,21 @@
-import { Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import { useMap } from "react-leaflet/hooks";
-import { LEAFLET_CONTROL_POSITIONS } from "./const";
 import { getQuantiles, getEqualIntervals } from "./utils";
+import { Typography } from "@mui/material";
+import { LEAFLET_CONTROL_POSITIONS } from "./const";
 
-const GeoJsonLayer = ({ features, data, legend, setLabel }) => {
+const GeoJsonLayer = ({ features, currentData, legend, setLabel }) => {
   const ref = useRef(null);
   const map = useMap();
   const ranges = getEqualIntervals(
     Object.values(currentData).map((value) => value),
-    5
+    legend.length
   );
 
   useEffect(() => {
     map.fitBounds(ref.current.getBounds());
   }, []);
-
   return (
     <GeoJSON
       ref={ref}
@@ -71,19 +70,18 @@ const LabelLayer = ({ label }) => {
     </div>
   );
 };
-
 const ThematicMap = (props) => {
   const [label, setLabel] = useState("");
-
   return (
     <MapContainer scrollWheelZoom={false}>
-      {label && <LabelLayer label={label} />}
       <TileLayer
         attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`}
         url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
       />
-      <GeoJsonLayer {...props} setLabel={setLabel} />
+      {label && <LabelLayer label={label} />}
+      <GeoJsonLayer {...props} setLabel={setLabel} currentData={props.data} key={JSON.stringify(props.data)} />
     </MapContainer>
   );
 };
+
 export default ThematicMap;

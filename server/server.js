@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 import express from "express";
 import path from "path";
-import { getRefreshToken, getOrgUnits, getGeoJson } from "./src/api.js";
+import { getRefreshToken } from "./src/api.js";
 dotenv.config();
 const { VITE_APP_MODE, VITE_CONFIG_NAME } = process.env;
 const isProduction = VITE_APP_MODE === "production";
@@ -35,12 +35,12 @@ const startServer = async () => {
   });
 
   // app.get("/api/orgUnits", async (req, res) => {
-  //   const result = await getOrgUnits(req.app.get("dhis2Api"));
+  //   const result = await getOrgUnits(req.app.get("dhis2Apis")[req.query.apiIndex]);
   //   res.json(result);
   // });
 
   // app.get("/api/orgUnitGeoJson", async (req, res) => {
-  //   const result = await getGeoJson(req.app.get("dhis2Api"));
+  //   const result = await getGeoJson(req.app.get("dhis2Apis")[req.query.apiIndex]);
   //   res.json(result);
   // });
 

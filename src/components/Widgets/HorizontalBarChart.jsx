@@ -15,10 +15,10 @@ const options = {
     datalabels: {
       anchor: "end",
       align: "end",
-      offset: -35,
-      font: {
-        weight: 500
-      }
+      offset: -35
+      // font: {
+      //   weight: 500
+      // }
     }
   }
 };
