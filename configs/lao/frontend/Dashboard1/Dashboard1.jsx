@@ -19,7 +19,7 @@ const Dashboard1 = () => {
       layout={[
         { i: "title", x: 0, y: 0, w: 11.9, h: 9 },
         { i: "1", x: 0, y: 9, w: 6, h: 50 },
-        { i: "2", x: 6, y: 9, w: 5.9, h: 50 },
+        { i: "2", x: 0, y: 9, w: 11.9, h: 50 },
         { i: "3", x: 0, y: 59, w: 6, h: 50 },
         { i: "4", x: 6, y: 59, w: 5.9, h: 50 }
       ]}
@@ -33,12 +33,12 @@ const Dashboard1 = () => {
         widgetIndex={0}
         childrenWidgets={[{ title: "Remarks", widget: <Title /> }]}
       />
-      <WidgetContainer
+      {/* <WidgetContainer
         key="1"
         dashboardIndex={0}
         widgetIndex={0}
         childrenWidgets={[{ title: t("widget1Title"), widget: <Widget1 /> }]}
-      />
+      /> */}
       <WidgetContainer
         key="2"
         dashboardIndex={0}

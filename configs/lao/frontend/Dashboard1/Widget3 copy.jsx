@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import LineChart from "@/components/Widgets/LineChart";
+import BarChart from "@/components/Widgets/BarChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { useTranslation } from "react-i18next";
 import useMetadataStore from "@/state/metadata";
 import { pull } from "../utils";
 import shallow from "zustand/shallow";
 
-const Widget2 = ({ setLoading }) => {
+const Widget3 = ({ setLoading }) => {
   const { hmisOrgUnits, hmisDataItems } = useMetadataStore(
     (state) => ({ hmisOrgUnits: state.hmisOrgUnits, hmisDataItems: state.hmisDataItems }),
     shallow
@@ -18,7 +18,7 @@ const Widget2 = ({ setLoading }) => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const result = await pull("/api/getWidget2Data");
+      const result = await pull("/api/getWidget3Data");
       setResult(result.data);
       setLoading(false);
     })();
@@ -28,17 +28,20 @@ const Widget2 = ({ setLoading }) => {
     if (!result) return;
     (async () => {
       const localeName = i18n.language === "en" ? "En" : "Lo";
-      const dataItems = ["cwhEsbBe6Zs", "cPcvesqWRtH", "dJhWRKs0fcq"].map((de) => {
+
+      const dataItems = result.dxs.map((de) => {
         const foundDi = hmisDataItems.find((di) => di.id === de);
         return foundDi;
       });
-      const colors = ["rgb(168, 191, 36)", "rgb(81, 140, 195)", "rgb(215, 69, 84)"];
+      const colors = [
+        "rgb(168, 191, 36)",
+        "rgb(81, 140, 195)",
+        "rgb(215, 69, 84)",
+        "rgb(255, 158, 33)",
+        "rgb(150, 143, 143)"
+      ];
       let currentData = {};
-      currentData.labels = result.pes.map((pe) => {
-        const year = pe.substring(0, 4);
-        const month = pe.substring(4, 6);
-        return month + "/" + year;
-      });
+      currentData.labels = result.pes;
       currentData.datasets = dataItems.map((di, index) => ({
         label: di[`name${localeName}`],
         data: result.pes.map((pe) => {
@@ -53,6 +56,6 @@ const Widget2 = ({ setLoading }) => {
     })();
   }, [i18n.language, JSON.stringify(result)]);
 
-  return data && <LineChart data={data} />;
+  return data && <BarChart data={data} />;
 };
-export default withWidgetChildrenLoader(Widget2);
+export default withWidgetChildrenLoader(Widget3);
