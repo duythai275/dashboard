@@ -1,3 +1,6 @@
+import axios from "axios";
+const { VITE_PRODUCTION_BASE, VITE_APP_MODE } = import.meta.env;
+
 const sortStringInArrayOfObject = (array, property) => {
   //sdafasdfasdfsdf
   return array.sort((a, b) => {
@@ -13,4 +16,8 @@ const sortStringInArrayOfObject = (array, property) => {
   });
 };
 
-export { sortStringInArrayOfObject };
+const pull = async (url) => {
+  return axios.get((VITE_APP_MODE === "production" ? VITE_PRODUCTION_BASE : "") + url);
+};
+
+export { sortStringInArrayOfObject, pull };

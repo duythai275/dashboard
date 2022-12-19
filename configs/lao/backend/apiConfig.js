@@ -107,14 +107,52 @@ const apis = [
       const response = result.data.rows.map((row) => ({ ou: row[1], value: parseInt(row[2]) }));
       return response;
     }
+  },
+  {
+    route: `/api/surveyOptionSets`,
+    handler: async (dhis2Apis) => {
+      const result = await dhis2Apis[1].get(
+        "/api/optionSets?filter=id:eq:sKdV9uzCd2Z&fields=id,name,options[id,name,code]&paging=false"
+      );
+      const response = result.data.optionSets;
+      return response;
+    }
+  },
+  {
+    route: `/api/getDashboard2Widget1Data`,
+    handler: async (dhis2Apis) => {
+      const result = await dhis2Apis[1].get(
+        "/api/trackedEntityInstances.json?fields=*&program=nOPMZMF91F6&ou=IWp9dQGM0bS&ouMode=DESCENDANTS&skipPaging=true"
+      );
+      const response = result.data;
+      return response;
+    }
   }
 ];
 const dhis2ApiConfigs = [
   {
+    //development
     baseUrl: "https://hmis.gov.la/hmis",
-    clientId: "hmispublicdashboard",
-    clientSecret: "057de9135-d058-a911-9a07-3dffaf5e44b",
-    refreshToken: "vnyxj3i2c14JllFWnmPKn9t7x0E"
+    clientId: "hmispublicdashboarddev",
+    clientSecret: "bfed13089-0720-194f-462c-69827851837",
+    refreshToken: "PbWy0kcCL1BEv0lAsuiY9DO_-Q4"
+    //production
+    //baseUrl:"http://10.201.48.100:8080/hmis",
+    //clientId: "hmispublicdashboard",
+    //clientSecret: "057de9135-d058-a911-9a07-3dffaf5e44b",
+    //refreshToken: "vnyxj3i2c14JllFWnmPKn9t7x0E"
+  },
+  {
+    //development
+    baseUrl: "https://dhis2.world/survey",
+    clientId: "surveypublicdashboarddev",
+    clientSecret: "a03f6bf84-87e8-5da7-eed6-5f821430c75",
+    refreshToken: "K08Wt5GPAXwyiTMonjRIkKqMcyw"
+    //production
+    //baseUrl:"http://10.201.48.100:8080/hmis",
+    //clientId: "hmispublicdashboard",
+    //clientSecret: "057de9135-d058-a911-9a07-3dffaf5e44b",
+    //refreshToken: "vnyxj3i2c14JllFWnmPKn9t7x0E"
   }
 ];
 

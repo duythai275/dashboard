@@ -22,7 +22,7 @@ const locales = [
       },
       {
         key: "widget4Title",
-        value: "Maternal deaths by district last year"
+        value: "Maternal deaths by provinces last year"
       },
       { key: "completeness", value: "Completeness" }
     ]

@@ -3,7 +3,7 @@ import HorizontalBarChart from "@/components/Widgets/HorizontalBarChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { useTranslation } from "react-i18next";
 import useMetadataStore from "@/state/metadata";
-import axios from "axios";
+import { pull } from "../utils";
 
 const Widget1 = ({ setLoading }) => {
   const hmisOrgUnits = useMetadataStore((state) => state.hmisOrgUnits);
@@ -14,7 +14,7 @@ const Widget1 = ({ setLoading }) => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const result = await axios.get("/api/getWidget1Data");
+      const result = await pull("/api/getWidget1Data");
       setResult(result.data);
       setLoading(false);
     })();

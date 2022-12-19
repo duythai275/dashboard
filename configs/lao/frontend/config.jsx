@@ -2,13 +2,17 @@ import useDashboardStore from "@/state/dashboard";
 import { useEffect, useState } from "react";
 import shallow from "zustand/shallow";
 import Dashboard1 from "./Dashboard1/Dashboard1";
+import Dashboard2 from "./Dashboard2/Dashboard2";
 import useAdditionalLocale from "@/hooks/App/useAdditionalLocale";
 import useMetadataStore from "@/state/metadata";
 import useSelectionStore from "@/state/selection";
-import axios from "axios";
+import { pull } from "./utils";
 import locales from "./locales";
 
-const dashboards = [{ name: "Health Sector Annual Progress", dashboard: Dashboard1 }];
+const dashboards = [
+  { name: "Health Sector Annual Progress", dashboard: Dashboard1 },
+  { name: "Facilities Profile", dashboard: Dashboard2 }
+];
 const languages = locales.map((locale) => ({
   name: locale.name,
   code: locale.code
@@ -34,10 +38,11 @@ const useDashboardInitialization = () => {
     (async () => {
       setReady(false);
       const results = await Promise.all([
-        axios.get("/api/orgUnits"),
-        axios.get("/api/dataItems"),
-        axios.get("/api/indicators"),
-        axios.get("/api/orgUnitGeoJson")
+        pull("/api/orgUnits"),
+        pull("/api/dataItems"),
+        pull("/api/indicators"),
+        pull("/api/orgUnitGeoJson"),
+        pull("/api/surveyOptionSets")
       ]);
       initDashboardState([
         {
@@ -55,6 +60,16 @@ const useDashboardInitialization = () => {
               selectedChildren: 0
             }
           ]
+        },
+        {
+          widgets: [
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            }
+          ]
         }
       ]);
       selectDashboard({ value: 0, label: dashboards[0].name });
@@ -62,6 +77,7 @@ const useDashboardInitialization = () => {
       setMetadata("hmisDataItems", results[1].data);
       setMetadata("hmisIndicators", results[2].data);
       setMetadata("hmisGeoJson", results[3].data);
+      setMetadata("surveyOptionSets", results[4].data);
       selectLanguage("lo");
       setReady(true);
     })();

@@ -1,7 +1,7 @@
 import React from "react";
 import RGL, { WidthProvider } from "react-grid-layout";
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
-import Title from "./Title";
+import Title from "../Title";
 import Widget1 from "./Widget1";
 import Widget2 from "./Widget2";
 import Widget3 from "./Widget3";

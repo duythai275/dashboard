@@ -3,7 +3,7 @@ import BarChart from "@/components/Widgets/BarChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { useTranslation } from "react-i18next";
 import useMetadataStore from "@/state/metadata";
-import axios from "axios";
+import { pull } from "../utils";
 import shallow from "zustand/shallow";
 
 const Widget3 = ({ setLoading }) => {
@@ -18,7 +18,7 @@ const Widget3 = ({ setLoading }) => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const result = await axios.get("/api/getWidget3Data");
+      const result = await pull("/api/getWidget3Data");
       setResult(result.data);
       setLoading(false);
     })();

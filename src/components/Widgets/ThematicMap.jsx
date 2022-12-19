@@ -79,7 +79,6 @@ const LegendLayer = ({ data, legend }) => {
     Object.values(data).map((value) => value),
     legend.length
   );
-  console.log(ranges);
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -102,7 +101,9 @@ const LegendLayer = ({ data, legend }) => {
     >
       {open ? (
         [
-          <strong>Legend</strong>,
+          <div className="legend-title">
+            <strong>Legend</strong>
+          </div>,
           ranges.map((range, index) => {
             return (
               <div className="legend-item">
