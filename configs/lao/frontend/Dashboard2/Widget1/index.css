@@ -1,0 +1,29 @@
+.aggregate-summary {
+  margin: 0;
+}
+
+.aggregate-summary th {
+  border-collapse: collapse;
+  background-color: #2880ca;
+  white-space: nowrap;
+  border: 1px solid #dedede;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.aggregate-summary td {
+  border: 1px solid #dedede;
+  padding: 3px;
+  font-size: 14;
+  text-align: center;
+}
+
+.aggregate-summary td:nth-child(1),
+.aggregate-summary th:nth-child(1) {
+  text-align: left;
+}
+
+.aggregate-summary tr:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
