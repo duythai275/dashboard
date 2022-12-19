@@ -10,7 +10,7 @@ import { pull } from "./utils";
 import locales from "./locales";
 
 const dashboards = [
-  { name: "Health Sector Annual Progress", dashboard: Dashboard1 },
+  { name: "Maternal And Child Mortality Monitoring", dashboard: Dashboard1 },
   { name: "Facilities Profile", dashboard: Dashboard2 }
 ];
 const languages = locales.map((locale) => ({

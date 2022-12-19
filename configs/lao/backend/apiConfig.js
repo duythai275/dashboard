@@ -78,10 +78,11 @@ const apis = [
     route: `/api/getWidget2Data`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get(
-        "/api/analytics.json?dimension=dx:cPcvesqWRtH;cwhEsbBe6Zs;dJhWRKs0fcq&dimension=ou:FRmrFTE63D0;K27JzTKmBKh;MBZYTqkEgwf;RdNV4tTRNEo;TOgZ99Jv0bN;VWGSudnonm5;W6sNfkJcXGC;XKGgynPS1WZ;YvLOmtTQD6b;c4HrGRJoarj;dOhqCNenSjS;hRQsZhmvqgS;hdeC7uX9Cko;pFCZqWnXtoU;quFXhkOJGB4;rO2RVJWHpCe;sv6c7CpPcrc;vBWtCmNNnCG&filter=pe:LAST_YEAR&includeNumDen=false&skipData=false&skipMeta=true"
+        "/api/analytics.json?dimension=dx:cPcvesqWRtH;cwhEsbBe6Zs;dJhWRKs0fcq&dimension=pe:LAST_12_MONTHS&filter=ou:IWp9dQGM0bS&includeNumDen=false&skipData=false&skipMeta=false"
       );
-      const response = result.data.rows.map((row) => ({ ou: row[1], item: row[0], value: parseInt(row[2]) }));
-
+      const response = {};
+      response.data = result.data.rows.map((row) => ({ pe: row[1], item: row[0], value: parseInt(row[2]) }));
+      response.pes = result.data.metaData.dimensions.pe;
       return response;
     }
   },
@@ -150,9 +151,9 @@ const dhis2ApiConfigs = [
     refreshToken: "K08Wt5GPAXwyiTMonjRIkKqMcyw"
     //production
     //baseUrl:"http://10.201.48.100:8080/hmis",
-    //clientId: "hmispublicdashboard",
-    //clientSecret: "057de9135-d058-a911-9a07-3dffaf5e44b",
-    //refreshToken: "vnyxj3i2c14JllFWnmPKn9t7x0E"
+    //clientId: "surveypublicdashboard",
+    //clientSecret: "eebc7d604-21d1-3457-bb61-1c6175b442e",
+    //refreshToken: "Vaf0oQfWxEuyqatXknkC_W5YSkE"
   }
 ];
 
