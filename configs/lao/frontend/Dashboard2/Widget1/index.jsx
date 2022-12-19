@@ -139,10 +139,20 @@ const Widget1 = ({ setLoading }) => {
             <Table stickyHeader aria-label="sticky table" sx={{ p: 0 }}>
               <TableHead>
                 <TableRow>
-                  {typeOfFacilities.map((facility) => (
+                  {typeOfFacilities.map((facility, idx) => (
                     <TableCell
                       key={facility.id}
                       sortDirection={orderBy === facility.id ? order : false}
+                      sx={
+                        idx === 0
+                          ? {
+                              position: "sticky",
+                              left: 0,
+                              background: "white",
+                              zIndex: 800,
+                            }
+                          : {}
+                      }
                     >
                       <TableSortLabel
                         active
@@ -175,8 +185,21 @@ const Widget1 = ({ setLoading }) => {
               <TableBody>
                 {stableSortRows.map(({ cellData }) => (
                   <TableRow>
-                    {typeOfFacilities.map((item) => (
-                      <TableCell>{cellData[item.id]}</TableCell>
+                    {typeOfFacilities.map((item, idx) => (
+                      <TableCell
+                        sx={
+                          idx === 0
+                            ? {
+                                position: "sticky",
+                                left: 0,
+                                background: "white",
+                                zIndex: 800,
+                              }
+                            : {}
+                        }
+                      >
+                        {cellData[item.id]}
+                      </TableCell>
                     ))}
                   </TableRow>
                 ))}

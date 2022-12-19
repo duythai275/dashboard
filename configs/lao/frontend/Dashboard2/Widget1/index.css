@@ -9,6 +9,9 @@
   border: 1px solid #dedede;
   padding: 5px;
   text-align: center;
+}
+
+.aggregate-summary th span svg {
   font-weight: bold;
 }
 
