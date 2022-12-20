@@ -21,7 +21,7 @@ const DashboardSelector = () => {
       sx={{ width: 400 }}
       options={dashboards.map((d, index) => ({
         value: index,
-        label: d.name
+        label: t(d.name)
       }))}
       renderInput={(params) => <TextField {...params} />}
       onChange={(event, newValue) => {

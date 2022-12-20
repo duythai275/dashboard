@@ -4,34 +4,56 @@ const locales = [
     name: "Lao",
     translations: [
       {
+        key: "dashboard1Title",
+        value: "ກະດານຂ່າວຕິດຕາມການຕາຍຂອງແມ່ແລະເດັກ"
+      },
+      {
+        key: "dashboard2Title",
+        value: "ສະຖານທີ່ບໍລິການສາທາລະນະສຸກ"
+      },
+      {
         key: "title",
         value:
           "ກະດານຂ່າວນີ້ສຳລັບໄວ້ຕິດຕາມເທົ່ານັ້ນ, ເພາະຂໍ້ມູນຍັງບໍ່ຜ່ານການກວດກາແລະຍັງບໍ່ເປັນທາງການ. ກະລູນາບໍ່ໃຫ້ນຳໃຊ້ຂໍ້ມູນເຫຼົ່ານີ້ເປັນຂໍ້ມູນອ້າງອີງທາງການ"
       },
       {
         key: "widget1Title",
-        value: "Data Completeness for OPD"
+        value: "Data Completeness for OPD" // ignore
       },
       {
         key: "widget2Title",
-        value: "Maternal and child mortality in the last 12 months - Lao PDR"
+        value: "ຈຳນວນແມ່ແລະເດັກຕາຍໃນ 12​ເດືອນຜ່ານມາ"
       },
       {
         key: "widget3Title",
-        value: "Reported children under five deaths last 5 year - Lao PDR"
+        value: "ຈຳນວນເດັກຕາຍໃນ 5 ​ປີຜ່ານມາ"
       },
       {
         key: "widget4Title",
-        value: "Maternal deaths by provinces last year"
+        value: "ຈຳນວນແມ່ຕາຍ"
       },
-      { key: "completeness", value: "Completeness" },
-      { key: "Ou/Facility", value: "Organisation unit / FD_Type of Facility" }
+      { key: "completeness", value: "Completeness" }, //ignore
+      { key: "Ou/Facility", value: "Organisation unit / FD_Type of Facility" },
+      { key: "data/period", value: "Data / Period" },
+      { key: "legend", value: "Legend" }, //MAP LEGEND
+      { key: "lao", value: "Lao" }, //Lao language selection
+      { key: "remarks", value: "Remarks" },
+      { key: "dashboard2Widget1Title", value: "Facilities Profile Summary" },
+      { key: "total", value: "ລວມ" }
     ]
   },
   {
     code: "en",
     name: "English",
     translations: [
+      {
+        key: "dashboard1Title",
+        value: "Maternal And Child Mortality Monitoring"
+      },
+      {
+        key: "dashboard2Title",
+        value: "Facilities Profile"
+      },
       {
         key: "title",
         value:
@@ -54,7 +76,12 @@ const locales = [
         value: "Maternal deaths by provinces last year"
       },
       { key: "completeness", value: "Completeness" },
-      { key: "Ou/Facility", value: "Organisation unit / FD_Type of Facility" }
+      { key: "Ou/Facility", value: "Organisation unit / FD_Type of Facility" },
+      { key: "data/period", value: "Data / Period" },
+      { key: "legend", value: "Legend" }, //MAP LEGEND
+      { key: "remarks", value: "Remarks" },
+      { key: "dashboard2Widget1Title", value: "Facilities Profile Summary" },
+      { key: "total", value: "Total" }
     ]
   }
 ];

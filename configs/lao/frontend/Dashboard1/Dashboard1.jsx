@@ -31,7 +31,7 @@ const Dashboard1 = () => {
         key="title"
         dashboardIndex={0}
         widgetIndex={0}
-        childrenWidgets={[{ title: "Remarks", widget: <Title /> }]}
+        childrenWidgets={[{ title: t("remarks"), widget: <Title /> }]}
       />
       {/* <WidgetContainer
         key="1"

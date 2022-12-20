@@ -38,7 +38,7 @@ const Widget3 = ({ setLoading }) => {
       rows: []
     };
     currentData.columns = result.pes.map((pe) => ({ name: pe, header: pe }));
-    currentData.columns.unshift({ name: "di", header: "Data / Period", width: 300 });
+    currentData.columns.unshift({ name: "di", header: t("data/period"), width: 300 });
     currentData.rows = dataItems.map((di) => {
       const row = {
         di: di[`name${localeName}`]
