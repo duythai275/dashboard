@@ -36,6 +36,7 @@ const Widget1 = ({ setLoading }) => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("orgUnit");
   const [data, setData] = useState([]);
+  const [totalData, setTotalData] = useState(null);
 
   const typeOfFacilities = useMemo(() => {
     const typeOfFacilitiesOptionSetFound = surveyOptionSets.find(
@@ -126,15 +127,31 @@ const Widget1 = ({ setLoading }) => {
         return { cellData };
       });
 
+      const totalCellData = {};
+      typeOfFacilities.forEach((facility) => {
+        let totalOfColumn = 0;
+
+        if (facility.id !== "orgUnit") {
+          mappedData.forEach((row) => {
+            totalOfColumn += row.cellData[facility.id];
+          });
+        } else {
+          totalOfColumn = "Total";
+        }
+
+        totalCellData[facility.id] = totalOfColumn;
+      });
+
+      setTotalData(totalCellData);
       setData(mappedData);
     }
   }, [JSON.stringify(teis), JSON.stringify(typeOfFacilities)]);
 
-  return data.length ? (
+  return data.length && totalData ? (
     <Custom>
       <Box>
         {/* <HeaderNav /> */}
-        <Paper sx={{ p: 0, borderRadius: 0, overflow: "hidden" }}>
+        <Paper sx={{ p: 0, borderRadius: 0 }}>
           <TableContainer className="aggregate-summary" sx={{ p: 0 }}>
             <Table stickyHeader aria-label="sticky table" sx={{ p: 0 }}>
               <TableHead>
@@ -203,6 +220,24 @@ const Widget1 = ({ setLoading }) => {
                     ))}
                   </TableRow>
                 ))}
+                <TableRow>
+                  {typeOfFacilities.map((item, idx) => (
+                    <TableCell
+                      sx={
+                        idx === 0
+                          ? {
+                              position: "sticky",
+                              left: 0,
+                              background: "white",
+                              zIndex: 800,
+                            }
+                          : {}
+                      }
+                    >
+                      {totalData[item.id]}
+                    </TableCell>
+                  ))}
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
