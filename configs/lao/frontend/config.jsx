@@ -8,6 +8,7 @@ import useMetadataStore from "@/state/metadata";
 import useSelectionStore from "@/state/selection";
 import { pull } from "./utils";
 import locales from "./locales";
+import { useTranslation } from "react-i18next";
 
 const dashboards = [
   { name: "dashboard1Title", dashboard: Dashboard1 },
@@ -24,6 +25,7 @@ const useDashboardInitialization = () => {
   });
   const setMetadata = useMetadataStore((state) => state.setMetadata);
   const [ready, setReady] = useState(false);
+  const { t } = useTranslation();
   const { initDashboardState, selectDashboard } = useDashboardStore(
     (state) => ({
       initDashboardState: state.initDashboardState,
@@ -35,6 +37,7 @@ const useDashboardInitialization = () => {
   const selectLanguage = useSelectionStore((state) => state.selectLanguage);
 
   useEffect(() => {
+    selectLanguage("lo");
     (async () => {
       setReady(false);
       const results = await Promise.all([
@@ -72,13 +75,12 @@ const useDashboardInitialization = () => {
           ]
         }
       ]);
-      selectDashboard({ value: 0, label: dashboards[0].name });
+      selectDashboard({ value: 0, label: t(dashboards[0].name) });
       setMetadata("hmisOrgUnits", results[0].data);
       setMetadata("hmisDataItems", results[1].data);
       setMetadata("hmisIndicators", results[2].data);
       setMetadata("hmisGeoJson", results[3].data);
       setMetadata("surveyOptionSets", results[4].data);
-      selectLanguage("lo");
       setReady(true);
     })();
   }, []);
