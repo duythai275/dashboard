@@ -36,7 +36,6 @@ const Widget1 = ({ setLoading }) => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("orgUnit");
   const [data, setData] = useState([]);
-  const [listOu, setListOu] = useState([]);
   const [totalData, setTotalData] = useState(null);
 
   const typeOfFacilities = useMemo(() => {
@@ -58,16 +57,16 @@ const Widget1 = ({ setLoading }) => {
     return dataTypeOfFacilities;
   }, [JSON.stringify(surveyOptionSets)]);
 
+  const stableSortRows = useMemo(() => {
+    if (data.length <= 0) return [];
+    return stableSort(data, getComparator(order, orderBy));
+  }, [JSON.stringify(data), order, orderBy]);
+
   const handleRequestSort = (property) => (event) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
-  const stableSortRows = useMemo(() => {
-    if (data.length <= 0) return [];
-    return stableSort(data, getComparator(order, orderBy));
-  }, [JSON.stringify(data), order, orderBy]);
 
   useEffect(() => {
     (async () => {
@@ -88,23 +87,17 @@ const Widget1 = ({ setLoading }) => {
 
   useEffect(() => {
     if (teis && typeOfFacilities) {
-      const listOuIdResult = [];
+      const listOuId = [];
       teis.forEach((tei) => {
-        const found = listOuIdResult.find((ou) => ou.id === tei.orgUnit);
+        const found = listOuId.find((ouId) => ouId === tei.orgUnit);
         if (!found) {
-          const ouFound = hmisOrgUnits.find((ou) => ou.id === tei.orgUnit);
-          listOuIdResult.push(ouFound);
+          listOuId.push(tei.orgUnit);
         }
       });
 
-      setListOu(listOuIdResult);
-    }
-  }, [JSON.stringify(teis)]);
-
-  useEffect(() => {
-    if (teis && typeOfFacilities && listOu.length) {
-      const mappedData = listOu.map((ou) => {
+      const mappedData = listOuId.map((ouId) => {
         const cellData = {};
+        const ouFound = hmisOrgUnits.find((ou) => ou.id === ouId);
 
         typeOfFacilities.forEach((facility) => {
           let resultType = checkType(teis, [facility.code]);
@@ -115,7 +108,7 @@ const Widget1 = ({ setLoading }) => {
 
           let count = 0;
           resultType.forEach(({ orgUnit }) => {
-            if (orgUnit === ou.id) {
+            if (orgUnit === ouId) {
               count++;
             }
           });
@@ -130,7 +123,9 @@ const Widget1 = ({ setLoading }) => {
 
         cellData["total"] = total;
         cellData["orgUnit"] =
-          i18n.language === "lo" && ou.nameLo ? ou.nameLo : ou.nameEn;
+          i18n.language === "lo" && ouFound.nameLo
+            ? ouFound.nameLo
+            : ouFound.nameEn;
         return { cellData };
       });
 
