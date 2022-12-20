@@ -36,6 +36,8 @@ const Widget1 = ({ setLoading }) => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("orgUnit");
   const [data, setData] = useState([]);
+  const [listOu, setListOu] = useState([]);
+  const [totalData, setTotalData] = useState(null);
 
   const typeOfFacilities = useMemo(() => {
     const typeOfFacilitiesOptionSetFound = surveyOptionSets.find(
@@ -46,12 +48,12 @@ const Widget1 = ({ setLoading }) => {
       return [];
     }
 
-    const ouCell = [{ name: "Ou/Facility", id: "orgUnit" }];
+    const ouCell = [{ name: t("Ou/Facility"), id: "orgUnit" }];
     const dataTypeOfFacilities = ouCell.concat(
       typeOfFacilitiesOptionSetFound.options
     );
 
-    dataTypeOfFacilities.push({ name: "Total", id: "total" });
+    dataTypeOfFacilities.push({ name: t("total"), id: "total" });
 
     return dataTypeOfFacilities;
   }, [JSON.stringify(surveyOptionSets)]);
@@ -86,17 +88,23 @@ const Widget1 = ({ setLoading }) => {
 
   useEffect(() => {
     if (teis && typeOfFacilities) {
-      const listOuId = [];
+      const listOuIdResult = [];
       teis.forEach((tei) => {
-        const found = listOuId.find((ouId) => ouId === tei.orgUnit);
+        const found = listOuIdResult.find((ou) => ou.id === tei.orgUnit);
         if (!found) {
-          listOuId.push(tei.orgUnit);
+          const ouFound = hmisOrgUnits.find((ou) => ou.id === tei.orgUnit);
+          listOuIdResult.push(ouFound);
         }
       });
 
-      const mappedData = listOuId.map((ouId) => {
+      setListOu(listOuIdResult);
+    }
+  }, [JSON.stringify(teis)]);
+
+  useEffect(() => {
+    if (teis && typeOfFacilities && listOu.length) {
+      const mappedData = listOu.map((ou) => {
         const cellData = {};
-        const ouFound = hmisOrgUnits.find((ou) => ou.id === ouId);
 
         typeOfFacilities.forEach((facility) => {
           let resultType = checkType(teis, [facility.code]);
@@ -107,7 +115,7 @@ const Widget1 = ({ setLoading }) => {
 
           let count = 0;
           resultType.forEach(({ orgUnit }) => {
-            if (orgUnit === ouId) {
+            if (orgUnit === ou.id) {
               count++;
             }
           });
@@ -121,20 +129,36 @@ const Widget1 = ({ setLoading }) => {
         }
 
         cellData["total"] = total;
-        cellData["orgUnit"] = ouFound.nameEn;
-
+        cellData["orgUnit"] =
+          i18n.language === "lo" && ou.nameLo ? ou.nameLo : ou.nameEn;
         return { cellData };
       });
 
+      const totalCellData = {};
+      typeOfFacilities.forEach((facility) => {
+        let totalOfColumn = 0;
+
+        if (facility.id !== "orgUnit") {
+          mappedData.forEach((row) => {
+            totalOfColumn += row.cellData[facility.id];
+          });
+        } else {
+          totalOfColumn = t("total");
+        }
+
+        totalCellData[facility.id] = totalOfColumn;
+      });
+
+      setTotalData(totalCellData);
       setData(mappedData);
     }
-  }, [JSON.stringify(teis), JSON.stringify(typeOfFacilities)]);
+  }, [JSON.stringify(teis), JSON.stringify(typeOfFacilities), i18n.language]);
 
-  return data.length ? (
+  return data.length && totalData ? (
     <Custom>
       <Box>
         {/* <HeaderNav /> */}
-        <Paper sx={{ p: 0, borderRadius: 0, overflow: "hidden" }}>
+        <Paper sx={{ p: 0, borderRadius: 0 }}>
           <TableContainer className="aggregate-summary" sx={{ p: 0 }}>
             <Table stickyHeader aria-label="sticky table" sx={{ p: 0 }}>
               <TableHead>
@@ -169,7 +193,20 @@ const Widget1 = ({ setLoading }) => {
                           },
                         }}
                       >
-                        {t(facility.name)}
+                        {i18n.language === "lo" &&
+                        facility.id !== "orgUnit" &&
+                        facility.id !== "total" &&
+                        facility.translations.find(
+                          (translation) =>
+                            translation.locale === "lo" &&
+                            translation.property === "NAME"
+                        )
+                          ? facility.translations.find(
+                              (translation) =>
+                                translation.locale === "lo" &&
+                                translation.property === "NAME"
+                            ).value
+                          : facility.name}
                         {orderBy === facility.id ? (
                           <Box component="span" sx={visuallyHidden}>
                             {order === "desc"
@@ -203,6 +240,24 @@ const Widget1 = ({ setLoading }) => {
                     ))}
                   </TableRow>
                 ))}
+                <TableRow>
+                  {typeOfFacilities.map((item, idx) => (
+                    <TableCell
+                      sx={
+                        idx === 0
+                          ? {
+                              position: "sticky",
+                              left: 0,
+                              background: "white",
+                              zIndex: 800,
+                            }
+                          : {}
+                      }
+                    >
+                      {totalData[item.id]}
+                    </TableCell>
+                  ))}
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>

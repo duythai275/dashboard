@@ -11,7 +11,7 @@ export const usePrepareDataForFilter = () => {
   const getOptionSetOfCategory = async () => {
     try {
       const result = await pull(
-        `/api/optionSets/VVvpXcJJq6s.json?fields=options[*]`
+        `/api/optionSets/VVvpXcJJq6s.json?fields=options[code,displayFormName]`
       );
       if (result) {
         setCategoryOptions(result.options);
@@ -24,7 +24,7 @@ export const usePrepareDataForFilter = () => {
   const getOptionSetOfOwnership = async () => {
     try {
       const result = await pull(
-        `/api/optionSets/agCcJXpPtBM.json?fields=options[*]`
+        `/api/optionSets/agCcJXpPtBM.json?fields=options[code,displayFormName]`
       );
       if (result) {
         setOwnershipOptions(result.options);
