@@ -30,15 +30,32 @@ const Widget1 = ({ setLoading }) => {
     shallow
   );
 
-  const [teis, setTeis] = useState(null);
-  const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("orgUnit");
+  const [teis, setTeis] = useState(null);
   const [data, setData] = useState([]);
+  const [ouList, setOuList] = useState([]);
+  const [typeOfFacilities, setTypeOfFacilities] = useState([]);
   const [totalData, setTotalData] = useState(null);
 
-  const typeOfFacilities = useMemo(() => {
+  const stableSortRows = useMemo(() => {
+    if (data.length <= 0) return [];
+    return stableSort(data, getComparator(order, orderBy));
+  }, [JSON.stringify(data), order, orderBy]);
+
+  const ouListLocale = useMemo(
+    () =>
+      ouList.length
+        ? ouList.map((ou) => ({
+            id: ou.id,
+            name: i18n.language === "lo" ? ou.nameLo : ou.nameEn,
+          }))
+        : [],
+    [i18n.language, JSON.stringify(ouList)]
+  );
+
+  const getTypeOfFacilities = () => {
     const typeOfFacilitiesOptionSetFound = surveyOptionSets.find(
       (optionSet) => optionSet.id === "sKdV9uzCd2Z"
     );
@@ -53,62 +70,36 @@ const Widget1 = ({ setLoading }) => {
     );
 
     dataTypeOfFacilities.push({ name: t("total"), id: "total" });
-
     return dataTypeOfFacilities;
-  }, [JSON.stringify(surveyOptionSets)]);
-
-  const stableSortRows = useMemo(() => {
-    if (data.length <= 0) return [];
-    return stableSort(data, getComparator(order, orderBy));
-  }, [JSON.stringify(data), order, orderBy]);
-
-  const handleRequestSort = (property) => (event) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
   };
 
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-      const result = await pull("/api/getDashboard2Widget1Data");
-      setResult(result.data);
-      setLoading(false);
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (!result) return;
-    (async () => {
-      const currentData = result.trackedEntityInstances;
-      setTeis(currentData);
-    })();
-  }, [i18n.language, JSON.stringify(result)]);
-
-  useEffect(() => {
-    if (teis && typeOfFacilities) {
-      const listOuId = [];
-      teis.forEach((tei) => {
-        const found = listOuId.find((ouId) => ouId === tei.orgUnit);
+  const getOuList = (currentData) => {
+    const ouListData = [];
+    if (currentData) {
+      currentData.forEach((tei) => {
+        const found = ouListData.find((ou) => ou.id === tei.orgUnit);
         if (!found) {
-          listOuId.push(tei.orgUnit);
+          const ouFound = hmisOrgUnits.find((ou) => ou.id === tei.orgUnit);
+          ouListData.push(ouFound);
         }
       });
+    }
+    return ouListData;
+  };
 
-      const mappedData = listOuId.map((ouId) => {
+  const getMappedData = (teis, typeOfFacilities, ouList) => {
+    if (teis && typeOfFacilities.length && ouList.length) {
+      const mappedData = ouListLocale.map((ou) => {
         const cellData = {};
-        const ouFound = hmisOrgUnits.find((ou) => ou.id === ouId);
-
         typeOfFacilities.forEach((facility) => {
           let resultType = checkType(teis, [facility.code]);
-
           // resultType = checkCategory(resultType, selectedCategories);
           // resultType = checkOwnership(resultType, selectedOwnerships);
           // resultType = checkService(resultType, selectedServices);
 
           let count = 0;
           resultType.forEach(({ orgUnit }) => {
-            if (orgUnit === ouId) {
+            if (orgUnit === ou.id) {
               count++;
             }
           });
@@ -122,17 +113,13 @@ const Widget1 = ({ setLoading }) => {
         }
 
         cellData["total"] = total;
-        cellData["orgUnit"] =
-          i18n.language === "lo" && ouFound.nameLo
-            ? ouFound.nameLo
-            : ouFound.nameEn;
+        cellData["orgUnit"] = ou.name;
         return { cellData };
       });
 
       const totalCellData = {};
       typeOfFacilities.forEach((facility) => {
         let totalOfColumn = 0;
-
         if (facility.id !== "orgUnit") {
           mappedData.forEach((row) => {
             totalOfColumn += row.cellData[facility.id];
@@ -143,11 +130,45 @@ const Widget1 = ({ setLoading }) => {
 
         totalCellData[facility.id] = totalOfColumn;
       });
+      return { mappedData, totalCellData };
+    }
 
+    return;
+  };
+
+  const handleRequestSort = (property) => (event) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const result = await pull("/api/getDashboard2Widget1Data");
+      const currentData = result?.data?.trackedEntityInstances;
+      const typeOfFacilityData = getTypeOfFacilities();
+      const ouListData = getOuList(currentData);
+
+      setTypeOfFacilities(typeOfFacilityData);
+      setOuList(ouListData);
+      setTeis(currentData);
+      setLoading(false);
+    })();
+  }, []);
+
+  useEffect(() => {
+    const result = getMappedData(teis, typeOfFacilities, ouListLocale);
+    if (result) {
+      const { mappedData, totalCellData } = result;
       setTotalData(totalCellData);
       setData(mappedData);
     }
-  }, [JSON.stringify(teis), JSON.stringify(typeOfFacilities), i18n.language]);
+  }, [
+    JSON.stringify(teis),
+    JSON.stringify(ouListLocale),
+    JSON.stringify(typeOfFacilities),
+  ]);
 
   return data.length && totalData ? (
     <Custom>
