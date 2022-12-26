@@ -20,12 +20,11 @@ const generateDhis2Apis = async (dhis2ApiConfigs) => {
 const startServer = async () => {
   app.use("/assets", express.static("assets"));
 
-  const { default: defaultImport } = await import(
-    isProduction ? "./src/dashboardApi.js" : `../configs/${VITE_CONFIG_NAME}/backend/apiConfig.js`
-  );
+  const { default: defaultImport } = await import(isProduction ? "./src/dashboardApi.js" : `../configs/${VITE_CONFIG_NAME}/backend/apiConfig.js`);
   const { dhis2ApiConfigs, apis } = defaultImport;
 
   await generateDhis2Apis(dhis2ApiConfigs);
+
   setInterval(() => {
     generateDhis2Apis(dhis2ApiConfigs);
   }, 3600000);

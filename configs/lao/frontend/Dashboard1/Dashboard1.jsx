@@ -7,12 +7,10 @@ import Widget2 from "./Widget2";
 import Widget3 from "./Widget3";
 import Widget4 from "./Widget4";
 import { useTranslation } from "react-i18next";
-
 const ReactGridLayout = WidthProvider(RGL);
 
 const Dashboard1 = () => {
   const { t } = useTranslation();
-
   return (
     <ReactGridLayout
       isDraggable={false}
@@ -27,36 +25,16 @@ const Dashboard1 = () => {
       rowHeight={1}
       containerPadding={[0, 0]}
     >
-      <WidgetContainer
-        key="title"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={[{ title: t("remarks"), widget: <Title /> }]}
-      />
+      <WidgetContainer key="title" dashboardIndex={0} widgetIndex={0} childrenWidgets={[{ title: t("remarks"), widget: <Title /> }]} />
       {/* <WidgetContainer
         key="1"
         dashboardIndex={0}
         widgetIndex={0}
         childrenWidgets={[{ title: t("widget1Title"), widget: <Widget1 /> }]}
       /> */}
-      <WidgetContainer
-        key="2"
-        dashboardIndex={0}
-        widgetIndex={1}
-        childrenWidgets={[{ title: t("widget2Title"), widget: <Widget2 /> }]}
-      />
-      <WidgetContainer
-        key="3"
-        dashboardIndex={0}
-        widgetIndex={2}
-        childrenWidgets={[{ title: t("widget3Title"), widget: <Widget3 /> }]}
-      />
-      <WidgetContainer
-        key="4"
-        dashboardIndex={0}
-        widgetIndex={3}
-        childrenWidgets={[{ title: t("widget4Title"), widget: <Widget4 /> }]}
-      />
+      <WidgetContainer key="2" dashboardIndex={0} widgetIndex={1} childrenWidgets={[{ title: t("widget2Title"), widget: <Widget2 /> }]} />
+      <WidgetContainer key="3" dashboardIndex={0} widgetIndex={2} childrenWidgets={[{ title: t("widget3Title"), widget: <Widget3 /> }]} />
+      <WidgetContainer key="4" dashboardIndex={0} widgetIndex={3} childrenWidgets={[{ title: t("widget4Title"), widget: <Widget4 /> }]} />
     </ReactGridLayout>
   );
 };
