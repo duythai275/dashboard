@@ -10,12 +10,13 @@ const apis = [
   {
     route: "/api/getD1W1Data",
     handler: async (dhis2Apis) => {
+      console.log(req);
       const result = await dhis2Apis[0].get("/api/dataElements?pageSize=10");
-
-      return result.data.dataElements.map((de) => ({
-        ma: de.id,
-        ten: de.displayName
-      }));
+      return { query: req.query };
+      // return result.data.dataElements.map((de) => ({
+      //   ma: de.id,
+      //   ten: de.displayName
+      // }));
     }
   }
 ];

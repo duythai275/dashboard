@@ -45,7 +45,7 @@ const startServer = async () => {
 
   apis.forEach((api) => {
     app.get(api.route, async (req, res) => {
-      const result = await api.handler(req.app.get("dhis2Apis"));
+      const result = await api.handler(req.app.get("dhis2Apis"), req);
       res.json(result);
     });
   });
