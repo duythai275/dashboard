@@ -1,3 +1,4 @@
+import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import {
   Box,
   Tab,
@@ -9,10 +10,28 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { pull } from "../../utils";
+import { orgUnitFilter } from "../common/constant/orgUnitFilter";
 import "./index.css";
-const Widget1 = () => {
+const Widget1 = ({ setLoading }) => {
   const [selectedTab, setSelectedTab] = useState("Under 1 death");
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    // (async () => {
+    //   setLoading(true);
+    //   const ouSelected = "IWp9dQGM0bS";
+    //   const filter = orgUnitFilter.find((item) => item.level === 1);
+    //   const result = await pull(
+    //     `/api/getDashboard3Widget1Data?ou=${ouSelected}${filter.filter}`
+    //   );
+    //   console.log(result);
+    //   setResult(result.data);
+    //   setLoading(false);
+    // })();
+  }, []);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       <Tabs
@@ -127,7 +146,7 @@ const Widget1 = () => {
   );
 };
 
-export default Widget1;
+export default withWidgetChildrenLoader(Widget1);
 
 const periods = [
   {
