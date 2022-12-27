@@ -25,6 +25,7 @@ const useDashboardInitialization = () => {
   locales.forEach((locale) => {
     useAdditionalLocale(locale.code, locale.translations);
   });
+
   const setMetadata = useMetadataStore((state) => state.setMetadata);
   const [ready, setReady] = useState(false);
   const { t } = useTranslation();

@@ -1,5 +1,6 @@
 const mapping = {
   lo: "la",
+  vi: "vn",
   en: "gb"
 };
 
