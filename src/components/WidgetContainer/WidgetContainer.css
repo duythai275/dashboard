@@ -31,6 +31,7 @@
   padding: 5px;
   height: calc(100% - 45px);
   width: 100%;
+  overflow: auto;
 }
 /* .widget-children-selector-container {
   padding: 10px;

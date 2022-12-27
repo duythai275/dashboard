@@ -1,4 +1,5 @@
 import LineChart from "@/components/Widgets/LineChart";
+import Custom from "@/components/Widgets/Custom";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -44,6 +45,199 @@ const Widget1 = () => {
     })();
   }, []);
 
-  return data && <LineChart data={data} />;
+  return (
+    data && (
+      <Custom>
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+        asjdhahjsdasdas
+        <br />
+      </Custom>
+    )
+  );
 };
 export default withWidgetChildrenLoader(Widget1);
