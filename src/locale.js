@@ -3,14 +3,16 @@ const resources = {
     translation: {
       initializing: "... Initializing ...",
       loading: "... Loading ...",
-      apply: "Apply"
+      apply: "Apply",
+      selectUnit: "Select unit"
     }
   },
   lo: {
     translation: {
       initializing: "... Initializing ...",
       loading: "... Loading ...",
-      apply: "Apply"
+      apply: "Apply",
+      selectUnit: "Select unit"
     }
   }
 };

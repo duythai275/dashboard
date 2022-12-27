@@ -66,6 +66,7 @@ const OrgUnitSelector = ({ orgUnits, accept }) => {
           setAnchorEl(event.currentTarget);
         }}
       >
+        {t("selectUnit")}
         <TextField value={orgUnit ? orgUnit.displayName : ""} />
       </div>
       <Popover
