@@ -3,13 +3,9 @@ const apis = [
   {
     route: `/api/orgUnits`,
     handler: async (dhis2Apis) => {
-      const result = await dhis2Apis[0].get(
-        "/api/organisationUnits?paging=false&fields=id,name,displayName,parent,path,ancestors,translations"
-      );
+      const result = await dhis2Apis[0].get("/api/organisationUnits?paging=false&fields=id,name,displayName,parent,path,ancestors,translations");
       return result.data.organisationUnits.map((ou) => {
-        const foundNameLo = ou.translations.find(
-          (translation) => translation.property === "NAME" && translation.locale === "lo"
-        );
+        const foundNameLo = ou.translations.find((translation) => translation.property === "NAME" && translation.locale === "lo");
         return {
           id: ou.id,
           nameEn: ou.name,
@@ -23,9 +19,7 @@ const apis = [
     handler: async (dhis2Apis) => {
       const orgUnitLevelsResult = await dhis2Apis[0].get(`/api/organisationUnitLevels.json?fields=level,displayName`);
       const levelQueryString = orgUnitLevelsResult.data.organisationUnitLevels.map((oul) => "level=" + oul.level);
-      const orgUnitGeoJsonResult = await dhis2Apis[0].get(
-        `/api/organisationUnits.geojson?${levelQueryString.join("&")}`
-      );
+      const orgUnitGeoJsonResult = await dhis2Apis[0].get(`/api/organisationUnits.geojson?${levelQueryString.join("&")}`);
       return orgUnitGeoJsonResult.data;
     }
   },
@@ -34,9 +28,7 @@ const apis = [
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get("/api/dataElements?paging=false&fields=id,name,formName,translations");
       return result.data.dataElements.map((de) => {
-        const foundNameLo = de.translations.find(
-          (translation) => translation.property === "NAME" && translation.locale === "lo"
-        );
+        const foundNameLo = de.translations.find((translation) => translation.property === "NAME" && translation.locale === "lo");
         return {
           id: de.id,
           nameEn: de.name,
@@ -50,9 +42,7 @@ const apis = [
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get("/api/indicators?paging=false&fields=id,name,translations");
       return result.data.indicators.map((i) => {
-        const foundNameLo = i.translations.find(
-          (translation) => translation.property === "FORM_NAME" && translation.locale === "lo"
-        );
+        const foundNameLo = i.translations.find((translation) => translation.property === "FORM_NAME" && translation.locale === "lo");
         return {
           id: i.id,
           nameEn: i.name,
@@ -67,9 +57,7 @@ const apis = [
       const result = await dhis2Apis[0].get(
         "/api/analytics.json?dimension=dx:cXVnVexZM2V.REPORTING_RATE&dimension=ou:FRmrFTE63D0;K27JzTKmBKh;MBZYTqkEgwf;RdNV4tTRNEo;TOgZ99Jv0bN;VWGSudnonm5;W6sNfkJcXGC;XKGgynPS1WZ;YvLOmtTQD6b;c4HrGRJoarj;dOhqCNenSjS;hRQsZhmvqgS;hdeC7uX9Cko;pFCZqWnXtoU;quFXhkOJGB4;rO2RVJWHpCe;sv6c7CpPcrc;vBWtCmNNnCG&filter=pe:LAST_YEAR&includeNumDen=false&skipData=false&skipMeta=false"
       );
-      const response = result.data.rows
-        .map((row) => ({ ou: row[1], value: parseFloat(row[2]) }))
-        .sort((a, b) => b.value - a.value);
+      const response = result.data.rows.map((row) => ({ ou: row[1], value: parseFloat(row[2]) })).sort((a, b) => b.value - a.value);
 
       return response;
     }

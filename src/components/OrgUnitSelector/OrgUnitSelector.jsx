@@ -1,30 +1,53 @@
 import { useEffect, useState } from "react";
-import { TreeView, TreeItem } from "@mui/lab";
-import { Popover, Button, Checkbox, Typography, TextField } from "@mui/material";
-import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
+import { Popover, Button, TextField } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight, faSquareCheck, faChevronDown, faPlusSquare, faMinusSquare, faFolderOpen, faFolder } from "@fortawesome/free-solid-svg-icons";
+import { faSquare } from "@fortawesome/free-regular-svg-icons";
+import CheckboxTree from "react-checkbox-tree";
 import { useTranslation } from "react-i18next";
-import useMetadataStore from "@/state/metadata";
 import "./OrgUnitSelector.css";
+import "react-checkbox-tree/lib/react-checkbox-tree.css";
 
-const OrgUnitSelector = ({ disabled, value, change }) => {
+const OrgUnitSelector = ({ orgUnits, accept }) => {
   const { t } = useTranslation();
+  const [orgUnit, setOrgUnit] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [tree, setTree] = useState([]);
   const openPopover = Boolean(anchorEl);
-  const orgUnits = useMetadataStore((state) => state.orgUnits);
-  const orgUnit = orgUnits.find((ou) => ou.id === value);
-  const [selected, setSelected] = useState(orgUnit ? orgUnit : null);
-  const [expanded, setExpanded] = useState(
-    selected && selected.id ? [...selected.ancestors.map((a) => a.id), selected.id] : []
-  );
-  useEffect(() => {
-    const generated = generateTreeObject();
-    setTree([...generated]);
-  }, [orgUnits.length]);
+  const [checked, setChecked] = useState([]);
+  const [expanded, setExpanded] = useState([]);
 
-  const generateTreeObject = () => {
+  const generateTreeObject = (transformed) => {
+    //https://stackoverflow.com/questions/18017869/build-tree-array-from-flat-array-in-javascript/40732240#40732240
+    const createDataTree = (dataset) => {
+      const hashTable = Object.create(null);
+      dataset.forEach((aData) => (hashTable[aData.id] = { ...aData }));
+      const dataTree = [];
+      dataset.forEach((aData) => {
+        if (aData.parent) {
+          if (hashTable[aData.parent].children) {
+            hashTable[aData.parent].children.push(hashTable[aData.id]);
+          } else {
+            hashTable[aData.parent].children = [];
+            hashTable[aData.parent].children.push(hashTable[aData.id]);
+          }
+        } else dataTree.push(hashTable[aData.id]);
+      });
+      return dataTree;
+    };
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // const tree = (items, id = null, link = "parent") =>
+    //   items.filter((item) => item[link] === id).map((item) => ({ ...item, children: tree(items, item.id) }));
+    const result = createDataTree(transformed);
+    return result;
+  };
+
+  useEffect(() => {
     const transformed = orgUnits.map((ou) => {
       const newOu = { ...ou };
+      newOu.value = newOu.id;
+      newOu.label = newOu.displayName;
       if (ou.parent) {
         newOu.parent = ou.parent.id;
       } else {
@@ -32,114 +55,65 @@ const OrgUnitSelector = ({ disabled, value, change }) => {
       }
       return newOu;
     });
-    //https://stackoverflow.com/questions/18017869/build-tree-array-from-flat-array-in-javascript/40732240#40732240
-    const createDataTree = (dataset) => {
-      const hashTable = Object.create(null);
-      dataset.forEach((aData) => (hashTable[aData.id] = { ...aData, children: [] }));
-      const dataTree = [];
-      dataset.forEach((aData) => {
-        if (aData.parent) hashTable[aData.parent].children.push(hashTable[aData.id]);
-        else dataTree.push(hashTable[aData.id]);
-      });
-      return dataTree;
-    };
-    const result = createDataTree(transformed);
-    return result;
-  };
+    const generated = generateTreeObject(transformed);
+    setTree([...generated]);
+  }, []);
 
-  const renderTree = (nodes) =>
-    nodes.map((node) => {
-      let checked;
-      if (node !== null && selected !== null) {
-        checked = selected.id === node.id;
-      } else {
-        checked = false;
-      }
-      return (
-        <TreeItem
-          sx={{ bgcolor: "unset" }}
-          key={node.id}
-          nodeId={node.id}
-          label={
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Checkbox
-                sx={{ height: 28 }}
-                disableRipple
-                name="tree-check-box"
-                checked={checked}
-                onChange={(event) => {
-                  if (event.target.checked) {
-                    const foundOu = orgUnits.find((ou) => ou.id === node.id);
-                    setSelected({ ...foundOu });
-                  } else {
-                    setSelected(null);
-                  }
-                }}
-              />
-              &nbsp;&nbsp;
-              <Typography>{node.displayName}</Typography>
-            </div>
-          }
-        >
-          {Array.isArray(node.children) ? node.children.map((child) => renderTree([child])) : null}
-        </TreeItem>
-      );
-    });
   return (
     <div className="org-unit-selector-container">
       <div
-        style={{ width: "100%" }}
         onClick={(event) => {
-          if (!disabled) setAnchorEl(event.currentTarget);
+          setAnchorEl(event.currentTarget);
         }}
       >
         <TextField value={orgUnit ? orgUnit.displayName : ""} />
       </div>
       <Popover
-        elevation={20}
         open={openPopover}
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left"
         }}
-        onClose={(event, reason) => {
-          if (reason === "backdropClick") return;
+        onClose={() => {
           setAnchorEl(null);
         }}
       >
         <div className="org-unit-tree-container">
-          <TreeView
-            selected={selected && selected.id ? [selected.id] : []}
-            expanded={expanded}
-            defaultCollapseIcon={<ArrowDropUp fontSize="large" />}
-            defaultExpandIcon={<ArrowDropDown fontSize="large" />}
-            onNodeToggle={(event, nodeIds) => {
-              setExpanded(nodeIds);
+          <CheckboxTree
+            icons={{
+              check: <FontAwesomeIcon icon={faSquareCheck} />,
+              uncheck: <FontAwesomeIcon icon={faSquare} />,
+              halfCheck: <FontAwesomeIcon icon={faSquareCheck} />,
+              expandClose: <FontAwesomeIcon icon={faChevronRight} />,
+              expandOpen: <FontAwesomeIcon icon={faChevronDown} />,
+              expandAll: <FontAwesomeIcon icon={faPlusSquare} />,
+              collapseAll: <FontAwesomeIcon icon={faMinusSquare} />,
+              parentClose: <FontAwesomeIcon icon={faFolder} />,
+              parentOpen: <FontAwesomeIcon icon={faFolderOpen} />,
+              leaf: null
             }}
-          >
-            {renderTree(tree)}
-          </TreeView>
+            noCascade={true}
+            nodes={tree}
+            checked={checked}
+            expanded={expanded}
+            onCheck={(checked, targetNode) => {
+              setChecked([targetNode.value]);
+            }}
+            onExpand={(expanded) => setExpanded(expanded)}
+          />
         </div>
         <div className="org-unit-selector-apply-button-container">
           <Button
             variant="contained"
             onClick={() => {
-              change(selected.id);
+              const foundOrgUnit = orgUnits.find((ou) => ou.id === checked[0]);
+              setOrgUnit({ ...foundOrgUnit });
               setAnchorEl(null);
+              accept(foundOrgUnit);
             }}
           >
             {t("apply")}
-          </Button>
-          &nbsp;&nbsp;
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={() => {
-              setAnchorEl(null);
-            }}
-          >
-            {t("cancel")}
           </Button>
         </div>
       </Popover>

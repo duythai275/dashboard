@@ -2,21 +2,26 @@ const apis = [
   {
     route: "/api/getLtUnits",
     handler: async (dhis2Apis) => {
-      const result = await dhis2Apis[0].get("/api/organisationUnits?pageSize=10");
-      //convert
-      return result.data;
+      const result = await dhis2Apis[0].get("/api/organisationUnits?paging=false&fields=id,name,code,translations,parent,ancestors");
+      return result.data.organisationUnits.map((ou) => {
+        const foundNameLo = ou.translations.find((translation) => translation.property === "NAME" && translation.locale === "lo");
+        return {
+          id: ou.id,
+          nameEn: ou.name,
+          nameLo: foundNameLo ? foundNameLo.value : ou.name,
+          parent: ou.parent
+        };
+      });
     }
   },
   {
     route: "/api/getD1W1Data",
     handler: async (dhis2Apis) => {
-      console.log(req);
       const result = await dhis2Apis[0].get("/api/dataElements?pageSize=10");
-      return { query: req.query };
-      // return result.data.dataElements.map((de) => ({
-      //   ma: de.id,
-      //   ten: de.displayName
-      // }));
+      return result.data.dataElements.map((de) => ({
+        ma: de.id,
+        ten: de.displayName
+      }));
     }
   }
 ];
