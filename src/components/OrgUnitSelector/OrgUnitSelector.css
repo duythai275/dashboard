@@ -10,3 +10,12 @@
 .org-unit-selector-apply-button-container {
   padding: 10px;
 }
+.rct-node-icon {
+  color: #4a6185 !important;
+}
+.rct-checkbox {
+  color: #4a6185 !important;
+}
+.rct-node {
+  padding-top: 5px;
+}

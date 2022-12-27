@@ -4,6 +4,7 @@ import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenL
 import { useEffect, useState } from "react";
 import axios from "axios";
 import useMetadataStore from "@/state/metadata";
+import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
 
 const Widget1 = () => {
   const [data, setData] = useState(null);
@@ -45,197 +46,19 @@ const Widget1 = () => {
     })();
   }, []);
 
+  const converted = ltUnits.map((ou) => {
+    return { ...ou, displayName: ou.nameEn };
+  });
+
   return (
     data && (
       <Custom>
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
-        asjdhahjsdasdas
-        <br />
+        <OrgUnitSelector
+          orgUnits={converted}
+          accept={(orgUnit) => {
+            console.log(orgUnit);
+          }}
+        />
       </Custom>
     )
   );
