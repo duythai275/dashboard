@@ -91,7 +91,8 @@ const Widget1 = ({ setLoading }) => {
       : null;
   }, [selectedOu]);
   useEffect(() => {
-    if (!selectedOu || !selectedPeriod) return;
+    if (!selectedOu || !selectedPeriod || !getListPeriod(selectedPeriod).valid)
+      return;
     (async () => {
       setLoading(true);
       const oug = orgUnitFilter
@@ -191,6 +192,7 @@ const Widget1 = ({ setLoading }) => {
         }}
       >
         <OrgUnitSelector
+          initialOrgUnit={converted.find((item) => item.level === 1)}
           orgUnits={converted}
           accept={(ou) => {
             setSelectedOu(ou);
@@ -218,7 +220,37 @@ const Widget1 = ({ setLoading }) => {
           <Typography sx={{ fontWeight: "700", fontSize: "18px" }}>
             {t(`${selectedTab}Title`)}
           </Typography>
-          {listTabComponent[selectedTab]}
+          {getListPeriod(selectedPeriod).valid ? (
+            getListPeriod(selectedPeriod).listPeriod.length <= 12 ? (
+              listTabComponent[selectedTab]
+            ) : (
+              <Typography
+                sx={{
+                  fontWeight: "700",
+                  fontSize: "22px",
+                  height: "300px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {t("exceed12MonthsError")}
+              </Typography>
+            )
+          ) : (
+            <Typography
+              sx={{
+                fontWeight: "700",
+                fontSize: "22px",
+                height: "300px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {t(getListPeriod(selectedPeriod).error)}
+            </Typography>
+          )}
         </>
       )}
     </Box>

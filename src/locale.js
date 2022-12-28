@@ -4,16 +4,16 @@ const resources = {
       initializing: "... Initializing ...",
       loading: "... Loading ...",
       apply: "Apply",
-      selectUnit: "Select unit"
-    }
+      selectUnit: "Select unit",
+    },
   },
   lo: {
     translation: {
       initializing: "... Initializing ...",
       loading: "... Loading ...",
       apply: "Apply",
-      selectUnit: "Select unit"
-    }
-  }
+      selectUnit: "ເລືອກຫົວ​ໜ່ວຍ​ການ​ຈັດ​ຕັ້ງ",
+    },
+  },
 };
 export default resources;

@@ -73,6 +73,7 @@ const PeriodSelector = ({ changePeriod }) => {
             })}
           </Select>
           <Button
+            disabled={selectedStartYear === 2014}
             sx={{ whiteSpace: "nowrap" }}
             onClick={() =>
               setSelectedStartYear((prevStartYear) => prevStartYear - 1)
@@ -82,6 +83,7 @@ const PeriodSelector = ({ changePeriod }) => {
             {t("prevYear")}
           </Button>
           <Button
+            disabled={selectedStartYear === new Date().getFullYear()}
             sx={{ whiteSpace: "nowrap" }}
             onClick={() =>
               setSelectedStartYear((prevStartYear) => prevStartYear + 1)
@@ -107,6 +109,7 @@ const PeriodSelector = ({ changePeriod }) => {
             })}
           </Select>
           <Button
+            disabled={selectedStartYear === 2014}
             sx={{ whiteSpace: "nowrap" }}
             onClick={() => setSelectedEndYear((prevEndYear) => prevEndYear - 1)}
             variant="contained"
@@ -114,6 +117,7 @@ const PeriodSelector = ({ changePeriod }) => {
             {t("prevYear")}
           </Button>
           <Button
+            disabled={selectedEndYear === new Date().getFullYear()}
             sx={{ whiteSpace: "nowrap" }}
             onClick={() => setSelectedEndYear((prevEndYear) => prevEndYear + 1)}
             variant="contained"

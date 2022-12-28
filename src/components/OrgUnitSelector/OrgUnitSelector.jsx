@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { Popover, Button, TextField } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faSquareCheck, faChevronDown, faPlusSquare, faMinusSquare, faFolderOpen, faFolder } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronRight,
+  faSquareCheck,
+  faChevronDown,
+  faPlusSquare,
+  faMinusSquare,
+  faFolderOpen,
+  faFolder,
+} from "@fortawesome/free-solid-svg-icons";
 import { faSquare } from "@fortawesome/free-regular-svg-icons";
 import CheckboxTree from "react-checkbox-tree";
 import { useTranslation } from "react-i18next";
@@ -10,7 +18,7 @@ import "react-checkbox-tree/lib/react-checkbox-tree.css";
 
 const OrgUnitSelector = ({ orgUnits, initialOrgUnit, accept }) => {
   const { t } = useTranslation();
-  const [orgUnit, setOrgUnit] = useState(initialOrgUnit);
+  const [orgUnit, setOrgUnit] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [tree, setTree] = useState([]);
   const openPopover = Boolean(anchorEl);
@@ -62,19 +70,33 @@ const OrgUnitSelector = ({ orgUnits, initialOrgUnit, accept }) => {
   return (
     <div className="org-unit-selector-container">
       <div
+        style={{
+          whiteSpace: "nowrap",
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
         onClick={(event) => {
           setAnchorEl(event.currentTarget);
         }}
       >
         {t("selectUnit")}
-        <TextField value={orgUnit ? orgUnit.displayName : ""} />
+        <TextField
+          value={
+            orgUnit
+              ? orgUnit.displayName
+              : initialOrgUnit
+              ? initialOrgUnit.displayName
+              : ""
+          }
+        />
       </div>
       <Popover
         open={openPopover}
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left"
+          horizontal: "left",
         }}
         onClose={() => {
           setAnchorEl(null);
@@ -92,7 +114,7 @@ const OrgUnitSelector = ({ orgUnits, initialOrgUnit, accept }) => {
               collapseAll: <FontAwesomeIcon icon={faMinusSquare} />,
               parentClose: <FontAwesomeIcon icon={faFolder} />,
               parentOpen: <FontAwesomeIcon icon={faFolderOpen} />,
-              leaf: null
+              leaf: null,
             }}
             noCascade={true}
             nodes={tree}

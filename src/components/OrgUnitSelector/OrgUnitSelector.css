@@ -1,5 +1,6 @@
 .org-unit-selector-container {
-  width: 200px;
+  min-width: 200px;
+  flex-wrap: nowrap;
 }
 .org-unit-tree-container {
   width: 500px;

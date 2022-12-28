@@ -40,8 +40,8 @@ const locales = [
       { key: "remarks", value: "Remarks" },
       { key: "dashboard2Widget1Title", value: "Facilities Profile Summary" },
       { key: "total", value: "ລວມ" },
-      { key: "dashboard3Title", value: "Dashboard 3 Title" },
-      { key: "dashboard3Widget1Title", value: "Dashboard 3 Widget 1 Title" },
+      { key: "dashboard3Title", value: "11 ຕົວຊີ້ວັດຂອງສະພາ" },
+      { key: "dashboard3Widget1Title", value: "11 ຕົວຊີ້ວັດຂອງສະພາ" },
       { key: "startDate", value: "ເລີ່ມຈາກ" },
       { key: "endDate", value: "ສີ້ນສຸດ" },
       { key: "prevYear", value: "ປີກາຍ" },
@@ -69,6 +69,15 @@ const locales = [
       { key: "under5DeathPer1000", value: "ອັດຕາການຕາຍຂອງເດັກ ຕໍ່ 1000" },
       { key: "maternalDeathPer100000", value: "ອັດຕາການຕາຍຂອງແມ່ ຕໍ່ 100,000	" },
       { key: "target", value: "ຄາດໝາຍ" },
+      {
+        key: "exceed12MonthsError",
+        value:
+          "ຈຳນວນເດືອນ ເກີນ 12 ເດືອນ, ສະນັ້ນບໍ່ສາມາດຄິດໄລ່ອັດການຕາຍຂອງເດັກໄດ້!",
+      },
+      {
+        key: "startDateGreaterThanEndDateError",
+        value: "ວັນທີເລີ່ມຕົ້ນຕ້ອງໜ້ອຍກວ່າວັນທີສິ້ນສຸດ!",
+      },
     ],
   },
   {
@@ -111,8 +120,11 @@ const locales = [
       { key: "remarks", value: "Remarks" },
       { key: "dashboard2Widget1Title", value: "Facilities Profile Summary" },
       { key: "total", value: "Total" },
-      { key: "dashboard3Title", value: "Dashboard 3 Title" },
-      { key: "dashboard3Widget1Title", value: "Dashboard 3 Widget 1 Title" },
+      { key: "dashboard3Title", value: "11 National Assembly Indicator" },
+      {
+        key: "dashboard3Widget1Title",
+        value: "11 National Assembly Indicator",
+      },
       { key: "startDate", value: "Start Date" },
       { key: "endDate", value: "End Date" },
       { key: "prevYear", value: "Prev Year" },
@@ -137,6 +149,15 @@ const locales = [
         value: "Maternal death ratio per 100,000",
       },
       { key: "target", value: "target" },
+      {
+        key: "exceed12MonthsError",
+        value:
+          "The number of months exceeds 12 months, so the infant mortality rate cannot be calculated!",
+      },
+      {
+        key: "startDateGreaterThanEndDateError",
+        value: "Start date must be less than end date!",
+      },
     ],
   },
 ];

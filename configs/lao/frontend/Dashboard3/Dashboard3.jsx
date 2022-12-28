@@ -12,7 +12,7 @@ const Dashboard3 = () => {
   return (
     <ReactGridLayout
       isDraggable={false}
-      layout={[{ i: "1", x: 0, y: 9, w: 11.9, h: 50 }]}
+      layout={[{ i: "1", x: 0, y: 9, w: 11.9, h: 70 }]}
       cols={12}
       rowHeight={1}
       containerPadding={[0, 0]}

@@ -47,28 +47,28 @@ const Tab3 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
             rowSpan={2}
             colSpan={1}
           >
-            Total under 1 death
+            {t("total")}
           </TableCell>
           <TableCell
             sx={{ borderRight: "1px solid black" }}
             rowSpan={2}
             colSpan={1}
           >
-            Estimated live births
+            {t("estLiveBirths")}
           </TableCell>
           <TableCell
             sx={{ borderRight: "1px solid black" }}
             rowSpan={2}
             colSpan={1}
           >
-            Maternal death ratio per 100,000
+            {t("maternalDeathPer100000")}
           </TableCell>
           <TableCell
             sx={{ borderRight: "1px solid black" }}
             rowSpan={2}
             colSpan={1}
           >
-            Target
+            {t("target")}
           </TableCell>
         </TableRow>
         <TableRow>
