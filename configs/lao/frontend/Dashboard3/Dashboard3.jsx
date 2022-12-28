@@ -22,7 +22,7 @@ const Dashboard3 = () => {
         dashboardIndex={1}
         widgetIndex={1}
         childrenWidgets={[
-          { title: "dashboard3Widget1Title", widget: <Widget1 /> },
+          { title: t("dashboard3Widget1Title"), widget: <Widget1 /> },
         ]}
       />
     </ReactGridLayout>
