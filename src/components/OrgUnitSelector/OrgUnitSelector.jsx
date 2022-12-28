@@ -8,9 +8,9 @@ import { useTranslation } from "react-i18next";
 import "./OrgUnitSelector.css";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 
-const OrgUnitSelector = ({ orgUnits, accept }) => {
+const OrgUnitSelector = ({ orgUnits, initialOrgUnit, accept }) => {
   const { t } = useTranslation();
-  const [orgUnit, setOrgUnit] = useState(null);
+  const [orgUnit, setOrgUnit] = useState(initialOrgUnit);
   const [anchorEl, setAnchorEl] = useState(null);
   const [tree, setTree] = useState([]);
   const openPopover = Boolean(anchorEl);
