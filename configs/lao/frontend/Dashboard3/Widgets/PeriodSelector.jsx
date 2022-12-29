@@ -42,20 +42,6 @@ const PeriodSelector = ({ changePeriod }) => {
     return result;
   }, [selectedEndYear]);
 
-  useEffect(() => {
-    changePeriod &&
-      changePeriod({
-        start: {
-          month: selectedStart,
-          year: selectedStartYear,
-        },
-        end: {
-          month: selectedEnd,
-          year: selectedEndYear,
-        },
-      });
-  }, [selectedStartYear, selectedEndYear, selectedStart, selectedEnd]);
-
   return (
     <Box sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: "5px" }}>
@@ -126,6 +112,32 @@ const PeriodSelector = ({ changePeriod }) => {
           </Button>
         </Box>
       </Box>
+      <Button
+        sx={{
+          whiteSpace: "nowrap",
+          alignSelf: "end",
+          backgroundColor: "rgb(7,126,7, 0.6)",
+          ["&:hover"]: {
+            backgroundColor: "rgb(7,126,7, 1)",
+          },
+        }}
+        onClick={() => {
+          changePeriod &&
+            changePeriod({
+              start: {
+                month: selectedStart,
+                year: selectedStartYear,
+              },
+              end: {
+                month: selectedEnd,
+                year: selectedEndYear,
+              },
+            });
+        }}
+        variant="contained"
+      >
+        {t("apply")}
+      </Button>
     </Box>
   );
 };

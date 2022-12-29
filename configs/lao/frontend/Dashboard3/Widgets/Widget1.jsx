@@ -189,6 +189,8 @@ const Widget1 = ({ setLoading }) => {
           flexDirection: "row",
           gap: "20px",
           alignItems: "center",
+          borderBottom: "1px solid #bbbbbb",
+          paddingBottom: "20px",
         }}
       >
         <OrgUnitSelector
@@ -221,22 +223,7 @@ const Widget1 = ({ setLoading }) => {
             {t(`${selectedTab}Title`)}
           </Typography>
           {getListPeriod(selectedPeriod).valid ? (
-            getListPeriod(selectedPeriod).listPeriod.length <= 12 ? (
-              listTabComponent[selectedTab]
-            ) : (
-              <Typography
-                sx={{
-                  fontWeight: "700",
-                  fontSize: "22px",
-                  height: "300px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {t("exceed12MonthsError")}
-              </Typography>
-            )
+            listTabComponent[selectedTab]
           ) : (
             <Typography
               sx={{

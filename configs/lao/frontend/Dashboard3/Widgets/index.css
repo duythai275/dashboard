@@ -2,4 +2,10 @@
 .table-d3-w1 td,
 .table-d3-w1 th {
   border: 1px solid #bbbbbb;
+  padding: 4px 10px;
+}
+
+.table-d3-w1 td,
+.table-d3-w1 th {
+  width: 150px;
 }

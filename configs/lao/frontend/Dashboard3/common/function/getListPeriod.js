@@ -46,6 +46,8 @@ export const getListPeriod = (period) => {
     const year = period.end.year;
     listPeriodResult.push(`${year}${month}`);
   }
+  if (listPeriodResult.length > 12)
+    return { valid: false, error: "exceed12MonthsError" };
 
   return {
     listPeriod: listPeriodResult,
