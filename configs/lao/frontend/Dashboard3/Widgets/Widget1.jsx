@@ -36,7 +36,10 @@ const Widget1 = ({ setLoading }) => {
     orgUnits.find((item) => item.level === 1)
   );
   const [result, setResult] = useState(null);
-  const [selectedPeriod, setSelectedPeriod] = useState(null);
+  const [selectedPeriod, setSelectedPeriod] = useState({
+    start: { month: new Date().getMonth() + 1, year: new Date().getFullYear() },
+    end: { month: new Date().getMonth() + 1, year: new Date().getFullYear() },
+  });
   const filteredOrgUnits = useMemo(() => {
     if (!orgUnits) return null;
     const result = orgUnits
