@@ -204,7 +204,7 @@ const Tab2 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
                   return estimatedLiveBirths;
                 })
                 .reduce((p, c) => p + (c ? c * 1 : 0), 0);
-              return ((total / totalEst) * 100).toFixed(0);
+              return ((total / totalEst) * 1000).toFixed(0);
             })()}
           </TableCell>
           <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
