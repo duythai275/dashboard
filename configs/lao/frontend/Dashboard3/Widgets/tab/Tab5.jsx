@@ -107,9 +107,8 @@ const Tab5 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
               <TableCell>
                 {(() =>
                   parseInt(estimatedLiveBirths)
-                    ? ((total / estimatedLiveBirths) * 100).toFixed(0)
+                    ? ((total / estimatedLiveBirths) * 100).toFixed(0) + "%"
                     : null)()}
-                %
               </TableCell>
               <TableCell>{target || null}</TableCell>
             </TableRow>
