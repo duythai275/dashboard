@@ -82,8 +82,9 @@ const Tab5 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
         {filteredSelectOrgUnit.map((orgUnit) => {
           let total = 0;
           const estimatedLiveBirths = (
-            (data.est.find((item) => item.ou === orgUnit.id)?.value &&
-              data.est.find((item) => item.ou === orgUnit.id)?.value * 1) /
+            ((data.est.find((item) => item.ou === orgUnit.id)?.value &&
+              data.est.find((item) => item.ou === orgUnit.id)?.value * 1) ||
+              0) /
             (12 / getListPeriod(selectedPeriod).listPeriod.length)
           ).toFixed(0);
           const target =
@@ -104,9 +105,13 @@ const Tab5 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
               <TableCell>{total}</TableCell>
               <TableCell>{estimatedLiveBirths}</TableCell>
               <TableCell>
-                {(() => ((total / estimatedLiveBirths) * 100).toFixed(0))()}%
+                {(() =>
+                  parseInt(estimatedLiveBirths)
+                    ? ((total / estimatedLiveBirths) * 100).toFixed(0)
+                    : null)()}
+                %
               </TableCell>
-              <TableCell>{target}</TableCell>
+              <TableCell>{target || null}</TableCell>
             </TableRow>
           );
         })}
@@ -190,9 +195,10 @@ const Tab5 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
               const totalEst = filteredSelectOrgUnit
                 .map((orgUnit) => {
                   const estimatedLiveBirths = (
-                    (data.est.find((item) => item.ou === orgUnit.id)?.value &&
+                    ((data.est.find((item) => item.ou === orgUnit.id)?.value &&
                       data.est.find((item) => item.ou === orgUnit.id)?.value *
-                        1) /
+                        1) ||
+                      0) /
                     (12 / getListPeriod(selectedPeriod).listPeriod.length)
                   ).toFixed(0);
                   return estimatedLiveBirths;
