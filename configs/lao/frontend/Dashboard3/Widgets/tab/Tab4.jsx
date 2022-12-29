@@ -104,7 +104,7 @@ const Tab4 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
                 );
               })}
               <TableCell>{total}</TableCell>
-              <TableCell>{estimatedLiveBirths}</TableCell>
+              <TableCell>{parseInt(estimatedLiveBirths) || null}</TableCell>
               <TableCell>
                 {(() =>
                   parseInt(estimatedLiveBirths)

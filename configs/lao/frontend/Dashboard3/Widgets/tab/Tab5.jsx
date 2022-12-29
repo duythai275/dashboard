@@ -103,7 +103,7 @@ const Tab5 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
                 );
               })}
               <TableCell>{total}</TableCell>
-              <TableCell>{estimatedLiveBirths}</TableCell>
+              <TableCell>{parseInt(estimatedLiveBirths) || null}</TableCell>
               <TableCell>
                 {(() =>
                   parseInt(estimatedLiveBirths)
@@ -163,9 +163,10 @@ const Tab5 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
               return filteredSelectOrgUnit
                 .map((orgUnit) => {
                   const estimatedLiveBirths = (
-                    (data.est.find((item) => item.ou === orgUnit.id)?.value &&
+                    ((data.est.find((item) => item.ou === orgUnit.id)?.value &&
                       data.est.find((item) => item.ou === orgUnit.id)?.value *
-                        1) /
+                        1) ||
+                      0) /
                     (12 / getListPeriod(selectedPeriod).listPeriod.length)
                   ).toFixed(0);
                   return estimatedLiveBirths;
