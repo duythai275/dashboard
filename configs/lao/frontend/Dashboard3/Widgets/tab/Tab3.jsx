@@ -114,7 +114,7 @@ const Tab3 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
                       ).toFixed(0)
                     : null)()}
               </TableCell>
-              <TableCell>{target || null}</TableCell>
+              <TableCell>{target ?? null}</TableCell>
             </TableRow>
           );
         })}
@@ -210,6 +210,7 @@ const Tab3 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
                   return estimatedLiveBirths;
                 })
                 .reduce((p, c) => p + (c ? c * 1 : 0), 0);
+              if (!parseInt(totalEst)) return 0;
               return ((total / totalEst) * 100000).toFixed(0);
             })()}
           </TableCell>

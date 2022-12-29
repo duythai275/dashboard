@@ -110,7 +110,7 @@ const Tab5 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
                     ? ((total / estimatedLiveBirths) * 100).toFixed(0) + "%"
                     : null)()}
               </TableCell>
-              <TableCell>{target || null}</TableCell>
+              <TableCell>{target ?? null}</TableCell>
             </TableRow>
           );
         })}
@@ -204,6 +204,7 @@ const Tab5 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
                   return estimatedLiveBirths;
                 })
                 .reduce((p, c) => p + (c ? c * 1 : 0), 0);
+              if (!parseInt(totalEst)) return 0;
               return ((total / totalEst) * 100).toFixed(0) + "%";
             })()}
           </TableCell>

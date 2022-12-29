@@ -116,7 +116,7 @@ const Tab1 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
                       )
                     : null)()}
               </TableCell>
-              <TableCell>{target || null}</TableCell>
+              <TableCell>{target ?? null}</TableCell>
             </TableRow>
           );
         })}
