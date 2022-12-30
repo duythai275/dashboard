@@ -151,12 +151,18 @@ const TabDetail = ({
                 return p + (c?.value ? c?.value * 1 : 0);
               }, 0);
             return (
-              <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
+              <TableCell
+                sx={{ fontWeight: "700", fontSize: "14px" }}
+                align="center"
+              >
                 {addCommaToNumber(value)}
               </TableCell>
             );
           })}
-          <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
+          <TableCell
+            align="center"
+            sx={{ fontWeight: "700", fontSize: "14px" }}
+          >
             {(() => {
               const result = getListPeriod(selectedPeriod)
                 .listPeriod.map((period) => {
@@ -177,7 +183,10 @@ const TabDetail = ({
               return addCommaToNumber(result);
             })()}
           </TableCell>
-          <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
+          <TableCell
+            align="center"
+            sx={{ fontWeight: "700", fontSize: "14px" }}
+          >
             {(() => {
               const result = filteredSelectOrgUnit
                 .map((orgUnit) => {
@@ -209,7 +218,10 @@ const TabDetail = ({
               return addCommaToNumber(result);
             })()}
           </TableCell>
-          <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
+          <TableCell
+            align="center"
+            sx={{ fontWeight: "700", fontSize: "14px" }}
+          >
             {(() => {
               const total = getListPeriod(selectedPeriod)
                 .listPeriod.map((period) => {
@@ -263,7 +275,10 @@ const TabDetail = ({
               );
             })()}
           </TableCell>
-          <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
+          <TableCell
+            align="center"
+            sx={{ fontWeight: "700", fontSize: "14px" }}
+          >
             {/* {(() => {
                 return filteredSelectOrgUnit
                   .map((orgUnit) => {
