@@ -9,7 +9,10 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { RATIO } from "../../common/constant/ratio";
+import { addCommaToNumber } from "../../common/function/addCommaToNumber";
 import { getListPeriod } from "../../common/function/getListPeriod";
+
+const MONTHS_IN_YEAR = 12;
 
 const TabDetail = ({
   selectedPeriod,
@@ -78,14 +81,16 @@ const TabDetail = ({
                     data.popLiveBirth.find((item) => item.ou === orgUnit.id)
                       ?.value * 1) ||
                     0) /
-                  (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                  (MONTHS_IN_YEAR /
+                    getListPeriod(selectedPeriod).listPeriod.length)
                 ).toFixed(0)
               : (
                   ((data.est.find((item) => item.ou === orgUnit.id)?.value &&
                     data.est.find((item) => item.ou === orgUnit.id)?.value *
                       1) ||
                     0) /
-                  (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                  (MONTHS_IN_YEAR /
+                    getListPeriod(selectedPeriod).listPeriod.length)
                 ).toFixed(0);
           const target =
             data.target.find((item) => item.ou === orgUnit.id)?.value &&
@@ -100,23 +105,30 @@ const TabDetail = ({
                 )?.value;
                 total = value ? total + value * 1 : total;
                 return (
-                  <TableCell align="center">{value && value * 1}</TableCell>
+                  <TableCell align="center">
+                    {value && addCommaToNumber(value * 1)}
+                  </TableCell>
                 );
               })}
-              <TableCell>{total}</TableCell>
-              <TableCell>{parseInt(estimatedLiveBirths) || null}</TableCell>
+              <TableCell>{addCommaToNumber(total)}</TableCell>
+              <TableCell>
+                {addCommaToNumber(parseInt(estimatedLiveBirths)) || null}
+              </TableCell>
               <TableCell>
                 {(() => {
                   const ratio = RATIO[tab];
                   return parseInt(estimatedLiveBirths)
-                    ? ((total / parseInt(estimatedLiveBirths)) * ratio).toFixed(
-                        0
+                    ? addCommaToNumber(
+                        (
+                          (total / parseInt(estimatedLiveBirths)) *
+                          ratio
+                        ).toFixed(0)
                       )
                     : null;
                 })()}
                 {["sbaDelivery", "epiPenta3"].includes(tab) ? "%" : null}
               </TableCell>
-              <TableCell>{target ?? null}</TableCell>
+              <TableCell>{addCommaToNumber(target) ?? null}</TableCell>
             </TableRow>
           );
         })}
@@ -140,13 +152,13 @@ const TabDetail = ({
               }, 0);
             return (
               <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
-                {value}
+                {addCommaToNumber(value)}
               </TableCell>
             );
           })}
           <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
             {(() => {
-              return getListPeriod(selectedPeriod)
+              const result = getListPeriod(selectedPeriod)
                 .listPeriod.map((period) => {
                   const value = data.data
                     .filter(
@@ -162,11 +174,12 @@ const TabDetail = ({
                   return value;
                 })
                 .reduce((p, c) => p + c, 0);
+              return addCommaToNumber(result);
             })()}
           </TableCell>
           <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
             {(() => {
-              return filteredSelectOrgUnit
+              const result = filteredSelectOrgUnit
                 .map((orgUnit) => {
                   const estimatedLiveBirths =
                     tab !== "epiPenta3"
@@ -178,7 +191,8 @@ const TabDetail = ({
                               (item) => item.ou === orgUnit.id
                             )?.value * 1) ||
                             0) /
-                          (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                          (MONTHS_IN_YEAR /
+                            getListPeriod(selectedPeriod).listPeriod.length)
                         ).toFixed(0)
                       : (
                           ((data.est.find((item) => item.ou === orgUnit.id)
@@ -186,11 +200,13 @@ const TabDetail = ({
                             data.est.find((item) => item.ou === orgUnit.id)
                               ?.value * 1) ||
                             0) /
-                          (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                          (MONTHS_IN_YEAR /
+                            getListPeriod(selectedPeriod).listPeriod.length)
                         ).toFixed(0);
                   return estimatedLiveBirths;
                 })
                 .reduce((p, c) => p + (c ? c * 1 : 0), 0);
+              return addCommaToNumber(result);
             })()}
           </TableCell>
           <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
@@ -223,7 +239,8 @@ const TabDetail = ({
                               (item) => item.ou === orgUnit.id
                             )?.value * 1) ||
                             0) /
-                          (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                          (MONTHS_IN_YEAR /
+                            getListPeriod(selectedPeriod).listPeriod.length)
                         ).toFixed(0)
                       : (
                           ((data.est.find((item) => item.ou === orgUnit.id)
@@ -231,13 +248,19 @@ const TabDetail = ({
                             data.est.find((item) => item.ou === orgUnit.id)
                               ?.value * 1) ||
                             0) /
-                          (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                          (MONTHS_IN_YEAR /
+                            getListPeriod(selectedPeriod).listPeriod.length)
                         ).toFixed(0);
                   return estimatedLiveBirths;
                 })
                 .reduce((p, c) => p + (c ? c * 1 : 0), 0);
               if (!parseInt(totalEst)) return 0;
-              return ((total / totalEst) * 1000).toFixed(0);
+              const ratio = RATIO[tab];
+
+              return (
+                addCommaToNumber(((total / totalEst) * ratio).toFixed(0)) +
+                (["sbaDelivery", "epiPenta3"].includes(tab) ? "%" : "")
+              );
             })()}
           </TableCell>
           <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
