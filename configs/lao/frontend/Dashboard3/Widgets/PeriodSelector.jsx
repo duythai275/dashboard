@@ -1,13 +1,8 @@
-import {
-  Box,
-  Button,
-  Input,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
-import React, { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Box, Button, MenuItem, Select, Typography } from "@mui/material";
+
+import { MONTHS } from "../common/constant/month";
 
 const PeriodSelector = ({ changePeriod }) => {
   const { t } = useTranslation();
@@ -25,7 +20,7 @@ const PeriodSelector = ({ changePeriod }) => {
     let result = [];
     for (let i = 0; i < 12; i++) {
       result.push({
-        label: `${t(months[i])} ${selectedStartYear}`,
+        label: `${t(MONTHS[i])} ${selectedStartYear}`,
         value: i + 1,
       });
     }
@@ -35,7 +30,7 @@ const PeriodSelector = ({ changePeriod }) => {
     let result = [];
     for (let i = 0; i < 12; i++) {
       result.push({
-        label: `${t(months[i])} ${selectedEndYear}`,
+        label: `${t(MONTHS[i])} ${selectedEndYear}`,
         value: i + 1,
       });
     }
@@ -143,18 +138,3 @@ const PeriodSelector = ({ changePeriod }) => {
 };
 
 export default PeriodSelector;
-
-const months = [
-  "january",
-  "february",
-  "march",
-  "april",
-  "may",
-  "june",
-  "july",
-  "august",
-  "september",
-  "october",
-  "november",
-  "december",
-];

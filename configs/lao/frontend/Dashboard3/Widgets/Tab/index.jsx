@@ -1,4 +1,3 @@
-import useMetadataStore from "@/state/metadata";
 import {
   Table,
   TableBody,
@@ -7,11 +6,18 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+
+import { RATIO } from "../../common/constant/ratio";
 import { getListPeriod } from "../../common/function/getListPeriod";
 
-const Tab4 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
+const TabDetail = ({
+  selectedPeriod,
+  data,
+  filteredSelectOrgUnit,
+  listHeader,
+  tab,
+}) => {
   const { i18n, t } = useTranslation();
 
   const currentNameProperty = i18n.language === "en" ? "nameEn" : "nameLo";
@@ -42,34 +48,17 @@ const Tab4 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
               </TableCell>
             );
           })}
-          <TableCell
-            sx={{ borderLeft: "1px solid black" }}
-            rowSpan={2}
-            colSpan={1}
-          >
-            {t("total")}
-          </TableCell>
-          <TableCell
-            sx={{ borderRight: "1px solid black" }}
-            rowSpan={2}
-            colSpan={1}
-          >
-            {t("estLiveBirths")}
-          </TableCell>
-          <TableCell
-            sx={{ borderRight: "1px solid black" }}
-            rowSpan={2}
-            colSpan={1}
-          >
-            %
-          </TableCell>
-          <TableCell
-            sx={{ borderRight: "1px solid black" }}
-            rowSpan={2}
-            colSpan={1}
-          >
-            {t("target")}
-          </TableCell>
+          {listHeader.map((header) => {
+            return (
+              <TableCell
+                sx={{ borderLeft: "1px solid black" }}
+                rowSpan={2}
+                colSpan={1}
+              >
+                {t(header)}
+              </TableCell>
+            );
+          })}
         </TableRow>
         <TableRow>
           {getListPeriod(selectedPeriod).listPeriod.map((period) => {
@@ -81,16 +70,27 @@ const Tab4 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
       <TableBody>
         {filteredSelectOrgUnit.map((orgUnit) => {
           let total = 0;
-          const estimatedLiveBirths = (
-            ((data.popLiveBirth.find((item) => item.ou === orgUnit.id)?.value &&
-              data.popLiveBirth.find((item) => item.ou === orgUnit.id)?.value *
-                1) ||
-              0) /
-            (12 / getListPeriod(selectedPeriod).listPeriod.length)
-          ).toFixed(0);
+          const estimatedLiveBirths =
+            tab !== "epiPenta3"
+              ? (
+                  ((data.popLiveBirth.find((item) => item.ou === orgUnit.id)
+                    ?.value &&
+                    data.popLiveBirth.find((item) => item.ou === orgUnit.id)
+                      ?.value * 1) ||
+                    0) /
+                  (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                ).toFixed(0)
+              : (
+                  ((data.est.find((item) => item.ou === orgUnit.id)?.value &&
+                    data.est.find((item) => item.ou === orgUnit.id)?.value *
+                      1) ||
+                    0) /
+                  (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                ).toFixed(0);
           const target =
             data.target.find((item) => item.ou === orgUnit.id)?.value &&
             data.target.find((item) => item.ou === orgUnit.id)?.value * 1;
+
           return (
             <TableRow>
               <TableCell>{orgUnit[currentNameProperty]}</TableCell>
@@ -106,10 +106,15 @@ const Tab4 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
               <TableCell>{total}</TableCell>
               <TableCell>{parseInt(estimatedLiveBirths) || null}</TableCell>
               <TableCell>
-                {(() =>
-                  parseInt(estimatedLiveBirths)
-                    ? ((total / estimatedLiveBirths) * 100).toFixed(0) + "%"
-                    : null)()}
+                {(() => {
+                  const ratio = RATIO[tab];
+                  return parseInt(estimatedLiveBirths)
+                    ? ((total / parseInt(estimatedLiveBirths)) * ratio).toFixed(
+                        0
+                      )
+                    : null;
+                })()}
+                {["sbaDelivery", "epiPenta3"].includes(tab) ? "%" : null}
               </TableCell>
               <TableCell>{target ?? null}</TableCell>
             </TableRow>
@@ -163,14 +168,26 @@ const Tab4 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
             {(() => {
               return filteredSelectOrgUnit
                 .map((orgUnit) => {
-                  const estimatedLiveBirths = (
-                    ((data.popLiveBirth.find((item) => item.ou === orgUnit.id)
-                      ?.value &&
-                      data.popLiveBirth.find((item) => item.ou === orgUnit.id)
-                        ?.value * 1) ||
-                      0) /
-                    (12 / getListPeriod(selectedPeriod).listPeriod.length)
-                  ).toFixed(0);
+                  const estimatedLiveBirths =
+                    tab !== "epiPenta3"
+                      ? (
+                          ((data.popLiveBirth.find(
+                            (item) => item.ou === orgUnit.id
+                          )?.value &&
+                            data.popLiveBirth.find(
+                              (item) => item.ou === orgUnit.id
+                            )?.value * 1) ||
+                            0) /
+                          (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                        ).toFixed(0)
+                      : (
+                          ((data.est.find((item) => item.ou === orgUnit.id)
+                            ?.value &&
+                            data.est.find((item) => item.ou === orgUnit.id)
+                              ?.value * 1) ||
+                            0) /
+                          (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                        ).toFixed(0);
                   return estimatedLiveBirths;
                 })
                 .reduce((p, c) => p + (c ? c * 1 : 0), 0);
@@ -196,37 +213,48 @@ const Tab4 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
                 .reduce((p, c) => p + c, 0);
               const totalEst = filteredSelectOrgUnit
                 .map((orgUnit) => {
-                  const estimatedLiveBirths = (
-                    ((data.popLiveBirth.find((item) => item.ou === orgUnit.id)
-                      ?.value &&
-                      data.popLiveBirth.find((item) => item.ou === orgUnit.id)
-                        ?.value * 1) ||
-                      0) /
-                    (12 / getListPeriod(selectedPeriod).listPeriod.length)
-                  ).toFixed(0);
+                  const estimatedLiveBirths =
+                    tab !== "epiPenta3"
+                      ? (
+                          ((data.popLiveBirth.find(
+                            (item) => item.ou === orgUnit.id
+                          )?.value &&
+                            data.popLiveBirth.find(
+                              (item) => item.ou === orgUnit.id
+                            )?.value * 1) ||
+                            0) /
+                          (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                        ).toFixed(0)
+                      : (
+                          ((data.est.find((item) => item.ou === orgUnit.id)
+                            ?.value &&
+                            data.est.find((item) => item.ou === orgUnit.id)
+                              ?.value * 1) ||
+                            0) /
+                          (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                        ).toFixed(0);
                   return estimatedLiveBirths;
                 })
                 .reduce((p, c) => p + (c ? c * 1 : 0), 0);
               if (!parseInt(totalEst)) return 0;
-
-              return ((total / totalEst) * 100).toFixed(0) + "%";
+              return ((total / totalEst) * 1000).toFixed(0);
             })()}
           </TableCell>
           <TableCell sx={{ fontWeight: "700", fontSize: "14px" }}>
             {/* {(() => {
-              return filteredSelectOrgUnit
-                .map((orgUnit) => {
-                  const target = (
-                    (data.target.find((item) => item.ou === orgUnit.id)
-                      ?.value &&
-                      data.target.find((item) => item.ou === orgUnit.id)
-                        ?.value * 1) /
-                    (12 / getListPeriod(selectedPeriod).listPeriod.length)
-                  ).toFixed(0);
-                  return target;
-                })
-                .reduce((p, c) => p + (c ? c * 1 : 0), 0);
-            })()} */}
+                return filteredSelectOrgUnit
+                  .map((orgUnit) => {
+                    const target = (
+                      (data.target.find((item) => item.ou === orgUnit.id)
+                        ?.value &&
+                        data.target.find((item) => item.ou === orgUnit.id)
+                          ?.value * 1) /
+                      (12 / getListPeriod(selectedPeriod).listPeriod.length)
+                    ).toFixed(0);
+                    return target;
+                  })
+                  .reduce((p, c) => p + (c ? c * 1 : 0), 0);
+              })()} */}
           </TableCell>
         </TableRow>
       </TableFooter>
@@ -234,4 +262,4 @@ const Tab4 = ({ selectedPeriod, data, filteredSelectOrgUnit }) => {
   );
 };
 
-export default Tab4;
+export default TabDetail;
