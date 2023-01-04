@@ -92,8 +92,6 @@ const Widget1 = ({ setLoading }) => {
     return ouListData;
   };
 
-  console.log({ selectedCategories, selectedOwnerships, selectedServices });
-
   const getMappedData = (teis, typeOfFacilities, ouList) => {
     if (teis && typeOfFacilities.length && ouList.length) {
       const mappedData = ouListLocale.map((ou) => {

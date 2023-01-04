@@ -24,7 +24,6 @@ const Filter = ({ onClose, onReset }) => {
       setLoading(true);
 
       const result = await pull("/api/getD2W1FilterData");
-      console.log(result);
       setCategoryOptions(result?.data.categories);
       setOwnershipOptions(result?.data.ownerships);
       setListDataElementOfService(result?.data.services);
