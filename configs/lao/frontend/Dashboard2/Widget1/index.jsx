@@ -20,6 +20,7 @@ import useMetadataStore from "@/state/metadata";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import Custom from "@/components/Widgets/Custom";
 import "./index.css";
+import HeaderNav from "./components/HeaderNav";
 
 const Widget1 = ({ setLoading }) => {
   const { hmisOrgUnits, surveyOptionSets } = useMetadataStore(
@@ -38,6 +39,10 @@ const Widget1 = ({ setLoading }) => {
   const [ouList, setOuList] = useState([]);
   const [typeOfFacilities, setTypeOfFacilities] = useState([]);
   const [totalData, setTotalData] = useState(null);
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedOwnerships, setSelectedOwnerships] = useState([]);
+  const [selectedServices, setSelectedServices] = useState([]);
 
   const stableSortRows = useMemo(() => {
     if (data.length <= 0) return [];
@@ -86,6 +91,8 @@ const Widget1 = ({ setLoading }) => {
     }
     return ouListData;
   };
+
+  console.log({ selectedCategories, selectedOwnerships, selectedServices });
 
   const getMappedData = (teis, typeOfFacilities, ouList) => {
     if (teis && typeOfFacilities.length && ouList.length) {
@@ -142,6 +149,18 @@ const Widget1 = ({ setLoading }) => {
     setOrderBy(property);
   };
 
+  const handleFilterClose = (selectedList) => {
+    setSelectedCategories(selectedList.selectedCategories);
+    setSelectedOwnerships(selectedList.selectedOwnerships);
+    setSelectedServices(selectedList.selectedServices);
+  };
+
+  const handleFilterReset = () => {
+    setSelectedCategories([]);
+    setSelectedOwnerships([]);
+    setSelectedServices([]);
+  };
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -173,7 +192,10 @@ const Widget1 = ({ setLoading }) => {
   return data.length && totalData ? (
     <Custom>
       <Box>
-        {/* <HeaderNav /> */}
+        {/* <HeaderNav
+          onFilterClose={handleFilterClose}
+          onFilterReset={handleFilterReset}
+        /> */}
         <Paper sx={{ p: 0, borderRadius: 0 }}>
           <TableContainer className="aggregate-summary" sx={{ p: 0 }}>
             <Table stickyHeader aria-label="sticky table" sx={{ p: 0 }}>

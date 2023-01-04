@@ -1,23 +1,37 @@
 import { Box, Button, CircularProgress } from "@mui/material";
-import { useState } from "react";
+import { pull } from "../../../../utils";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import FilterByCategory from "./FilterByCategory";
 import FilterByOwnership from "./FilterByOwnership";
 import FilterByService from "./FilterByService";
-import { usePrepareDataForFilter } from "./usePrepareDataForFilter";
 
-const Filter = ({ onClose }) => {
+const Filter = ({ onClose, onReset }) => {
   const { t } = useTranslation();
-  const {
-    categoryOptions,
-    ownershipOptions,
-    listDataElementOfService,
-    loading,
-  } = usePrepareDataForFilter();
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedOwnerships, setSelectedOwnerships] = useState([]);
+
+  const [categoryOptions, setCategoryOptions] = useState(null);
+  const [ownershipOptions, setOwnershipOptions] = useState(null);
+  const [listDataElementOfService, setListDataElementOfService] =
+    useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+
+      const result = await pull("/api/getD2W1FilterData");
+      console.log(result);
+      setCategoryOptions(result?.data.categories);
+      setOwnershipOptions(result?.data.ownerships);
+      setListDataElementOfService(result?.data.services);
+
+      setLoading(false);
+    })();
+  }, []);
 
   return (
     <Box
@@ -103,6 +117,7 @@ const Filter = ({ onClose }) => {
             ["&:hover"]: { backgroundColor: "rgba(255, 193, 7, 0.5)" },
           }}
           onClick={() => {
+            onReset();
             setSelectedCategories([]);
             setSelectedServices([]);
             setSelectedOwnerships([]);

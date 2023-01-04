@@ -40,7 +40,7 @@ const FilterByOwnership = ({
                     }}
                   />
                 }
-                label={vs.displayFormName}
+                label={vs.name}
               />
             );
           })}

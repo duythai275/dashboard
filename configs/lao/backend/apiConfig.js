@@ -170,6 +170,45 @@ const apis = [
     },
   },
   {
+    route: `/api/getD2W1FilterData`,
+    handler: async (dhis2Apis) => {
+      const resultCategory = await dhis2Apis[1].get(
+        `/api/optionSets/VVvpXcJJq6s.json?fields=options[code,displayFormName]`
+      );
+      const resultOwnership = await dhis2Apis[1].get(
+        `/api/optionSets/agCcJXpPtBM.json?fields=options[code,displayFormName]`
+      );
+      const resultListDataElementOfService = await dhis2Apis[1].get(
+        `/api/programs/nOPMZMF91F6.json?filter=programStages.id:eq:es7vEDfcKx8&fields=programStages[id,name,programStageDataElements[dataElement[id,displayFormName]]]`
+      );
+
+      const categories = resultCategory
+        ? resultCategory.data.options.map(({ code, displayFormName }) => ({
+            code,
+            name: displayFormName,
+          }))
+        : [];
+
+      const ownerships = resultOwnership
+        ? resultCategory.data.options.map(({ code, displayFormName }) => ({
+            code,
+            name: displayFormName,
+          }))
+        : [];
+
+      const services = resultListDataElementOfService
+        ? resultListDataElementOfService.data.programStages[0].programStageDataElements.map(
+            ({ dataElement }) => ({
+              id: dataElement.id,
+              name: dataElement.displayFormName,
+            })
+          )
+        : [];
+
+      return { categories, ownerships, services };
+    },
+  },
+  {
     route: `/api/getDashboard3Widget1Tab1Data`,
     handler: async (dhis2Apis, req) => {
       const { ou, oug, period, year } = req.query;

@@ -47,7 +47,7 @@ const FilterByService = ({
                     }}
                   />
                 }
-                label={de.displayFormName.replace("Fixed Services", "")}
+                label={de.name.replace("Fixed Services", "")}
               />
             );
           })}

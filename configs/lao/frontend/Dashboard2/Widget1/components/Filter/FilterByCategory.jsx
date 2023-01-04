@@ -40,7 +40,7 @@ const FilterByCategory = ({
                     }}
                   />
                 }
-                label={vs.displayFormName}
+                label={vs.name}
               />
             );
           })}
