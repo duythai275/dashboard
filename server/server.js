@@ -30,6 +30,7 @@ const startServer = async () => {
   }, 3600000);
 
   app.get("/", (req, res) => {
+    ``;
     res.sendFile(path.resolve("./index.html"));
   });
 
