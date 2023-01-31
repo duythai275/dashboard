@@ -369,7 +369,7 @@ const dhis2ApiConfigs = [
     //baseUrl:"http://10.201.48.100:8080/hmis",
     //clientId: "hmispublicdashboard",
     //clientSecret: "057de9135-d058-a911-9a07-3dffaf5e44b",
-    //refreshToken: "vnyxj3i2c14JllFWnmPKn9t7x0E"
+    //refreshToken: "krikloya8mGrqSWpMuPFEaaS-Dw"
   },
   {
     //development
@@ -381,7 +381,7 @@ const dhis2ApiConfigs = [
     //baseUrl:"http://10.201.48.100:8080/hmis",
     //clientId: "surveypublicdashboard",
     //clientSecret: "eebc7d604-21d1-3457-bb61-1c6175b442e",
-    //refreshToken: "Vaf0oQfWxEuyqatXknkC_W5YSkE"
+    //refreshToken: "L2_1DKZ6o7D4loFVd4javLWOd-Y"
   }
 ];
 
