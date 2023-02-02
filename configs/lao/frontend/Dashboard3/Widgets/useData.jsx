@@ -19,31 +19,26 @@ const useData = (selectedOu, selectedPeriod, setLoading) => {
         .join(";");
       const period = getListPeriod(selectedPeriod).listPeriod.join(";");
       const year = getListPeriod(selectedPeriod).year;
-      const result = await Promise.all([
-        await pull(
-          `/api/getDashboard3Widget1Tab1Data?ou=${selectedOu.id}&oug=${oug}&period=${period}&year=${year}`
-        ),
-        await pull(
-          `/api/getDashboard3Widget1Tab2Data?ou=${selectedOu.id}&oug=${oug}&period=${period}&year=${year}`
-        ),
-        await pull(
-          `/api/getDashboard3Widget1Tab3Data?ou=${selectedOu.id}&oug=${oug}&period=${period}&year=${year}`
-        ),
-        await pull(
-          `/api/getDashboard3Widget1Tab4Data?ou=${selectedOu.id}&oug=${oug}&period=${period}&year=${year}`
-        ),
-        await pull(
-          `/api/getDashboard3Widget1Tab5Data?ou=${selectedOu.id}&oug=${oug}&period=${period}&year=${year}`
-        ),
-      ]);
+
+      const result = await Promise.all(
+        LIST_TABS.map((_, index) => {
+          return pull(
+            `/api/getDashboard3Widget1Tab${index + 1}Data?ou=${
+              selectedOu.id
+            }&oug=${oug}&period=${period}&year=${year}`
+          );
+        })
+      );
       const popLiveBirth = result[0].data.popLiveBirth;
-      setResult({
-        [LIST_TABS[0]]: result[0].data,
-        [LIST_TABS[1]]: { ...result[1].data, popLiveBirth },
-        [LIST_TABS[2]]: { ...result[2].data, popLiveBirth },
-        [LIST_TABS[3]]: { ...result[3].data, popLiveBirth },
-        [LIST_TABS[4]]: { ...result[4].data, popLiveBirth },
+      const dataResult = {};
+      LIST_TABS.forEach((item, index) => {
+        const data =
+          index === 0
+            ? result[index].data
+            : { ...result[index].data, popLiveBirth };
+        dataResult[item] = data;
       });
+      setResult(dataResult);
       setLoading(false);
     })();
   }, [selectedOu, selectedPeriod]);

@@ -17,6 +17,8 @@ import TabDetail from "./Tab";
 import { LIST_HEADER } from "../common/constant/listHeader";
 import useData from "./useData";
 
+const Z_ORG_UNIT_ID = "KEGktGHjhYQ";
+
 const Widget1 = ({ setLoading }) => {
   const { i18n, t } = useTranslation();
   const orgUnits = useMetadataStore((state) => state.hmisOrgUnits);
@@ -37,9 +39,9 @@ const Widget1 = ({ setLoading }) => {
     const result = orgUnits
       .filter(
         (item) =>
-          !item.ancestors.find((ancestor) => ancestor.id === "KEGktGHjhYQ")
+          !item.ancestors.find((ancestor) => ancestor.id === Z_ORG_UNIT_ID)
       )
-      .filter((item) => item.id !== "KEGktGHjhYQ")
+      .filter((item) => item.id !== Z_ORG_UNIT_ID)
       .filter((item) => item.level < 5);
     const result1 = result.filter((item) => {
       if (item.level > 3) return null;

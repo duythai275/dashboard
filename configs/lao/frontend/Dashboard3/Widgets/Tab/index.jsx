@@ -73,25 +73,16 @@ const TabDetail = ({
       <TableBody>
         {filteredSelectOrgUnit.map((orgUnit) => {
           let total = 0;
-          const estimatedLiveBirths =
-            tab !== "epiPenta3"
-              ? (
-                  ((data.popLiveBirth.find((item) => item.ou === orgUnit.id)
-                    ?.value &&
-                    data.popLiveBirth.find((item) => item.ou === orgUnit.id)
-                      ?.value * 1) ||
-                    0) /
-                  (MONTHS_IN_YEAR /
-                    getListPeriod(selectedPeriod).listPeriod.length)
-                ).toFixed(0)
-              : (
-                  ((data.est.find((item) => item.ou === orgUnit.id)?.value &&
-                    data.est.find((item) => item.ou === orgUnit.id)?.value *
-                      1) ||
-                    0) /
-                  (MONTHS_IN_YEAR /
-                    getListPeriod(selectedPeriod).listPeriod.length)
-                ).toFixed(0);
+          const estimatedLiveBirths = (
+            ((data[tab !== "epiPenta3" ? "popLiveBirth" : "est"].find(
+              (item) => item.ou === orgUnit.id
+            )?.value &&
+              data[tab !== "epiPenta3" ? "popLiveBirth" : "est"].find(
+                (item) => item.ou === orgUnit.id
+              )?.value * 1) ||
+              0) /
+            (MONTHS_IN_YEAR / getListPeriod(selectedPeriod).listPeriod.length)
+          ).toFixed(0);
           const target =
             data.target.find((item) => item.ou === orgUnit.id)?.value &&
             data.target.find((item) => item.ou === orgUnit.id)?.value * 1;
@@ -190,28 +181,18 @@ const TabDetail = ({
             {(() => {
               const result = filteredSelectOrgUnit
                 .map((orgUnit) => {
-                  const estimatedLiveBirths =
-                    tab !== "epiPenta3"
-                      ? (
-                          ((data.popLiveBirth.find(
-                            (item) => item.ou === orgUnit.id
-                          )?.value &&
-                            data.popLiveBirth.find(
-                              (item) => item.ou === orgUnit.id
-                            )?.value * 1) ||
-                            0) /
-                          (MONTHS_IN_YEAR /
-                            getListPeriod(selectedPeriod).listPeriod.length)
-                        ).toFixed(0)
-                      : (
-                          ((data.est.find((item) => item.ou === orgUnit.id)
-                            ?.value &&
-                            data.est.find((item) => item.ou === orgUnit.id)
-                              ?.value * 1) ||
-                            0) /
-                          (MONTHS_IN_YEAR /
-                            getListPeriod(selectedPeriod).listPeriod.length)
-                        ).toFixed(0);
+                  const estimatedLiveBirths = (
+                    ((data[tab !== "epiPenta3" ? "popLiveBirth" : "est"].find(
+                      (item) => item.ou === orgUnit.id
+                    )?.value &&
+                      data[tab !== "epiPenta3" ? "popLiveBirth" : "est"].find(
+                        (item) => item.ou === orgUnit.id
+                      )?.value * 1) ||
+                      0) /
+                    (MONTHS_IN_YEAR /
+                      getListPeriod(selectedPeriod).listPeriod.length)
+                  ).toFixed(0);
+
                   return estimatedLiveBirths;
                 })
                 .reduce((p, c) => p + (c ? c * 1 : 0), 0);
@@ -241,28 +222,17 @@ const TabDetail = ({
                 .reduce((p, c) => p + c, 0);
               const totalEst = filteredSelectOrgUnit
                 .map((orgUnit) => {
-                  const estimatedLiveBirths =
-                    tab !== "epiPenta3"
-                      ? (
-                          ((data.popLiveBirth.find(
-                            (item) => item.ou === orgUnit.id
-                          )?.value &&
-                            data.popLiveBirth.find(
-                              (item) => item.ou === orgUnit.id
-                            )?.value * 1) ||
-                            0) /
-                          (MONTHS_IN_YEAR /
-                            getListPeriod(selectedPeriod).listPeriod.length)
-                        ).toFixed(0)
-                      : (
-                          ((data.est.find((item) => item.ou === orgUnit.id)
-                            ?.value &&
-                            data.est.find((item) => item.ou === orgUnit.id)
-                              ?.value * 1) ||
-                            0) /
-                          (MONTHS_IN_YEAR /
-                            getListPeriod(selectedPeriod).listPeriod.length)
-                        ).toFixed(0);
+                  const estimatedLiveBirths = (
+                    ((data[tab !== "epiPenta3" ? "popLiveBirth" : "est"].find(
+                      (item) => item.ou === orgUnit.id
+                    )?.value &&
+                      data[tab !== "epiPenta3" ? "popLiveBirth" : "est"].find(
+                        (item) => item.ou === orgUnit.id
+                      )?.value * 1) ||
+                      0) /
+                    (MONTHS_IN_YEAR /
+                      getListPeriod(selectedPeriod).listPeriod.length)
+                  ).toFixed(0);
                   return estimatedLiveBirths;
                 })
                 .reduce((p, c) => p + (c ? c * 1 : 0), 0);

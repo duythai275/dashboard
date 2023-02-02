@@ -1,7 +1,7 @@
 export const RATIO = {
-  under1Death: 1000,
-  under5Death: 1000,
-  maternalDeath: 100000,
+  under1Death: 1_000,
+  under5Death: 1_000,
+  maternalDeath: 100_000,
   sbaDelivery: 100,
   epiPenta3: 100,
 };
