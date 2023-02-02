@@ -143,12 +143,8 @@ const apis = [
   {
     route: `/api/getD2W1FilterData`,
     handler: async (dhis2Apis) => {
-      const resultCategory = await dhis2Apis[1].get(
-        `/api/optionSets/VVvpXcJJq6s.json?fields=options[code,displayFormName]`
-      );
-      const resultOwnership = await dhis2Apis[1].get(
-        `/api/optionSets/agCcJXpPtBM.json?fields=options[code,displayFormName]`
-      );
+      const resultCategory = await dhis2Apis[1].get(`/api/optionSets/VVvpXcJJq6s.json?fields=options[code,displayFormName]`);
+      const resultOwnership = await dhis2Apis[1].get(`/api/optionSets/agCcJXpPtBM.json?fields=options[code,displayFormName]`);
       const resultListDataElementOfService = await dhis2Apis[1].get(
         `/api/programs/nOPMZMF91F6.json?filter=programStages.id:eq:es7vEDfcKx8&fields=programStages[id,name,programStageDataElements[dataElement[id,displayFormName]]]`
       );
@@ -156,28 +152,26 @@ const apis = [
       const categories = resultCategory
         ? resultCategory.data.options.map(({ code, displayFormName }) => ({
             code,
-            name: displayFormName,
+            name: displayFormName
           }))
         : [];
 
       const ownerships = resultOwnership
         ? resultCategory.data.options.map(({ code, displayFormName }) => ({
             code,
-            name: displayFormName,
+            name: displayFormName
           }))
         : [];
 
       const services = resultListDataElementOfService
-        ? resultListDataElementOfService.data.programStages[0].programStageDataElements.map(
-            ({ dataElement }) => ({
-              id: dataElement.id,
-              name: dataElement.displayFormName,
-            })
-          )
+        ? resultListDataElementOfService.data.programStages[0].programStageDataElements.map(({ dataElement }) => ({
+            id: dataElement.id,
+            name: dataElement.displayFormName
+          }))
         : [];
 
       return { categories, ownerships, services };
-    },
+    }
   },
   {
     route: `/api/getDashboard3Widget1Tab1Data`,
@@ -364,7 +358,7 @@ const dhis2ApiConfigs = [
     baseUrl: "https://hmis.gov.la/hmis",
     clientId: "hmispublicdashboarddev",
     clientSecret: "bfed13089-0720-194f-462c-69827851837",
-    refreshToken: "PbWy0kcCL1BEv0lAsuiY9DO_-Q4"
+    refreshToken: "DZyrPbXtdJPW8eTCMLwhXWLvGXU"
     //production
     //baseUrl:"http://10.201.48.100:8080/hmis",
     //clientId: "hmispublicdashboard",
@@ -376,7 +370,7 @@ const dhis2ApiConfigs = [
     baseUrl: "https://dhis2.world/survey",
     clientId: "surveypublicdashboarddev",
     clientSecret: "a03f6bf84-87e8-5da7-eed6-5f821430c75",
-    refreshToken: "K08Wt5GPAXwyiTMonjRIkKqMcyw"
+    refreshToken: "4WGNayPyTfZn6xLeLohZy3kNVak"
     //production
     //baseUrl:"http://10.201.48.100:8080/hmis",
     //clientId: "surveypublicdashboard",
