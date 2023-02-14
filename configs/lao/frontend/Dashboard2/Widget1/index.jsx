@@ -163,7 +163,133 @@ const Widget1 = ({ setLoading }) => {
     (async () => {
       setLoading(true);
       const result = await pull("/api/getDashboard2Widget1Data");
-      const currentData = result?.data?.trackedEntityInstances;
+      const ATTRIBUTE_IDS = [
+        "qs7l1gtT608",
+        "cKpZaSvAxzK",
+        "CsjieOOZ9pv",
+        "NsOTMYIp3qX",
+        "Bjh8c1UMXTZ",
+        "In7PRC47OtU",
+        "LlmU76ZZ77P",
+        "N55gZ9oPehi",
+        "Lazma6Rapgs",
+        "KVaIZ8B0a1B",
+        "WZ9PffiEDcO",
+        "YKmbwdflzrG",
+        "j5zwTrfUJf9",
+        "mN2mzPmXotd",
+        "pEyDXrIVO0b",
+        "V9db007buZE",
+        "KatN02ohdCd",
+      ];
+      const findHeaderIndex = (headers, name) => {
+        const found = headers.findIndex((header) => header.name === name);
+        return found;
+      };
+      const teiIndex = findHeaderIndex(result.data.headers, "tei");
+      const orgUnitIndex = findHeaderIndex(result.data.headers, "ou");
+      const enrollmentDateIndex = findHeaderIndex(
+        result.data.headers,
+        "enrollmentdate"
+      );
+      const eventIndex = findHeaderIndex(result.data.headers, "psi");
+      const programStateIndex = findHeaderIndex(result.data.headers, "ps");
+      const enrollmentIndex = findHeaderIndex(result.data.headers, "pi");
+      const eventDateIndex = findHeaderIndex(result.data.headers, "eventdate");
+      const listDataValueIndex = result.data.headers.map((item) => {
+        if (
+          item.name.includes("es7vEDfcKx8.") &&
+          !ATTRIBUTE_IDS.includes(item.name.replace("es7vEDfcKx8.", ""))
+        ) {
+          return item;
+        }
+        return "";
+      });
+      const listAttributeIndex = result.data.headers.map((item) => {
+        if (
+          item.name.includes("es7vEDfcKx8.") &&
+          ATTRIBUTE_IDS.includes(item.name.replace("es7vEDfcKx8.", ""))
+        ) {
+          return item;
+        }
+        return "";
+      });
+
+      let listTeiResult = [];
+      result.data.rows.forEach((row) => {
+        const target = listTeiResult.findIndex(
+          (item) => item.trackedEntityInstance === row[teiIndex]
+        );
+        if (target !== -1) {
+          listTeiResult[target].enrollments[0].events = [
+            ...listTeiResult[target].enrollments.events,
+            row,
+          ];
+          return;
+        }
+        const dataValues = listDataValueIndex
+          .map((item, index) => {
+            if (item) {
+              const value =
+                row[index] === "1"
+                  ? "true"
+                  : row[index] === "0"
+                  ? "false"
+                  : row[index];
+              return {
+                dataElement: item.name.replace("es7vEDfcKx8.", ""),
+                value,
+              };
+            }
+            return null;
+          })
+          .filter((item) => item);
+        const attributes = listAttributeIndex
+          .map((item, index) => {
+            if (item) {
+              const value =
+                row[index] === "1"
+                  ? "true"
+                  : row[index] === "0"
+                  ? "false"
+                  : row[index];
+              return {
+                attribute: item.name.replace("es7vEDfcKx8.", ""),
+                value,
+              };
+            }
+            return null;
+          })
+          .filter((item) => item);
+        const event = {
+          event: row[eventIndex],
+          program: "nOPMZMF91F6",
+          programState: row[programStateIndex],
+          orgUnit: row[orgUnitIndex],
+          trackedEntityInstance: row[teiIndex],
+          enrollment: row[enrollmentIndex],
+          eventDate: row[eventDateIndex],
+          dataValues,
+        };
+        const newTei = {
+          attributes,
+          trackedEntityInstance: row[teiIndex],
+          orgUnit: row[orgUnitIndex],
+          enrollments: [
+            {
+              program: "nOPMZMF91F6",
+              events: [event],
+              orgUnit: row[orgUnitIndex],
+              trackedEntityInstance: row[teiIndex],
+              enrollmentDate: row[enrollmentDateIndex],
+              enrollment: row[enrollmentIndex],
+            },
+          ],
+        };
+        listTeiResult.push(newTei);
+      });
+      const currentData = listTeiResult;
+
       const typeOfFacilityData = getTypeOfFacilities();
       const ouListData = getOuList(currentData);
 
