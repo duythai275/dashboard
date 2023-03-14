@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 import express from "express";
 import path from "path";
-import { getRefreshToken } from "./src/api.js";
+import { generateOauth2Api, generateBasicApi } from "./src/api.js";
 dotenv.config();
 const { VITE_APP_MODE, VITE_CONFIG_NAME } = process.env;
 const isProduction = VITE_APP_MODE === "production";
@@ -11,7 +11,12 @@ const port = isProduction ? 80 : 3001;
 const generateDhis2Apis = async (dhis2ApiConfigs) => {
   const dhis2Apis = await Promise.all(
     dhis2ApiConfigs.map(async (config) => {
-      return getRefreshToken(config);
+      console.log(config);
+      if (config.type === "basic") {
+        return generateBasicApi(config);
+      } else {
+        return generateOauth2Api(config);
+      }
     })
   );
   app.set("dhis2Apis", dhis2Apis);

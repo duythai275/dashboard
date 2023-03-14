@@ -3,7 +3,7 @@ import axios from "axios";
 import qs from "qs";
 dotenv.config();
 
-const getRefreshToken = async (config) => {
+const generateOauth2Api = async (config) => {
   const { baseUrl, clientId, clientSecret, refreshToken } = config;
   const data = qs.stringify({
     grant_type: "refresh_token",
@@ -29,10 +29,20 @@ const getRefreshToken = async (config) => {
   return dhis2Api;
 };
 
+const generateBasicApi = async (config) => {
+  const { baseUrl, username, password } = config;
+
+  const dhis2Api = axios.create({
+    baseURL: baseUrl,
+    headers: {
+      Authorization: "Basic " + Buffer.from(`${username}:${password}`).toString("base64")
+    }
+  });
+  return dhis2Api;
+};
+
 const getOrgUnits = async (dhis2Api) => {
-  const result = await dhis2Api.get(
-    "/api/organisationUnits?paging=false&fields=id,name,displayName,parent,path,ancestors,translations"
-  );
+  const result = await dhis2Api.get("/api/organisationUnits?paging=false&fields=id,name,displayName,parent,path,ancestors,translations");
   return result.data.organisationUnits;
 };
 
@@ -43,4 +53,4 @@ const getGeoJson = async (dhis2Api) => {
   return orgUnitGeoJsonResult.data;
 };
 
-export { getRefreshToken, getOrgUnits, getGeoJson };
+export { generateOauth2Api, generateBasicApi, getOrgUnits, getGeoJson };
