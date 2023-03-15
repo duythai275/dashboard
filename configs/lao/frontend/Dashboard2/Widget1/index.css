@@ -1,6 +1,6 @@
 .aggregate-summary {
   margin: 0;
-  border: 1px solid rgba(224, 224, 224, 1);
+  border: 1px solid #e0e0e0;
 }
 
 .aggregate-summary th {
@@ -18,9 +18,13 @@
   background-color: #f8f8f8;
 }
 
+.aggregate-summary tr:hover td {
+  background-color: #ebedf7;
+}
+
 .aggregate-summary tr td,
 .aggregate-summary tr th {
-  border-right: 1px solid rgba(224, 224, 224, 1);
+  border-right: 1px solid #e0e0e0;
 }
 
 .aggregate-summary tr td:last-child,
