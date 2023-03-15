@@ -320,9 +320,9 @@ const Widget1 = ({ setLoading }) => {
           onFilterClose={handleFilterClose}
           onFilterReset={handleFilterReset}
         /> */}
-        <Paper sx={{ p: 0, borderRadius: 0 }}>
-          <TableContainer className="aggregate-summary" sx={{ p: 0 }}>
-            <Table stickyHeader aria-label="sticky table" sx={{ p: 0 }}>
+        <Box sx={{ p: 1 }}>
+          <TableContainer className="aggregate-summary">
+            <Table stickyHeader sx={{ p: 0 }}>
               <TableHead>
                 <TableRow>
                   {typeOfFacilities.map((facility, idx) => (
@@ -334,55 +334,62 @@ const Widget1 = ({ setLoading }) => {
                           ? {
                               position: "sticky",
                               left: 0,
-                              background: "white",
+                              background: "#fff",
                               zIndex: 800,
                             }
                           : {}
                       }
                     >
-                      <TableSortLabel
-                        active
-                        direction={orderBy === facility.id ? order : "asc"}
-                        onClick={handleRequestSort(facility.id)}
-                        sx={{
-                          whiteSpace: "nowrap",
-                          "&.Mui-active": { color: "#fefefe" },
-                          " svg": {
-                            fontSize: "15px",
-                          },
-                          "& path": {
-                            color: "#fefefe",
-                          },
-                        }}
-                      >
-                        {i18n.language === "lo" &&
-                        facility.id !== "orgUnit" &&
-                        facility.id !== "total" &&
-                        facility.translations.find(
-                          (translation) =>
-                            translation.locale === "lo" &&
-                            translation.property === "NAME"
-                        )
-                          ? facility.translations.find(
-                              (translation) =>
-                                translation.locale === "lo" &&
-                                translation.property === "NAME"
-                            ).value
-                          : facility.name}
-                        {orderBy === facility.id ? (
-                          <Box component="span" sx={visuallyHidden}>
-                            {order === "desc"
-                              ? "sorted descending"
-                              : "sorted ascending"}
-                          </Box>
-                        ) : null}
-                      </TableSortLabel>
+                      <Box>
+                        <TableSortLabel
+                          active
+                          direction={orderBy === facility.id ? order : "asc"}
+                          onClick={handleRequestSort(facility.id)}
+                          sx={{
+                            whiteSpace: "nowrap",
+                            "&.Mui-active": {
+                              color: "#555e68",
+                              fontWeight: "bold",
+                            },
+                            " svg": {
+                              ml: 1,
+                              mt: "2px",
+                              fontSize: "15px",
+                            },
+                            "& path": {
+                              color: "#555e68",
+                            },
+                          }}
+                        >
+                          {i18n.language === "lo" &&
+                          facility.id !== "orgUnit" &&
+                          facility.id !== "total" &&
+                          facility.translations.find(
+                            (translation) =>
+                              translation.locale === "lo" &&
+                              translation.property === "NAME"
+                          )
+                            ? facility.translations.find(
+                                (translation) =>
+                                  translation.locale === "lo" &&
+                                  translation.property === "NAME"
+                              ).value
+                            : facility.name}
+                          {orderBy === facility.id ? (
+                            <Box component="span" sx={visuallyHidden}>
+                              {order === "desc"
+                                ? "sorted descending"
+                                : "sorted ascending"}
+                            </Box>
+                          ) : null}
+                        </TableSortLabel>
+                      </Box>
                     </TableCell>
                   ))}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {stableSortRows.map(({ cellData }) => (
+                {stableSortRows.map(({ cellData }, cellIdx) => (
                   <TableRow>
                     {typeOfFacilities.map((item, idx) => (
                       <TableCell
@@ -391,7 +398,8 @@ const Widget1 = ({ setLoading }) => {
                             ? {
                                 position: "sticky",
                                 left: 0,
-                                background: "white",
+                                background:
+                                  cellIdx % 2 !== 0 ? "white" : "#f8f8f8",
                                 zIndex: 800,
                               }
                             : {}
@@ -410,7 +418,7 @@ const Widget1 = ({ setLoading }) => {
                           ? {
                               position: "sticky",
                               left: 0,
-                              background: "white",
+                              background: "#f8f8f8",
                               zIndex: 800,
                             }
                           : {}
@@ -423,7 +431,7 @@ const Widget1 = ({ setLoading }) => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Paper>
+        </Box>
       </Box>
     </Custom>
   ) : (
