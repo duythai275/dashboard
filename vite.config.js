@@ -7,6 +7,9 @@ export default ({ mode }) => {
   return defineConfig({
     base: process.env.VITE_PRODUCTION_BASE,
     plugins: [react()],
+    build: {
+      sourcemap: true
+    },
     resolve: {
       alias: {
         "@/config": path.resolve(__dirname, `./configs/${process.env.VITE_CONFIG_NAME}/frontend`),

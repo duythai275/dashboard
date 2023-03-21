@@ -1,0 +1,23 @@
+{
+  "launch_path": "index.html",
+  "default_locale": "en",
+  "activities": {
+    "dhis": {
+      "href": "*"
+    }
+  },
+  "appType": "APP",
+  "name": "",
+  "version": "0.1.1",
+  "description": "",
+  "developer": {
+    "name": "HISPVN Team"
+  },
+  "key": "cd",
+  "short_name": "cd",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}

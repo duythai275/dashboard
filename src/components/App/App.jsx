@@ -9,7 +9,7 @@ const { VITE_MODE } = import.meta.env;
 const App = () => {
   const { i18n } = useTranslation();
   const language = useSelectionStore((state) => state.language);
-
+  console.log(VITE_MODE);
   useEffect(() => {
     i18n.changeLanguage(language);
   }, [language]);

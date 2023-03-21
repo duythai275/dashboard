@@ -2,15 +2,19 @@
   "name": "dashboard-env",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "start": "cross-env VITE_APP_MODE=development vite",
     "server": "cross-env VITE_APP_MODE=development nodemon ./server/server.js",
-    "build": "cross-env VITE_MODE=production vite build",
+    "build": "cross-env VITE_APP_MODE=production vite build",
+    "build-internal": "cross-env VITE_APP_MODE=production vite build",
+    "postbuild-internal": "node ./scripts/postbuild.js && cd dist && bestzip dashboard.zip *",
     "preview": "vite preview",
     "create-bundle": "cross-env VITE_APP_MODE=production vite build && node ./scripts/createBundle.js"
   },
   "dependencies": {
+    "@dhis2/app-runtime": "^3.9.0",
+    "@dhis2/d2-i18n": "^1.1.1",
+    "@dhis2/ui": "^8.12.3",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@fontsource/roboto": "^4.5.8",
@@ -43,6 +47,7 @@
     "react-i18next": "^12.0.0",
     "react-leaflet": "^4.1.0",
     "styled-components": "^5.3.6",
+    "styled-jsx": "^5.1.2",
     "usehooks-ts": "^2.9.1",
     "yarn": "^1.22.19",
     "zustand": "^4.1.3"
