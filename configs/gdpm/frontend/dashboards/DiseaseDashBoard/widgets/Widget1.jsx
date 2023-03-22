@@ -34,15 +34,15 @@ const Widget1 = ({ setLoading, code, ou }) => {
           {
             type: "line",
             label: new Date().getFullYear(),
-            borderColor: "rgb(255, 99, 132)",
-            borderWidth: 2,
+            borderColor: "#9E0059",
+            borderWidth: 3,
             fill: false,
             data: weeks().map(() => Math.floor(Math.random() * (1000 - 0))),
           },
           {
             type: "bar",
             label: new Date().getFullYear() - 1,
-            backgroundColor: "rgb(75, 192, 192)",
+            backgroundColor: "#0E79B2",
             data: weeks().map(() => Math.floor(Math.random() * (1000 - 0))),
             borderColor: "white",
             borderWidth: 2,
