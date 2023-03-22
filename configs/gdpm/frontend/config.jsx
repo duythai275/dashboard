@@ -52,10 +52,10 @@ const useDashboardInitialization = () => {
           "/api/organisationUnits?filter=level:eq:4&fields=id,name,ancestors[id,name,level]"
         ),
       ]);
-      setMetadata("diseases", results[0].options);
+      setMetadata("diseases", results[0].optionSets[0].options);
       setMetadata("ouGroups", results[1].organisationUnitGroups);
       setMetadata("communes", results[2].organisationUnits);
-
+      console.log(results[0].optionSets[0].options);
       initDashboardState([
         {
           widgets: [
