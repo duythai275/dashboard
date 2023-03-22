@@ -5,9 +5,9 @@ const locales = [
     translations: [
       {
         key: "dashboard1Title",
-        value: "Đây là dashboard 1"
-      }
-    ]
+        value: "Đây là dashboard 1",
+      },
+    ],
   },
   {
     code: "en",
@@ -15,9 +15,9 @@ const locales = [
     translations: [
       {
         key: "dashboard1Title",
-        value: "This is dashboard 1"
-      }
-    ]
-  }
+        value: "This is dashboard 1",
+      },
+    ],
+  },
 ];
 export default locales;
