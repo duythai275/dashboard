@@ -4,7 +4,7 @@ import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenL
 import { useTranslation } from "react-i18next";
 import useMetadataStore from "@/state/metadata";
 import { pull } from "../utils";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 
 const Widget3 = ({ setLoading }) => {
   const { hmisOrgUnits, hmisDataItems } = useMetadataStore(
@@ -33,13 +33,7 @@ const Widget3 = ({ setLoading }) => {
         const foundDi = hmisDataItems.find((di) => di.id === de);
         return foundDi;
       });
-      const colors = [
-        "rgb(168, 191, 36)",
-        "rgb(81, 140, 195)",
-        "rgb(215, 69, 84)",
-        "rgb(255, 158, 33)",
-        "rgb(150, 143, 143)"
-      ];
+      const colors = ["rgb(168, 191, 36)", "rgb(81, 140, 195)", "rgb(215, 69, 84)", "rgb(255, 158, 33)", "rgb(150, 143, 143)"];
       let currentData = {};
       currentData.labels = result.pes;
       currentData.datasets = dataItems.map((di, index) => ({

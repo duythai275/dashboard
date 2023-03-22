@@ -5,7 +5,9 @@ const useDashboardStore = create((set, get) => ({
   selectedDashboard: null,
   dashboardState: null,
   additionalState: {},
+  dashboards: [],
   layout: null,
+  setDashboards: (dashboards) => set(() => ({ dashboards: dashboards })),
   selectDashboard: (dashboard) => set(() => ({ selectedDashboard: dashboard })),
   initDashboardState: (dashboardState) => set(() => ({ dashboardState })),
   changeDashboardState: (dashboardIndex, newState) =>

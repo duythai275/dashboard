@@ -1,6 +1,6 @@
 import useDashboardStore from "@/state/dashboard";
 import { useEffect, useState } from "react";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 import Dashboard1 from "./Dashboard1/Dashboard1";
 import Dashboard2 from "./Dashboard2/Dashboard2";
 import useAdditionalLocale from "@/hooks/App/useAdditionalLocale";
@@ -14,11 +14,11 @@ import Dashboard3 from "./Dashboard3/Dashboard3";
 const dashboards = [
   { name: "dashboard1Title", dashboard: Dashboard1 },
   { name: "dashboard2Title", dashboard: Dashboard2 },
-  { name: "dashboard3Title", dashboard: Dashboard3 },
+  { name: "dashboard3Title", dashboard: Dashboard3 }
 ];
 const languages = locales.map((locale) => ({
   name: locale.name,
-  code: locale.code,
+  code: locale.code
 }));
 
 const useDashboardInitialization = () => {
@@ -32,7 +32,7 @@ const useDashboardInitialization = () => {
   const { initDashboardState, selectDashboard } = useDashboardStore(
     (state) => ({
       initDashboardState: state.initDashboardState,
-      selectDashboard: state.selectDashboard,
+      selectDashboard: state.selectDashboard
     }),
     shallow
   );
@@ -48,45 +48,45 @@ const useDashboardInitialization = () => {
         pull("/api/dataItems"),
         pull("/api/indicators"),
         pull("/api/orgUnitGeoJson"),
-        pull("/api/surveyOptionSets"),
+        pull("/api/surveyOptionSets")
       ]);
       initDashboardState([
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
-        },
+              selectedChildren: 0
+            }
+          ]
+        }
       ]);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });
       setMetadata("hmisOrgUnits", results[0].data);
@@ -97,7 +97,6 @@ const useDashboardInitialization = () => {
       setReady(true);
     })();
   }, []);
-
   return ready;
 };
 

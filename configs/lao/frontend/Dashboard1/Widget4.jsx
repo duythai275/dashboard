@@ -4,7 +4,7 @@ import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenL
 import { useTranslation } from "react-i18next";
 import useMetadataStore from "@/state/metadata";
 import { pull } from "../utils";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 
 const Widget4 = ({ setLoading }) => {
   const { hmisGeoJson } = useMetadataStore((state) => ({ hmisGeoJson: state.hmisGeoJson }), shallow);
@@ -34,9 +34,7 @@ const Widget4 = ({ setLoading }) => {
   return (
     data && (
       <ThematicMap
-        features={hmisGeoJson.features.filter(
-          (feature) => feature.properties.level === "2" && feature.geometry.type !== "Point"
-        )}
+        features={hmisGeoJson.features.filter((feature) => feature.properties.level === "2" && feature.geometry.type !== "Point")}
         data={data}
         legend={legend}
       />

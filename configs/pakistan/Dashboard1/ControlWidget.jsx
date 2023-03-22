@@ -3,7 +3,7 @@ import Custom from "@/components/Widgets/Custom";
 import { DISEASES } from "./const";
 import "./ControlWidget.css";
 import useDashboardStore from "@/state/dashboard";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 import { useEffect } from "react";
 const layout1 = [
   { i: "control", x: 0, y: 0, w: 12, h: 14 },
@@ -61,14 +61,7 @@ const ControlWidget = () => {
                   changeAdditionalStateProperty("selectedLayout", "layout2");
                   const widgets = [{ selectedChildren: 0 }];
                   DISEASES.forEach((disease, index) => {
-                    widgets.push(
-                      ...[
-                        { selectedChildren: 0 },
-                        { selectedChildren: 0 },
-                        { selectedChildren: 0 },
-                        { selectedChildren: 0 }
-                      ]
-                    );
+                    widgets.push(...[{ selectedChildren: 0 }, { selectedChildren: 0 }, { selectedChildren: 0 }, { selectedChildren: 0 }]);
                     // selectWidgetChild(0, 1 + 4 * index, 0);
                     // selectWidgetChild(0, 2 + 4 * index, 0);
                     // selectWidgetChild(0, 3 + 4 * index, 0);

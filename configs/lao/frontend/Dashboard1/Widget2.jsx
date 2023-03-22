@@ -4,7 +4,7 @@ import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenL
 import { useTranslation } from "react-i18next";
 import useMetadataStore from "@/state/metadata";
 import { pull } from "../utils";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 
 const Widget2 = ({ setLoading }) => {
   const { hmisOrgUnits, hmisDataItems } = useMetadataStore(

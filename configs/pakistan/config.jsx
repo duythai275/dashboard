@@ -1,6 +1,6 @@
 import useDashboardStore from "@/state/dashboard";
 import { useEffect, useState } from "react";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 import Dashboard1 from "./Dashboard1/Dashboard1";
 // import Dashboard2 from "./Dashboard2/Dashboard2";
 

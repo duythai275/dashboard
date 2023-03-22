@@ -1,15 +1,15 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { dashboards } from "@/config/config";
 import useDashboardStore from "@/state/dashboard";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 
 const DashboardSelector = () => {
   const { t } = useTranslation();
-  const { selectedDashboard, selectDashboard } = useDashboardStore(
+  const { selectedDashboard, selectDashboard, dashboards } = useDashboardStore(
     (state) => ({
       selectedDashboard: state.selectedDashboard,
-      selectDashboard: state.selectDashboard
+      selectDashboard: state.selectDashboard,
+      dashboards: state.dashboards
     }),
     shallow
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Dashboard1 from "./Dashboard1/Dashboard1";
 import locales from "./locales";
 import useDashboardStore from "@/state/dashboard";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 import { useTranslation } from "react-i18next";
 import useSelectionStore from "@/state/selection";
 import useAdditionalLocale from "@/hooks/App/useAdditionalLocale";

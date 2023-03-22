@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import DataGrid from "@/components/Widgets/DataGrid";
 import useMetadataStore from "@/state/metadata";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 import { useTranslation } from "react-i18next";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { pull } from "../utils";

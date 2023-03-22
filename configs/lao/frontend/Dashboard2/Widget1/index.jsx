@@ -1,18 +1,8 @@
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  TableHead,
-  TableSortLabel,
-  Box,
-} from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, TableHead, TableSortLabel, Box } from "@mui/material";
 import React, { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { visuallyHidden } from "@mui/utils";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 
 import { pull } from "../../utils";
 import { checkType, getComparator, stableSort } from "./utils";
@@ -26,7 +16,7 @@ const Widget1 = ({ setLoading }) => {
   const { hmisOrgUnits, surveyOptionSets } = useMetadataStore(
     (state) => ({
       hmisOrgUnits: state.hmisOrgUnits,
-      surveyOptionSets: state.surveyOptionSets,
+      surveyOptionSets: state.surveyOptionSets
     }),
     shallow
   );
@@ -54,25 +44,21 @@ const Widget1 = ({ setLoading }) => {
       ouList.length
         ? ouList.map((ou) => ({
             id: ou.id,
-            name: i18n.language === "lo" ? ou.nameLo : ou.nameEn,
+            name: i18n.language === "lo" ? ou.nameLo : ou.nameEn
           }))
         : [],
     [i18n.language, JSON.stringify(ouList)]
   );
 
   const getTypeOfFacilities = () => {
-    const typeOfFacilitiesOptionSetFound = surveyOptionSets.find(
-      (optionSet) => optionSet.id === "sKdV9uzCd2Z"
-    );
+    const typeOfFacilitiesOptionSetFound = surveyOptionSets.find((optionSet) => optionSet.id === "sKdV9uzCd2Z");
 
     if (!typeOfFacilitiesOptionSetFound) {
       return [];
     }
 
     const ouCell = [{ name: t("Ou/Facility"), id: "orgUnit" }];
-    const dataTypeOfFacilities = ouCell.concat(
-      typeOfFacilitiesOptionSetFound.options
-    );
+    const dataTypeOfFacilities = ouCell.concat(typeOfFacilitiesOptionSetFound.options);
 
     dataTypeOfFacilities.push({ name: t("total"), id: "total" });
     return dataTypeOfFacilities;
@@ -180,7 +166,7 @@ const Widget1 = ({ setLoading }) => {
         "mN2mzPmXotd",
         "pEyDXrIVO0b",
         "V9db007buZE",
-        "KatN02ohdCd",
+        "KatN02ohdCd"
       ];
       const findHeaderIndex = (headers, name) => {
         const found = headers.findIndex((header) => header.name === name);
@@ -188,28 +174,19 @@ const Widget1 = ({ setLoading }) => {
       };
       const teiIndex = findHeaderIndex(result.data.headers, "tei");
       const orgUnitIndex = findHeaderIndex(result.data.headers, "ou");
-      const enrollmentDateIndex = findHeaderIndex(
-        result.data.headers,
-        "enrollmentdate"
-      );
+      const enrollmentDateIndex = findHeaderIndex(result.data.headers, "enrollmentdate");
       const eventIndex = findHeaderIndex(result.data.headers, "psi");
       const programStateIndex = findHeaderIndex(result.data.headers, "ps");
       const enrollmentIndex = findHeaderIndex(result.data.headers, "pi");
       const eventDateIndex = findHeaderIndex(result.data.headers, "eventdate");
       const listDataValueIndex = result.data.headers.map((item) => {
-        if (
-          item.name.includes("es7vEDfcKx8.") &&
-          !ATTRIBUTE_IDS.includes(item.name.replace("es7vEDfcKx8.", ""))
-        ) {
+        if (item.name.includes("es7vEDfcKx8.") && !ATTRIBUTE_IDS.includes(item.name.replace("es7vEDfcKx8.", ""))) {
           return item;
         }
         return "";
       });
       const listAttributeIndex = result.data.headers.map((item) => {
-        if (
-          item.name.includes("es7vEDfcKx8.") &&
-          ATTRIBUTE_IDS.includes(item.name.replace("es7vEDfcKx8.", ""))
-        ) {
+        if (item.name.includes("es7vEDfcKx8.") && ATTRIBUTE_IDS.includes(item.name.replace("es7vEDfcKx8.", ""))) {
           return item;
         }
         return "";
@@ -217,28 +194,18 @@ const Widget1 = ({ setLoading }) => {
 
       let listTeiResult = [];
       result.data.rows.forEach((row) => {
-        const target = listTeiResult.findIndex(
-          (item) => item.trackedEntityInstance === row[teiIndex]
-        );
+        const target = listTeiResult.findIndex((item) => item.trackedEntityInstance === row[teiIndex]);
         if (target !== -1) {
-          listTeiResult[target].enrollments[0].events = [
-            ...listTeiResult[target].enrollments.events,
-            row,
-          ];
+          listTeiResult[target].enrollments[0].events = [...listTeiResult[target].enrollments.events, row];
           return;
         }
         const dataValues = listDataValueIndex
           .map((item, index) => {
             if (item) {
-              const value =
-                row[index] === "1"
-                  ? "true"
-                  : row[index] === "0"
-                  ? "false"
-                  : row[index];
+              const value = row[index] === "1" ? "true" : row[index] === "0" ? "false" : row[index];
               return {
                 dataElement: item.name.replace("es7vEDfcKx8.", ""),
-                value,
+                value
               };
             }
             return null;
@@ -247,15 +214,10 @@ const Widget1 = ({ setLoading }) => {
         const attributes = listAttributeIndex
           .map((item, index) => {
             if (item) {
-              const value =
-                row[index] === "1"
-                  ? "true"
-                  : row[index] === "0"
-                  ? "false"
-                  : row[index];
+              const value = row[index] === "1" ? "true" : row[index] === "0" ? "false" : row[index];
               return {
                 attribute: item.name.replace("es7vEDfcKx8.", ""),
-                value,
+                value
               };
             }
             return null;
@@ -269,7 +231,7 @@ const Widget1 = ({ setLoading }) => {
           trackedEntityInstance: row[teiIndex],
           enrollment: row[enrollmentIndex],
           eventDate: row[eventDateIndex],
-          dataValues,
+          dataValues
         };
         const newTei = {
           attributes,
@@ -282,9 +244,9 @@ const Widget1 = ({ setLoading }) => {
               orgUnit: row[orgUnitIndex],
               trackedEntityInstance: row[teiIndex],
               enrollmentDate: row[enrollmentDateIndex],
-              enrollment: row[enrollmentIndex],
-            },
-          ],
+              enrollment: row[enrollmentIndex]
+            }
+          ]
         };
         listTeiResult.push(newTei);
       });
@@ -307,11 +269,7 @@ const Widget1 = ({ setLoading }) => {
       setTotalData(totalCellData);
       setData(mappedData);
     }
-  }, [
-    JSON.stringify(teis),
-    JSON.stringify(ouListLocale),
-    JSON.stringify(typeOfFacilities),
-  ]);
+  }, [JSON.stringify(teis), JSON.stringify(ouListLocale), JSON.stringify(typeOfFacilities)]);
 
   return data.length && totalData ? (
     <Custom>
@@ -335,7 +293,7 @@ const Widget1 = ({ setLoading }) => {
                               position: "sticky",
                               left: 0,
                               background: "#fff",
-                              zIndex: 800,
+                              zIndex: 800
                             }
                           : {}
                       }
@@ -349,37 +307,27 @@ const Widget1 = ({ setLoading }) => {
                             whiteSpace: "nowrap",
                             "&.Mui-active": {
                               color: "#555e68",
-                              fontWeight: "bold",
+                              fontWeight: "bold"
                             },
                             " svg": {
                               ml: 1,
                               mt: "2px",
-                              fontSize: "15px",
+                              fontSize: "15px"
                             },
                             "& path": {
-                              color: "#555e68",
-                            },
+                              color: "#555e68"
+                            }
                           }}
                         >
                           {i18n.language === "lo" &&
                           facility.id !== "orgUnit" &&
                           facility.id !== "total" &&
-                          facility.translations.find(
-                            (translation) =>
-                              translation.locale === "lo" &&
-                              translation.property === "NAME"
-                          )
-                            ? facility.translations.find(
-                                (translation) =>
-                                  translation.locale === "lo" &&
-                                  translation.property === "NAME"
-                              ).value
+                          facility.translations.find((translation) => translation.locale === "lo" && translation.property === "NAME")
+                            ? facility.translations.find((translation) => translation.locale === "lo" && translation.property === "NAME").value
                             : facility.name}
                           {orderBy === facility.id ? (
                             <Box component="span" sx={visuallyHidden}>
-                              {order === "desc"
-                                ? "sorted descending"
-                                : "sorted ascending"}
+                              {order === "desc" ? "sorted descending" : "sorted ascending"}
                             </Box>
                           ) : null}
                         </TableSortLabel>
@@ -398,9 +346,8 @@ const Widget1 = ({ setLoading }) => {
                             ? {
                                 position: "sticky",
                                 left: 0,
-                                background:
-                                  cellIdx % 2 !== 0 ? "white" : "#f8f8f8",
-                                zIndex: 800,
+                                background: cellIdx % 2 !== 0 ? "white" : "#f8f8f8",
+                                zIndex: 800
                               }
                             : {}
                         }
@@ -419,7 +366,7 @@ const Widget1 = ({ setLoading }) => {
                               position: "sticky",
                               left: 0,
                               background: "#f8f8f8",
-                              zIndex: 800,
+                              zIndex: 800
                             }
                           : {}
                       }

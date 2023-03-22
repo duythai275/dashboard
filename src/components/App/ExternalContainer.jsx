@@ -1,11 +1,15 @@
 import ControlBar from "@/components/ControlBar/ControlBar";
 import FullScreenLoader from "../FullScreenLoader/FullScreenLoader";
 import useDashboardStore from "@/state/dashboard";
-import { dashboards, useDashboardInitialization } from "@/config/config";
+import { useDashboardInitialization } from "@/config/config";
+import { shallow } from "zustand/shallow";
 
 const ExternalContainer = () => {
   const ready = useDashboardInitialization();
-  const selectedDashboard = useDashboardStore((state) => state.selectedDashboard);
+  const { selectedDashboard, dashboards } = useDashboardStore(
+    (state) => ({ selectedDashboard: state.selectedDashboard, dashboards: state.dashboards }),
+    shallow
+  );
   let Dashboard = ready ? dashboards[selectedDashboard.value].dashboard : null;
 
   return ready ? (
