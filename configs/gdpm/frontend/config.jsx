@@ -47,6 +47,8 @@ const useDashboardInitialization = () => {
       ]);
       setMetadata("diseases", results[0].options);
       setMetadata("ouGroups", results[0].organisationUnitGroups);
+      setMetadata("communes", results[0].organisationUnits);
+
       initDashboardState([
         {
           widgets: [
