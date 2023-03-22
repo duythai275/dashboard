@@ -42,7 +42,8 @@ const useDashboardInitialization = () => {
         pull("/api/optionSets?filter=id:eq:d5fivOeWHIb&fields=id,name,translations,options[id,name,code,translations"),
         pull(
           "/api/organisationUnitGroups?filter=id:in:[oCFEWHz1vlJ,gqdSIqMZvOG,LgSrUpV7Qmv,Mvfn1MRfn7q,n0F2Tl5rMe4]&fields=id,name,translations,organisationUnits[id,name,code,translations]"
-        )
+        ),
+        pull("/api/organisationUnits?filter=level:eq:4&fields=id,name,ancestors[id,name,level]")
       ]);
       setMetadata("diseases", results[0].options);
       setMetadata("ouGroups", results[0].organisationUnitGroups);
