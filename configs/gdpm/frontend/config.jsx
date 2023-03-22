@@ -7,7 +7,7 @@ import useSelectionStore from "@/state/selection";
 import locales from "./locales";
 import { pull } from "@/utils/fetch";
 import { useTranslation } from "react-i18next";
-import Dashboard1 from "./dashboards/Dashboard1";
+import Dashboard1 from "./dashboards/Dashboard1/Dashboard1";
 
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -55,7 +55,6 @@ const useDashboardInitialization = () => {
       setMetadata("diseases", results[0].optionSets[0].options);
       setMetadata("ouGroups", results[1].organisationUnitGroups);
       setMetadata("communes", results[2].organisationUnits);
-      console.log(results[0].optionSets[0].options);
       initDashboardState([
         {
           widgets: [
