@@ -20,6 +20,7 @@ import useMetadataStore from "@/state/metadata";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const styles = {
   p: 2,
