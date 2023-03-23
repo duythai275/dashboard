@@ -9,6 +9,7 @@ const ReactGridLayout = WidthProvider(RGL);
 
 import "./index.css";
 import { useMemo } from "react";
+import Widget3 from "./widgets/Widget3";
 
 const DiseaseDashboard = ({ disease, dashboardIndex }) => {
   const { t, i18n } = useTranslation();
@@ -78,7 +79,7 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
         childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
           return {
             title: province.name,
-            widget: <Widget1 code={disease} ou={province.id} />,
+            widget: <Widget3 code={disease} />,
           };
         })}
       />
