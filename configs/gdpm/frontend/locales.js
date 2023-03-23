@@ -43,6 +43,39 @@ const locales = [
         key: "thisWeek_lastYear",
         value: `Tuần ${THIS_WEEK} - ${LAST_YEAR}`,
       },
+      //disease dashboard
+      {
+        key: "country",
+        value: "Toàn quốc",
+      },
+      {
+        key: "widget2Title",
+        value: "trong 10 tuần qua",
+      },
+      {
+        key: "northRegion",
+        value: "Miền Bắc",
+      },
+      {
+        key: "centralRegion",
+        value: "Miền Trung",
+      },
+      {
+        key: "centralHighlandsRegion",
+        value: "Tây Nguyên",
+      },
+      {
+        key: "southRegion",
+        value: "Miền Nam",
+      },
+      {
+        key: "case",
+        value: "Ca mắc",
+      },
+      {
+        key: "deathCase",
+        value: "Ca tử vong",
+      },
     ],
   },
   {
@@ -81,6 +114,35 @@ const locales = [
       {
         key: "thisWeek_lastYear",
         value: `Week ${THIS_WEEK} - ${LAST_YEAR}`,
+      },
+      //disease dashboard
+      {
+        key: "country",
+        value: "Country",
+      },
+      {
+        key: "northRegion",
+        value: "North Region",
+      },
+      {
+        key: "centralRegion",
+        value: "Central Region",
+      },
+      {
+        key: "centralHighlandsRegion",
+        value: "Central Highlands Region",
+      },
+      {
+        key: "southRegion",
+        value: "South Region",
+      },
+      {
+        key: "case",
+        value: "Cases",
+      },
+      {
+        key: "deathCase",
+        value: "Death Cases",
       },
     ],
   },

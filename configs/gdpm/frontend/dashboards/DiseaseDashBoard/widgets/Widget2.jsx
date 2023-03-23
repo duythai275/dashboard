@@ -1,4 +1,3 @@
-import MultitypeChart from "@/components/Widgets/MultitypeChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import useMetadataStore from "@/state/metadata";
 import { pull } from "@/utils/fetch";
@@ -11,7 +10,6 @@ import {
   TableHead,
   TableRow,
   Tabs,
-  Typography,
 } from "@mui/material";
 import { getISOWeek } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
@@ -38,44 +36,69 @@ const Widget1 = ({ setLoading, code }) => {
     }
     return weeks.join(";");
   }, []);
+  const lastYear = useMemo(() => new Date().getFullYear() - 1);
+  const currentYear = useMemo(() => new Date().getFullYear());
   const getData = async () => {
     try {
+      setLoading(true);
       const listOu = ouGroups
         .find((item) => item.id === tabs[value].id)
-        .organisationUnits.map((ou) => ou.id)
-        .join(";");
-      const result = await pull(
-        `/api/analytics/events/query/PO07dgbJCgr.json?dimension=pe:${listPe}&dimension=ou:${listOu}&dimension=GIdhyQcAihV.Pip1eJUznxo&dimension=GIdhyQcAihV.Du5ydup8qQf:IN:${code}&stage=GIdhyQcAihV&displayProperty=NAME&totalPages=true&outputType=EVENT&desc=eventdate&outputIdScheme=UID&pageSize=100000`
-      );
-      if (result) {
-        const eventDateIndex = result.headers.findIndex(
-          (header) => header.name === "eventdate"
+        .organisationUnits.map((ou) => ou.id);
+      const results = await Promise.all([
+        pull(
+          `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_provinces&var=startYear:${lastYear}&var=endYear:${currentYear}`
+        ),
+        pull(
+          `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_deaths_provinces&var=startYear:${lastYear}&var=endYear:${currentYear}`
+        ),
+      ]);
+      if (results) {
+        const ouIndex = results[0].listGrid.headers.findIndex(
+          (header) => header.name === "uidlevel2"
         );
-        const statusIndex = result.headers.findIndex(
-          (header) => header.name === "GIdhyQcAihV.Pip1eJUznxo"
+        const weeklyIndex = results[0].listGrid.headers.findIndex(
+          (header) => header.name === "weekly"
+        );
+        const diseaseIndex = results[0].listGrid.headers.findIndex(
+          (header) => header.name === "Du5ydup8qQf"
+        );
+        const casesIndex = results[0].listGrid.headers.findIndex(
+          (header) => header.name === "cases"
         );
 
         const dataResult = listPe.split(";").map((week) => {
-          const dataByWeek = result.rows.filter((row) => {
-            getISOWeek(new Date(row[eventDateIndex])) === week;
-          });
-          const deadDataByWeek = dataByWeek.filter(
-            (row) => row[statusIndex] === "3"
-          );
+          const dataByWeek = results[0].listGrid.rows
+            .filter(
+              (row) =>
+                row[weeklyIndex].slice(4) === week &&
+                listOu.includes(row[ouIndex]) &&
+                row[diseaseIndex] === code
+            )
+            .reduce((prev, curr) => prev + curr[casesIndex] * 1, 0);
+          const deadDataByWeek = results[1].listGrid.rows
+            .filter(
+              (row) =>
+                row[weeklyIndex].slice(4) === week &&
+                listOu.includes(row[ouIndex]) &&
+                row[diseaseIndex] === code
+            )
+            .reduce((prev, curr) => prev + curr[casesIndex] * 1, 0);
           return {
-            case: dataByWeek.length - deadDataByWeek.length,
-            dead: deadDataByWeek.length,
+            case: dataByWeek,
+            dead: deadDataByWeek,
           };
         });
         setData(dataResult);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
     getData();
-  }, [value]);
+  }, [value, code]);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -88,7 +111,7 @@ const Widget1 = ({ setLoading, code }) => {
           scrollButtons="auto"
         >
           {tabs.map((tab) => (
-            <Tab label={tab.label} />
+            <Tab label={t(tab.label)} />
           ))}
         </Tabs>
       </Box>
@@ -107,10 +130,10 @@ const Widget1 = ({ setLoading, code }) => {
                 <TableRow>
                   <TableCell sx={{ fontWeight: "500" }}>{week}</TableCell>
                   <TableCell sx={{ color: "#63bc5e" }}>
-                    {data[index].case} Cases
+                    {data[index].case}
                   </TableCell>
                   <TableCell sx={{ color: "#db4e4e" }}>
-                    {data[index].dead} Death
+                    {data[index].dead}
                   </TableCell>
                 </TableRow>
               );

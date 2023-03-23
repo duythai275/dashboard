@@ -7,15 +7,31 @@ import RGL, { WidthProvider } from "react-grid-layout";
 import Widget2 from "./widgets/Widget2";
 const ReactGridLayout = WidthProvider(RGL);
 
-const DiseaseDashboard = ({ disease }) => {
-  const { t } = useTranslation();
-  const { ouGroups } = useMetadataStore(
+import "./index.css";
+import { useMemo } from "react";
+import Widget3 from "./widgets/Widget3";
+import Widget5 from "./widgets/Widget5";
+import Widget4 from "./widgets/Widget4";
+import { getISOWeek } from "date-fns";
+import Widget6 from "./widgets/Widget6";
+
+const DiseaseDashboard = ({ disease, dashboardIndex }) => {
+  const { t, i18n } = useTranslation();
+  const { ouGroups, diseases } = useMetadataStore(
     (state) => ({
       ouGroups: state.ouGroups,
+      diseases: state.diseases,
     }),
     shallow
   );
 
+  const currentDisease = useMemo(
+    () => diseases.find((item) => item.code === disease),
+    [disease, JSON.stringify(diseases)]
+  );
+  const lastYear = useMemo(() => new Date().getFullYear() - 1);
+  const currentYear = useMemo(() => new Date().getFullYear());
+  const currentWeek = useMemo(() => getISOWeek(new Date()));
   return (
     <ReactGridLayout
       isDraggable={false}
@@ -33,82 +49,140 @@ const DiseaseDashboard = ({ disease }) => {
     >
       <WidgetContainer
         key="1"
-        dashboardIndex={0}
+        dashboardIndex={dashboardIndex}
         widgetIndex={0}
-        childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
-          return {
-            title: province.name,
-            widget: <Widget1 code={disease} ou={province.id} />,
-          };
-        })}
+        childrenWidgets={[
+          {
+            title: t("country"),
+            widget: <Widget1 code={disease} ou={"S3kaCiYIP4B"} />,
+          },
+          ...ouGroups[3].organisationUnits.map((province) => {
+            return {
+              title: province.name,
+              widget: <Widget1 code={disease} ou={province.id} />,
+            };
+          }),
+        ]}
       />
       <WidgetContainer
         key="2"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
-          return {
-            title: province.name,
-            widget: <Widget2 code={disease} ou={province.id} />,
-          };
-        })}
+        dashboardIndex={dashboardIndex}
+        widgetIndex={1}
+        childrenWidgets={[
+          {
+            title:
+              i18n.language === "vi"
+                ? `Các ca mắc ${currentDisease.translations[0]?.value} trong 10 tuần qua`
+                : `${currentDisease.name} cases in last 10 weeks`,
+            widget: <Widget2 code={disease} />,
+          },
+        ]}
       />
       <WidgetContainer
         key="3"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
-          return {
-            title: province.name,
-            widget: <Widget1 code={disease} ou={province.id} />,
-          };
-        })}
+        dashboardIndex={dashboardIndex}
+        widgetIndex={2}
+        childrenWidgets={[
+          {
+            title:
+              i18n.language === "vi"
+                ? `Các ca mắc ${currentDisease.translations[0]?.value} - ${lastYear} (đến tuần ${currentWeek})`
+                : `${currentDisease.name} cases - ${lastYear} (upto week ${currentWeek})`,
+            widget: <Widget3 code={disease} isUpto />,
+          },
+          {
+            title:
+              i18n.language === "vi"
+                ? `Các ca mắc ${currentDisease.translations[0]?.value} - ${lastYear} (tuần ${currentWeek})`
+                : `${currentDisease.name} cases - ${lastYear} (week ${currentWeek})`,
+            widget: <Widget3 code={disease} />,
+          },
+          {
+            title:
+              i18n.language === "vi"
+                ? `Các ca tử vong ${currentDisease.translations[0]?.value} - ${lastYear} (đến tuần ${currentWeek})`
+                : `${currentDisease.name} death cases - ${lastYear} (upto week ${currentWeek})`,
+            widget: <Widget3 code={disease} isDeath />,
+          },
+        ]}
       />
       <WidgetContainer
         key="4"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
-          return {
-            title: province.name,
-            widget: <Widget1 code={disease} ou={province.id} />,
-          };
-        })}
+        dashboardIndex={dashboardIndex}
+        widgetIndex={2}
+        childrenWidgets={[
+          {
+            title:
+              i18n.language === "vi"
+                ? `Phần trăm thay đổi số các ca mắc ${currentDisease.translations[0]?.value} giữa ${lastYear} và ${currentYear} (đến tuần ${currentWeek})`
+                : `% change number of ${currentDisease.name} cases between ${lastYear} and ${currentYear} (upto week ${currentWeek})`,
+            widget: <Widget4 code={disease} isUpto />,
+          },
+          {
+            title:
+              i18n.language === "vi"
+                ? `Phần trăm thay đổi số các ca mắc ${currentDisease.translations[0]?.value} giữa ${lastYear} và ${currentYear} (tuần ${currentWeek})`
+                : `% change number of ${currentDisease.name} cases between ${lastYear} and ${currentYear} (week ${currentWeek})`,
+            widget: <Widget4 code={disease} />,
+          },
+          {
+            title:
+              i18n.language === "vi"
+                ? `Phần trăm thay đổi số các ca tử vong ${currentDisease.translations[0]?.value} giữa ${lastYear} và ${currentYear} (đến tuần ${currentWeek})`
+                : `% change number of ${currentDisease.name} death cases between ${lastYear} and ${currentYear} (upto week ${currentWeek})`,
+            widget: <Widget4 code={disease} isDeath />,
+          },
+        ]}
       />
       <WidgetContainer
         key="5"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
-          return {
-            title: province.name,
-            widget: <Widget1 code={disease} ou={province.id} />,
-          };
-        })}
+        dashboardIndex={dashboardIndex}
+        widgetIndex={2}
+        childrenWidgets={[
+          {
+            title:
+              i18n.language === "vi"
+                ? `Các ca mắc ${currentDisease.translations[0]?.value} - ${currentYear} (đến tuần ${currentWeek})`
+                : `${currentDisease.name} cases - ${currentYear} (upto week ${currentWeek})`,
+            widget: <Widget5 code={disease} isUpto />,
+          },
+          {
+            title:
+              i18n.language === "vi"
+                ? `Các ca mắc ${currentDisease.translations[0]?.value} - ${currentYear} (tuần ${currentWeek})`
+                : `${currentDisease.name} cases - ${currentYear} (week ${currentWeek})`,
+            widget: <Widget5 code={disease} />,
+          },
+          {
+            title:
+              i18n.language === "vi"
+                ? `Các ca tử vong ${currentDisease.translations[0]?.value} - ${currentYear} (đến tuần ${currentWeek})`
+                : `${currentDisease.name} death cases - ${currentYear} (upto week ${currentWeek})`,
+            widget: <Widget5 code={disease} isDeath />,
+          },
+        ]}
       />
       <WidgetContainer
         key="6"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
-          return {
-            title: province.name,
-            widget: <Widget1 code={disease} ou={province.id} />,
-          };
-        })}
+        dashboardIndex={dashboardIndex}
+        widgetIndex={5}
+        childrenWidgets={[
+          {
+            title:
+              i18n.language === "vi"
+                ? `Top 10 tỉnh có số ca mắc ${currentDisease.translations[0]?.value} cao nhất (đến tuần ${currentWeek})`
+                : `Top 10 provinces with highest cumulative ${currentDisease.name} cases (upto week ${currentWeek})`,
+            widget: <Widget6 code={disease} isUpto />,
+          },
+          {
+            title:
+              i18n.language === "vi"
+                ? `Top 10 tỉnh có số ca mắc ${currentDisease.translations[0]?.value} cao nhất (tuần ${currentWeek})`
+                : `Top 10 provinces with highest cumulative ${currentDisease.name} cases (week ${currentWeek})`,
+            widget: <Widget6 code={disease} />,
+          },
+        ]}
       />
-      {/* <WidgetContainer
-        key="2"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={[{ title: t("widget1Title"), widget: <Widget1 /> }]}
-      />
-      <WidgetContainer
-        key="3"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={[{ title: t("widget1Title"), widget: <Widget1 /> }]}
-      /> */}
     </ReactGridLayout>
   );
 };

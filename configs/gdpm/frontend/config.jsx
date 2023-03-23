@@ -24,7 +24,7 @@ const useDashboardInitialization = () => {
   const setMetadata = useMetadataStore((state) => state.setMetadata);
   const [ready, setReady] = useState(false);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { initDashboardState, selectDashboard, setDashboards } =
     useDashboardStore(
       (state) => ({
@@ -61,11 +61,18 @@ const useDashboardInitialization = () => {
       setMetadata("ouGroups", results[1].organisationUnitGroups);
       setMetadata("communes", results[2].organisationUnits);
       setMetadata("orgUnitGeoJson", results[3]);
-
-      results[0].optionSets[0].options.forEach((option) => {
+      results[0].optionSets[0].options.forEach((option, index) => {
         dashboards.push({
-          name: option.name,
-          dashboard: <DiseaseDashboard disease={option.code} />,
+          name:
+            i18n.language === "vi"
+              ? option.translations[0]?.value
+              : option.name,
+          dashboard: (
+            <DiseaseDashboard
+              disease={option.code}
+              dashboardIndex={index + 1}
+            />
+          ),
         });
       });
       initDashboardState([
