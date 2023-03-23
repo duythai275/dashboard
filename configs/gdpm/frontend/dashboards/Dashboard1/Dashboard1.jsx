@@ -38,7 +38,7 @@ const headerStyle = { width: "80px", top: "36.8px", ...green };
 
 const compareStatus = (w12Value, w11Value) => {
   if (w12Value === w11Value) return "equal";
-  if (w12Value > w11Value) return "increase";
+  if (w12Value * 1 > w11Value * 1) return "increase";
   return "decrease";
 };
 
@@ -161,13 +161,13 @@ const Dashboard1 = ({ title }) => {
 
   return (
     <Paper sx={{ mt: 1, pt: 2, border: "1px solid #ededed" }}>
-      <Box sx={{ width: 1, textAlign: "center", pb: 1 }}>
+      <Box sx={{ width: 1, textAlign: "center", pb: 2 }}>
         <Typography variant="widgetTitle">{t(title)}</Typography>
       </Box>
       <Divider />
 
       <Box sx={styles}>
-        {tableData ? (
+        {tableData.length > 0 ? (
           <BorderedTable
             stripe
             stickyHeader
