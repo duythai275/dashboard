@@ -1,3 +1,8 @@
+import {
+  LAST_YEAR,
+  THIS_YEAR,
+} from "./dashboards/Dashboard1/constants/constants";
+
 const locales = [
   {
     code: "vi",
@@ -5,7 +10,36 @@ const locales = [
     translations: [
       {
         key: "dashboard1Title",
-        value: "Đây là dashboard 1",
+        value: "dashboard1Title",
+      },
+      { key: "bulletin", value: "Bulletin" },
+      {
+        key: "disease",
+        value: "Disease",
+      },
+      {
+        key: "cases",
+        value: "Cases",
+      },
+      {
+        key: "deaths",
+        value: "Deaths",
+      },
+      {
+        key: "week12_currYear",
+        value: "Week 12	- " + THIS_YEAR,
+      },
+      {
+        key: "week11_currYear",
+        value: "Week 11	- " + THIS_YEAR,
+      },
+      {
+        key: "status",
+        value: "Status",
+      },
+      {
+        key: "week12_prevYear",
+        value: "Week 12 - " + LAST_YEAR,
       },
       //disease dashboard
       {
@@ -48,7 +82,35 @@ const locales = [
     translations: [
       {
         key: "dashboard1Title",
-        value: "This is dashboard 1",
+        value: "dashboard1Title",
+      },
+      {
+        key: "disease",
+        value: "Disease",
+      },
+      {
+        key: "cases",
+        value: "Cases",
+      },
+      {
+        key: "deaths",
+        value: "Deaths",
+      },
+      {
+        key: "week12_currYear",
+        value: "Week 12	- " + THIS_YEAR,
+      },
+      {
+        key: "week11_currYear",
+        value: "Week 11	- " + THIS_YEAR,
+      },
+      {
+        key: "status",
+        value: "Status",
+      },
+      {
+        key: "week12_prevYear",
+        value: "Week 12 - " + LAST_YEAR,
       },
       //disease dashboard
       {

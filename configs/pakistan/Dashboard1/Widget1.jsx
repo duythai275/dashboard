@@ -18,6 +18,7 @@ const Widget1 = ({ setLoading, apiUrl }) => {
       setLoading(false);
     })();
   }, []);
+
   return (
     data && (
       <ThematicTimelineMap

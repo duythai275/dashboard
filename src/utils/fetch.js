@@ -6,8 +6,10 @@ password = import.meta.env.VITE_PASSWORD;
 const pull = (endPoint) => {
   return fetch(baseUrl + endPoint, {
     headers: {
-      Authorization: !username ? "" : "Basic " + btoa(`${username}:${password}`)
-    }
+      Authorization: !username
+        ? ""
+        : "Basic " + btoa(`${username}:${password}`),
+    },
   })
     .then((result) => {
       return result.json();
@@ -21,8 +23,10 @@ const push = (endPoint, payload, method) => {
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
-      Authorization: !username ? "" : "Basic " + btoa(`${username}:${password}`)
-    }
+      Authorization: !username
+        ? ""
+        : "Basic " + btoa(`${username}:${password}`),
+    },
   });
 };
 
