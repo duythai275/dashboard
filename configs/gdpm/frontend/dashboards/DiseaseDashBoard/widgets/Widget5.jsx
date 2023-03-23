@@ -6,7 +6,7 @@ import ThematicMap from "@/components/Widgets/ThematicMap";
 import { shallow } from "zustand/shallow";
 import { pull } from "@/utils/fetch";
 
-const Widget3 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
+const Widget5 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
   const [data, setData] = useState(null);
   const { orgUnitGeoJson } = useMetadataStore(
     (state) => ({ orgUnitGeoJson: state.orgUnitGeoJson }),
@@ -48,7 +48,7 @@ const Widget3 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
             const week = row[weeklyIndex].slice(5) * 1;
             if (isUpto || isDeath) {
               if (
-                year === currentYear ||
+                year === lastYear ||
                 week > currentWeek ||
                 row[diseaseIndex] !== code
               ) {
@@ -61,7 +61,7 @@ const Widget3 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
               dataResult[row[ouIndex]] = row[casesIndex] * 1;
             } else {
               if (
-                year === currentYear ||
+                year === lastYear ||
                 week !== currentWeek ||
                 row[diseaseIndex] !== code
               ) {
@@ -95,4 +95,4 @@ const Widget3 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
   );
 };
 
-export default withWidgetChildrenLoader(Widget3);
+export default withWidgetChildrenLoader(Widget5);

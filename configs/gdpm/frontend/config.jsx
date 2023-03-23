@@ -57,6 +57,7 @@ const useDashboardInitialization = () => {
       setMetadata("diseases", results[0].optionSets[0].options);
       setMetadata("ouGroups", results[1].organisationUnitGroups);
       setMetadata("communes", results[2].organisationUnits);
+      setMetadata("orgUnitGeoJson", results[3]);
       results[0].optionSets[0].options.forEach((option, index) => {
         dashboards.push({
           name:

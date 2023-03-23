@@ -1,20 +1,23 @@
+import { useEffect, useMemo, useState } from "react";
+import { getISOWeek } from "date-fns";
+import _ from "lodash";
+import { shallow } from "zustand/shallow";
+
 import MultitypeChart from "@/components/Widgets/MultitypeChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
+import useMetadataStore from "@/state/metadata";
 import { pull } from "@/utils/fetch";
-import { useEffect, useMemo, useState } from "react";
 
-const Widget1 = ({ setLoading, code, ou }) => {
+const Widget1 = ({ setLoading, code, isUpto = false }) => {
+  const { ouGroups } = useMetadataStore(
+    (state) => ({ ouGroups: state.ouGroups }),
+    shallow
+  );
   const [data, setData] = useState(null);
-  const weeks = useMemo(() => {
-    let weeks = [];
-    for (let i = 1; i <= 52; i++) {
-      weeks.push(`W${i}`);
-    }
-    return weeks;
-  }, []);
 
   const lastYear = useMemo(() => new Date().getFullYear() - 1);
   const currentYear = useMemo(() => new Date().getFullYear());
+  const currentWeek = useMemo(() => getISOWeek(new Date()));
 
   const getData = async () => {
     try {
@@ -36,31 +39,66 @@ const Widget1 = ({ setLoading, code, ou }) => {
         (header) => header.name === "cases"
       );
 
-      const dataLastYearResult = weeks.map((week) => {
-        return (
-          result.listGrid.rows.find(
-            (row) =>
-              row[weeklyIndex].slice(4) === week &&
-              row[diseaseIndex] === code &&
-              row[weeklyIndex].slice(0, 4) * 1 === lastYear &&
-              row[ouIndex] === ou
-          )?.[casesIndex] * 1 || 0
-        );
+      const dataLastYearResult = {};
+      const dataCurrentYearResult = {};
+
+      result.listGrid.rows.forEach((row) => {
+        const year = row[weeklyIndex].slice(0, 4) * 1;
+        const week = row[weeklyIndex].slice(5) * 1;
+        if (isUpto) {
+          if (week > currentWeek || row[diseaseIndex] !== code) {
+            return;
+          }
+          if (year === currentYear) {
+            if (dataCurrentYearResult[row[ouIndex]]) {
+              dataCurrentYearResult[row[ouIndex]] += row[casesIndex] * 1;
+              return;
+            }
+            dataCurrentYearResult[row[ouIndex]] = row[casesIndex] * 1;
+            return;
+          }
+
+          if (dataLastYearResult[row[ouIndex]]) {
+            dataLastYearResult[row[ouIndex]] += row[casesIndex] * 1;
+            return;
+          }
+          dataLastYearResult[row[ouIndex]] = row[casesIndex] * 1;
+        } else {
+          if (week !== currentWeek || row[diseaseIndex] !== code) {
+            return;
+          }
+          if (year === currentYear) {
+            if (dataCurrentYearResult[row[ouIndex]]) {
+              dataCurrentYearResult[row[ouIndex]] += row[casesIndex] * 1;
+              return;
+            }
+            dataCurrentYearResult[row[ouIndex]] = row[casesIndex] * 1;
+            return;
+          }
+
+          if (dataLastYearResult[row[ouIndex]]) {
+            dataLastYearResult[row[ouIndex]] += row[casesIndex] * 1;
+            return;
+          }
+          dataLastYearResult[row[ouIndex]] = row[casesIndex] * 1;
+        }
       });
-      const dataCurrentYearResult = weeks.map((week) => {
-        return (
-          result.listGrid.rows.find(
-            (row) =>
-              row[weeklyIndex].slice(4) === week &&
-              row[diseaseIndex] === code &&
-              row[weeklyIndex].slice(0, 4) * 1 === currentYear &&
-              row[ouIndex] === ou
-          )?.[casesIndex] * 1 || 0
-        );
-      });
+
+      const dataResult = _.orderBy(
+        Object.keys(dataCurrentYearResult).map((item) => ({
+          id: item,
+          value: dataCurrentYearResult[item] * 1 || 0,
+        })),
+        "value",
+        "desc"
+      ).slice(0, 10);
+
+      const labels = dataResult.map((item) => item.id);
+
       setData({
-        lastYear: dataLastYearResult,
-        currentYear: dataCurrentYearResult,
+        lastYear: labels.map((item) => dataLastYearResult[item] || 0),
+        currentYear: dataResult.map((item) => item.value),
+        labels,
       });
     } catch (error) {
       console.error(error);
@@ -70,21 +108,24 @@ const Widget1 = ({ setLoading, code, ou }) => {
   };
   useEffect(() => {
     getData();
-  }, [ou, code]);
+  }, [isUpto, code]);
 
   if (!data) return null;
   return (
     <MultitypeChart
       data={{
-        labels: weeks,
+        labels: data.labels.map(
+          (item) =>
+            ouGroups[3].organisationUnits.find((ou) => ou.id === item)?.name
+        ),
         datasets: [
           {
-            type: "line",
+            type: "bar",
             label: currentYear,
-            borderColor: "#9E0059",
-            borderWidth: 3,
-            fill: false,
+            backgroundColor: "#9E0059",
             data: data.currentYear,
+            borderColor: "white",
+            borderWidth: 2,
           },
           {
             type: "bar",
