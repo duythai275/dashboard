@@ -39,7 +39,7 @@ const useDashboardInitialization = () => {
     selectLanguage("vi");
     (async () => {
       const dashboards = [
-        { name: "dashboard1Title", dashboard: <Dashboard1 /> },
+        { name: "dashboard1Title", dashboard: <Dashboard1 title="bulletin" /> },
       ];
       setReady(false);
       const results = await Promise.all([

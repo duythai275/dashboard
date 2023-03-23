@@ -5,7 +5,7 @@ const StyledTable = styled(Table)({
     fontWeight: "bold",
   },
   "& th, & td": {
-    padding: "5px 10px",
+    padding: "6px 10px",
     color: "#555e68",
     borderRight: "1px solid #e0e0e0",
   },
@@ -40,9 +40,7 @@ const Scroller = styled(Box)({
 
   "&::-webkit-scrollbar-track": {
     borderRadius: 0,
-    border: "1px solid #e0e0e0",
-    borderBottom: 0,
-    borderRight: 0,
+    boxShadow: "inset 0 0 3px #e0e0e0",
   },
 
   "&::-webkit-scrollbar-thumb": {
