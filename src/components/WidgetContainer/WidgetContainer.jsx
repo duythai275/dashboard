@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import {
-  Typography,
-  IconButton,
-  Popover,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
-import { Widgets } from "@mui/icons-material";
+import { Typography, IconButton, Popover, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import useDashboardStore from "@/state/dashboard";
 import { shallow } from "zustand/shallow";
 import "./WidgetContainer.css";
@@ -16,25 +9,15 @@ import "../Widgets/Widgets.css";
 
 const WidgetContainer = (props, ref) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const {
-    style,
-    className,
-    onMouseDown,
-    onMouseUp,
-    onTouchEnd,
-    dashboardIndex,
-    widgetIndex,
-    childrenWidgets,
-  } = props;
+  const { style, className, onMouseDown, onMouseUp, onTouchEnd, dashboardIndex, widgetIndex, childrenWidgets } = props;
   const { dashboardState, selectWidgetChild } = useDashboardStore(
     (state) => ({
       dashboardState: state.dashboardState,
-      selectWidgetChild: state.selectWidgetChild,
+      selectWidgetChild: state.selectWidgetChild
     }),
     shallow
   );
-  const selectedChildrenIndex =
-    dashboardState[dashboardIndex].widgets[widgetIndex].selectedChildren;
+  const selectedChildrenIndex = dashboardState[dashboardIndex].widgets[widgetIndex].selectedChildren;
 
   const currentTitle = childrenWidgets[selectedChildrenIndex]?.title;
   const handleClosePopover = () => {
@@ -50,10 +33,7 @@ const WidgetContainer = (props, ref) => {
       onMouseUp={onMouseUp}
       onTouchEnd={onTouchEnd}
     >
-      <div
-        className="widget-title"
-        style={{ width: childrenWidgets.length === 1 ? "100%" : undefined }}
-      >
+      <div className="widget-title" style={{ width: childrenWidgets.length === 1 ? "100%" : undefined }}>
         <div>
           <Typography variant="widgetTitle">{currentTitle}</Typography>
         </div>
@@ -64,21 +44,19 @@ const WidgetContainer = (props, ref) => {
                 setAnchorEl(event.currentTarget);
               }}
             >
-              <Widgets />
+              <FontAwesomeIcon icon={faEllipsis} style={{ fontSize: 22 }} />
             </IconButton>
           </div>
         )}
       </div>
-      <div className="widget-content">
-        {childrenWidgets[selectedChildrenIndex].widget}
-      </div>
+      <div className="widget-content">{childrenWidgets[selectedChildrenIndex].widget}</div>
       <Popover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handleClosePopover}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left",
+          horizontal: "left"
         }}
       >
         <div className="widget-children-selector-container">
