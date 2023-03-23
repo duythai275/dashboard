@@ -1,7 +1,4 @@
-import {
-  LAST_YEAR,
-  THIS_YEAR,
-} from "./dashboards/Dashboard1/constants/constants";
+import { LAST_YEAR, THIS_YEAR } from "./dashboards/Dashboard1/constants/constants";
 
 const locales = [
   {
@@ -10,38 +7,38 @@ const locales = [
     translations: [
       {
         key: "dashboard1Title",
-        value: "dashboard1Title",
+        value: "dashboard1Title"
       },
-      { key: "bulletin", value: "Bảng tin" },
+      { key: "bulletin", value: "Bảng tin dịch bệnh" },
       {
         key: "disease",
-        value: "Tên bệnh",
+        value: "Tên bệnh"
       },
       {
         key: "cases",
-        value: "Ca mắc",
+        value: "Ca mắc"
       },
       {
         key: "deaths",
-        value: "Ca tử vong",
+        value: "Ca tử vong"
       },
       {
         key: "week12_currYear",
-        value: "Tuần 12	- " + THIS_YEAR,
+        value: "Tuần 12	- " + THIS_YEAR
       },
       {
         key: "week11_currYear",
-        value: "Tuần 11	- " + THIS_YEAR,
+        value: "Tuần 11	- " + THIS_YEAR
       },
       {
         key: "status",
-        value: "Trạng thái",
+        value: "Trạng thái"
       },
       {
         key: "week12_prevYear",
-        value: "Tuần 12 - " + LAST_YEAR,
-      },
-    ],
+        value: "Tuần 12 - " + LAST_YEAR
+      }
+    ]
   },
   {
     code: "en",
@@ -49,38 +46,38 @@ const locales = [
     translations: [
       {
         key: "dashboard1Title",
-        value: "dashboard1Title",
+        value: "dashboard1Title"
       },
       { key: "bulletin", value: "Bulletin" },
       {
         key: "disease",
-        value: "Disease",
+        value: "Disease"
       },
       {
         key: "cases",
-        value: "Cases",
+        value: "Cases"
       },
       {
         key: "deaths",
-        value: "Deaths",
+        value: "Deaths"
       },
       {
         key: "week12_currYear",
-        value: "Week 12	- " + THIS_YEAR,
+        value: "Week 12	- " + THIS_YEAR
       },
       {
         key: "week11_currYear",
-        value: "Week 11	- " + THIS_YEAR,
+        value: "Week 11	- " + THIS_YEAR
       },
       {
         key: "status",
-        value: "Status",
+        value: "Status"
       },
       {
         key: "week12_prevYear",
-        value: "Week 12 - " + LAST_YEAR,
-      },
-    ],
-  },
+        value: "Week 12 - " + LAST_YEAR
+      }
+    ]
+  }
 ];
 export default locales;
