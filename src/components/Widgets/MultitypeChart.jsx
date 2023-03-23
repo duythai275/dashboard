@@ -9,39 +9,28 @@ import {
   Legend,
   Tooltip,
   LineController,
-  BarController,
+  BarController
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-ChartJS.register(
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  LineController,
-  BarController,
-  ChartDataLabels
-);
+ChartJS.register(LinearScale, CategoryScale, BarElement, PointElement, LineElement, Legend, Tooltip, LineController, BarController, ChartDataLabels);
 const options = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: "bottom",
+      position: "bottom"
     },
     datalabels: {
       anchor: "end",
       align: "end",
-      offset: -5,
+      offset: -5
       // font: {
       //   weight: 500
       // }
-    },
-  },
+    }
+  }
 };
 
 const MultitypeChart = ({ data }) => {

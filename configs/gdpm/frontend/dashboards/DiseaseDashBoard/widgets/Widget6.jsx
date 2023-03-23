@@ -9,10 +9,7 @@ import useMetadataStore from "@/state/metadata";
 import { pull } from "@/utils/fetch";
 
 const Widget1 = ({ setLoading, code, isUpto = false }) => {
-  const { ouGroups } = useMetadataStore(
-    (state) => ({ ouGroups: state.ouGroups }),
-    shallow
-  );
+  const { ouGroups } = useMetadataStore((state) => ({ ouGroups: state.ouGroups }), shallow);
   const [data, setData] = useState(null);
 
   const lastYear = useMemo(() => new Date().getFullYear() - 1);
@@ -26,18 +23,10 @@ const Widget1 = ({ setLoading, code, isUpto = false }) => {
       const result = await pull(
         `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_provinces&var=startYear:${lastYear}&var=endYear:${currentYear}`
       );
-      const ouIndex = result.listGrid.headers.findIndex(
-        (header) => header.name === "uidlevel2"
-      );
-      const weeklyIndex = result.listGrid.headers.findIndex(
-        (header) => header.name === "weekly"
-      );
-      const diseaseIndex = result.listGrid.headers.findIndex(
-        (header) => header.name === "Du5ydup8qQf"
-      );
-      const casesIndex = result.listGrid.headers.findIndex(
-        (header) => header.name === "cases"
-      );
+      const ouIndex = result.listGrid.headers.findIndex((header) => header.name === "uidlevel2");
+      const weeklyIndex = result.listGrid.headers.findIndex((header) => header.name === "weekly");
+      const diseaseIndex = result.listGrid.headers.findIndex((header) => header.name === "Du5ydup8qQf");
+      const casesIndex = result.listGrid.headers.findIndex((header) => header.name === "cases");
 
       const dataLastYearResult = {};
       const dataCurrentYearResult = {};
@@ -87,7 +76,7 @@ const Widget1 = ({ setLoading, code, isUpto = false }) => {
       const dataResult = _.orderBy(
         Object.keys(dataCurrentYearResult).map((item) => ({
           id: item,
-          value: dataCurrentYearResult[item] * 1 || 0,
+          value: dataCurrentYearResult[item] * 1 || 0
         })),
         "value",
         "desc"
@@ -98,7 +87,7 @@ const Widget1 = ({ setLoading, code, isUpto = false }) => {
       setData({
         lastYear: labels.map((item) => dataLastYearResult[item] || 0),
         currentYear: dataResult.map((item) => item.value),
-        labels,
+        labels
       });
     } catch (error) {
       console.error(error);
@@ -114,28 +103,25 @@ const Widget1 = ({ setLoading, code, isUpto = false }) => {
   return (
     <MultitypeChart
       data={{
-        labels: data.labels.map(
-          (item) =>
-            ouGroups[3].organisationUnits.find((ou) => ou.id === item)?.name
-        ),
+        labels: data.labels.map((item) => ouGroups[3].organisationUnits.find((ou) => ou.id === item)?.name),
         datasets: [
           {
             type: "bar",
             label: currentYear,
-            backgroundColor: "#9E0059",
+            backgroundColor: "#85B15F",
             data: data.currentYear,
             borderColor: "white",
-            borderWidth: 2,
+            borderWidth: 2
           },
           {
             type: "bar",
             label: lastYear,
-            backgroundColor: "#0E79B2",
+            backgroundColor: "#e08e31",
             data: data.lastYear,
             borderColor: "white",
-            borderWidth: 2,
-          },
-        ],
+            borderWidth: 2
+          }
+        ]
       }}
     />
   );
