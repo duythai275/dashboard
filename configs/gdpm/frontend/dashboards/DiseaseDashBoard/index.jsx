@@ -7,13 +7,22 @@ import RGL, { WidthProvider } from "react-grid-layout";
 import Widget2 from "./widgets/Widget2";
 const ReactGridLayout = WidthProvider(RGL);
 
-const DiseaseDashboard = ({ disease }) => {
-  const { t } = useTranslation();
-  const { ouGroups } = useMetadataStore(
+import "./index.css";
+import { useMemo } from "react";
+
+const DiseaseDashboard = ({ disease, dashboardIndex }) => {
+  const { t, i18n } = useTranslation();
+  const { ouGroups, diseases } = useMetadataStore(
     (state) => ({
       ouGroups: state.ouGroups,
+      diseases: state.diseases,
     }),
     shallow
+  );
+
+  const currentDisease = useMemo(
+    () => diseases.find((item) => item.code === disease),
+    [disease, JSON.stringify(diseases)]
   );
 
   return (
@@ -33,30 +42,39 @@ const DiseaseDashboard = ({ disease }) => {
     >
       <WidgetContainer
         key="1"
-        dashboardIndex={0}
+        dashboardIndex={dashboardIndex}
         widgetIndex={0}
-        childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
-          return {
-            title: province.name,
-            widget: <Widget1 code={disease} ou={province.id} />,
-          };
-        })}
+        childrenWidgets={[
+          {
+            title: t("country"),
+            widget: <Widget1 code={disease} ou={"S3kaCiYIP4B"} />,
+          },
+          ...ouGroups[3].organisationUnits.map((province) => {
+            return {
+              title: province.name,
+              widget: <Widget1 code={disease} ou={province.id} />,
+            };
+          }),
+        ]}
       />
       <WidgetContainer
         key="2"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
-          return {
-            title: province.name,
-            widget: <Widget2 code={disease} ou={province.id} />,
-          };
-        })}
+        dashboardIndex={dashboardIndex}
+        widgetIndex={1}
+        childrenWidgets={[
+          {
+            title:
+              i18n.language === "vi"
+                ? `Các ca mắc ${currentDisease.translations[0]?.value} trong 10 tuần qua`
+                : `${currentDisease.name} cases in last 10 weeks`,
+            widget: <Widget2 code={disease} />,
+          },
+        ]}
       />
       <WidgetContainer
         key="3"
-        dashboardIndex={0}
-        widgetIndex={0}
+        dashboardIndex={dashboardIndex}
+        widgetIndex={2}
         childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
           return {
             title: province.name,
@@ -66,8 +84,8 @@ const DiseaseDashboard = ({ disease }) => {
       />
       <WidgetContainer
         key="4"
-        dashboardIndex={0}
-        widgetIndex={0}
+        dashboardIndex={dashboardIndex}
+        widgetIndex={3}
         childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
           return {
             title: province.name,
@@ -77,8 +95,8 @@ const DiseaseDashboard = ({ disease }) => {
       />
       <WidgetContainer
         key="5"
-        dashboardIndex={0}
-        widgetIndex={0}
+        dashboardIndex={dashboardIndex}
+        widgetIndex={4}
         childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
           return {
             title: province.name,
@@ -88,8 +106,8 @@ const DiseaseDashboard = ({ disease }) => {
       />
       <WidgetContainer
         key="6"
-        dashboardIndex={0}
-        widgetIndex={0}
+        dashboardIndex={dashboardIndex}
+        widgetIndex={5}
         childrenWidgets={ouGroups[3].organisationUnits.map((province) => {
           return {
             title: province.name,
@@ -97,18 +115,6 @@ const DiseaseDashboard = ({ disease }) => {
           };
         })}
       />
-      {/* <WidgetContainer
-        key="2"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={[{ title: t("widget1Title"), widget: <Widget1 /> }]}
-      />
-      <WidgetContainer
-        key="3"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={[{ title: t("widget1Title"), widget: <Widget1 /> }]}
-      /> */}
     </ReactGridLayout>
   );
 };
