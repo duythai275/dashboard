@@ -53,7 +53,8 @@ const Scroller = styled(Box)({
 });
 
 const StyledPaper = styled(Paper)({
-  border: "1px solid #e0e0e0",
+  // border: "1px solid #e0e0e0",
+  borderRadius: "0 0 4px 4px",
   overflow: "hidden",
 });
 

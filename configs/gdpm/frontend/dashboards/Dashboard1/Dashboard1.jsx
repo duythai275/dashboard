@@ -12,18 +12,21 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { LAST_YEAR, THIS_YEAR } from "./constants/constants";
+import {
+  LAST_YEAR,
+  THIS_WEEK,
+  LAST_WEEK,
+  THIS_YEAR,
+} from "./constants/constants";
 import { BorderedTable } from "./components/BorderedTable";
-import { fillCaseData } from "./utils";
+import { fillCaseData, getComparator, stableSort } from "./utils";
 import { pull } from "@/utils/fetch";
 import useMetadataStore from "@/state/metadata";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
-import TrendingDownIcon from "@mui/icons-material/TrendingDown";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import HorizontalRuleRoundedIcon from "@mui/icons-material/HorizontalRuleRounded";
+import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
+import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
 
 const styles = {
-  p: 2,
   "& td, th": {
     textAlign: "center",
     fontWeight: "bold",
@@ -33,70 +36,87 @@ const styles = {
   },
 };
 
-const green = { color: "#00A336 !important" };
-const red = { color: "#d10000 !important" };
+const green = { color: "#1f6e36 !important" };
+const red = { color: "#d45555 !important" };
 const headerStyle = { width: "80px", top: "36.8px", ...green };
 
 const compareStatus = (w12Value, w11Value) => {
   if (w12Value === w11Value) return "equal";
-  if (w12Value > w11Value) return "increase";
+  if (w12Value * 1 > w11Value * 1) return "increase";
   return "decrease";
 };
 
 const getDiseaseData = (resultCase, resultDeath, code) => {
-  const week12_currYear_cases = fillCaseData(
+  const thisWeek_thisYear_cases = fillCaseData(
     resultCase.listGrid,
     code,
-    THIS_YEAR + "W12"
+    `${THIS_YEAR}W${THIS_WEEK}`
   );
-  const week12_currYear_deaths = fillCaseData(
+  const thisWeek_thisYear_deaths = fillCaseData(
     resultDeath.listGrid,
     code,
-    THIS_YEAR + "W12"
+    `${THIS_YEAR}W${THIS_WEEK}`
   );
 
-  const week11_currYear_cases = fillCaseData(
+  const lastWeek_thisYear_cases = fillCaseData(
     resultCase.listGrid,
     code,
-    THIS_YEAR + "W11"
+    `${THIS_WEEK === 1 ? LAST_YEAR : THIS_YEAR}W${LAST_WEEK}`
   );
-  const week11_currYear_deaths = fillCaseData(
+  const lastWeek_thisYear_deaths = fillCaseData(
     resultDeath.listGrid,
     code,
-    THIS_YEAR + "W11"
+    `${THIS_WEEK === 1 ? LAST_YEAR : THIS_YEAR}W${LAST_WEEK}`
   );
 
-  const week12_prevYear_cases = fillCaseData(
+  const thisWeek_lastYear_cases = fillCaseData(
     resultCase.listGrid,
     code,
-    LAST_YEAR + "W12"
+    `${LAST_YEAR}W${THIS_WEEK}`
   );
-  const week12_prevYear_deaths = fillCaseData(
+  const thisWeek_lastYear_deaths = fillCaseData(
     resultDeath.listGrid,
     code,
-    LAST_YEAR + "W12"
+    `${LAST_YEAR}W${THIS_WEEK}`
   );
 
   const status_cases = compareStatus(
-    week12_currYear_cases,
-    week11_currYear_cases
+    thisWeek_thisYear_cases,
+    lastWeek_thisYear_cases
   );
 
   const status_deaths = compareStatus(
-    week12_currYear_deaths,
-    week11_currYear_deaths
+    thisWeek_thisYear_deaths,
+    lastWeek_thisYear_deaths
   );
 
   return {
-    week12_currYear_cases,
-    week12_currYear_deaths,
-    week11_currYear_cases,
-    week11_currYear_deaths,
-    week12_prevYear_cases,
-    week12_prevYear_deaths,
+    code,
+    thisWeek_thisYear_cases,
+    thisWeek_thisYear_deaths,
+    lastWeek_thisYear_cases,
+    lastWeek_thisYear_deaths,
+    thisWeek_lastYear_cases,
+    thisWeek_lastYear_deaths,
     status_cases,
     status_deaths,
   };
+};
+
+const StatusIcon = ({ status }) => {
+  return (
+    <Box
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
+      {status === "equal" ? (
+        <HorizontalRuleRoundedIcon />
+      ) : status === "increase" ? (
+        <ArrowUpwardRoundedIcon sx={red} />
+      ) : (
+        <ArrowDownwardRoundedIcon sx={green} />
+      )}
+    </Box>
+  );
 };
 
 const Dashboard1 = ({ title }) => {
@@ -116,9 +136,9 @@ const Dashboard1 = ({ title }) => {
     });
 
     return result;
-  }, [i18n.language]);
+  }, [i18n.language, diseases]);
 
-  const [tableData, setTableData] = useState(null);
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -130,29 +150,35 @@ const Dashboard1 = ({ title }) => {
         `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_deaths_country&var=startYear:${LAST_YEAR}&var=endYear:${THIS_YEAR}`
       );
 
-      const resultTableData = {};
-      diseases.forEach(({ code }, idx) => {
-        resultTableData[code] = getDiseaseData(resultCase, resultDeath, code);
+      const resultTableData = diseases.map(({ code }, idx) => {
+        return getDiseaseData(resultCase, resultDeath, code);
       });
 
-      setTableData(resultTableData);
+      setTableData(
+        stableSort(
+          resultTableData,
+          getComparator("desc", "thisWeek_thisYear_cases")
+        )
+      );
     })();
   }, [diseases]);
 
   return (
     <Paper sx={{ mt: 1, pt: 2, border: "1px solid #ededed" }}>
-      <Box sx={{ width: 1, textAlign: "center", pb: 1 }}>
-        <Typography variant="widgetTitle">{t(title)}</Typography>
+      <Box sx={{ width: 1, textAlign: "center", pb: 2 }}>
+        <Typography variant="widgetTitle" sx={{ fontSize: 20 }}>
+          {t(title)}
+        </Typography>
       </Box>
       <Divider />
 
       <Box sx={styles}>
-        {tableData ? (
+        {tableData.length > 0 ? (
           <BorderedTable
             stripe
             stickyHeader
             enableHover
-            sx={{ minWidth: 1450 }}
+            sx={{ minWidth: 1500 }}
             maxHeight={"calc(min(70dvh, 850px))"}
           >
             <TableHead>
@@ -177,27 +203,27 @@ const Dashboard1 = ({ title }) => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell sx={headerStyle}>{t("week12_currYear")}</TableCell>
-                <TableCell sx={headerStyle}>{t("week11_currYear")}</TableCell>
+                <TableCell sx={headerStyle}>{t("thisWeek_thisYear")}</TableCell>
+                <TableCell sx={headerStyle}>{t("lastWeek_thisYear")}</TableCell>
                 <TableCell sx={headerStyle}>{t("status")}</TableCell>
-                <TableCell sx={headerStyle}>{t("week12_prevYear")}</TableCell>
+                <TableCell sx={headerStyle}>{t("thisWeek_lastYear")}</TableCell>
                 <TableCell sx={{ ...headerStyle, ...red }}>
-                  {t("week12_currYear")}
+                  {t("thisWeek_thisYear")}
                 </TableCell>
                 <TableCell sx={{ ...headerStyle, ...red }}>
-                  {t("week11_currYear")}
+                  {t("lastWeek_thisYear")}
                 </TableCell>
                 <TableCell sx={{ ...headerStyle, ...red }}>
                   {t("status")}
                 </TableCell>
                 <TableCell sx={{ ...headerStyle, ...red }}>
-                  {t("week12_prevYear")}
+                  {t("thisWeek_lastYear")}
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.keys(tableData).map((code, idx) => (
-                <TableRow sx={{ cursor: "pointer" }} key={code}>
+              {tableData.map((row, idx) => (
+                <TableRow sx={{ cursor: "pointer" }} key={row.code}>
                   <TableCell
                     sx={{
                       position: "sticky",
@@ -205,43 +231,31 @@ const Dashboard1 = ({ title }) => {
                       backgroundColor: idx % 2 === 0 ? "#f8f8f8" : "#fff",
                     }}
                   >
-                    {diseaseNames[code]}
+                    {diseaseNames[row.code]}
                   </TableCell>
-                  <TableCell sx={green}>
-                    {tableData[code]["week12_currYear_cases"]}
+                  <TableCell sx={{ ...green, fontSize: 15 }}>
+                    {row["thisWeek_thisYear_cases"]}
                   </TableCell>
-                  <TableCell sx={green}>
-                    {tableData[code]["week11_currYear_cases"]}
-                  </TableCell>
-                  <TableCell>
-                    {tableData[code]["status_cases"] === "equal" ? (
-                      <TrendingFlatIcon sx={{ fontSize: 18 }} />
-                    ) : tableData[code]["status_cases"] === "increase" ? (
-                      <TrendingUpIcon sx={{ fontSize: 18 }} />
-                    ) : (
-                      <TrendingDownIcon sx={{ fontSize: 18 }} />
-                    )}
-                  </TableCell>
-                  <TableCell sx={green}>
-                    {tableData[code]["week12_prevYear_cases"]}
-                  </TableCell>
-                  <TableCell sx={red}>
-                    {tableData[code]["week12_currYear_deaths"]}
-                  </TableCell>
-                  <TableCell sx={red}>
-                    {tableData[code]["week11_currYear_deaths"]}
+                  <TableCell sx={{ ...green, fontSize: 15 }}>
+                    {row["lastWeek_thisYear_cases"]}
                   </TableCell>
                   <TableCell>
-                    {tableData[code]["status_deaths"] === "equal" ? (
-                      <TrendingFlatIcon sx={{ fontSize: 18 }} />
-                    ) : tableData[code]["status_deaths"] === "increase" ? (
-                      <TrendingUpIcon sx={{ fontSize: 18 }} />
-                    ) : (
-                      <TrendingDownIcon sx={{ fontSize: 18 }} />
-                    )}
+                    <StatusIcon status={row["status_cases"]} />
                   </TableCell>
-                  <TableCell sx={red}>
-                    {tableData[code]["week12_prevYear_deaths"]}
+                  <TableCell sx={{ ...green, fontSize: 15 }}>
+                    {row["thisWeek_lastYear_cases"]}
+                  </TableCell>
+                  <TableCell sx={{ ...red, fontSize: 15 }}>
+                    {row["thisWeek_thisYear_deaths"]}
+                  </TableCell>
+                  <TableCell sx={{ ...red, fontSize: 15 }}>
+                    {row["lastWeek_thisYear_deaths"]}
+                  </TableCell>
+                  <TableCell>
+                    <StatusIcon status={row["status_deaths"]} />
+                  </TableCell>
+                  <TableCell sx={{ ...red, fontSize: 15 }}>
+                    {row["thisWeek_lastYear_deaths"]}
                   </TableCell>
                 </TableRow>
               ))}

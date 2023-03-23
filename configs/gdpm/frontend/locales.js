@@ -1,6 +1,8 @@
 import {
   LAST_YEAR,
   THIS_YEAR,
+  THIS_WEEK,
+  LAST_WEEK,
 } from "./dashboards/Dashboard1/constants/constants";
 
 const locales = [
@@ -12,34 +14,34 @@ const locales = [
         key: "dashboard1Title",
         value: "dashboard1Title",
       },
-      { key: "bulletin", value: "Bulletin" },
+      { key: "bulletin", value: "Bảng tin dịch bệnh" },
       {
         key: "disease",
-        value: "Disease",
+        value: "Tên bệnh",
       },
       {
         key: "cases",
-        value: "Cases",
+        value: "Ca mắc",
       },
       {
         key: "deaths",
-        value: "Deaths",
+        value: "Ca tử vong",
       },
       {
-        key: "week12_currYear",
-        value: "Week 12	- " + THIS_YEAR,
+        key: "thisWeek_thisYear",
+        value: `Tuần ${THIS_WEEK} - ${THIS_YEAR}`,
       },
       {
-        key: "week11_currYear",
-        value: "Week 11	- " + THIS_YEAR,
+        key: "lastWeek_thisYear",
+        value: `Tuần ${LAST_WEEK} - ${THIS_WEEK === 1 ? LAST_YEAR : THIS_YEAR}`,
       },
       {
         key: "status",
-        value: "Status",
+        value: "Trạng thái",
       },
       {
-        key: "week12_prevYear",
-        value: "Week 12 - " + LAST_YEAR,
+        key: "thisWeek_lastYear",
+        value: `Tuần ${THIS_WEEK} - ${LAST_YEAR}`,
       },
       //disease dashboard
       {
@@ -98,20 +100,20 @@ const locales = [
         value: "Deaths",
       },
       {
-        key: "week12_currYear",
-        value: "Week 12	- " + THIS_YEAR,
+        key: "thisWeek_thisYear",
+        value: `Week ${THIS_WEEK} - ${THIS_YEAR}`,
       },
       {
-        key: "week11_currYear",
-        value: "Week 11	- " + THIS_YEAR,
+        key: "lastWeek_thisYear",
+        value: `Week ${LAST_WEEK} - ${THIS_WEEK === 1 ? LAST_YEAR : THIS_YEAR}`,
       },
       {
         key: "status",
         value: "Status",
       },
       {
-        key: "week12_prevYear",
-        value: "Week 12 - " + LAST_YEAR,
+        key: "thisWeek_lastYear",
+        value: `Week ${THIS_WEEK} - ${LAST_YEAR}`,
       },
       //disease dashboard
       {
