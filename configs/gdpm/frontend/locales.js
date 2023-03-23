@@ -51,6 +51,7 @@ const locales = [
         key: "dashboard1Title",
         value: "dashboard1Title",
       },
+      { key: "bulletin", value: "Bulletin" },
       {
         key: "disease",
         value: "Disease",
