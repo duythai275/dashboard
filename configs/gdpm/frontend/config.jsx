@@ -40,7 +40,7 @@ const useDashboardInitialization = () => {
     (async () => {
       const dashboards = [
         {
-          name: "dashboard1Title",
+          name: "bulletin",
           dashboard: <BulletinDashboard title="bulletin" />,
         },
       ];
