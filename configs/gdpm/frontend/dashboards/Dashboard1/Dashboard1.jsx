@@ -14,13 +14,12 @@ import { useTranslation } from "react-i18next";
 
 import { LAST_YEAR, THIS_YEAR } from "./constants/constants";
 import { BorderedTable } from "./components/BorderedTable";
-import { fillCaseData } from "./utils";
+import { fillCaseData, getComparator, stableSort } from "./utils";
 import { pull } from "@/utils/fetch";
 import useMetadataStore from "@/state/metadata";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
-import TrendingDownIcon from "@mui/icons-material/TrendingDown";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import HorizontalRuleRoundedIcon from "@mui/icons-material/HorizontalRuleRounded";
+import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
+import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
 
 const styles = {
   p: 2,
@@ -88,6 +87,7 @@ const getDiseaseData = (resultCase, resultDeath, code) => {
   );
 
   return {
+    code,
     week12_currYear_cases,
     week12_currYear_deaths,
     week11_currYear_cases,
@@ -97,6 +97,22 @@ const getDiseaseData = (resultCase, resultDeath, code) => {
     status_cases,
     status_deaths,
   };
+};
+
+const StatusIcon = ({ status }) => {
+  return (
+    <Box
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
+      {status === "equal" ? (
+        <HorizontalRuleRoundedIcon />
+      ) : status === "increase" ? (
+        <ArrowUpwardRoundedIcon sx={red} />
+      ) : (
+        <ArrowDownwardRoundedIcon sx={green} />
+      )}
+    </Box>
+  );
 };
 
 const Dashboard1 = ({ title }) => {
@@ -116,9 +132,9 @@ const Dashboard1 = ({ title }) => {
     });
 
     return result;
-  }, [i18n.language]);
+  }, [i18n.language, diseases]);
 
-  const [tableData, setTableData] = useState(null);
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -130,12 +146,16 @@ const Dashboard1 = ({ title }) => {
         `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_deaths_country&var=startYear:${LAST_YEAR}&var=endYear:${THIS_YEAR}`
       );
 
-      const resultTableData = {};
-      diseases.forEach(({ code }, idx) => {
-        resultTableData[code] = getDiseaseData(resultCase, resultDeath, code);
+      const resultTableData = diseases.map(({ code }, idx) => {
+        return getDiseaseData(resultCase, resultDeath, code);
       });
 
-      setTableData(resultTableData);
+      setTableData(
+        stableSort(
+          resultTableData,
+          getComparator("desc", "week12_currYear_cases")
+        )
+      );
     })();
   }, [diseases]);
 
@@ -196,8 +216,8 @@ const Dashboard1 = ({ title }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.keys(tableData).map((code, idx) => (
-                <TableRow sx={{ cursor: "pointer" }} key={code}>
+              {tableData.map((row, idx) => (
+                <TableRow sx={{ cursor: "pointer" }} key={row.code}>
                   <TableCell
                     sx={{
                       position: "sticky",
@@ -205,43 +225,31 @@ const Dashboard1 = ({ title }) => {
                       backgroundColor: idx % 2 === 0 ? "#f8f8f8" : "#fff",
                     }}
                   >
-                    {diseaseNames[code]}
+                    {diseaseNames[row.code]}
                   </TableCell>
                   <TableCell sx={green}>
-                    {tableData[code]["week12_currYear_cases"]}
+                    {row["week12_currYear_cases"]}
                   </TableCell>
                   <TableCell sx={green}>
-                    {tableData[code]["week11_currYear_cases"]}
+                    {row["week11_currYear_cases"]}
                   </TableCell>
                   <TableCell>
-                    {tableData[code]["status_cases"] === "equal" ? (
-                      <TrendingFlatIcon sx={{ fontSize: 18 }} />
-                    ) : tableData[code]["status_cases"] === "increase" ? (
-                      <TrendingUpIcon sx={{ fontSize: 18 }} />
-                    ) : (
-                      <TrendingDownIcon sx={{ fontSize: 18 }} />
-                    )}
+                    <StatusIcon status={row["status_cases"]} />
                   </TableCell>
                   <TableCell sx={green}>
-                    {tableData[code]["week12_prevYear_cases"]}
+                    {row["week12_prevYear_cases"]}
                   </TableCell>
                   <TableCell sx={red}>
-                    {tableData[code]["week12_currYear_deaths"]}
+                    {row["week12_currYear_deaths"]}
                   </TableCell>
                   <TableCell sx={red}>
-                    {tableData[code]["week11_currYear_deaths"]}
+                    {row["week11_currYear_deaths"]}
                   </TableCell>
                   <TableCell>
-                    {tableData[code]["status_deaths"] === "equal" ? (
-                      <TrendingFlatIcon sx={{ fontSize: 18 }} />
-                    ) : tableData[code]["status_deaths"] === "increase" ? (
-                      <TrendingUpIcon sx={{ fontSize: 18 }} />
-                    ) : (
-                      <TrendingDownIcon sx={{ fontSize: 18 }} />
-                    )}
+                    <StatusIcon status={row["status_deaths"]} />
                   </TableCell>
                   <TableCell sx={red}>
-                    {tableData[code]["week12_prevYear_deaths"]}
+                    {row["week12_prevYear_deaths"]}
                   </TableCell>
                 </TableRow>
               ))}
