@@ -12,7 +12,12 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { LAST_YEAR, THIS_YEAR } from "./constants/constants";
+import {
+  LAST_YEAR,
+  THIS_WEEK,
+  LAST_WEEK,
+  THIS_YEAR,
+} from "./constants/constants";
 import { BorderedTable } from "./components/BorderedTable";
 import { fillCaseData, getComparator, stableSort } from "./utils";
 import { pull } from "@/utils/fetch";
@@ -42,57 +47,57 @@ const compareStatus = (w12Value, w11Value) => {
 };
 
 const getDiseaseData = (resultCase, resultDeath, code) => {
-  const week12_currYear_cases = fillCaseData(
+  const thisWeek_thisYear_cases = fillCaseData(
     resultCase.listGrid,
     code,
-    THIS_YEAR + "W12"
+    `${THIS_YEAR}W${THIS_WEEK}`
   );
-  const week12_currYear_deaths = fillCaseData(
+  const thisWeek_thisYear_deaths = fillCaseData(
     resultDeath.listGrid,
     code,
-    THIS_YEAR + "W12"
+    `${THIS_YEAR}W${THIS_WEEK}`
   );
 
-  const week11_currYear_cases = fillCaseData(
+  const lastWeek_thisYear_cases = fillCaseData(
     resultCase.listGrid,
     code,
-    THIS_YEAR + "W11"
+    `${THIS_WEEK === 1 ? LAST_YEAR : THIS_YEAR}W${LAST_WEEK}`
   );
-  const week11_currYear_deaths = fillCaseData(
+  const lastWeek_thisYear_deaths = fillCaseData(
     resultDeath.listGrid,
     code,
-    THIS_YEAR + "W11"
+    `${THIS_WEEK === 1 ? LAST_YEAR : THIS_YEAR}W${LAST_WEEK}`
   );
 
-  const week12_prevYear_cases = fillCaseData(
+  const thisWeek_lastYear_cases = fillCaseData(
     resultCase.listGrid,
     code,
-    LAST_YEAR + "W12"
+    `${LAST_YEAR}W${THIS_WEEK}`
   );
-  const week12_prevYear_deaths = fillCaseData(
+  const thisWeek_lastYear_deaths = fillCaseData(
     resultDeath.listGrid,
     code,
-    LAST_YEAR + "W12"
+    `${LAST_YEAR}W${THIS_WEEK}`
   );
 
   const status_cases = compareStatus(
-    week12_currYear_cases,
-    week11_currYear_cases
+    thisWeek_thisYear_cases,
+    lastWeek_thisYear_cases
   );
 
   const status_deaths = compareStatus(
-    week12_currYear_deaths,
-    week11_currYear_deaths
+    thisWeek_thisYear_deaths,
+    lastWeek_thisYear_deaths
   );
 
   return {
     code,
-    week12_currYear_cases,
-    week12_currYear_deaths,
-    week11_currYear_cases,
-    week11_currYear_deaths,
-    week12_prevYear_cases,
-    week12_prevYear_deaths,
+    thisWeek_thisYear_cases,
+    thisWeek_thisYear_deaths,
+    lastWeek_thisYear_cases,
+    lastWeek_thisYear_deaths,
+    thisWeek_lastYear_cases,
+    thisWeek_lastYear_deaths,
     status_cases,
     status_deaths,
   };
@@ -152,7 +157,7 @@ const Dashboard1 = ({ title }) => {
       setTableData(
         stableSort(
           resultTableData,
-          getComparator("desc", "week12_currYear_cases")
+          getComparator("desc", "thisWeek_thisYear_cases")
         )
       );
     })();
@@ -173,7 +178,7 @@ const Dashboard1 = ({ title }) => {
             stripe
             stickyHeader
             enableHover
-            sx={{ minWidth: 1450 }}
+            sx={{ minWidth: 1500 }}
             maxHeight={"calc(min(70dvh, 850px))"}
           >
             <TableHead>
@@ -198,21 +203,21 @@ const Dashboard1 = ({ title }) => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell sx={headerStyle}>{t("week12_currYear")}</TableCell>
-                <TableCell sx={headerStyle}>{t("week11_currYear")}</TableCell>
+                <TableCell sx={headerStyle}>{t("thisWeek_thisYear")}</TableCell>
+                <TableCell sx={headerStyle}>{t("lastWeek_thisYear")}</TableCell>
                 <TableCell sx={headerStyle}>{t("status")}</TableCell>
-                <TableCell sx={headerStyle}>{t("week12_prevYear")}</TableCell>
+                <TableCell sx={headerStyle}>{t("thisWeek_lastYear")}</TableCell>
                 <TableCell sx={{ ...headerStyle, ...red }}>
-                  {t("week12_currYear")}
+                  {t("thisWeek_thisYear")}
                 </TableCell>
                 <TableCell sx={{ ...headerStyle, ...red }}>
-                  {t("week11_currYear")}
+                  {t("lastWeek_thisYear")}
                 </TableCell>
                 <TableCell sx={{ ...headerStyle, ...red }}>
                   {t("status")}
                 </TableCell>
                 <TableCell sx={{ ...headerStyle, ...red }}>
-                  {t("week12_prevYear")}
+                  {t("thisWeek_lastYear")}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -229,28 +234,28 @@ const Dashboard1 = ({ title }) => {
                     {diseaseNames[row.code]}
                   </TableCell>
                   <TableCell sx={{ ...green, fontSize: 15 }}>
-                    {row["week12_currYear_cases"]}
+                    {row["thisWeek_thisYear_cases"]}
                   </TableCell>
                   <TableCell sx={{ ...green, fontSize: 15 }}>
-                    {row["week11_currYear_cases"]}
+                    {row["lastWeek_thisYear_cases"]}
                   </TableCell>
                   <TableCell>
                     <StatusIcon status={row["status_cases"]} />
                   </TableCell>
                   <TableCell sx={{ ...green, fontSize: 15 }}>
-                    {row["week12_prevYear_cases"]}
+                    {row["thisWeek_lastYear_cases"]}
                   </TableCell>
                   <TableCell sx={{ ...red, fontSize: 15 }}>
-                    {row["week12_currYear_deaths"]}
+                    {row["thisWeek_thisYear_deaths"]}
                   </TableCell>
                   <TableCell sx={{ ...red, fontSize: 15 }}>
-                    {row["week11_currYear_deaths"]}
+                    {row["lastWeek_thisYear_deaths"]}
                   </TableCell>
                   <TableCell>
                     <StatusIcon status={row["status_deaths"]} />
                   </TableCell>
                   <TableCell sx={{ ...red, fontSize: 15 }}>
-                    {row["week12_prevYear_deaths"]}
+                    {row["thisWeek_lastYear_deaths"]}
                   </TableCell>
                 </TableRow>
               ))}
