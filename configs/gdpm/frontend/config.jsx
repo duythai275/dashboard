@@ -7,7 +7,7 @@ import useSelectionStore from "@/state/selection";
 import locales from "./locales";
 import { pull } from "@/utils/fetch";
 import { useTranslation } from "react-i18next";
-import Dashboard1 from "./dashboards/Dashboard1/Dashboard1";
+import BulletinDashboard from "./dashboards/BulletinDashboard/BulletinDashboard";
 import DiseaseDashboard from "./dashboards/DiseaseDashboard";
 
 const languages = locales.map((locale) => ({
@@ -39,7 +39,10 @@ const useDashboardInitialization = () => {
     selectLanguage("vi");
     (async () => {
       const dashboards = [
-        { name: "dashboard1Title", dashboard: <Dashboard1 title="bulletin" /> },
+        {
+          name: "dashboard1Title",
+          dashboard: <BulletinDashboard title="bulletin" />,
+        },
       ];
       setReady(false);
       const results = await Promise.all([

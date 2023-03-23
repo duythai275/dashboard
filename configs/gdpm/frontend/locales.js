@@ -3,7 +3,7 @@ import {
   THIS_YEAR,
   THIS_WEEK,
   LAST_WEEK,
-} from "./dashboards/Dashboard1/constants/constants";
+} from "./dashboards/BulletinDashboard/constants/constants";
 
 const locales = [
   {

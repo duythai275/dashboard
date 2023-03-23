@@ -119,7 +119,7 @@ const StatusIcon = ({ status }) => {
   );
 };
 
-const Dashboard1 = ({ title }) => {
+const BulletinDashboard = ({ title }) => {
   const { t, i18n } = useTranslation();
   const diseases = useMetadataStore((state) => state.diseases);
 
@@ -277,4 +277,4 @@ const Dashboard1 = ({ title }) => {
     </Paper>
   );
 };
-export default Dashboard1;
+export default BulletinDashboard;
