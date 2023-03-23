@@ -12,7 +12,7 @@ import DiseaseDashboard from "./dashboards/DiseaseDashboard";
 
 const languages = locales.map((locale) => ({
   name: locale.name,
-  code: locale.code,
+  code: locale.code
 }));
 
 const useDashboardInitialization = () => {
@@ -25,75 +25,71 @@ const useDashboardInitialization = () => {
   const [ready, setReady] = useState(false);
 
   const { t } = useTranslation();
-  const { initDashboardState, selectDashboard, setDashboards } =
-    useDashboardStore(
-      (state) => ({
-        initDashboardState: state.initDashboardState,
-        selectDashboard: state.selectDashboard,
-        setDashboards: state.setDashboards,
-      }),
-      shallow
-    );
+  const { initDashboardState, selectDashboard, setDashboards } = useDashboardStore(
+    (state) => ({
+      initDashboardState: state.initDashboardState,
+      selectDashboard: state.selectDashboard,
+      setDashboards: state.setDashboards
+    }),
+    shallow
+  );
 
   useEffect(() => {
     selectLanguage("vi");
     (async () => {
-      const dashboards = [
-        { name: "dashboard1Title", dashboard: <Dashboard1 title="bulletin" /> },
-      ];
+      const dashboards = [{ name: "dashboard1Title", dashboard: <Dashboard1 /> }];
       setReady(false);
       const results = await Promise.all([
-        pull(
-          "/api/optionSets?filter=id:eq:d5fivOeWHIb&fields=id,name,translations,options[id,name,code,translations"
-        ),
+        pull("/api/optionSets?filter=id:eq:d5fivOeWHIb&fields=id,name,translations,options[id,name,code,translations"),
         pull(
           "/api/organisationUnitGroups?filter=id:in:[oCFEWHz1vlJ,gqdSIqMZvOG,LgSrUpV7Qmv,Mvfn1MRfn7q,n0F2Tl5rMe4]&fields=id,name,translations,organisationUnits[id,name,code,translations]"
         ),
-        pull(
-          "/api/organisationUnits?filter=level:eq:4&fields=id,name,ancestors[id,name,level]"
-        ),
+        pull("/api/organisationUnits?filter=level:eq:4&fields=id,name,ancestors[id,name,level]"),
+        pull("/api/organisationUnits.geojson?level=2")
       ]);
       setMetadata("diseases", results[0].optionSets[0].options);
       setMetadata("ouGroups", results[1].organisationUnitGroups);
       setMetadata("communes", results[2].organisationUnits);
+      setMetadata("orgUnitGeoJson", results[3]);
+
       results[0].optionSets[0].options.forEach((option) => {
         dashboards.push({
           name: option.name,
-          dashboard: <DiseaseDashboard disease={option.code} />,
+          dashboard: <DiseaseDashboard disease={option.code} />
         });
       });
       initDashboardState([
         {
           widgets: [
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         ...results[0].optionSets[0].options.map((_) => {
           return {
             widgets: [
               {
-                selectedChildren: 0,
+                selectedChildren: 0
               },
               {
-                selectedChildren: 0,
+                selectedChildren: 0
               },
               {
-                selectedChildren: 0,
+                selectedChildren: 0
               },
               {
-                selectedChildren: 0,
+                selectedChildren: 0
               },
               {
-                selectedChildren: 0,
+                selectedChildren: 0
               },
               {
-                selectedChildren: 0,
-              },
-            ],
+                selectedChildren: 0
+              }
+            ]
           };
-        }),
+        })
       ]);
       setDashboards(dashboards);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });
