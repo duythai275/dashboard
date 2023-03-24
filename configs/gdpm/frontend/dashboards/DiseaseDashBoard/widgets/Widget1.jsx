@@ -3,6 +3,9 @@ import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenL
 import { pull } from "@/utils/fetch";
 import { useEffect, useMemo, useState } from "react";
 
+//CHANGE WIDGET TITLE TO:
+// Weekly {disease name} {province name(if select province)} cases
+// Diễn biến bệnh {disease name} theo tuần {tại province name (if select province)}
 const Widget1 = ({ setLoading, code, ou }) => {
   const [data, setData] = useState(null);
   const weeks = useMemo(() => {

@@ -1,23 +1,8 @@
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  Paper,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Divider, Paper, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  LAST_YEAR,
-  THIS_WEEK,
-  LAST_WEEK,
-  THIS_YEAR,
-} from "./constants/constants";
+import { LAST_YEAR, THIS_WEEK, LAST_WEEK, THIS_YEAR } from "./constants/constants";
 import { BorderedTable } from "./components/BorderedTable";
 import { fillCaseData, getComparator, stableSort } from "./utils";
 import { pull } from "@/utils/fetch";
@@ -25,15 +10,16 @@ import useMetadataStore from "@/state/metadata";
 import HorizontalRuleRoundedIcon from "@mui/icons-material/HorizontalRuleRounded";
 import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
+import useDashboardStore from "@/state/dashboard";
 
 const styles = {
   "& td, th": {
     textAlign: "center",
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   "& td:nth-of-type(1)": {
-    textAlign: "left",
-  },
+    textAlign: "left"
+  }
 };
 
 const green = { color: "#1f6e36 !important" };
@@ -47,48 +33,18 @@ const compareStatus = (w12Value, w11Value) => {
 };
 
 const getDiseaseData = (resultCase, resultDeath, code) => {
-  const thisWeek_thisYear_cases = fillCaseData(
-    resultCase.listGrid,
-    code,
-    `${THIS_YEAR}W${THIS_WEEK}`
-  );
-  const thisWeek_thisYear_deaths = fillCaseData(
-    resultDeath.listGrid,
-    code,
-    `${THIS_YEAR}W${THIS_WEEK}`
-  );
+  const thisWeek_thisYear_cases = fillCaseData(resultCase.listGrid, code, `${THIS_YEAR}W${THIS_WEEK}`);
+  const thisWeek_thisYear_deaths = fillCaseData(resultDeath.listGrid, code, `${THIS_YEAR}W${THIS_WEEK}`);
 
-  const lastWeek_thisYear_cases = fillCaseData(
-    resultCase.listGrid,
-    code,
-    `${THIS_WEEK === 1 ? LAST_YEAR : THIS_YEAR}W${LAST_WEEK}`
-  );
-  const lastWeek_thisYear_deaths = fillCaseData(
-    resultDeath.listGrid,
-    code,
-    `${THIS_WEEK === 1 ? LAST_YEAR : THIS_YEAR}W${LAST_WEEK}`
-  );
+  const lastWeek_thisYear_cases = fillCaseData(resultCase.listGrid, code, `${THIS_WEEK === 1 ? LAST_YEAR : THIS_YEAR}W${LAST_WEEK}`);
+  const lastWeek_thisYear_deaths = fillCaseData(resultDeath.listGrid, code, `${THIS_WEEK === 1 ? LAST_YEAR : THIS_YEAR}W${LAST_WEEK}`);
 
-  const thisWeek_lastYear_cases = fillCaseData(
-    resultCase.listGrid,
-    code,
-    `${LAST_YEAR}W${THIS_WEEK}`
-  );
-  const thisWeek_lastYear_deaths = fillCaseData(
-    resultDeath.listGrid,
-    code,
-    `${LAST_YEAR}W${THIS_WEEK}`
-  );
+  const thisWeek_lastYear_cases = fillCaseData(resultCase.listGrid, code, `${LAST_YEAR}W${THIS_WEEK}`);
+  const thisWeek_lastYear_deaths = fillCaseData(resultDeath.listGrid, code, `${LAST_YEAR}W${THIS_WEEK}`);
 
-  const status_cases = compareStatus(
-    thisWeek_thisYear_cases,
-    lastWeek_thisYear_cases
-  );
+  const status_cases = compareStatus(thisWeek_thisYear_cases, lastWeek_thisYear_cases);
 
-  const status_deaths = compareStatus(
-    thisWeek_thisYear_deaths,
-    lastWeek_thisYear_deaths
-  );
+  const status_deaths = compareStatus(thisWeek_thisYear_deaths, lastWeek_thisYear_deaths);
 
   return {
     code,
@@ -99,15 +55,13 @@ const getDiseaseData = (resultCase, resultDeath, code) => {
     thisWeek_lastYear_cases,
     thisWeek_lastYear_deaths,
     status_cases,
-    status_deaths,
+    status_deaths
   };
 };
 
 const StatusIcon = ({ status }) => {
   return (
-    <Box
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-    >
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
       {status === "equal" ? (
         <HorizontalRuleRoundedIcon />
       ) : status === "increase" ? (
@@ -122,15 +76,13 @@ const StatusIcon = ({ status }) => {
 const BulletinDashboard = ({ title }) => {
   const { t, i18n } = useTranslation();
   const diseases = useMetadataStore((state) => state.diseases);
-
+  const selectDashboard = useDashboardStore((state) => state.selectDashboard);
   const diseaseNames = useMemo(() => {
     const result = {};
     const language = i18n.language;
 
     diseases.forEach(({ translations, name, code }) => {
-      const translationName = translations.find(
-        ({ locale }) => locale === language
-      )?.value;
+      const translationName = translations.find(({ locale }) => locale === language)?.value;
 
       result[code] = translationName || name;
     });
@@ -154,12 +106,7 @@ const BulletinDashboard = ({ title }) => {
         return getDiseaseData(resultCase, resultDeath, code);
       });
 
-      setTableData(
-        stableSort(
-          resultTableData,
-          getComparator("desc", "thisWeek_thisYear_cases")
-        )
-      );
+      setTableData(stableSort(resultTableData, getComparator("desc", "thisWeek_thisYear_cases")));
     })();
   }, [diseases]);
 
@@ -171,16 +118,9 @@ const BulletinDashboard = ({ title }) => {
         </Typography>
       </Box>
       <Divider />
-
       <Box sx={styles}>
         {tableData.length > 0 ? (
-          <BorderedTable
-            stripe
-            stickyHeader
-            enableHover
-            sx={{ minWidth: 1500 }}
-            maxHeight={"calc(min(70dvh, 850px))"}
-          >
+          <BorderedTable stripe stickyHeader enableHover sx={{ minWidth: 1500 }} maxHeight={"calc(min(70dvh, 850px))"}>
             <TableHead>
               <TableRow>
                 <TableCell
@@ -190,7 +130,7 @@ const BulletinDashboard = ({ title }) => {
                     position: "sticky",
                     left: 0,
                     backgroundColor: "#fff",
-                    zIndex: 5,
+                    zIndex: 5
                   }}
                 >
                   {t("disease")}
@@ -207,56 +147,43 @@ const BulletinDashboard = ({ title }) => {
                 <TableCell sx={headerStyle}>{t("lastWeek_thisYear")}</TableCell>
                 <TableCell sx={headerStyle}>{t("status")}</TableCell>
                 <TableCell sx={headerStyle}>{t("thisWeek_lastYear")}</TableCell>
-                <TableCell sx={{ ...headerStyle, ...red }}>
-                  {t("thisWeek_thisYear")}
-                </TableCell>
-                <TableCell sx={{ ...headerStyle, ...red }}>
-                  {t("lastWeek_thisYear")}
-                </TableCell>
-                <TableCell sx={{ ...headerStyle, ...red }}>
-                  {t("status")}
-                </TableCell>
-                <TableCell sx={{ ...headerStyle, ...red }}>
-                  {t("thisWeek_lastYear")}
-                </TableCell>
+                <TableCell sx={{ ...headerStyle, ...red }}>{t("thisWeek_thisYear")}</TableCell>
+                <TableCell sx={{ ...headerStyle, ...red }}>{t("lastWeek_thisYear")}</TableCell>
+                <TableCell sx={{ ...headerStyle, ...red }}>{t("status")}</TableCell>
+                <TableCell sx={{ ...headerStyle, ...red }}>{t("thisWeek_lastYear")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {tableData.map((row, idx) => (
-                <TableRow sx={{ cursor: "pointer" }} key={row.code}>
+                <TableRow
+                  sx={{ cursor: "pointer" }}
+                  key={row.code}
+                  onClick={() => {
+                    const foundIndex = diseases.findIndex((d) => d.code === row.code);
+                    selectDashboard({ value: foundIndex + 1, label: diseaseNames[row.code] });
+                  }}
+                >
                   <TableCell
                     sx={{
                       position: "sticky",
                       left: 0,
-                      backgroundColor: idx % 2 === 0 ? "#f8f8f8" : "#fff",
+                      backgroundColor: idx % 2 === 0 ? "#f8f8f8" : "#fff"
                     }}
                   >
                     {diseaseNames[row.code]}
                   </TableCell>
-                  <TableCell sx={{ ...green, fontSize: 15 }}>
-                    {row["thisWeek_thisYear_cases"]}
-                  </TableCell>
-                  <TableCell sx={{ ...green, fontSize: 15 }}>
-                    {row["lastWeek_thisYear_cases"]}
-                  </TableCell>
+                  <TableCell sx={{ ...green, fontSize: 15 }}>{row["thisWeek_thisYear_cases"]}</TableCell>
+                  <TableCell sx={{ ...green, fontSize: 15 }}>{row["lastWeek_thisYear_cases"]}</TableCell>
                   <TableCell>
                     <StatusIcon status={row["status_cases"]} />
                   </TableCell>
-                  <TableCell sx={{ ...green, fontSize: 15 }}>
-                    {row["thisWeek_lastYear_cases"]}
-                  </TableCell>
-                  <TableCell sx={{ ...red, fontSize: 15 }}>
-                    {row["thisWeek_thisYear_deaths"]}
-                  </TableCell>
-                  <TableCell sx={{ ...red, fontSize: 15 }}>
-                    {row["lastWeek_thisYear_deaths"]}
-                  </TableCell>
+                  <TableCell sx={{ ...green, fontSize: 15 }}>{row["thisWeek_lastYear_cases"]}</TableCell>
+                  <TableCell sx={{ ...red, fontSize: 15 }}>{row["thisWeek_thisYear_deaths"]}</TableCell>
+                  <TableCell sx={{ ...red, fontSize: 15 }}>{row["lastWeek_thisYear_deaths"]}</TableCell>
                   <TableCell>
                     <StatusIcon status={row["status_deaths"]} />
                   </TableCell>
-                  <TableCell sx={{ ...red, fontSize: 15 }}>
-                    {row["thisWeek_lastYear_deaths"]}
-                  </TableCell>
+                  <TableCell sx={{ ...red, fontSize: 15 }}>{row["thisWeek_lastYear_deaths"]}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -267,7 +194,7 @@ const BulletinDashboard = ({ title }) => {
               height: "calc(min(70dvh, 850px))",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "center"
             }}
           >
             <CircularProgress />

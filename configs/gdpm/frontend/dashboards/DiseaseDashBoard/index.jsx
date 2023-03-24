@@ -8,7 +8,7 @@ import Widget2 from "./widgets/Widget2";
 const ReactGridLayout = WidthProvider(RGL);
 
 import "./index.css";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import Widget3 from "./widgets/Widget3";
 import Widget5 from "./widgets/Widget5";
 import Widget4 from "./widgets/Widget4";
@@ -29,6 +29,7 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
   const lastYear = useMemo(() => new Date().getFullYear() - 1);
   const currentYear = useMemo(() => new Date().getFullYear());
   const currentWeek = useMemo(() => getISOWeek(new Date()));
+
   return (
     <ReactGridLayout
       isDraggable={false}
@@ -106,7 +107,7 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
       <WidgetContainer
         key="4"
         dashboardIndex={dashboardIndex}
-        widgetIndex={2}
+        widgetIndex={3}
         childrenWidgets={[
           {
             title:
@@ -134,7 +135,7 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
       <WidgetContainer
         key="5"
         dashboardIndex={dashboardIndex}
-        widgetIndex={2}
+        widgetIndex={4}
         childrenWidgets={[
           {
             title:

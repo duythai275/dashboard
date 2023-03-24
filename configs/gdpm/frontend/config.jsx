@@ -54,7 +54,7 @@ const useDashboardInitialization = () => {
       ]);
       setMetadata("diseases", results[0].optionSets[0].options);
       results[1].organisationUnitGroups.forEach((oug) => {
-        oug.organisationUnits = _.sortBy(oug.organisationUnits, "code");
+        oug.organisationUnits = _.sortBy(oug.organisationUnits, "name");
       });
       setMetadata("ouGroups", results[1].organisationUnitGroups);
       setMetadata("communes", results[2].organisationUnits);
