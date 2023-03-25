@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import { shallow } from "zustand/shallow";
 
 const Widget1 = ({ setLoading, code }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [value, setValue] = useState(0);
   const [data, setData] = useState(null);
 
@@ -31,7 +31,7 @@ const Widget1 = ({ setLoading, code }) => {
   );
   const listPe = useMemo(() => {
     const weeks = [];
-    for (let i = getISOWeek(new Date()) - 9; i <= getISOWeek(new Date()); i++) {
+    for (let i = getISOWeek(new Date()); i >= getISOWeek(new Date()) - 9; i--) {
       weeks.push(`${new Date().getFullYear()}W${i}`);
     }
     return weeks.join(";");
@@ -70,7 +70,7 @@ const Widget1 = ({ setLoading, code }) => {
           const dataByWeek = results[0].listGrid.rows
             .filter(
               (row) =>
-                row[weeklyIndex].slice(4) === week &&
+                row[weeklyIndex] === week &&
                 listOu.includes(row[ouIndex]) &&
                 row[diseaseIndex] === code
             )
@@ -78,11 +78,12 @@ const Widget1 = ({ setLoading, code }) => {
           const deadDataByWeek = results[1].listGrid.rows
             .filter(
               (row) =>
-                row[weeklyIndex].slice(4) === week &&
+                row[weeklyIndex] === week &&
                 listOu.includes(row[ouIndex]) &&
                 row[diseaseIndex] === code
             )
             .reduce((prev, curr) => prev + curr[casesIndex] * 1, 0);
+
           return {
             case: dataByWeek,
             dead: deadDataByWeek,
@@ -102,7 +103,15 @@ const Widget1 = ({ setLoading, code }) => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Tabs
           value={value}
           onChange={handleChange}
@@ -125,14 +134,20 @@ const Widget1 = ({ setLoading, code }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {listPe.split(";").map((week, index) => {
+            {listPe.split(";").map((weekly, index) => {
+              const year = weekly.slice(0, 4);
+              const week = weekly.slice(5);
+              const weekLabel =
+                i18n.language === "vi"
+                  ? `Tuần ${week} ${year}`
+                  : `Week ${week} ${year}`;
               return (
                 <TableRow>
-                  <TableCell sx={{ fontWeight: "500" }}>{week}</TableCell>
-                  <TableCell sx={{ color: "#63bc5e" }}>
+                  <TableCell sx={{ fontWeight: "500" }}>{weekLabel}</TableCell>
+                  <TableCell sx={{ color: "#63bc5e", fontWeight: "500" }}>
                     {data[index].case}
                   </TableCell>
-                  <TableCell sx={{ color: "#db4e4e" }}>
+                  <TableCell sx={{ color: "#db4e4e", fontWeight: "500" }}>
                     {data[index].dead}
                   </TableCell>
                 </TableRow>

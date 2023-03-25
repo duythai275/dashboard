@@ -2,11 +2,13 @@ import MultitypeChart from "@/components/Widgets/MultitypeChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { pull } from "@/utils/fetch";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 //CHANGE WIDGET TITLE TO:
 // Weekly {disease name} {province name(if select province)} cases
 // Diễn biến bệnh {disease name} theo tuần {tại province name (if select province)}
 const Widget1 = ({ setLoading, code, ou }) => {
+  const { t, i18n } = useTranslation();
   const [data, setData] = useState(null);
   const weeks = useMemo(() => {
     let weeks = [];
@@ -27,38 +29,58 @@ const Widget1 = ({ setLoading, code, ou }) => {
           `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_country&var=startYear:${lastYear}&var=endYear:${currentYear}`
         );
         if (result) {
-          const weeklyIndex = result.listGrid.headers.findIndex((header) => header.name === "weekly");
-          const diseaseIndex = result.listGrid.headers.findIndex((header) => header.name === "Du5ydup8qQf");
-          const casesIndex = result.listGrid.headers.findIndex((header) => header.name === "cases");
+          const weeklyIndex = result.listGrid.headers.findIndex(
+            (header) => header.name === "weekly"
+          );
+          const diseaseIndex = result.listGrid.headers.findIndex(
+            (header) => header.name === "Du5ydup8qQf"
+          );
+          const casesIndex = result.listGrid.headers.findIndex(
+            (header) => header.name === "cases"
+          );
 
           const dataLastYearResult = weeks.map((week) => {
             return (
               result.listGrid.rows.find(
-                (row) => row[weeklyIndex].slice(4) === week && row[diseaseIndex] === code && row[weeklyIndex].slice(0, 4) * 1 === lastYear
+                (row) =>
+                  row[weeklyIndex].slice(4) === week &&
+                  row[diseaseIndex] === code &&
+                  row[weeklyIndex].slice(0, 4) * 1 === lastYear
               )?.[casesIndex] * 1 || 0
             );
           });
           const dataCurrentYearResult = weeks.map((week) => {
             return (
               result.listGrid.rows.find(
-                (row) => row[weeklyIndex].slice(4) === week && row[diseaseIndex] === code && row[weeklyIndex].slice(0, 4) * 1 === currentYear
+                (row) =>
+                  row[weeklyIndex].slice(4) === week &&
+                  row[diseaseIndex] === code &&
+                  row[weeklyIndex].slice(0, 4) * 1 === currentYear
               )?.[casesIndex] * 1 || 0
             );
           });
 
           setData({
             lastYear: dataLastYearResult,
-            currentYear: dataCurrentYearResult
+            currentYear: dataCurrentYearResult,
           });
         }
       } else {
         const result = await pull(
           `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_provinces&var=startYear:${lastYear}&var=endYear:${currentYear}`
         );
-        const ouIndex = result.listGrid.headers.findIndex((header) => header.name === "uidlevel2");
-        const weeklyIndex = result.listGrid.headers.findIndex((header) => header.name === "weekly");
-        const diseaseIndex = result.listGrid.headers.findIndex((header) => header.name === "Du5ydup8qQf");
-        const casesIndex = result.listGrid.headers.findIndex((header) => header.name === "cases");
+        const ouIndex = result.listGrid.headers.findIndex(
+          (header) => header.name === "uidlevel2"
+        );
+        const weeklyIndex = result.listGrid.headers.findIndex(
+          (header) => header.name === "weekly"
+        );
+        const diseaseIndex = result.listGrid.headers.findIndex(
+          (header) => header.name === "Du5ydup8qQf"
+        );
+        const casesIndex = result.listGrid.headers.findIndex(
+          (header) => header.name === "cases"
+        );
 
         const dataLastYearResult = weeks.map((week) => {
           return (
@@ -84,7 +106,7 @@ const Widget1 = ({ setLoading, code, ou }) => {
         });
         setData({
           lastYear: dataLastYearResult,
-          currentYear: dataCurrentYearResult
+          currentYear: dataCurrentYearResult,
         });
       }
     } catch (error) {
@@ -101,23 +123,25 @@ const Widget1 = ({ setLoading, code, ou }) => {
   return (
     <MultitypeChart
       data={{
-        labels: weeks,
+        labels: weeks.map((week) =>
+          i18n.language === "vi" ? `T${week.slice(1)}` : week
+        ),
         datasets: [
-          {
-            type: "bar",
-            label: currentYear,
-            backgroundColor: "#85B15F",
-            data: data.currentYear
-          },
           {
             type: "line",
             label: lastYear,
             backgroundColor: "#e08e31",
             data: data.lastYear,
             borderColor: "#e08e31",
-            borderWidth: 2
-          }
-        ]
+            borderWidth: 2,
+          },
+          {
+            type: "bar",
+            label: currentYear,
+            backgroundColor: "#85B15F",
+            data: data.currentYear,
+          },
+        ],
       }}
     />
   );
