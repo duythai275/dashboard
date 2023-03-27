@@ -16,8 +16,11 @@ let theme = createTheme({
     mandatoryStar: { fontFamily: font, color: red[600], fontSize: "20px !important", fontWeight: "bold" },
     widgetTitle: {
       fontFamily: font,
-      fontSize: 15,
-      fontWeight: 600
+      fontSize: 14,
+      fontWeight: 500,
+      whiteSpace: "initial",
+      overflow: "hidden",
+      textOverflow: "ellipsis"
     },
     HELPER: {
       fontFamily: font,
