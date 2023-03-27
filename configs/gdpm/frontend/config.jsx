@@ -9,6 +9,7 @@ import { pull } from "@/utils/fetch";
 import { useTranslation } from "react-i18next";
 import BulletinDashboard from "./dashboards/BulletinDashboard/BulletinDashboard";
 import DiseaseDashboard from "./dashboards/DiseaseDashboard";
+import changeMapWidgetChildren from "./hooks/changeMapWidgetChildren";
 import _ from "lodash";
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -128,7 +129,7 @@ const useDashboardInitialization = () => {
       selectDashboard({ value: selectedDashboard.value, label: t(dashboards[selectedDashboard.value].name) });
     }
   }, [i18n.language]);
-
+  changeMapWidgetChildren();
   return ready;
 };
 
