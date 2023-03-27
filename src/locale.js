@@ -4,7 +4,8 @@ const resources = {
       initializing: "... Initializing ...",
       loading: "... Loading ...",
       apply: "Apply",
-      selectUnit: "Select unit"
+      selectUnit: "Select unit",
+      noData: "No data"
     }
   },
   lo: {
@@ -12,14 +13,16 @@ const resources = {
       initializing: "... Initializing ...",
       loading: "... Loading ...",
       apply: "Apply",
-      selectUnit: "ເລືອກຫົວ​ໜ່ວຍ​ການ​ຈັດ​ຕັ້ງ"
+      selectUnit: "ເລືອກຫົວ​ໜ່ວຍ​ການ​ຈັດ​ຕັ້ງ",
+      noData: "No data"
     }
   },
   vi: {
     translation: {
       initializing: "Đang khởi chạy",
       loading: "Đang tải dữ liệu",
-      apply: "Áp dụng"
+      apply: "Áp dụng",
+      noData: "Không có dữ liệu"
     }
   }
 };

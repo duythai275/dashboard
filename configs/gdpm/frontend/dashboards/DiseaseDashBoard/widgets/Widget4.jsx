@@ -9,15 +9,8 @@ import _ from "lodash";
 
 const Widget4 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
   const [data, setData] = useState(null);
-  const { orgUnitGeoJson } = useMetadataStore(
-    (state) => ({ orgUnitGeoJson: state.orgUnitGeoJson }),
-    shallow
-  );
-  const features = orgUnitGeoJson
-    ? orgUnitGeoJson.features.filter(
-        (feature) => feature.properties.level === "2"
-      )
-    : [];
+  const { orgUnitGeoJson } = useMetadataStore((state) => ({ orgUnitGeoJson: state.orgUnitGeoJson }), shallow);
+  const features = orgUnitGeoJson ? orgUnitGeoJson.features.filter((feature) => feature.properties.level === "2") : [];
   const lastYear = useMemo(() => new Date().getFullYear() - 1);
   const currentYear = useMemo(() => new Date().getFullYear());
   const currentWeek = useMemo(() => getISOWeek(new Date()));
@@ -31,18 +24,10 @@ const Widget4 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
           }_provinces&var=startYear:${lastYear}&var=endYear:${currentYear}`
         );
         if (result) {
-          const ouIndex = result.listGrid.headers.findIndex(
-            (header) => header.name === "uidlevel2"
-          );
-          const weeklyIndex = result.listGrid.headers.findIndex(
-            (header) => header.name === "weekly"
-          );
-          const diseaseIndex = result.listGrid.headers.findIndex(
-            (header) => header.name === "Du5ydup8qQf"
-          );
-          const casesIndex = result.listGrid.headers.findIndex(
-            (header) => header.name === "cases"
-          );
+          const ouIndex = result.listGrid.headers.findIndex((header) => header.name === "uidlevel2");
+          const weeklyIndex = result.listGrid.headers.findIndex((header) => header.name === "weekly");
+          const diseaseIndex = result.listGrid.headers.findIndex((header) => header.name === "Du5ydup8qQf");
+          const casesIndex = result.listGrid.headers.findIndex((header) => header.name === "cases");
           const dataLastYearResult = {};
           const dataCurrentYearResult = {};
           const dataResult = {};
@@ -88,10 +73,7 @@ const Widget4 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
               dataLastYearResult[row[ouIndex]] = row[casesIndex] * 1;
             }
           });
-          _.union(
-            Object.keys(dataLastYearResult),
-            Object.keys(dataCurrentYearResult)
-          ).forEach((ou) => {
+          _.union(Object.keys(dataLastYearResult), Object.keys(dataCurrentYearResult)).forEach((ou) => {
             const lastYearValue = dataLastYearResult[ou] || 0;
             const currentYearValue = dataCurrentYearResult[ou] || 0;
 
@@ -105,12 +87,7 @@ const Widget4 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
             }
 
             const changeValue = (currentYearValue / lastYearValue - 1) * 100;
-            dataResult[ou] =
-              changeValue >= 100
-                ? 100
-                : changeValue <= 0
-                ? 0
-                : Math.round(changeValue);
+            dataResult[ou] = changeValue >= 100 ? 100 : changeValue <= 0 ? 0 : Math.round(changeValue);
           });
           setData(dataResult);
         }
@@ -124,6 +101,7 @@ const Widget4 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
   return (
     data && (
       <ThematicMap
+        labelPostfix="%"
         features={features}
         data={_.isEmpty(data) ? { 0: 0 } : data}
         // timeline={data && Object.keys(data).sort()}
@@ -133,7 +111,7 @@ const Widget4 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
           { color: "#AFB42B", max: 33, min: 1 },
           { color: "#FBC02D", max: 66, min: 34 },
           { color: "#F57C00", max: 99, min: 67 },
-          { color: "#AC0800", max: 100, min: 100 },
+          { color: "#AC0800", max: 100, min: 100 }
         ]}
       />
     )

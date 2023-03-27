@@ -6,8 +6,10 @@ import { Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { LEAFLET_CONTROL_POSITIONS } from "./const";
+import { useTranslation } from "react-i18next";
 
-const GeoJsonLayer = ({ features, currentData, legend, setLabel }) => {
+const GeoJsonLayer = ({ features, currentData, legend, setLabel, labelPostfix }) => {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const map = useMap();
   const ranges = getEqualIntervals(
@@ -48,9 +50,9 @@ const GeoJsonLayer = ({ features, currentData, legend, setLabel }) => {
             fillOpacity: 0.1
           });
         }
-
+        const postfix = labelPostfix ? labelPostfix : "";
         layer.on("mouseover", () => {
-          setLabel(feature.properties.name + ": " + (foundData ? foundData : "No data"));
+          setLabel(feature.properties.name + ": " + (foundData ? foundData + postfix : t("noData")));
           layer.setStyle({
             weight: 3
           });
