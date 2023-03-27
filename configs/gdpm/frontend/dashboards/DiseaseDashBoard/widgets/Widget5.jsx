@@ -5,6 +5,7 @@ import { getISOWeek } from "date-fns";
 import ThematicMap from "@/components/Widgets/ThematicMap";
 import { shallow } from "zustand/shallow";
 import { pull } from "@/utils/fetch";
+import _ from "lodash";
 
 const Widget5 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
   const [data, setData] = useState(null);
@@ -87,7 +88,7 @@ const Widget5 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
     data && (
       <ThematicMap
         features={features}
-        data={data}
+        data={_.isEmpty(data) ? { 0: 0 } : data}
         // timeline={data && Object.keys(data).sort()}
         legend={["#689F38", "#AFB42B", "#FBC02D", "#F57C00", "#AC0800"]}
       />

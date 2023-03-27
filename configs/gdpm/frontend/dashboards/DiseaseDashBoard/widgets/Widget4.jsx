@@ -125,7 +125,7 @@ const Widget4 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
     data && (
       <ThematicMap
         features={features}
-        data={data}
+        data={_.isEmpty(data) ? { 0: 0 } : data}
         // timeline={data && Object.keys(data).sort()}
         legend={["#689F38", "#AFB42B", "#FBC02D", "#F57C00", "#AC0800"]}
         legendSet={[
