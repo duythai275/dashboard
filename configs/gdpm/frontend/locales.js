@@ -71,7 +71,8 @@ const locales = [
         key: "deathCase",
         value: "Ca tử vong"
       },
-      { key: "week", value: "Tuần" }
+      { key: "week", value: "Tuần" },
+      { key: "widget1Title", value: `Diễn biến bệnh {{diseaseName}} theo tuần` }
     ]
   },
   {
@@ -140,7 +141,8 @@ const locales = [
         key: "deathCase",
         value: "Death Cases"
       },
-      { key: "week", value: "Week" }
+      { key: "week", value: "Week" },
+      { key: "widget1Title", value: `Weekly {{diseaseName}} cases` }
     ]
   }
 ];
