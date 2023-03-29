@@ -17,16 +17,16 @@ const Widget1 = ({ setLoading, code, ou }) => {
     }
     return weeks;
   }, []);
-
-  const lastYear = useMemo(() => new Date().getFullYear() - 1);
-  const currentYear = useMemo(() => new Date().getFullYear());
+  const last5Year = useMemo(() => new Date().getFullYear() - 5, []);
+  const lastYear = useMemo(() => new Date().getFullYear() - 1, []);
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
 
   const getData = async () => {
     try {
       setLoading(true);
       if (ou === "S3kaCiYIP4B") {
         const result = await pull(
-          `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_country&var=startYear:${lastYear}&var=endYear:${currentYear}`
+          `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_country&var=startYear:${last5Year}&var=endYear:${currentYear}`
         );
         if (result) {
           const weeklyIndex = result.listGrid.headers.findIndex(
@@ -38,6 +38,21 @@ const Widget1 = ({ setLoading, code, ou }) => {
           const casesIndex = result.listGrid.headers.findIndex(
             (header) => header.name === "cases"
           );
+
+          const dataLast5YearResult = weeks.map((week) => {
+            const value = result.listGrid.rows.filter(
+              (row) =>
+                row[weeklyIndex].slice(4) === week &&
+                row[diseaseIndex] === code &&
+                row[weeklyIndex].slice(0, 4) * 1 < currentYear
+            );
+            return Math.round(
+              value.reduce(
+                (prev, curr) => prev + (curr?.[casesIndex] * 1 || 0),
+                0
+              ) / 5
+            );
+          });
 
           const dataLastYearResult = weeks.map((week) => {
             return (
@@ -61,13 +76,14 @@ const Widget1 = ({ setLoading, code, ou }) => {
           });
 
           setData({
+            last5Year: dataLast5YearResult,
             lastYear: dataLastYearResult,
             currentYear: dataCurrentYearResult,
           });
         }
       } else {
         const result = await pull(
-          `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_provinces&var=startYear:${lastYear}&var=endYear:${currentYear}`
+          `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_provinces&var=startYear:${last5Year}&var=endYear:${currentYear}`
         );
         const ouIndex = result.listGrid.headers.findIndex(
           (header) => header.name === "uidlevel2"
@@ -81,6 +97,22 @@ const Widget1 = ({ setLoading, code, ou }) => {
         const casesIndex = result.listGrid.headers.findIndex(
           (header) => header.name === "cases"
         );
+
+        const dataLast5YearResult = weeks.map((week) => {
+          const value = result.listGrid.rows.filter(
+            (row) =>
+              row[weeklyIndex].slice(4) === week &&
+              row[diseaseIndex] === code &&
+              row[weeklyIndex].slice(0, 4) * 1 < currentYear &&
+              row[ouIndex] === ou
+          );
+          return Math.round(
+            value.reduce(
+              (prev, curr) => prev + (curr?.[casesIndex] * 1 || 0),
+              0
+            ) / 5
+          );
+        });
 
         const dataLastYearResult = weeks.map((week) => {
           return (
@@ -105,6 +137,7 @@ const Widget1 = ({ setLoading, code, ou }) => {
           );
         });
         setData({
+          last5Year: dataLast5YearResult,
           lastYear: dataLastYearResult,
           currentYear: dataCurrentYearResult,
         });
@@ -123,10 +156,16 @@ const Widget1 = ({ setLoading, code, ou }) => {
   return (
     <MultitypeChart
       data={{
-        labels: weeks.map((week) =>
-          i18n.language === "vi" ? `T${week.slice(1)}` : week
-        ),
+        labels: weeks.map((week) => t("labelWidget1", { week: week.slice(1) })),
         datasets: [
+          {
+            type: "line",
+            label: t("arithmeticMeanLast5Year"),
+            backgroundColor: "#2C6693",
+            data: data.last5Year,
+            borderColor: "#2C6693",
+            borderWidth: 2,
+          },
           {
             type: "line",
             label: lastYear,
