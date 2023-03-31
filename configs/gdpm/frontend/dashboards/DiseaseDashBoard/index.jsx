@@ -20,25 +20,19 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
   const { ouGroups, diseases } = useMetadataStore(
     (state) => ({
       ouGroups: state.ouGroups,
-      diseases: state.diseases,
+      diseases: state.diseases
     }),
     shallow
   );
 
-  const currentDisease = useMemo(
-    () => diseases.find((item) => item.code === disease),
-    [disease, JSON.stringify(diseases)]
-  );
+  const currentDisease = useMemo(() => diseases.find((item) => item.code === disease), [disease, JSON.stringify(diseases)]);
   const lastYear = useMemo(() => new Date().getFullYear() - 1, []);
   const currentYear = useMemo(() => new Date().getFullYear(), []);
   const currentWeek = useMemo(() => getISOWeek(new Date()), []);
   const diseaseName = useMemo(
     () =>
-      currentDisease.translations.find(
-        (translation) =>
-          translation.locale === i18n.language &&
-          translation.property === "NAME"
-      )?.value || currentDisease.name,
+      currentDisease.translations.find((translation) => translation.locale === i18n.language && translation.property === "NAME")?.value ||
+      currentDisease.name,
     [currentDisease, i18n.language]
   );
   return (
@@ -50,7 +44,7 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
         { i: "3", x: 0, y: 50, w: 3, h: 50 },
         { i: "4", x: 3, y: 50, w: 3, h: 50 },
         { i: "5", x: 6, y: 50, w: 3, h: 50 },
-        { i: "6", x: 9, y: 50, w: 2.9, h: 50 },
+        { i: "6", x: 9, y: 50, w: 2.9, h: 50 }
       ]}
       cols={12}
       rowHeight={1}
@@ -63,17 +57,17 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
         childrenWidgets={[
           {
             title: t("widget1Title", { diseaseName }),
-            widget: <Widget1 code={disease} ou={"S3kaCiYIP4B"} />,
+            widget: <Widget1 code={disease} ou={"S3kaCiYIP4B"} />
           },
           ...ouGroups[3].organisationUnits.map((province) => {
             return {
               title: t("widget1TitleWithProvince", {
                 diseaseName,
-                provinceName: province.name,
+                provinceName: province.name
               }),
-              widget: <Widget1 code={disease} ou={province.id} />,
+              widget: <Widget1 code={disease} ou={province.id} />
             };
-          }),
+          })
         ]}
       />
       <WidgetContainer
@@ -83,8 +77,8 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
         childrenWidgets={[
           {
             title: t("widget2Title", { diseaseName }),
-            widget: <Widget2 code={disease} />,
-          },
+            widget: <Widget2 code={disease} />
+          }
         ]}
       />
       <WidgetContainer
@@ -95,18 +89,18 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
           {
             title: t("widget3.1Title", { diseaseName, lastYear, currentWeek }),
 
-            widget: <Widget3 code={disease} isUpto />,
+            widget: <Widget3 code={disease} isUpto />
           },
           {
             title: t("widget3.2Title", { diseaseName, lastYear, currentWeek }),
 
-            widget: <Widget3 code={disease} />,
+            widget: <Widget3 code={disease} />
           },
           {
             title: t("widget3.3Title", { diseaseName, lastYear, currentWeek }),
 
-            widget: <Widget3 code={disease} isDeath />,
-          },
+            widget: <Widget3 code={disease} isDeath />
+          }
         ]}
       />
       <WidgetContainer
@@ -119,31 +113,31 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
               diseaseName,
               lastYear,
               currentYear,
-              currentWeek,
+              currentWeek
             }),
 
-            widget: <Widget4 code={disease} isUpto />,
+            widget: <Widget4 code={disease} isUpto />
           },
           {
             title: t("widget4.2Title", {
               diseaseName,
               lastYear,
               currentYear,
-              currentWeek,
+              currentWeek
             }),
 
-            widget: <Widget4 code={disease} />,
+            widget: <Widget4 code={disease} />
           },
           {
             title: t("widget4.3Title", {
               diseaseName,
               lastYear,
               currentYear,
-              currentWeek,
+              currentWeek
             }),
 
-            widget: <Widget4 code={disease} isDeath />,
-          },
+            widget: <Widget4 code={disease} isDeath />
+          }
         ]}
       />
       <WidgetContainer
@@ -155,29 +149,29 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
             title: t("widget5.1Title", {
               diseaseName,
               currentYear,
-              currentWeek,
+              currentWeek
             }),
 
-            widget: <Widget5 code={disease} isUpto />,
+            widget: <Widget5 code={disease} isUpto />
           },
           {
             title: t("widget5.2Title", {
               diseaseName,
               currentYear,
-              currentWeek,
+              currentWeek
             }),
 
-            widget: <Widget5 code={disease} />,
+            widget: <Widget5 code={disease} />
           },
           {
             title: t("widget5.3Title", {
               diseaseName,
               currentYear,
-              currentWeek,
+              currentWeek
             }),
 
-            widget: <Widget5 code={disease} isDeath />,
-          },
+            widget: <Widget5 code={disease} isDeath />
+          }
         ]}
       />
       <WidgetContainer
@@ -188,19 +182,19 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
           {
             title: t("widget6.1Title", {
               diseaseName,
-              currentWeek,
+              currentWeek
             }),
 
-            widget: <Widget6 code={disease} isUpto />,
+            widget: <Widget6 code={disease} isUpto />
           },
           {
             title: t("widget6.2Title", {
               diseaseName,
-              currentWeek,
+              currentWeek
             }),
 
-            widget: <Widget6 code={disease} />,
-          },
+            widget: <Widget6 code={disease} />
+          }
         ]}
       />
     </ReactGridLayout>
