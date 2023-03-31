@@ -1,7 +1,6 @@
-import * as dotenv from "dotenv";
-import axios from "axios";
-import qs from "qs";
-dotenv.config();
+require("dotenv").config();
+const axios = require("axios");
+const qs = require("qs");
 
 const generateOauth2Api = async (config) => {
   const { baseUrl, clientId, clientSecret, refreshToken } = config;
@@ -53,4 +52,4 @@ const getGeoJson = async (dhis2Api) => {
   return orgUnitGeoJsonResult.data;
 };
 
-export { generateOauth2Api, generateBasicApi, getOrgUnits, getGeoJson };
+module.exports = { generateOauth2Api, generateBasicApi, getOrgUnits, getGeoJson };

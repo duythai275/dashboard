@@ -1,8 +1,8 @@
-import * as dotenv from "dotenv";
-import express from "express";
-import path from "path";
-import { generateOauth2Api, generateBasicApi } from "./src/api.js";
-dotenv.config();
+require("dotenv").config();
+const express = require("express");
+const path = require("path");
+const { generateOauth2Api, generateBasicApi } = require("./src/api.js");
+// dotenv.config();
 const { VITE_APP_MODE, VITE_CONFIG_NAME } = process.env;
 const isProduction = VITE_APP_MODE === "production";
 const app = express();

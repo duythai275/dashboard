@@ -11,17 +11,18 @@ import locales from "./locales";
 import { useTranslation } from "react-i18next";
 import Dashboard3 from "./Dashboard3/Dashboard3";
 
-const dashboards = [
-  { name: "dashboard1Title", dashboard: Dashboard1 },
-  { name: "dashboard2Title", dashboard: Dashboard2 },
-  { name: "dashboard3Title", dashboard: Dashboard3 }
-];
 const languages = locales.map((locale) => ({
   name: locale.name,
   code: locale.code
 }));
 
 const useDashboardInitialization = () => {
+  const dashboards = [
+    { name: "dashboard1Title", dashboard: Dashboard1 },
+    { name: "dashboard2Title", dashboard: Dashboard2 },
+    { name: "dashboard3Title", dashboard: Dashboard3 }
+  ];
+
   locales.forEach((locale) => {
     useAdditionalLocale(locale.code, locale.translations);
   });
@@ -29,10 +30,11 @@ const useDashboardInitialization = () => {
   const setMetadata = useMetadataStore((state) => state.setMetadata);
   const [ready, setReady] = useState(false);
   const { t } = useTranslation();
-  const { initDashboardState, selectDashboard } = useDashboardStore(
+  const { initDashboardState, selectDashboard, setDashboards } = useDashboardStore(
     (state) => ({
       initDashboardState: state.initDashboardState,
-      selectDashboard: state.selectDashboard
+      selectDashboard: state.selectDashboard,
+      setDashboards: state.setDashboards
     }),
     shallow
   );
@@ -88,6 +90,7 @@ const useDashboardInitialization = () => {
           ]
         }
       ]);
+      setDashboards(dashboards);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });
       setMetadata("hmisOrgUnits", results[0].data);
       setMetadata("hmisDataItems", results[1].data);
@@ -100,4 +103,4 @@ const useDashboardInitialization = () => {
   return ready;
 };
 
-export { dashboards, useDashboardInitialization, languages };
+export { useDashboardInitialization, languages };
