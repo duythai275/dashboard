@@ -1,6 +1,5 @@
-import moment from "moment";
-import * as dotenv from "dotenv";
-dotenv.config();
+require("dotenv").config();
+const moment = require("moment");
 const { VITE_HMIS_BASE_URL, VITE_HMIS_USERNAME, VITE_HMIS_PASSWORD, VITE_SURVEY_BASE_URL, VITE_SURVEY_USERNAME, VITE_SURVEY_PASSWORD } = process.env;
 
 const apis = [
@@ -390,4 +389,4 @@ const dhis2ApiConfigs = [
   { type: "basic", baseUrl: VITE_SURVEY_BASE_URL, username: VITE_SURVEY_USERNAME, password: VITE_SURVEY_PASSWORD }
 ];
 
-export default { apis, dhis2ApiConfigs };
+module.exports = { apis, dhis2ApiConfigs };
