@@ -1,6 +1,5 @@
-import moment from "moment";
-import * as dotenv from "dotenv";
-dotenv.config();
+require("dotenv").config();
+const moment = require("moment");
 const {
   VITE_HMIS_BASE_URL,
   VITE_HMIS_USERNAME,
@@ -450,4 +449,4 @@ const dhis2ApiConfigs = [
   },
 ];
 
-export default { apis, dhis2ApiConfigs };
+module.exports = { apis, dhis2ApiConfigs };
