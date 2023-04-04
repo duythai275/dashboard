@@ -49,11 +49,10 @@ const useDashboardInitialization = () => {
     (async () => {
       setReady(false);
       const results = await Promise.all([
-        // pull("/api/orgUnits"),
-        // pull("/api/dataItems"),
-        // pull("/api/indicators"),
-        // pull("/api/orgUnitGeoJson"),
-        // pull("/api/surveyOptionSets"),
+        pull("/api/orgUnits"),
+        pull("/api/dataItems"),
+        pull("/api/indicators"),
+        pull("/api/orgUnitGeoJson"),
       ]);
       initDashboardState([
         {
@@ -95,11 +94,10 @@ const useDashboardInitialization = () => {
       ]);
       setDashboards(dashboards);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });
-      // setMetadata("hmisOrgUnits", results[0].data);
-      // setMetadata("hmisDataItems", results[1].data);
-      // setMetadata("hmisIndicators", results[2].data);
-      // setMetadata("hmisGeoJson", results[3].data);
-      // setMetadata("surveyOptionSets", results[4].data);
+      setMetadata("hmisOrgUnits", results[0].data);
+      setMetadata("hmisDataItems", results[1].data);
+      setMetadata("hmisIndicators", results[2].data);
+      setMetadata("hmisGeoJson", results[3].data);
       setReady(true);
     })();
   }, []);

@@ -3,6 +3,10 @@ import RGL, { WidthProvider } from "react-grid-layout";
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
 import Title from "../Title";
 import { useTranslation } from "react-i18next";
+import Widget4 from "./Widgets/Widget4";
+import Widget5 from "./Widgets/Widget5";
+import Widget6 from "./Widgets/Widget6";
+import Widget7 from "./Widgets/Widget7";
 const ReactGridLayout = WidthProvider(RGL);
 
 const Dashboard1 = () => {
@@ -61,33 +65,25 @@ const Dashboard1 = () => {
         key="4"
         dashboardIndex={0}
         widgetIndex={0}
-        childrenWidgets={[
-          { title: t("widget1.4Title"), widget: <div>widget4</div> },
-        ]}
+        childrenWidgets={[{ title: t("widget1.4Title"), widget: <Widget4 /> }]}
       />
       <WidgetContainer
         key="5"
         dashboardIndex={0}
         widgetIndex={0}
-        childrenWidgets={[
-          { title: t("widget1.5Title"), widget: <div>widget5</div> },
-        ]}
+        childrenWidgets={[{ title: t("widget1.5Title"), widget: <Widget5 /> }]}
       />
       <WidgetContainer
         key="6"
         dashboardIndex={0}
         widgetIndex={0}
-        childrenWidgets={[
-          { title: t("widget1.6Title"), widget: <div>widget6</div> },
-        ]}
+        childrenWidgets={[{ title: t("widget1.6Title"), widget: <Widget6 /> }]}
       />
       <WidgetContainer
         key="7"
         dashboardIndex={0}
         widgetIndex={0}
-        childrenWidgets={[
-          { title: t("widget1.7Title"), widget: <div>widget7</div> },
-        ]}
+        childrenWidgets={[{ title: t("widget1.7Title"), widget: <Widget7 /> }]}
       />
       <WidgetContainer
         key="8"
