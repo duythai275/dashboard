@@ -1,15 +1,18 @@
-import useDashboardStore from "@/state/dashboard";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { shallow } from "zustand/shallow";
-import Dashboard1 from "./Dashboard1";
+
 import useAdditionalLocale from "@/hooks/App/useAdditionalLocale";
+import useDashboardStore from "@/state/dashboard";
 import useMetadataStore from "@/state/metadata";
 import useSelectionStore from "@/state/selection";
-import { pull } from "./utils";
-import locales from "./locales";
-import { useTranslation } from "react-i18next";
+
+import Dashboard1 from "./Dashboard1";
 import Dashboard2 from "./Dashboard2";
 import Dashboard3 from "./Dashboard3";
+
+import locales from "./locales";
+import { pull } from "./utils";
 
 const dashboards = [
   { name: "dashboard1Title", dashboard: Dashboard1 },
