@@ -16,21 +16,26 @@ const apis = [
       const result = await dhis2Apis[0].get(
         "/api/organisationUnits?paging=false&fields=id,name,displayName,parent,path,ancestors,translations,level,organisationUnitGroups"
       );
-      return result.data.organisationUnits.map((ou) => {
-        const foundNameLo = ou.translations.find(
-          (translation) =>
-            translation.property === "NAME" && translation.locale === "lo"
-        );
-        return {
-          id: ou.id,
-          level: ou.level,
-          parent: ou.parent,
-          ancestors: ou.ancestors,
-          nameEn: ou.name,
-          nameLo: foundNameLo ? foundNameLo.value : ou.name,
-          oug: ou.organisationUnitGroups,
-        };
-      });
+      return result.data.organisationUnits
+        .filter(
+          (ou) =>
+            ou.ancestors?.[0]?.id === "IWp9dQGM0bS" || ou.id === "IWp9dQGM0bS"
+        )
+        .map((ou) => {
+          const foundNameLo = ou.translations.find(
+            (translation) =>
+              translation.property === "NAME" && translation.locale === "lo"
+          );
+          return {
+            id: ou.id,
+            level: ou.level,
+            parent: ou.parent,
+            ancestors: ou.ancestors,
+            nameEn: ou.name,
+            nameLo: foundNameLo ? foundNameLo.value : ou.name,
+            oug: ou.organisationUnitGroups,
+          };
+        });
     },
   },
   {
@@ -136,6 +141,19 @@ const apis = [
     },
   },
   {
+    route: `/api/getDashboard1Widget5Data`,
+    handler: async (dhis2Apis) => {
+      const result = await dhis2Apis[0].get(
+        "/api/analytics.json?dimension=dx:dJhWRKs0fcq&dimension=ou:IWp9dQGM0bS;LEVEL-2&filter=pe:LAST_YEAR&displayProperty=NAME&skipData=false&skipMeta=false"
+      );
+      const response = result.data.rows.map((row) => ({
+        ou: row[1],
+        value: parseInt(row[2]),
+      }));
+      return response;
+    },
+  },
+  {
     route: `/api/getDashboard1Widget7Data`,
     handler: async (dhis2Apis) => {
       const years = [moment().year()];
@@ -166,15 +184,46 @@ const apis = [
     },
   },
   {
-    route: `/api/getDashboard1Widget5Data`,
+    route: `/api/getDashboard1Widget9Data`,
     handler: async (dhis2Apis) => {
-      const result = await dhis2Apis[0].get(
-        "/api/analytics.json?dimension=dx:dJhWRKs0fcq&dimension=ou:IWp9dQGM0bS;LEVEL-2&filter=pe:LAST_YEAR&displayProperty=NAME&skipData=false&skipMeta=false"
-      );
-      const response = result.data.rows.map((row) => ({
-        ou: row[1],
-        value: parseInt(row[2]),
-      }));
+      const result = await Promise.all([
+        dhis2Apis[0].get(
+          "/api/analytics.json?dimension=dx:hPrLP02dias.REPORTING_RATE&dimension=ou:FRmrFTE63D0;IWp9dQGM0bS;K27JzTKmBKh;MBZYTqkEgwf;RdNV4tTRNEo;TOgZ99Jv0bN;VWGSudnonm5;W6sNfkJcXGC;XKGgynPS1WZ;YvLOmtTQD6b;c4HrGRJoarj;dOhqCNenSjS;hRQsZhmvqgS;hdeC7uX9Cko;pFCZqWnXtoU;quFXhkOJGB4;rO2RVJWHpCe;sv6c7CpPcrc;vBWtCmNNnCG&dimension=pe:LAST_4_WEEKS;LAST_MONTH&includeNumDen=true&skipData=false&skipMeta=false"
+        ),
+        dhis2Apis[0].get(
+          "/api/legendSets?fields=id%2Clegends%5Bid%2CdisplayName~rename(name)%2CstartValue%2CendValue%2Ccolor%5D&filter=id%3Ain%3A%5Bpjqi9ASXG0w%5D"
+        ),
+      ]);
+      const response = {
+        data: result[0].data.rows.map((row) => ({
+          ou: row[1],
+          pe: row[2],
+          value: parseInt(row[3]),
+        })),
+        legendSets: result[1].data.legendSets,
+        pes: result[0].data.metaData.dimensions.pe,
+      };
+      return response;
+    },
+  },
+  {
+    route: `/api/getDashboard1Widget10Data`,
+    handler: async (dhis2Apis) => {
+      const result = await Promise.all([
+        dhis2Apis[0].get(
+          "/api/analytics.json?dimension=dx:cTfAP7at6pN&dimension=ou:IWp9dQGM0bS;LEVEL-3&filter=pe:202302&displayProperty=NAME&skipData=false&skipMeta=false"
+        ),
+        dhis2Apis[0].get(
+          "/api/legendSets/Y8vcHdmr6ZV?fields=%3Aall%2CattributeValues%5B%3Aall%2Cattribute%5Bid%2Cname%2CdisplayName%5D%5D"
+        ),
+      ]);
+      const response = {
+        data: result[0].data.rows.map((row) => ({
+          ou: row[1],
+          value: parseInt(row[2]),
+        })),
+        legends: result[1].data.legends,
+      };
       return response;
     },
   },

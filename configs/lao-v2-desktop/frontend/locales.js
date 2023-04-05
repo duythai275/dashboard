@@ -31,6 +31,14 @@ const locales = [
         key: "widget1.7Title",
         value: "ຈຳນວນເດັກຕາຍໃນ 5 ​ປີຜ່ານມາ",
       },
+      {
+        key: "widget1.9Title",
+        value: "PHEOC: ອັດຕາການລາຍງານຂໍ້ມູນພະຍາດເຝົ້າລະວັງຂອງແຕ່ລະແຂວງ",
+      },
+      {
+        key: "widget1.10Title",
+        value: "NCLE Data Quality FEB 2023",
+      },
     ],
   },
   {
@@ -64,6 +72,15 @@ const locales = [
       {
         key: "widget1.7Title",
         value: "Reported children under five deaths last 5 year - Lao PDR",
+      },
+      {
+        key: "widget1.9Title",
+        value:
+          "PHEOC Surveillance - 00. Reporting rate by province, last 4 weeks and last month",
+      },
+      {
+        key: "widget1.10Title",
+        value: "NCLE Data Quality FEB 2023",
       },
     ],
   },

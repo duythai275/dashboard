@@ -7,6 +7,8 @@ import Widget4 from "./Widgets/Widget4";
 import Widget5 from "./Widgets/Widget5";
 import Widget6 from "./Widgets/Widget6";
 import Widget7 from "./Widgets/Widget7";
+import Widget9 from "./Widgets/Widget9";
+import Widget10 from "./Widgets/Widget10";
 const ReactGridLayout = WidthProvider(RGL);
 
 const Dashboard1 = () => {
@@ -97,16 +99,14 @@ const Dashboard1 = () => {
         key="9"
         dashboardIndex={0}
         widgetIndex={0}
-        childrenWidgets={[
-          { title: t("widget1.9Title"), widget: <div>widget9</div> },
-        ]}
+        childrenWidgets={[{ title: t("widget1.9Title"), widget: <Widget9 /> }]}
       />
       <WidgetContainer
         key="10"
         dashboardIndex={0}
         widgetIndex={0}
         childrenWidgets={[
-          { title: t("widget1.10Title"), widget: <div>widget10</div> },
+          { title: t("widget1.10Title"), widget: <Widget10 /> },
         ]}
       />
     </ReactGridLayout>
