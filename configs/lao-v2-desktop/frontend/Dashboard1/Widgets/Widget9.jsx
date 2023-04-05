@@ -7,6 +7,8 @@ import { pull } from "../../utils";
 import { shallow } from "zustand/shallow";
 import { Table, TableCell, TableHead, TableRow } from "@mui/material";
 import DataGrid from "@/components/Widgets/DataGrid";
+import { getMonthName } from "../common/function/getMonthName";
+import {} from "date-fns/locale";
 
 const Widget9 = ({ setLoading }) => {
   const { hmisOrgUnits } = useMetadataStore(
@@ -37,14 +39,31 @@ const Widget9 = ({ setLoading }) => {
           listOu.push(foundOu);
         }
       });
+      const renderHeaderWithTranslation = (pe) => {
+        if (pe.includes("W")) {
+          const year = pe.slice(0, 4);
+          const month = pe.slice(5);
+          return t("weeklyHeaderTitleOfWidget1.9", { month, year });
+        }
+        const year = pe.slice(0, 4);
+        const month = pe.slice(4);
+        return t("monthlyHeaderTitleOfWidget1.9", {
+          month: getMonthName(
+            month * 1,
+            localeName === "En" ? "en-US" : localeName
+          ),
+          year,
+        });
+      };
       let currentData = {
         columns: [],
         rows: [],
       };
       currentData.columns = result.pes.map((pe) => ({
         name: pe,
-        header: pe,
+        header: renderHeaderWithTranslation(pe),
         group: "peInfo",
+        flex: 1,
         onRender: (cellProps, { data }) => {
           const foundLegend = result.legendSets[0].legends.find(
             (legend) =>
@@ -56,7 +75,7 @@ const Widget9 = ({ setLoading }) => {
       currentData.columns.unshift({
         name: "ou",
         header: "",
-        width: 300,
+        flex: 1,
         group: "widgetGroup",
         style: { fontWeight: "700" },
       });
@@ -93,7 +112,7 @@ const Widget9 = ({ setLoading }) => {
           {
             name: "widgetGroup",
             header: (() => (
-              <div style={{ textAlign: "center" }}>
+              <div style={{ textAlign: "center", minWidth: "100%" }}>
                 Notifiable Disease Reporting Rates by week, by province
               </div>
             ))(),

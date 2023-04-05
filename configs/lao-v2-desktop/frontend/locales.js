@@ -1,3 +1,5 @@
+import { getMonthName } from "./Dashboard1/common/function/getMonthName";
+
 const locales = [
   {
     code: "lo",
@@ -39,6 +41,8 @@ const locales = [
         key: "widget1.10Title",
         value: "NCLE Data Quality FEB 2023",
       },
+      { key: "monthlyHeaderTitleOfWidget1.9", value: `{{month}} {{year}}` },
+      { key: "weeklyHeaderTitleOfWidget1.9", value: `ອາທິດ{{month}} {{year}}` },
     ],
   },
   {
@@ -82,6 +86,8 @@ const locales = [
         key: "widget1.10Title",
         value: "NCLE Data Quality FEB 2023",
       },
+      { key: "monthlyHeaderTitleOfWidget1.9", value: `{{month}} {{year}}` },
+      { key: "weeklyHeaderTitleOfWidget1.9", value: `W{{month}} {{year}}` },
     ],
   },
 ];

@@ -14,9 +14,13 @@ const Widget5 = ({ setLoading }) => {
   const [data, setData] = useState({});
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
-  const legend = useMemo(() => {
+  const legendSets = useMemo(() => {
     if (!result) return [];
-    return result.legends.map((legend) => legend.color);
+    return result.legends.map((legend) => ({
+      color: legend.color,
+      max: legend.endValue,
+      min: legend.startValue,
+    }));
   });
 
   useEffect(() => {
@@ -46,7 +50,8 @@ const Widget5 = ({ setLoading }) => {
             feature.geometry.type !== "Point"
         )}
         data={data}
-        legend={legend}
+        legend={legendSets.map((legend) => legend.color)}
+        legendSets={legendSets}
       />
     )
   );
