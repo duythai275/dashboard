@@ -11,7 +11,6 @@ const port = isProduction ? 80 : 3001;
 const generateDhis2Apis = async (dhis2ApiConfigs) => {
   const dhis2Apis = await Promise.all(
     dhis2ApiConfigs.map(async (config) => {
-      console.log(config);
       if (config.type === "basic") {
         return generateBasicApi(config);
       } else {
