@@ -18,6 +18,18 @@ const locales = [
         value: "Penta 3",
       },
       {
+        key: "widget1.1Title",
+        value: `Less than 1 year Death {{year}}`,
+      },
+      {
+        key: "widget1.2Title",
+        value: `Less than 5 year Death {{year}}`,
+      },
+      {
+        key: "widget1.3Title",
+        value: `Mother Death {{year}}`,
+      },
+      {
         key: "widget1.4Title",
         value: "ຈຳນວນແມ່ແລະເດັກຕາຍໃນ 36​ເດືອນຜ່ານມາ",
       },
@@ -43,6 +55,7 @@ const locales = [
       },
       { key: "monthlyHeaderTitleOfWidget1.9", value: `{{month}} {{year}}` },
       { key: "weeklyHeaderTitleOfWidget1.9", value: `ອາທິດ{{month}} {{year}}` },
+      { key: "widget1.1Date", value: `As at {{date}}` },
     ],
   },
   {
@@ -60,6 +73,18 @@ const locales = [
       {
         key: "dashboard3Title",
         value: "Penta 3",
+      },
+      {
+        key: "widget1.1Title",
+        value: `Less than 1 year Death {{year}}`,
+      },
+      {
+        key: "widget1.2Title",
+        value: `Less than 5 year Death {{year}}`,
+      },
+      {
+        key: "widget1.3Title",
+        value: `Mother Death {{year}}`,
       },
       {
         key: "widget1.4Title",
@@ -88,6 +113,7 @@ const locales = [
       },
       { key: "monthlyHeaderTitleOfWidget1.9", value: `{{month}} {{year}}` },
       { key: "weeklyHeaderTitleOfWidget1.9", value: `W{{month}} {{year}}` },
+      { key: "widget1.1Date", value: `As at {{date}}` },
     ],
   },
 ];

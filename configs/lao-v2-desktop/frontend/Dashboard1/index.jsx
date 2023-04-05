@@ -11,6 +11,9 @@ import Widget9 from "./Widgets/Widget9";
 import Widget10 from "./Widgets/Widget10";
 import { pull } from "../utils";
 import useDashboardStore from "@/state/dashboard";
+import Widget1 from "./Widgets/Widget1";
+import Widget2 from "./Widgets/Widget2";
+import Widget3 from "./Widgets/Widget3";
 const ReactGridLayout = WidthProvider(RGL);
 
 const Dashboard1 = () => {
@@ -58,7 +61,10 @@ const Dashboard1 = () => {
         dashboardIndex={0}
         widgetIndex={0}
         childrenWidgets={[
-          { title: t("widget1.1Title"), widget: <div>widget1</div> },
+          {
+            title: t("widget1.1Title", { year: new Date().getFullYear() }),
+            widget: <Widget1 />,
+          },
         ]}
       />
       <WidgetContainer
@@ -66,7 +72,10 @@ const Dashboard1 = () => {
         dashboardIndex={0}
         widgetIndex={0}
         childrenWidgets={[
-          { title: t("widget1.2Title"), widget: <div>widget2</div> },
+          {
+            title: t("widget1.2Title", { year: new Date().getFullYear() }),
+            widget: <Widget2 />,
+          },
         ]}
       />
       <WidgetContainer
@@ -74,7 +83,10 @@ const Dashboard1 = () => {
         dashboardIndex={0}
         widgetIndex={0}
         childrenWidgets={[
-          { title: t("widget1.3Title"), widget: <div>widget3</div> },
+          {
+            title: t("widget1.3Title", { year: new Date().getFullYear() }),
+            widget: <Widget3 />,
+          },
         ]}
       />
       <WidgetContainer
