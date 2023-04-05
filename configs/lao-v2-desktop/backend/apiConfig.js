@@ -156,16 +156,12 @@ const apis = [
   {
     route: `/api/getDashboard1Widget7Data`,
     handler: async (dhis2Apis) => {
-      const pes = [];
-      const month = moment().month();
-      const year = moment().year();
-      for (let i = 0; i <= 4; i++) {
-        for (let j = i > 0 ? 11 : month; j >= 0; j--) {
-          pes.push(`${year - i}${j >= 10 ? j : `0${j}`}`);
-        }
+      const years = [moment().year()];
+      for (let i = 1; i <= 4; i++) {
+        years.push(moment().year() - i);
       }
       const result = await dhis2Apis[0].get(
-        `/api/analytics.json?dimension=dx:FSLrz90vXKf;cPcvesqWRtH;cwhEsbBe6Zs;dJhWRKs0fcq;kyVKK0JcRPJ;sISjKc2LEDg&dimension=pe:${pes.join(
+        `/api/analytics.json?dimension=dx:FSLrz90vXKf;cPcvesqWRtH;cwhEsbBe6Zs;dJhWRKs0fcq;kyVKK0JcRPJ;sISjKc2LEDg&dimension=pe:${years.join(
           ";"
         )}&filter=ou:IWp9dQGM0bS&includeNumDen=false&skipData=false&skipMeta=false`
       );
