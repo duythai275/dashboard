@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
-import DataGrid from "@/components/Widgets/DataGrid";
-import useMetadataStore from "@/state/metadata";
+import { Box, Typography } from "@mui/material";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { shallow } from "zustand/shallow";
 import { useTranslation } from "react-i18next";
+
+import DataGrid from "@/components/Widgets/DataGrid";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
+import useMetadataStore from "@/state/metadata";
+
 import { pull } from "../../utils";
 
 const Widget7 = ({ setLoading }) => {
@@ -11,9 +16,8 @@ const Widget7 = ({ setLoading }) => {
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
 
-  const { hmisOrgUnits, hmisDataItems } = useMetadataStore(
+  const { hmisDataItems } = useMetadataStore(
     (state) => ({
-      hmisOrgUnits: state.hmisOrgUnits,
       hmisDataItems: state.hmisDataItems,
     }),
     shallow
@@ -40,7 +44,53 @@ const Widget7 = ({ setLoading }) => {
       columns: [],
       rows: [],
     };
-    currentData.columns = result.pes.map((pe) => ({ name: pe, header: pe }));
+    currentData.columns = result.pes.map((pe, index) => ({
+      name: pe,
+      header: pe,
+      render: ({ value, rowIndex }) => {
+        if (index === result.pes.length - 1) {
+          return <div>{value}</div>;
+        }
+        const previousYearValue =
+          result.data.find(
+            (r) =>
+              r.pe === result.pes[index + 1] &&
+              r.item === dataItems[rowIndex].id
+          )?.value || null;
+        const isIncreased = previousYearValue
+          ? value > previousYearValue
+            ? true
+            : value < previousYearValue
+            ? false
+            : null
+          : null;
+
+        return (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography>{value}</Typography>
+            <Typography
+              sx={{
+                color: isIncreased ? "#E61B1B" : "#118861",
+              }}
+            >
+              {isIncreased ? (
+                <ArrowUpwardIcon />
+              ) : isIncreased === false ? (
+                <ArrowDownwardIcon />
+              ) : (
+                ""
+              )}
+            </Typography>
+          </Box>
+        );
+      },
+    }));
     currentData.columns.unshift({
       name: "di",
       header: t("data/period"),

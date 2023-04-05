@@ -18,7 +18,6 @@ const Widget5 = ({ setLoading }) => {
     if (!result) return [];
     return result.legends.map((legend) => legend.color);
   });
-  console.log(result);
 
   useEffect(() => {
     (async () => {
