@@ -156,12 +156,16 @@ const apis = [
   {
     route: `/api/getDashboard1Widget7Data`,
     handler: async (dhis2Apis) => {
-      const years = [moment().year()];
-      for (let i = 1; i <= 4; i++) {
-        years.push(moment().year() - i);
+      const pes = [];
+      const month = moment().month();
+      const year = moment().year();
+      for (let i = 0; i <= 4; i++) {
+        for (let j = i > 0 ? 11 : month; j >= 0; j--) {
+          pes.push(`${year - i}${j >= 10 ? j : `0${j}`}`);
+        }
       }
       const result = await dhis2Apis[0].get(
-        `/api/analytics.json?dimension=dx:FSLrz90vXKf;cPcvesqWRtH;cwhEsbBe6Zs;dJhWRKs0fcq;kyVKK0JcRPJ;sISjKc2LEDg&dimension=pe:${years.join(
+        `/api/analytics.json?dimension=dx:FSLrz90vXKf;cPcvesqWRtH;cwhEsbBe6Zs;dJhWRKs0fcq;kyVKK0JcRPJ;sISjKc2LEDg&dimension=pe:${pes.join(
           ";"
         )}&filter=ou:IWp9dQGM0bS&includeNumDen=false&skipData=false&skipMeta=false`
       );
@@ -225,6 +229,40 @@ const apis = [
         legends: result[1].data.legends,
       };
       return response;
+    },
+  },
+  {
+    route: `/api/getDashboard1Widget1234567Data`,
+    handler: async (dhis2Apis) => {
+      const pes = [];
+      const month = moment().month() + 1;
+      const year = moment().year();
+      for (let i = 0; i <= 4; i++) {
+        for (let j = i > 0 ? 12 : month; j >= 1; j--) {
+          pes.push(`${year - i}${j >= 10 ? j : `0${j}`}`);
+        }
+      }
+      const result = await dhis2Apis[0].get(
+        `/api/analytics.json?dimension=dx:FSLrz90vXKf;cPcvesqWRtH;cwhEsbBe6Zs;dJhWRKs0fcq;kyVKK0JcRPJ;sISjKc2LEDg&dimension=pe:${pes.join(
+          ";"
+        )}&dimension=ou:IWp9dQGM0bS;LEVEL-2&includeNumDen=false&skipData=false&skipMeta=false`
+      );
+      const response = {};
+      response.data = result.data.rows.map((row) => ({
+        pe: row[1],
+        item: row[0],
+        value: parseInt(row[2]),
+      }));
+      response.pes = result.data.metaData.dimensions.pe;
+      response.dxs = [
+        "sISjKc2LEDg",
+        "FSLrz90vXKf",
+        "cPcvesqWRtH",
+        "kyVKK0JcRPJ",
+        "cwhEsbBe6Zs",
+        "dJhWRKs0fcq",
+      ];
+      return result.data;
     },
   },
   {
