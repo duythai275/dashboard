@@ -209,9 +209,15 @@ const apis = [
   {
     route: `/api/getDashboard1Widget10Data`,
     handler: async (dhis2Apis) => {
+      const year = new Date().getFullYear();
+      const month = new Date().getMonth() + 1;
+      const pe =
+        month > 2
+          ? `${year}${month - 2 > 9 ? month - 2 : `0${month - 2}`}`
+          : `${year - 1}${month + 10 > 9 ? month + 10 : `0${month + 10}`}`;
       const result = await Promise.all([
         dhis2Apis[0].get(
-          "/api/analytics.json?dimension=dx:cTfAP7at6pN&dimension=ou:IWp9dQGM0bS;LEVEL-3&filter=pe:202302&displayProperty=NAME&skipData=false&skipMeta=false"
+          `/api/analytics.json?dimension=dx:cTfAP7at6pN&dimension=ou:IWp9dQGM0bS;LEVEL-3&filter=pe:${pe}&displayProperty=NAME&skipData=false&skipMeta=false`
         ),
         dhis2Apis[0].get(
           "/api/legendSets/Y8vcHdmr6ZV?fields=%3Aall%2CattributeValues%5B%3Aall%2Cattribute%5Bid%2Cname%2CdisplayName%5D%5D"

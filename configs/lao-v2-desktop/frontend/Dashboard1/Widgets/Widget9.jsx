@@ -62,7 +62,6 @@ const Widget9 = ({ setLoading }) => {
       currentData.columns = result.pes.map((pe) => ({
         name: pe,
         header: renderHeaderWithTranslation(pe),
-        group: "peInfo",
         flex: 1,
         onRender: (cellProps, { data }) => {
           const foundLegend = result.legendSets[0].legends.find(
@@ -76,7 +75,6 @@ const Widget9 = ({ setLoading }) => {
         name: "ou",
         header: "",
         flex: 1,
-        group: "widgetGroup",
         style: { fontWeight: "700" },
       });
       currentData.rows = listOu.map((ou) => {
@@ -99,28 +97,10 @@ const Widget9 = ({ setLoading }) => {
   return (
     data && (
       <DataGrid
-        groups={[
-          {
-            name: "peInfo",
-            header: (() => (
-              <div
-                style={{ textAlign: "center" }}
-              >{`NCLE: Communicable Disease {For Completeness} Reporting rate`}</div>
-            ))(),
-            group: "widgetGroup",
-          },
-          {
-            name: "widgetGroup",
-            header: (() => (
-              <div style={{ textAlign: "center", minWidth: "100%" }}>
-                Notifiable Disease Reporting Rates by week, by province
-              </div>
-            ))(),
-          },
-        ]}
         columns={data.columns}
         rows={data.rows}
         showZebraRows={false}
+        defaultSortInfo={{ name: "ou", dir: 1 }}
       />
     )
   );
