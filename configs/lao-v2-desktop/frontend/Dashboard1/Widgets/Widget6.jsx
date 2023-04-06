@@ -5,10 +5,10 @@ import { shallow } from "zustand/shallow";
 import LineChart from "@/components/Widgets/LineChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import useMetadataStore from "@/state/metadata";
-import useDashboardStore from "@/state/dashboard";
 
 import { WIDGET_6_DASHBOARD_1_DATA_ITEMS } from "../common/constant/dataItem";
 import { WIDGET_6_DASHBOARD_1_COLORS } from "../common/constant/color";
+import { pull } from "../../utils";
 
 const Widget6 = ({ setLoading }) => {
   const { hmisIndicators } = useMetadataStore(
@@ -17,7 +17,6 @@ const Widget6 = ({ setLoading }) => {
     }),
     shallow
   );
-  const additionalState = useDashboardStore((state) => state.additionalState);
   const [data, setData] = useState(null);
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
@@ -42,27 +41,27 @@ const Widget6 = ({ setLoading }) => {
   }, []);
 
   useEffect(() => {
-    if (additionalState.widget1234567Dashboard1Ready) {
+    (async () => {
+      setLoading(true);
+      const resultData = await pull("/api/getDashboard1Widget6Data");
+
       const response = {};
-      response.data = additionalState.widget1234567Dashboard1Data.rows.map(
-        (row) => ({
-          pe: row[1],
-          item: row[0],
-          value: parseInt(row[3]),
+      response.data = resultData.data.rows.map((row) => ({
+        pe: row[1],
+        item: row[0],
+        value: parseInt(row[3]),
+      }));
+      response.pes = resultData.data.metaData.dimensions.pe
+        .filter((item) => {
+          if (listTargetPe.includes(item)) {
+            return item;
+          }
         })
-      );
-      response.pes =
-        additionalState.widget1234567Dashboard1Data.metaData.dimensions.pe
-          .filter((item) => {
-            if (listTargetPe.includes(item)) {
-              return item;
-            }
-          })
-          .reverse();
+        .reverse();
       setResult(response);
-    }
-    setLoading(!additionalState.widget1234567Dashboard1Ready);
-  }, [additionalState.widget1234567Dashboard1Ready]);
+      setLoading(false);
+    })();
+  }, []);
 
   useEffect(() => {
     if (!result) return;
@@ -84,12 +83,10 @@ const Widget6 = ({ setLoading }) => {
       currentData.datasets = dataItems.map((di, index) => ({
         label: di[`name${localeName}`],
         data: result.pes.map((pe) => {
-          const foundRow = result.data.filter(
+          const foundRow = result.data.find(
             (row) => row.pe === pe && row.item === di.id
           );
-          return foundRow.length
-            ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
-            : 0;
+          return foundRow ? foundRow.value : 0;
         }),
         borderColor: colors[index],
         backgroundColor: colors[index],

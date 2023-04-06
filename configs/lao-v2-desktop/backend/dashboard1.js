@@ -2,6 +2,38 @@ const moment = require("moment");
 
 const apisDashboard1 = [
   {
+    route: `/api/getDashboard1Widget6Data`,
+    handler: async (dhis2Apis) => {
+      const pes = [];
+      let month = moment().month() + 1;
+      let year = moment().year();
+      while (true) {
+        if (pes.length === 36) {
+          break;
+        }
+        if (month === 0) {
+          year -= 1;
+          month = 12;
+          pes.push(`${year}${month}`);
+        } else {
+          pes.push(`${year}${month > 9 ? month : `0${month}`}`);
+        }
+        month -= 1;
+      }
+      for (let i = 0; i <= 4; i++) {
+        for (let j = i > 0 ? 12 : month; j >= 1; j--) {
+          pes.push(`${year - i}${j >= 10 ? j : `0${j}`}`);
+        }
+      }
+      const result = await dhis2Apis[0].get(
+        `/api/analytics.json?dimension=dx:j6KMK39OsGk;LQDrtIwibHf;yU7jURi1DCf&dimension=pe:${pes.join(
+          ";"
+        )}&dimension=ou:IWp9dQGM0bS&includeNumDen=false&skipData=false&skipMeta=false`
+      );
+      return result.data;
+    },
+  },
+  {
     route: `/api/getDashboard1Widget9Data`,
     handler: async (dhis2Apis) => {
       const result = await Promise.all([
@@ -67,24 +99,6 @@ const apisDashboard1 = [
           ";"
         )}&dimension=ou:IWp9dQGM0bS;LEVEL-2&includeNumDen=false&skipData=false&skipMeta=false`
       );
-      const response = {};
-      response.data = result.data.rows.map((row) => ({
-        pe: row[1],
-        item: row[0],
-        value: parseInt(row[2]),
-      }));
-      response.pes = result.data.metaData.dimensions.pe;
-      response.dxs = [
-        "sISjKc2LEDg",
-        "FSLrz90vXKf",
-        "cPcvesqWRtH",
-        "kyVKK0JcRPJ",
-        "cwhEsbBe6Zs",
-        "dJhWRKs0fcq",
-        "j6KMK39OsGk",
-        "LQDrtIwibHf",
-        "yU7jURi1DCf",
-      ];
       return result.data;
     },
   },
