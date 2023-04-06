@@ -17,7 +17,7 @@ const Widget1 = ({ setLoading }) => {
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
 
-  const currentDate = useMemo(() => format(new Date(), "dd/mm/yyyy"), []);
+  const currentDate = useMemo(() => format(new Date(), "dd/MM/yyyy"), []);
 
   const listTargetPe = useMemo(() => {
     const currentYear = [],
@@ -81,8 +81,6 @@ const Widget1 = ({ setLoading }) => {
       <Custom>
         <Box
           sx={{
-            border: "1px solid black",
-            borderRadius: "12px",
             display: "flex",
             flexDirection: "column",
             gap: "30px",
@@ -103,7 +101,7 @@ const Widget1 = ({ setLoading }) => {
           >
             <Typography
               textAlign="center"
-              sx={{ fontWeight: "700", fontSize: "24px" }}
+              sx={{ fontWeight: "700", fontSize: "50px" }}
             >
               {data.currentYearData}
             </Typography>
