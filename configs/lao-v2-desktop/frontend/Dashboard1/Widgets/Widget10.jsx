@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { shallow } from "zustand/shallow";
+
 import ThematicMap from "@/components/Widgets/ThematicMap";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
-import { useTranslation } from "react-i18next";
 import useMetadataStore from "@/state/metadata";
+
 import { pull } from "../../utils";
-import { shallow } from "zustand/shallow";
 
 const Widget5 = ({ setLoading }) => {
   const { hmisGeoJson } = useMetadataStore(

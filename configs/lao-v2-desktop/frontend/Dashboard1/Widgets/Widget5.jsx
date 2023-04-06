@@ -1,10 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { shallow } from "zustand/shallow";
+
 import ThematicMap from "@/components/Widgets/ThematicMap";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
-import { useTranslation } from "react-i18next";
 import useMetadataStore from "@/state/metadata";
-import { shallow } from "zustand/shallow";
 import useDashboardStore from "@/state/dashboard";
+
+import { WIDGET_5_DASHBOARD_1_LEGEND_COLORS } from "../common/constant/color";
+import { WIDGET_5_DASHBOARD_1_DATA_ITEM } from "../common/constant/dataItem";
 
 const Widget5 = ({ setLoading }) => {
   const { hmisGeoJson } = useMetadataStore(
@@ -16,7 +20,7 @@ const Widget5 = ({ setLoading }) => {
   const [data, setData] = useState({});
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
-  const legend = ["#fde0dd", "#fa9fb5", "#c51b8a"];
+  const legend = WIDGET_5_DASHBOARD_1_LEGEND_COLORS;
 
   const listTargetPe = useMemo(() => {
     const listPe = [];
@@ -32,7 +36,9 @@ const Widget5 = ({ setLoading }) => {
       const response = additionalState.widget1234567Dashboard1Data.rows
         .filter(
           (row) =>
-            listTargetPe.includes(row[1]) && row[0] === "dJhWRKs0fcq" && row
+            listTargetPe.includes(row[1]) &&
+            row[0] === WIDGET_5_DASHBOARD_1_DATA_ITEM &&
+            row
         )
         .map((row) => ({
           ou: row[2],

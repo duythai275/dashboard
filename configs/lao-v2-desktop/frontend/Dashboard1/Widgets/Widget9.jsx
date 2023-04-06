@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import LineChart from "@/components/Widgets/LineChart";
-import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { useTranslation } from "react-i18next";
-import useMetadataStore from "@/state/metadata";
-import { pull } from "../../utils";
 import { shallow } from "zustand/shallow";
-import { Table, TableCell, TableHead, TableRow } from "@mui/material";
+
 import DataGrid from "@/components/Widgets/DataGrid";
+import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
+import useMetadataStore from "@/state/metadata";
+
 import { getMonthName } from "../common/function/getMonthName";
-import {} from "date-fns/locale";
+import { pull } from "../../utils";
 
 const Widget9 = ({ setLoading }) => {
   const { hmisOrgUnits } = useMetadataStore(
@@ -31,7 +30,6 @@ const Widget9 = ({ setLoading }) => {
     if (!result) return;
     (async () => {
       const localeName = i18n.language === "en" ? "En" : "Lo";
-      const provinces = hmisOrgUnits.filter((ou) => ou.level === 2);
       const listOu = [];
       result.data.forEach((item) => {
         const foundOu = hmisOrgUnits.find((ou) => item.ou === ou.id);
@@ -73,7 +71,7 @@ const Widget9 = ({ setLoading }) => {
       }));
       currentData.columns.unshift({
         name: "ou",
-        header: "",
+        header: t("headerTitleWidget1.9"),
         flex: 1,
         style: { fontWeight: "700" },
       });

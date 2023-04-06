@@ -1,0 +1,181 @@
+const moment = require("moment");
+
+const apisDashboard1 = [
+  {
+    route: `/api/getDashboard1Widget1Data`,
+    handler: async (dhis2Apis) => {
+      const result = await dhis2Apis[0].get(
+        "/api/analytics.json?dimension=dx:cXVnVexZM2V.REPORTING_RATE&dimension=ou:FRmrFTE63D0;K27JzTKmBKh;MBZYTqkEgwf;RdNV4tTRNEo;TOgZ99Jv0bN;VWGSudnonm5;W6sNfkJcXGC;XKGgynPS1WZ;YvLOmtTQD6b;c4HrGRJoarj;dOhqCNenSjS;hRQsZhmvqgS;hdeC7uX9Cko;pFCZqWnXtoU;quFXhkOJGB4;rO2RVJWHpCe;sv6c7CpPcrc;vBWtCmNNnCG&filter=pe:LAST_YEAR&includeNumDen=false&skipData=false&skipMeta=false"
+      );
+      const response = result.data.rows
+        .map((row) => ({ ou: row[1], value: parseFloat(row[2]) }))
+        .sort((a, b) => b.value - a.value);
+
+      return response;
+    },
+  },
+  {
+    route: `/api/getDashboard1Widget4Data`,
+    handler: async (dhis2Apis) => {
+      const listPe = [];
+      let month = new Date().getMonth() + 1;
+      let year = new Date().getFullYear();
+      while (true) {
+        if (listPe.length === 36) {
+          break;
+        }
+        listPe.push(`${year}${month < 10 ? `0${month}` : month}`);
+        if (month === 1) {
+          month = 12;
+          year -= 1;
+        } else {
+          month -= 1;
+        }
+      }
+      const result = await dhis2Apis[0].get(
+        `/api/analytics.json?dimension=dx:cPcvesqWRtH;cwhEsbBe6Zs;dJhWRKs0fcq&dimension=pe:${listPe
+          .reverse()
+          .join(
+            ";"
+          )}&filter=ou:IWp9dQGM0bS&includeNumDen=false&skipData=false&skipMeta=false`
+      );
+      const response = {};
+      response.data = result.data.rows.map((row) => ({
+        pe: row[1],
+        item: row[0],
+        value: parseInt(row[2]),
+      }));
+      response.pes = result.data.metaData.dimensions.pe;
+      return response;
+    },
+  },
+  {
+    route: `/api/getDashboard1Widget5Data`,
+    handler: async (dhis2Apis) => {
+      const result = await dhis2Apis[0].get(
+        "/api/analytics.json?dimension=dx:dJhWRKs0fcq&dimension=ou:IWp9dQGM0bS;LEVEL-2&filter=pe:LAST_YEAR&displayProperty=NAME&skipData=false&skipMeta=false"
+      );
+      const response = result.data.rows.map((row) => ({
+        ou: row[1],
+        value: parseInt(row[2]),
+      }));
+      return response;
+    },
+  },
+  {
+    route: `/api/getDashboard1Widget7Data`,
+    handler: async (dhis2Apis) => {
+      const years = [moment().year()];
+      for (let i = 1; i <= 4; i++) {
+        years.push(moment().year() - i);
+      }
+      const result = await dhis2Apis[0].get(
+        `/api/analytics.json?dimension=dx:FSLrz90vXKf;cPcvesqWRtH;cwhEsbBe6Zs;dJhWRKs0fcq;kyVKK0JcRPJ;sISjKc2LEDg&dimension=pe:${years.join(
+          ";"
+        )}&filter=ou:IWp9dQGM0bS&includeNumDen=false&skipData=false&skipMeta=false`
+      );
+      const response = {};
+      response.data = result.data.rows.map((row) => ({
+        pe: row[1],
+        item: row[0],
+        value: parseInt(row[2]),
+      }));
+      response.pes = result.data.metaData.dimensions.pe;
+      response.dxs = [
+        "sISjKc2LEDg",
+        "FSLrz90vXKf",
+        "cPcvesqWRtH",
+        "kyVKK0JcRPJ",
+        "cwhEsbBe6Zs",
+        "dJhWRKs0fcq",
+      ];
+      return response;
+    },
+  },
+  {
+    route: `/api/getDashboard1Widget9Data`,
+    handler: async (dhis2Apis) => {
+      const result = await Promise.all([
+        dhis2Apis[0].get(
+          "/api/analytics.json?dimension=dx:hPrLP02dias.REPORTING_RATE&dimension=ou:FRmrFTE63D0;IWp9dQGM0bS;K27JzTKmBKh;MBZYTqkEgwf;RdNV4tTRNEo;TOgZ99Jv0bN;VWGSudnonm5;W6sNfkJcXGC;XKGgynPS1WZ;YvLOmtTQD6b;c4HrGRJoarj;dOhqCNenSjS;hRQsZhmvqgS;hdeC7uX9Cko;pFCZqWnXtoU;quFXhkOJGB4;rO2RVJWHpCe;sv6c7CpPcrc;vBWtCmNNnCG&dimension=pe:LAST_4_WEEKS;LAST_MONTH&includeNumDen=true&skipData=false&skipMeta=false"
+        ),
+        dhis2Apis[0].get(
+          "/api/legendSets?fields=id%2Clegends%5Bid%2CdisplayName~rename(name)%2CstartValue%2CendValue%2Ccolor%5D&filter=id%3Ain%3A%5Bpjqi9ASXG0w%5D"
+        ),
+      ]);
+      const response = {
+        data: result[0].data.rows.map((row) => ({
+          ou: row[1],
+          pe: row[2],
+          value: parseInt(row[3]),
+        })),
+        legendSets: result[1].data.legendSets,
+        pes: result[0].data.metaData.dimensions.pe,
+      };
+      return response;
+    },
+  },
+  {
+    route: `/api/getDashboard1Widget10Data`,
+    handler: async (dhis2Apis) => {
+      const year = new Date().getFullYear();
+      const month = new Date().getMonth() + 1;
+      const pe =
+        month > 2
+          ? `${year}${month - 2 > 9 ? month - 2 : `0${month - 2}`}`
+          : `${year - 1}${month + 10 > 9 ? month + 10 : `0${month + 10}`}`;
+      const result = await Promise.all([
+        dhis2Apis[0].get(
+          `/api/analytics.json?dimension=dx:cTfAP7at6pN&dimension=ou:IWp9dQGM0bS;LEVEL-3&filter=pe:${pe}&displayProperty=NAME&skipData=false&skipMeta=false`
+        ),
+        dhis2Apis[0].get(
+          "/api/legendSets/Y8vcHdmr6ZV?fields=%3Aall%2CattributeValues%5B%3Aall%2Cattribute%5Bid%2Cname%2CdisplayName%5D%5D"
+        ),
+      ]);
+      const response = {
+        data: result[0].data.rows.map((row) => ({
+          ou: row[1],
+          value: parseInt(row[2]),
+        })),
+        legends: result[1].data.legends,
+      };
+      return response;
+    },
+  },
+  {
+    route: `/api/getDashboard1Widget1234567Data`,
+    handler: async (dhis2Apis) => {
+      const pes = [];
+      const month = moment().month() + 1;
+      const year = moment().year();
+      for (let i = 0; i <= 4; i++) {
+        for (let j = i > 0 ? 12 : month; j >= 1; j--) {
+          pes.push(`${year - i}${j >= 10 ? j : `0${j}`}`);
+        }
+      }
+      const result = await dhis2Apis[0].get(
+        `/api/analytics.json?dimension=dx:FSLrz90vXKf;cPcvesqWRtH;cwhEsbBe6Zs;dJhWRKs0fcq;kyVKK0JcRPJ;sISjKc2LEDg&dimension=pe:${pes.join(
+          ";"
+        )}&dimension=ou:IWp9dQGM0bS;LEVEL-2&includeNumDen=false&skipData=false&skipMeta=false`
+      );
+      const response = {};
+      response.data = result.data.rows.map((row) => ({
+        pe: row[1],
+        item: row[0],
+        value: parseInt(row[2]),
+      }));
+      response.pes = result.data.metaData.dimensions.pe;
+      response.dxs = [
+        "sISjKc2LEDg",
+        "FSLrz90vXKf",
+        "cPcvesqWRtH",
+        "kyVKK0JcRPJ",
+        "cwhEsbBe6Zs",
+        "dJhWRKs0fcq",
+      ];
+      return result.data;
+    },
+  },
+];
+
+module.exports = { apisDashboard1 };

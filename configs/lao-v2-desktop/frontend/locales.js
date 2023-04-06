@@ -56,6 +56,9 @@ const locales = [
       { key: "monthlyHeaderTitleOfWidget1.9", value: `{{month}} {{year}}` },
       { key: "weeklyHeaderTitleOfWidget1.9", value: `ອາທິດ{{month}} {{year}}` },
       { key: "widget1.1Date", value: `As at {{date}}` },
+      { key: "lastPeriod", value: `Same period last year: {{value}}` },
+      { key: "headerTitleWidget1.7", value: "Data/Period" },
+      { key: "headerTitleWidget1.9", value: "Org Units/Period" },
     ],
   },
   {
@@ -114,6 +117,9 @@ const locales = [
       { key: "monthlyHeaderTitleOfWidget1.9", value: `{{month}} {{year}}` },
       { key: "weeklyHeaderTitleOfWidget1.9", value: `W{{month}} {{year}}` },
       { key: "widget1.1Date", value: `As at {{date}}` },
+      { key: "lastPeriod", value: `Same period last year: {{value}}` },
+      { key: "headerTitleWidget1.7", value: "Data/Period" },
+      { key: "headerTitleWidget1.9", value: "Org Units/Period" },
     ],
   },
 ];

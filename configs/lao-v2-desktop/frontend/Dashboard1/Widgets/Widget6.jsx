@@ -7,6 +7,9 @@ import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenL
 import useMetadataStore from "@/state/metadata";
 import useDashboardStore from "@/state/dashboard";
 
+import { WIDGET_6_DASHBOARD_1_DATA_ITEMS } from "../common/constant/dataItem";
+import { WIDGET_6_DASHBOARD_1_COLORS } from "../common/constant/color";
+
 const Widget6 = ({ setLoading }) => {
   const { hmisDataItems } = useMetadataStore(
     (state) => ({ hmisDataItems: state.hmisDataItems }),
@@ -64,17 +67,11 @@ const Widget6 = ({ setLoading }) => {
 
     (async () => {
       const localeName = i18n.language === "en" ? "En" : "Lo";
-      const dataItems = ["cwhEsbBe6Zs", "cPcvesqWRtH", "dJhWRKs0fcq"].map(
-        (de) => {
-          const foundDi = hmisDataItems.find((di) => di.id === de);
-          return foundDi;
-        }
-      );
-      const colors = [
-        "rgb(168, 191, 36)",
-        "rgb(81, 140, 195)",
-        "rgb(215, 69, 84)",
-      ];
+      const dataItems = WIDGET_6_DASHBOARD_1_DATA_ITEMS.map((de) => {
+        const foundDi = hmisDataItems.find((di) => di.id === de);
+        return foundDi;
+      });
+      const colors = WIDGET_6_DASHBOARD_1_COLORS;
       let currentData = {};
       currentData.labels = result.pes.map((pe) => {
         const year = pe.substring(0, 4);

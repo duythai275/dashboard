@@ -1,22 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { shallow } from "zustand/shallow";
-
-import LineChart from "@/components/Widgets/LineChart";
-import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
-import useMetadataStore from "@/state/metadata";
-import useDashboardStore from "@/state/dashboard";
-import Custom from "@/components/Widgets/Custom";
 import { Box, Typography } from "@mui/material";
-import { format } from "date-fns";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
+
+import Custom from "@/components/Widgets/Custom";
+import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
+import useDashboardStore from "@/state/dashboard";
+
+import { WIDGET_1_DASHBOARD_1_DATA_ITEM } from "../common/constant/dataItem";
 
 const Widget1 = ({ setLoading }) => {
-  const { hmisDataItems } = useMetadataStore(
-    (state) => ({ hmisDataItems: state.hmisDataItems }),
-    shallow
-  );
   const additionalState = useDashboardStore((state) => state.additionalState);
   const [data, setData] = useState(null);
   const [result, setResult] = useState(null);
@@ -44,7 +39,7 @@ const Widget1 = ({ setLoading }) => {
           (row) =>
             (listTargetPe.currentYear.includes(row[1]) ||
               listTargetPe.lastYear.includes(row[1])) &&
-            row[0] === "cPcvesqWRtH"
+            row[0] === WIDGET_1_DASHBOARD_1_DATA_ITEM
         )
         .map((row) => ({
           pe: row[1],
@@ -59,18 +54,6 @@ const Widget1 = ({ setLoading }) => {
     if (!result) return;
 
     (async () => {
-      const localeName = i18n.language === "en" ? "En" : "Lo";
-      const dataItems = ["cwhEsbBe6Zs", "cPcvesqWRtH", "dJhWRKs0fcq"].map(
-        (de) => {
-          const foundDi = hmisDataItems.find((di) => di.id === de);
-          return foundDi;
-        }
-      );
-      const colors = [
-        "rgb(168, 191, 36)",
-        "rgb(81, 140, 195)",
-        "rgb(215, 69, 84)",
-      ];
       let currentData = {};
       currentData.currentYearData = result.data
         .filter((item) => {
@@ -128,7 +111,7 @@ const Widget1 = ({ setLoading }) => {
               {data.currentYearData}
             </Typography>
             <Typography textAlign="center">
-              same period last year: {data.lastYearData}
+              {t("lastPeriod", { value: data.lastYearData })}
               <Typography
                 sx={{
                   display: "flex",

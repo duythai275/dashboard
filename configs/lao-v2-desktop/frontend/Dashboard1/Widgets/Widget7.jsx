@@ -2,15 +2,16 @@ import { useState, useEffect, useMemo } from "react";
 import { Box, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { shallow } from "zustand/shallow";
 import { useTranslation } from "react-i18next";
+import { shallow } from "zustand/shallow";
 
 import DataGrid from "@/components/Widgets/DataGrid";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import useMetadataStore from "@/state/metadata";
-
-import { pull } from "../../utils";
 import useDashboardStore from "@/state/dashboard";
+
+import { WIDGET_7_DASHBOARD_1_DATA_ITEMS } from "../common/constant/dataItem";
+import { DOWN_TREND_COLOR, UP_TREND_COLOR } from "../common/constant/color";
 
 const Widget7 = ({ setLoading }) => {
   const [data, setData] = useState(null);
@@ -42,14 +43,6 @@ const Widget7 = ({ setLoading }) => {
       );
       response.pes =
         additionalState.widget1234567Dashboard1Data.metaData.dimensions.pe;
-      response.dxs = [
-        "sISjKc2LEDg",
-        "FSLrz90vXKf",
-        "cPcvesqWRtH",
-        "kyVKK0JcRPJ",
-        "cwhEsbBe6Zs",
-        "dJhWRKs0fcq",
-      ];
       setResult(response);
     }
     setLoading(!additionalState.widget1234567Dashboard1Ready);
@@ -58,7 +51,7 @@ const Widget7 = ({ setLoading }) => {
   useEffect(() => {
     if (!result) return;
     const localeName = i18n.language === "en" ? "En" : "Lo";
-    const dataItems = result.dxs.map((de) => {
+    const dataItems = WIDGET_7_DASHBOARD_1_DATA_ITEMS.map((de) => {
       const foundDi = hmisDataItems.find((di) => di.id === de);
       return foundDi;
     });
@@ -72,7 +65,7 @@ const Widget7 = ({ setLoading }) => {
       header: pe,
       render: ({ value, rowIndex }) => {
         if (index === result.pes.length - 1) {
-          return <div>{value}</div>;
+          return <Typography>{value}</Typography>;
         }
         const previousYearValue = result.data
           .filter(
@@ -100,7 +93,7 @@ const Widget7 = ({ setLoading }) => {
             <Typography>{value}</Typography>
             <Typography
               sx={{
-                color: isIncreased ? "#E61B1B" : "#118861",
+                color: isIncreased ? UP_TREND_COLOR : DOWN_TREND_COLOR,
               }}
             >
               {isIncreased ? (
@@ -117,7 +110,7 @@ const Widget7 = ({ setLoading }) => {
     }));
     currentData.columns.unshift({
       name: "di",
-      header: t("data/period"),
+      header: t("headerTitleWidget1.7"),
       width: 300,
     });
     currentData.rows = dataItems.map((di) => {
@@ -134,15 +127,6 @@ const Widget7 = ({ setLoading }) => {
       });
       return row;
     });
-    // currentData.datasets = dataItems.map((di, index) => ({
-    //   label: di[`name${localeName}`],
-    //   data: result.pes.map((pe) => {
-    //     const foundRow = result.data.find((row) => row.pe === pe && row.item === di.id);
-    //     return foundRow ? foundRow.value : 0;
-    //   }),
-    //   borderColor: colors[index],
-    //   backgroundColor: colors[index]
-    // }));
     setData({ ...currentData });
   }, [i18n.language, JSON.stringify(result)]);
 
