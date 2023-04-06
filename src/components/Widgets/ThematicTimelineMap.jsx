@@ -17,7 +17,9 @@ const GeoJsonLayer = ({ features, currentData, legend, setLabel }) => {
   );
 
   useEffect(() => {
-    map.fitBounds(ref.current.getBounds());
+    setTimeout(() => {
+      map.fitBounds(ref.current.getBounds());
+    }, 500);
   }, []);
 
   return (
@@ -179,11 +181,7 @@ const TimelineLabelLayer = ({ timelineLabel }) => {
 };
 
 const LegendLayer = () => {
-  return (
-    <div className={`${LEAFLET_CONTROL_POSITIONS.topLeft} label-layer-container`}>
-      alksdfasdfjhadjklsfhjadklsfhjkladsfhkladfs
-    </div>
-  );
+  return <div className={`${LEAFLET_CONTROL_POSITIONS.topLeft} label-layer-container`}>alksdfasdfjhadjklsfhjadklsfhjkladsfhkladfs</div>;
 };
 
 const ThematicTimelineMap = (props) => {
@@ -199,12 +197,7 @@ const ThematicTimelineMap = (props) => {
         attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`}
         url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
       />
-      <GeoJsonLayer
-        {...props}
-        setLabel={setLabel}
-        currentData={timelineLabel ? props.data[timelineLabel] : {}}
-        key={timelineLabel}
-      />
+      <GeoJsonLayer {...props} setLabel={setLabel} currentData={timelineLabel ? props.data[timelineLabel] : {}} key={timelineLabel} />
     </MapContainer>
   );
 };
