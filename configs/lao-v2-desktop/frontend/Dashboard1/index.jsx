@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import RGL, { WidthProvider } from "react-grid-layout";
+import RGL, { WidthProvider, Responsive } from "react-grid-layout";
 import { useTranslation } from "react-i18next";
 
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
@@ -21,7 +21,7 @@ import {
 
 import { pull } from "../utils";
 
-const ReactGridLayout = WidthProvider(RGL);
+const ReactGridLayout = WidthProvider(Responsive);
 
 const Dashboard1 = () => {
   const { t } = useTranslation();
@@ -40,19 +40,34 @@ const Dashboard1 = () => {
   return (
     <ReactGridLayout
       isDraggable={false}
-      layout={[
-        { i: "1", x: 0, y: 0, w: 4, h: 25 },
-        { i: "2", x: 4, y: 0, w: 4, h: 25 },
-        { i: "3", x: 8, y: 0, w: 4, h: 25 },
-        { i: "4", x: 0, y: 25, w: 8, h: 50 },
-        { i: "5", x: 8, y: 25, w: 4, h: 50 },
-        { i: "6", x: 0, y: 75, w: 8, h: 50 },
-        { i: "7", x: 8, y: 75, w: 4, h: 50 },
-        { i: "8", x: 0, y: 125, w: 12, h: 50 },
-        { i: "9", x: 0, y: 175, w: 8, h: 50 },
-        { i: "10", x: 8, y: 175, w: 4, h: 50 },
-      ]}
-      cols={12}
+      breakpoints={{ desktop: 1200, mobile: 480 }}
+      layouts={{
+        desktop: [
+          { i: "1", x: 0, y: 0, w: 4, h: 25 },
+          { i: "2", x: 4, y: 0, w: 4, h: 25 },
+          { i: "3", x: 8, y: 0, w: 4, h: 25 },
+          { i: "4", x: 0, y: 25, w: 8, h: 50 },
+          { i: "5", x: 8, y: 25, w: 4, h: 50 },
+          { i: "6", x: 0, y: 75, w: 8, h: 50 },
+          { i: "7", x: 8, y: 75, w: 4, h: 50 },
+          { i: "8", x: 0, y: 125, w: 12, h: 50 },
+          { i: "9", x: 0, y: 175, w: 8, h: 50 },
+          { i: "10", x: 8, y: 175, w: 4, h: 50 },
+        ],
+        mobile: [
+          { i: "1", x: 0, y: 0, w: 12, h: 25 },
+          { i: "2", x: 0, y: 25, w: 12, h: 25 },
+          { i: "3", x: 0, y: 50, w: 12, h: 25 },
+          { i: "4", x: 0, y: 75, w: 12, h: 50 },
+          { i: "5", x: 0, y: 125, w: 12, h: 50 },
+          { i: "6", x: 0, y: 175, w: 12, h: 50 },
+          { i: "7", x: 0, y: 225, w: 12, h: 50 },
+          { i: "8", x: 0, y: 275, w: 12, h: 50 },
+          { i: "9", x: 0, y: 325, w: 12, h: 50 },
+          { i: "10", x: 0, y: 375, w: 12, h: 50 },
+        ],
+      }}
+      cols={{ desktop: 12, mobile: 6 }}
       rowHeight={1}
       containerPadding={[0, 0]}
     >
