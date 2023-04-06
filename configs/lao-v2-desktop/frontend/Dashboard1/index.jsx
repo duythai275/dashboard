@@ -1,18 +1,26 @@
 import { useEffect } from "react";
 import RGL, { WidthProvider } from "react-grid-layout";
-import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
 import { useTranslation } from "react-i18next";
+
+import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
+import useDashboardStore from "@/state/dashboard";
+
+import Widget123 from "./Widgets/Widget123";
 import Widget4 from "./Widgets/Widget4";
 import Widget5 from "./Widgets/Widget5";
 import Widget6 from "./Widgets/Widget6";
 import Widget7 from "./Widgets/Widget7";
 import Widget9 from "./Widgets/Widget9";
 import Widget10 from "./Widgets/Widget10";
+
+import {
+  WIDGET_1_DASHBOARD_1_DATA_ITEM,
+  WIDGET_2_DASHBOARD_1_DATA_ITEM,
+  WIDGET_3_DASHBOARD_1_DATA_ITEM,
+} from "./common/constant/dataItem";
+
 import { pull } from "../utils";
-import useDashboardStore from "@/state/dashboard";
-import Widget1 from "./Widgets/Widget1";
-import Widget2 from "./Widgets/Widget2";
-import Widget3 from "./Widgets/Widget3";
+
 const ReactGridLayout = WidthProvider(RGL);
 
 const Dashboard1 = () => {
@@ -55,7 +63,7 @@ const Dashboard1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.1Title", { year: new Date().getFullYear() }),
-            widget: <Widget1 />,
+            widget: <Widget123 dataItemId={WIDGET_1_DASHBOARD_1_DATA_ITEM} />,
           },
         ]}
       />
@@ -66,7 +74,7 @@ const Dashboard1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.2Title", { year: new Date().getFullYear() }),
-            widget: <Widget2 />,
+            widget: <Widget123 dataItemId={WIDGET_2_DASHBOARD_1_DATA_ITEM} />,
           },
         ]}
       />
@@ -77,7 +85,7 @@ const Dashboard1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.3Title", { year: new Date().getFullYear() }),
-            widget: <Widget3 />,
+            widget: <Widget123 dataItemId={WIDGET_3_DASHBOARD_1_DATA_ITEM} />,
           },
         ]}
       />

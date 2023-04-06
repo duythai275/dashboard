@@ -9,9 +9,7 @@ import Custom from "@/components/Widgets/Custom";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import useDashboardStore from "@/state/dashboard";
 
-import { WIDGET_1_DASHBOARD_1_DATA_ITEM } from "../common/constant/dataItem";
-
-const Widget1 = ({ setLoading }) => {
+const Widget123 = ({ setLoading, dataItemId }) => {
   const additionalState = useDashboardStore((state) => state.additionalState);
   const [data, setData] = useState(null);
   const [result, setResult] = useState(null);
@@ -39,7 +37,7 @@ const Widget1 = ({ setLoading }) => {
           (row) =>
             (listTargetPe.currentYear.includes(row[1]) ||
               listTargetPe.lastYear.includes(row[1])) &&
-            row[0] === WIDGET_1_DASHBOARD_1_DATA_ITEM
+            row[0] === dataItemId
         )
         .map((row) => ({
           pe: row[1],
@@ -142,4 +140,4 @@ const Widget1 = ({ setLoading }) => {
     )
   );
 };
-export default withWidgetChildrenLoader(Widget1);
+export default withWidgetChildrenLoader(Widget123);
