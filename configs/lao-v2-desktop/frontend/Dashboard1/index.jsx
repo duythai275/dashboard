@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import RGL, { WidthProvider } from "react-grid-layout";
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
-import Title from "../Title";
 import { useTranslation } from "react-i18next";
 import Widget4 from "./Widgets/Widget4";
 import Widget5 from "./Widgets/Widget5";
@@ -34,28 +33,21 @@ const Dashboard1 = () => {
     <ReactGridLayout
       isDraggable={false}
       layout={[
-        // { i: "title", x: 0, y: 0, w: 11.9, h: 9 },
-        { i: "1", x: 0, y: 0, w: 4, h: 30 },
-        { i: "2", x: 4, y: 0, w: 4, h: 30 },
-        { i: "3", x: 8, y: 0, w: 4, h: 30 },
-        { i: "4", x: 0, y: 30, w: 8, h: 50 },
-        { i: "5", x: 8, y: 30, w: 4, h: 50 },
-        { i: "6", x: 0, y: 80, w: 8, h: 50 },
-        { i: "7", x: 8, y: 80, w: 4, h: 50 },
-        { i: "8", x: 0, y: 130, w: 12, h: 50 },
-        { i: "9", x: 0, y: 180, w: 8, h: 50 },
-        { i: "10", x: 8, y: 180, w: 4, h: 50 },
+        { i: "1", x: 0, y: 0, w: 4, h: 25 },
+        { i: "2", x: 4, y: 0, w: 4, h: 25 },
+        { i: "3", x: 8, y: 0, w: 4, h: 25 },
+        { i: "4", x: 0, y: 25, w: 8, h: 50 },
+        { i: "5", x: 8, y: 25, w: 4, h: 50 },
+        { i: "6", x: 0, y: 75, w: 8, h: 50 },
+        { i: "7", x: 8, y: 75, w: 4, h: 50 },
+        { i: "8", x: 0, y: 125, w: 12, h: 50 },
+        { i: "9", x: 0, y: 175, w: 8, h: 50 },
+        { i: "10", x: 8, y: 175, w: 4, h: 50 },
       ]}
       cols={12}
       rowHeight={1}
       containerPadding={[0, 0]}
     >
-      {/* <WidgetContainer
-        key="title"
-        dashboardIndex={0}
-        widgetIndex={0}
-        childrenWidgets={[{ title: t("remarks"), widget: <Title /> }]}
-      /> */}
       <WidgetContainer
         key="1"
         dashboardIndex={0}

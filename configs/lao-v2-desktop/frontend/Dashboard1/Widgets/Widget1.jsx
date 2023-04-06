@@ -92,9 +92,6 @@ const Widget1 = ({ setLoading }) => {
             height: "100%",
           }}
         >
-          <Typography textAlign="center" fontWeight={700}>
-            {t("widget1.1Title", { year: new Date().getFullYear() })}
-          </Typography>
           <Box
             sx={{
               display: "flex",
