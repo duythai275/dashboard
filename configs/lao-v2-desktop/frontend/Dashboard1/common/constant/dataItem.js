@@ -13,9 +13,9 @@ const WIDGET_4_DASHBOARD_1_DATA_ITEMS = [
 const WIDGET_5_DASHBOARD_1_DATA_ITEM = "dJhWRKs0fcq";
 
 const WIDGET_6_DASHBOARD_1_DATA_ITEMS = [
-  "cwhEsbBe6Zs",
-  "cPcvesqWRtH",
-  "dJhWRKs0fcq",
+  "j6KMK39OsGk",
+  "LQDrtIwibHf",
+  "yU7jURi1DCf",
 ];
 
 const WIDGET_7_DASHBOARD_1_DATA_ITEMS = [

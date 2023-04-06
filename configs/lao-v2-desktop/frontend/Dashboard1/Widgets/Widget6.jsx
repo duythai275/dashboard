@@ -11,8 +11,10 @@ import { WIDGET_6_DASHBOARD_1_DATA_ITEMS } from "../common/constant/dataItem";
 import { WIDGET_6_DASHBOARD_1_COLORS } from "../common/constant/color";
 
 const Widget6 = ({ setLoading }) => {
-  const { hmisDataItems } = useMetadataStore(
-    (state) => ({ hmisDataItems: state.hmisDataItems }),
+  const { hmisIndicators } = useMetadataStore(
+    (state) => ({
+      hmisIndicators: state.hmisIndicators,
+    }),
     shallow
   );
   const additionalState = useDashboardStore((state) => state.additionalState);
@@ -68,7 +70,8 @@ const Widget6 = ({ setLoading }) => {
     (async () => {
       const localeName = i18n.language === "en" ? "En" : "Lo";
       const dataItems = WIDGET_6_DASHBOARD_1_DATA_ITEMS.map((de) => {
-        const foundDi = hmisDataItems.find((di) => di.id === de);
+        const foundDi = hmisIndicators.find((di) => di.id === de);
+
         return foundDi;
       });
       const colors = WIDGET_6_DASHBOARD_1_COLORS;
