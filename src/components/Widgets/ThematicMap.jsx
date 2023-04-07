@@ -8,7 +8,13 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { LEAFLET_CONTROL_POSITIONS } from "./const";
 import { useTranslation } from "react-i18next";
 
-const GeoJsonLayer = ({ features, currentData, legend, setLabel, labelPostfix }) => {
+const GeoJsonLayer = ({
+  features,
+  currentData,
+  legend,
+  setLabel,
+  labelPostfix,
+}) => {
   const { t } = useTranslation();
   const ref = useRef(null);
   const map = useMap();
@@ -31,39 +37,45 @@ const GeoJsonLayer = ({ features, currentData, legend, setLabel, labelPostfix })
       style={{ color: "#4d4d4d" }}
       onEachFeature={(feature, layer) => {
         layer.setStyle({
-          weight: 1
+          weight: 1,
         });
-        let foundData = currentData[feature.id] || null;
-        if (foundData) {
-          const foundRangeIndex = ranges.findIndex((range) => foundData <= range.max && foundData >= range.min);
+        let foundData = currentData[feature.id] ?? null;
+        if (foundData !== null) {
+          const foundRangeIndex = ranges.findIndex(
+            (range) => foundData <= range.max && foundData >= range.min
+          );
           if (foundRangeIndex !== -1) {
             layer.setStyle({
               fillColor: legend[foundRangeIndex],
-              fillOpacity: 0.8
+              fillOpacity: 0.8,
             });
           } else {
             layer.setStyle({
               fillColor: "#4d4d4d",
-              fillOpacity: 0.1
+              fillOpacity: 0.1,
             });
           }
         } else {
           layer.setStyle({
             fillColor: "#4d4d4d",
-            fillOpacity: 0.1
+            fillOpacity: 0.1,
           });
         }
         const postfix = labelPostfix ? labelPostfix : "";
         layer.on("mouseover", () => {
-          setLabel(feature.properties.name + ": " + (foundData ? foundData + postfix : t("noData")));
+          setLabel(
+            feature.properties.name +
+              ": " +
+              (foundData !== null ? foundData + postfix : t("noData"))
+          );
           layer.setStyle({
-            weight: 3
+            weight: 3,
           });
         });
         layer.on("mouseout", () => {
           setLabel("");
           layer.setStyle({
-            weight: 1
+            weight: 1,
           });
         });
       }}
@@ -73,7 +85,9 @@ const GeoJsonLayer = ({ features, currentData, legend, setLabel, labelPostfix })
 
 const LabelLayer = ({ label }) => {
   return (
-    <div className={`${LEAFLET_CONTROL_POSITIONS.topRight} label-layer-container`}>
+    <div
+      className={`${LEAFLET_CONTROL_POSITIONS.topRight} label-layer-container`}
+    >
       <Typography variant="subtitle2">{label ? label : ""}</Typography>
     </div>
   );
@@ -118,7 +132,7 @@ const LegendLayer = ({ data, legend }) => {
                 </div>
               </div>
             );
-          })
+          }),
         ]
       ) : (
         <FontAwesomeIcon icon={faCircleInfo} />
@@ -136,7 +150,12 @@ const ThematicMap = (props) => {
         url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
       />
       {label && <LabelLayer label={label} />}
-      <GeoJsonLayer {...props} setLabel={setLabel} currentData={props.data} key={JSON.stringify(props.data)} />
+      <GeoJsonLayer
+        {...props}
+        setLabel={setLabel}
+        currentData={props.data}
+        key={JSON.stringify(props.data)}
+      />
     </MapContainer>
   );
 };
