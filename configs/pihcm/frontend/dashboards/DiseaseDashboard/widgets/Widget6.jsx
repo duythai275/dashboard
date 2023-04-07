@@ -9,8 +9,8 @@ import useMetadataStore from "@/state/metadata";
 import { pull } from "@/utils/fetch";
 
 const Widget1 = ({ setLoading, code, isUpto = false }) => {
-  const { ouGroups } = useMetadataStore(
-    (state) => ({ ouGroups: state.ouGroups }),
+  const { communes } = useMetadataStore(
+    (state) => ({ communes: state.communes }),
     shallow
   );
   const [data, setData] = useState(null);
@@ -18,13 +18,17 @@ const Widget1 = ({ setLoading, code, isUpto = false }) => {
   const lastYear = useMemo(() => new Date().getFullYear() - 1);
   const currentYear = useMemo(() => new Date().getFullYear());
   const currentWeek = useMemo(() => getISOWeek(new Date()));
+  const provinces = useMemo(() => {
+    if (!communes) return null;
+    return communes.filter((item) => item.level === 2);
+  }, [communes]);
 
   const getData = async () => {
     try {
       setLoading(true);
 
       const result = await pull(
-        `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_provinces&var=startYear:${lastYear}&var=endYear:${currentYear}`
+        `/api/sqlViews/G0IHd6DtZDf/data?paging=false&var=table:_analytics_casereporting_cases_provinces&var=startYear:${lastYear}&var=endYear:${currentYear}`
       );
       const ouIndex = result.listGrid.headers.findIndex(
         (header) => header.name === "uidlevel2"
@@ -115,8 +119,7 @@ const Widget1 = ({ setLoading, code, isUpto = false }) => {
     <MultitypeChart
       data={{
         labels: data.labels.map(
-          (item) =>
-            ouGroups[3].organisationUnits.find((ou) => ou.id === item)?.name
+          (item) => provinces.find((ou) => ou.id === item)?.name
         ),
         datasets: [
           {

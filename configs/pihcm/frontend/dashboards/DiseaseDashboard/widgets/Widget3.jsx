@@ -26,7 +26,7 @@ const Widget3 = ({ setLoading, code, isUpto = false, isDeath = false }) => {
       try {
         setLoading(true);
         const result = await pull(
-          `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_${
+          `/api/sqlViews/G0IHd6DtZDf/data?paging=false&var=table:_analytics_casereporting_${
             isDeath ? "deaths" : "cases"
           }_provinces&var=startYear:${lastYear}&var=endYear:${currentYear}`
         );

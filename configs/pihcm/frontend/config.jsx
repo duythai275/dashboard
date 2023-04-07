@@ -59,7 +59,7 @@ const useDashboardInitialization = () => {
           "/api/optionSets?filter=id:eq:d5fivOeWHIb&fields=id,name,translations,options[id,name,code,translations"
         ),
         pull(
-          "/api/organisationUnits?filter=level:eq:4&fields=id,name,ancestors[id,name,level]"
+          "/api/organisationUnits?fields=id,name,level,ancestors[id,name,level]&paging=false"
         ),
         pull("/api/organisationUnits.geojson?level=2"),
       ]);

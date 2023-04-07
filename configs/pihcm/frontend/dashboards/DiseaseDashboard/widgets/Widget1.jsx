@@ -26,7 +26,7 @@ const Widget1 = ({ setLoading, code, ou }) => {
       setLoading(true);
       if (ou === "S3kaCiYIP4B") {
         const result = await pull(
-          `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_country&var=startYear:${last5Year}&var=endYear:${currentYear}`
+          `/api/sqlViews/G0IHd6DtZDf/data?paging=false&var=table:_analytics_casereporting_cases_region&var=startYear:${last5Year}&var=endYear:${currentYear}`
         );
         if (result) {
           const weeklyIndex = result.listGrid.headers.findIndex(
@@ -83,7 +83,7 @@ const Widget1 = ({ setLoading, code, ou }) => {
         }
       } else {
         const result = await pull(
-          `/api/sqlViews/LEHkTysr0km/data?paging=false&var=table:_analytics_casereporting_cases_provinces&var=startYear:${last5Year}&var=endYear:${currentYear}`
+          `/api/sqlViews/G0IHd6DtZDf/data?paging=false&var=table:_analytics_casereporting_cases_provinces&var=startYear:${last5Year}&var=endYear:${currentYear}`
         );
         const ouIndex = result.listGrid.headers.findIndex(
           (header) => header.name === "uidlevel2"
