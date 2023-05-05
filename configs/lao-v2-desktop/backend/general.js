@@ -3,7 +3,7 @@ const apisGeneral = [
     route: `/api/orgUnits`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get(
-        "/api/organisationUnits?paging=false&fields=id,name,displayName,parent,path,ancestors,translations,level,organisationUnitGroups"
+        "/api/organisationUnits?paging=false&fields=id,name,displayName,parent,path,ancestors,translations,level,organisationUnitGroups&filter=level:in:[1,2,3]"
       );
       return result.data.organisationUnits
         .filter(
@@ -33,13 +33,17 @@ const apisGeneral = [
       const orgUnitLevelsResult = await dhis2Apis[0].get(
         `/api/organisationUnitLevels.json?fields=level,displayName`
       );
-      const levelQueryString =
-        orgUnitLevelsResult.data.organisationUnitLevels.map(
-          (oul) => "level=" + oul.level
-        );
+      // const levelQueryString =
+      //   orgUnitLevelsResult.data.organisationUnitLevels.map(
+      //     (oul) => "level=" + oul.level
+      //   );
+
+      const levelQueryString = "level=2&level=3";
+      // const orgUnitGeoJsonResult = await dhis2Apis[0].get(`/api/organisationUnits.geojson?${levelQueryString.join("&")}`);
       const orgUnitGeoJsonResult = await dhis2Apis[0].get(
-        `/api/organisationUnits.geojson?${levelQueryString.join("&")}`
+        `/api/organisationUnits.geojson?${levelQueryString}`
       );
+
       return orgUnitGeoJsonResult.data;
     },
   },
@@ -47,7 +51,7 @@ const apisGeneral = [
     route: `/api/dataItems`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get(
-        "/api/dataElements?paging=false&fields=id,name,formName,translations"
+        "/api/dataElements.json?paging=false&fields=id,name,formName,translations&filter=domainType:eq:AGGREGATE"
       );
       return result.data.dataElements.map((de) => {
         const foundNameLo = de.translations.find(
@@ -66,7 +70,7 @@ const apisGeneral = [
     route: `/api/indicators`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get(
-        "/api/indicators.json?paging=false&fields=id,name,translations"
+        "/api/indicators?paging=false&fields=id,name,translations"
       );
       return result.data.indicators.map((i) => {
         const foundNameLo = i.translations.find(
