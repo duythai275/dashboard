@@ -5,7 +5,7 @@ const apisDashboard2 = [
     route: `/api/getDashboard2Widget8Data`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get(
-        "/api/analytics?dimension=dx:Q21U47uf0xo.REPORTING_RATE;w8XQmI94Spv.REPORTING_RATE;Q21U47uf0xo.REPORTING_RATE_ON_TIME;w8XQmI94Spv.REPORTING_RATE_ON_TIME&dimension=pe:THIS_MONTH&filter=ou:IWp9dQGM0bS;LEVEL-2&includeNumDen=true&skipData=false&skipMeta=false"
+        "/api/analytics?dimension=dx:Q21U47uf0xo.REPORTING_RATE;w8XQmI94Spv.REPORTING_RATE;Q21U47uf0xo.REPORTING_RATE_ON_TIME;w8XQmI94Spv.REPORTING_RATE_ON_TIME&dimension=pe:THIS_MONTH&filter=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=true&skipData=false&skipMeta=false"
       );
       return result.data;
     },
@@ -24,7 +24,7 @@ const apisDashboard2 = [
       const result = await dhis2Apis[0].get(
         `/api/analytics.json?dimension=dx:KcdTp96b0QX&dimension=pe:${pes.join(
           ";"
-        )}&dimension=ou:IWp9dQGM0bS;LEVEL-2&includeNumDen=false&skipData=false&skipMeta=false`
+        )}&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=false&skipData=false&skipMeta=false`
       );
       return result.data;
     },
@@ -43,7 +43,7 @@ const apisDashboard2 = [
       const result = await dhis2Apis[0].get(
         `/api/analytics.json?dimension=dx:r2wLxYXH75x&dimension=pe:${pes.join(
           ";"
-        )}&dimension=ou:IWp9dQGM0bS;LEVEL-2&includeNumDen=false&skipData=false&skipMeta=false`
+        )}&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=false&skipData=false&skipMeta=false`
       );
       return result.data;
     },
