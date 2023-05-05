@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import RGL, { WidthProvider, Responsive } from "react-grid-layout";
+import { WidthProvider, Responsive } from "react-grid-layout";
 import { useTranslation } from "react-i18next";
 
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";

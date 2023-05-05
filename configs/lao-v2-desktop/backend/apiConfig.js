@@ -1,11 +1,12 @@
 const { apisDashboard1 } = require("./dashboard1");
+const { apisDashboard2 } = require("./dashboard2");
 const { apisGeneral } = require("./general");
 
 require("dotenv").config();
 const { VITE_HMIS_BASE_URL, VITE_HMIS_USERNAME, VITE_HMIS_PASSWORD } =
   process.env;
 
-const apis = [...apisGeneral, ...apisDashboard1];
+const apis = [...apisGeneral, ...apisDashboard1, ...apisDashboard2];
 const dhis2ApiConfigs = [
   // {
   //   //development

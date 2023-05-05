@@ -66,9 +66,28 @@ const apisGeneral = [
     route: `/api/indicators`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get(
-        "/api/indicators?paging=false&fields=id,name,translations"
+        "/api/indicators.json?paging=false&fields=id,name,translations"
       );
       return result.data.indicators.map((i) => {
+        const foundNameLo = i.translations.find(
+          (translation) =>
+            translation.property === "FORM_NAME" && translation.locale === "lo"
+        );
+        return {
+          id: i.id,
+          nameEn: i.name,
+          nameLo: foundNameLo ? foundNameLo.value : i.name,
+        };
+      });
+    },
+  },
+  {
+    route: `/api/dataSets`,
+    handler: async (dhis2Apis) => {
+      const result = await dhis2Apis[0].get(
+        "/api/dataSets.json?paging=false&fields=id,name,translations"
+      );
+      return result.data.dataSets.map((i) => {
         const foundNameLo = i.translations.find(
           (translation) =>
             translation.property === "FORM_NAME" && translation.locale === "lo"

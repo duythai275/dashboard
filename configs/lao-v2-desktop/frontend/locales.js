@@ -59,6 +59,32 @@ const locales = [
       { key: "lastPeriod", value: `Same period last year: {{value}}` },
       { key: "headerTitleWidget1.7", value: "Data/Period" },
       { key: "headerTitleWidget1.9", value: "Org Units/Period" },
+      {
+        key: "widget2.1Title",
+        value: "Less than 1 year Death {{currentYear}}",
+      },
+      {
+        key: "widget2.2Title",
+        value: "Less than 5 year Death {{currentYear}}",
+      },
+      { key: "widget2.3Title", value: "Mother Death {{currentYear}}" },
+      { key: "widget2.4.1Title", value: "Lao PDR - MCH: Total number of SBA" },
+      {
+        key: "widget2.4.2Title",
+        value: "Lao PDR - MCH: SBA coverage (Annualized)",
+      },
+      { key: "widget2.5.1Title", value: "MCH: Total number of SBA" },
+      { key: "widget2.5.2Title", value: "MCH: SBA coverage (Annualized)" },
+      {
+        key: "widget2.6Title",
+        value: "SBA Coverage (Annualized) by provinces {{currentYear}}",
+      },
+      {
+        key: "widget2.7Title",
+        value: "SBA total by provinces {{currentYear}}",
+      },
+      { key: "widget2.8Title", value: "Reporting Rate" },
+      { key: "widget2.9Title", value: "Repoting rate heat map" },
     ],
   },
   {
@@ -120,6 +146,32 @@ const locales = [
       { key: "lastPeriod", value: `Same period last year: {{value}}` },
       { key: "headerTitleWidget1.7", value: "Data/Period" },
       { key: "headerTitleWidget1.9", value: "Org Units/Period" },
+      {
+        key: "widget2.1Title",
+        value: "Less than 1 year Death {{currentYear}}",
+      },
+      {
+        key: "widget2.2Title",
+        value: "Less than 5 year Death {{currentYear}}",
+      },
+      { key: "widget2.3Title", value: "Mother Death {{currentYear}}" },
+      { key: "widget2.4.1Title", value: "Lao PDR - MCH: Total number of SBA" },
+      {
+        key: "widget2.4.2Title",
+        value: "Lao PDR - MCH: SBA coverage (Annualized)",
+      },
+      { key: "widget2.5.1Title", value: "MCH: Total number of SBA" },
+      { key: "widget2.5.2Title", value: "MCH: SBA coverage (Annualized)" },
+      {
+        key: "widget2.6Title",
+        value: "SBA Coverage (Annualized) by provinces {{currentYear}}",
+      },
+      {
+        key: "widget2.7Title",
+        value: "SBA total by provinces {{currentYear}}",
+      },
+      { key: "widget2.8Title", value: "Reporting Rate" },
+      { key: "widget2.9Title", value: "Repoting rate heat map" },
     ],
   },
 ];

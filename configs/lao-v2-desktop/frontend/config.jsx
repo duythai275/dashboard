@@ -53,6 +53,7 @@ const useDashboardInitialization = () => {
         pull("/api/dataItems"),
         pull("/api/indicators"),
         pull("/api/orgUnitGeoJson"),
+        pull("/api/dataSets"),
       ]);
       initDashboardState([
         {
@@ -69,10 +70,49 @@ const useDashboardInitialization = () => {
             {
               selectedChildren: 0,
             },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
           ],
         },
         {
           widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
             {
               selectedChildren: 0,
             },
@@ -98,6 +138,7 @@ const useDashboardInitialization = () => {
       setMetadata("hmisDataItems", results[1].data);
       setMetadata("hmisIndicators", results[2].data);
       setMetadata("hmisGeoJson", results[3].data);
+      setMetadata("hmisDataSets", results[4].data);
       setReady(true);
     })();
   }, []);
