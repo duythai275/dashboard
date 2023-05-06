@@ -5,13 +5,13 @@ const apisDashboard2 = [
     route: `/api/getDashboard2Widget8Data`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get(
-        "/api/analytics?dimension=dx:Q21U47uf0xo.REPORTING_RATE;w8XQmI94Spv.REPORTING_RATE;Q21U47uf0xo.REPORTING_RATE_ON_TIME;w8XQmI94Spv.REPORTING_RATE_ON_TIME&dimension=pe:THIS_MONTH&filter=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=true&skipData=false&skipMeta=false"
+        "/api/analytics?dimension=dx:Q21U47uf0xo.REPORTING_RATE;w8XQmI94Spv.REPORTING_RATE;Q21U47uf0xo.REPORTING_RATE_ON_TIME;w8XQmI94Spv.REPORTING_RATE_ON_TIME&filter=pe:LAST_12_MONTHS&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=true&skipData=false&skipMeta=false"
       );
       return result.data;
     },
   },
   {
-    route: `/api/getDashboard2Widget1457Data`,
+    route: `/api/getDashboard2Widget14_15_17Data`,
     handler: async (dhis2Apis) => {
       const pes = [];
       const month = moment().month() + 1;
@@ -30,7 +30,7 @@ const apisDashboard2 = [
     },
   },
   {
-    route: `/api/getDashboard2Widget3456Data`,
+    route: `/api/getDashboard2Widget34_25_26Data`,
     handler: async (dhis2Apis) => {
       const pes = [];
       const month = moment().month() + 1;

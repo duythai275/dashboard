@@ -23,7 +23,7 @@ const Widget8 = ({ setLoading }) => {
     let month = new Date().getMonth() + 1;
     let year = new Date().getFullYear();
     while (true) {
-      if (listPe.length === 3) {
+      if (listPe.length === 12) {
         break;
       }
       listPe.push(`${year}${month < 10 ? `0${month}` : month}`);
@@ -41,16 +41,13 @@ const Widget8 = ({ setLoading }) => {
     (async () => {
       setLoading(true);
       const resultData = await pull("/api/getDashboard2Widget8Data");
-
       const response = {};
-      response.data = resultData.data.rows
-        .map((row) => ({
-          pe: row[1],
-          dx: row[0],
-          value: parseInt(row[3]),
-          ou: row[2],
-        }))
-        .filter((row) => listTargetPe.includes(row.pe));
+
+      response.data = resultData.data.rows.map((row) => ({
+        dx: row[0],
+        value: row[2],
+        ou: row[1],
+      }));
       response.ou = resultData.data.metaData.dimensions.ou
         .map((item) => {
           const foundOu = orgUnits.find(
@@ -68,18 +65,15 @@ const Widget8 = ({ setLoading }) => {
       setResult(response);
       setLoading(false);
     })();
-  }, [additionalState.widget1457Dashboard2Ready]);
+  }, [additionalState.widget14_15_17Dashboard2Ready]);
 
   useEffect(() => {
     if (!result) return;
 
     (async () => {
       const localeName = i18n.language === "en" ? "En" : "Lo";
-      const listMonth = listTargetPe.map((item) => {
-        const month = item.slice(4);
-        return month;
-      });
-      const colors = ["#A8BF24", "#5790C6", "#D52E45", "FF9E21"];
+
+      const colors = ["#A8BF24", "#5790C6", "#D52E45", "#FF9E21"];
       let currentData = {};
 
       currentData.labels = result.ou.map((ou) => {
@@ -100,6 +94,7 @@ const Widget8 = ({ setLoading }) => {
           const foundRow = result.data.filter(
             (row) => row.ou === ou.id && row.dx === dx
           );
+
           return foundRow.length
             ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
             : 0;

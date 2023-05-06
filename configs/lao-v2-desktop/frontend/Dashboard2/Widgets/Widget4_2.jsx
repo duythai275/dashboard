@@ -27,9 +27,9 @@ const Widget4_2 = ({ setLoading }) => {
   }, []);
 
   useEffect(() => {
-    if (additionalState.widget3456Dashboard2Ready) {
+    if (additionalState.widget34_25_26Dashboard2Ready) {
       const response = {};
-      response.data = additionalState.widget3456Dashboard2Data.rows.map(
+      response.data = additionalState.widget34_25_26Dashboard2Data.rows.map(
         (row) => ({
           pe: row[1],
           item: row[0],
@@ -37,7 +37,7 @@ const Widget4_2 = ({ setLoading }) => {
         })
       );
       response.pes =
-        additionalState.widget3456Dashboard2Data.metaData.dimensions.pe
+        additionalState.widget34_25_26Dashboard2Data.metaData.dimensions.pe
           .filter((item) => {
             if (listTargetPe.includes(item)) {
               return item;
@@ -46,8 +46,8 @@ const Widget4_2 = ({ setLoading }) => {
           .reverse();
       setResult(response);
     }
-    setLoading(!additionalState.widget3456Dashboard2Ready);
-  }, [additionalState.widget3456Dashboard2Ready]);
+    setLoading(!additionalState.widget34_25_26Dashboard2Ready);
+  }, [additionalState.widget34_25_26Dashboard2Ready]);
 
   useEffect(() => {
     if (!result) return;

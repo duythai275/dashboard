@@ -25,15 +25,22 @@ const Dashboard2 = () => {
 
   useEffect(() => {
     (async () => {
-      changeAdditionalStateProperty("widget1234567Dashboard2Ready", false);
+      changeAdditionalStateProperty("widget14_15_17Dashboard2Ready", false);
+      changeAdditionalStateProperty("widget34_25_26Dashboard2Ready", false);
       const result = await Promise.all([
-        pull("/api/getDashboard2Widget1457Data"),
-        pull("/api/getDashboard2Widget3456Data"),
+        pull("/api/getDashboard2Widget14_15_17Data"),
+        pull("/api/getDashboard2Widget34_25_26Data"),
       ]);
-      changeAdditionalStateProperty("widget1457Dashboard2Ready", true);
-      changeAdditionalStateProperty("widget3456Dashboard2Ready", true);
-      changeAdditionalStateProperty("widget1457Dashboard2Data", result[0].data);
-      changeAdditionalStateProperty("widget3456Dashboard2Data", result[1].data);
+      changeAdditionalStateProperty("widget14_15_17Dashboard2Ready", true);
+      changeAdditionalStateProperty("widget34_25_26Dashboard2Ready", true);
+      changeAdditionalStateProperty(
+        "widget14_15_17Dashboard2Data",
+        result[0].data
+      );
+      changeAdditionalStateProperty(
+        "widget34_25_26Dashboard2Data",
+        result[1].data
+      );
     })();
   }, []);
   return (

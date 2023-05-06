@@ -32,8 +32,8 @@ const Widget6 = ({ setLoading }) => {
   }, []);
 
   useEffect(() => {
-    if (additionalState.widget3456Dashboard2Ready) {
-      const response = additionalState.widget3456Dashboard2Data.rows
+    if (additionalState.widget34_25_26Dashboard2Ready) {
+      const response = additionalState.widget34_25_26Dashboard2Data.rows
         .filter((row) => listTargetPe.includes(row[1]) && row)
         .map((row) => ({
           ou: row[2],
@@ -42,8 +42,8 @@ const Widget6 = ({ setLoading }) => {
         }));
       setResult(response);
     }
-    setLoading(!additionalState.widget3456Dashboard2Ready);
-  }, [additionalState.widget3456Dashboard2Ready]);
+    setLoading(!additionalState.widget34_25_26Dashboard2Ready);
+  }, [additionalState.widget34_25_26Dashboard2Ready]);
 
   useEffect(() => {
     if (!result) return;

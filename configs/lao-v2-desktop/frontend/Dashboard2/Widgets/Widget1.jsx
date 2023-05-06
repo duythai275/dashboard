@@ -27,9 +27,9 @@ const Widget1 = ({ setLoading }) => {
   }, []);
 
   useEffect(() => {
-    if (additionalState.widget1457Dashboard2Ready) {
+    if (additionalState.widget14_15_17Dashboard2Ready) {
       const response = {};
-      response.data = additionalState.widget1457Dashboard2Data.rows
+      response.data = additionalState.widget14_15_17Dashboard2Data.rows
         .filter(
           (row) =>
             listTargetPe.currentYear.includes(row[1]) ||
@@ -42,8 +42,8 @@ const Widget1 = ({ setLoading }) => {
 
       setResult(response);
     }
-    setLoading(!additionalState.widget1457Dashboard2Ready);
-  }, [additionalState.widget1457Dashboard2Ready]);
+    setLoading(!additionalState.widget14_15_17Dashboard2Ready);
+  }, [additionalState.widget14_15_17Dashboard2Ready]);
 
   useEffect(() => {
     if (!result) return;
