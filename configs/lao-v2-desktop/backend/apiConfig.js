@@ -3,8 +3,14 @@ const { apisDashboard2 } = require("./dashboard2");
 const { apisGeneral } = require("./general");
 
 require("dotenv").config();
-const { VITE_HMIS_BASE_URL, VITE_HMIS_USERNAME, VITE_HMIS_PASSWORD } =
-  process.env;
+const {
+  VITE_HMIS_BASE_URL,
+  VITE_HMIS_USERNAME,
+  VITE_HMIS_PASSWORD,
+  VITE_FHIS_BASE_URL,
+  VITE_FHIS_USERNAME,
+  VITE_FHIS_PASSWORD,
+} = process.env;
 
 const apis = [...apisGeneral, ...apisDashboard1, ...apisDashboard2];
 const dhis2ApiConfigs = [
@@ -37,6 +43,12 @@ const dhis2ApiConfigs = [
     baseUrl: VITE_HMIS_BASE_URL,
     username: VITE_HMIS_USERNAME,
     password: VITE_HMIS_PASSWORD,
+  },
+  {
+    type: "basic",
+    baseUrl: VITE_FHIS_BASE_URL,
+    username: VITE_FHIS_USERNAME,
+    password: VITE_FHIS_PASSWORD,
   },
   // {
   //   type: "basic",
