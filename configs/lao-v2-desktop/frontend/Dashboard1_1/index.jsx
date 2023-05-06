@@ -176,15 +176,15 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.7.1Title"),
-            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_1} />,
+            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_1} key="1.7.1"/>,
           },
           {
             title: t("widget1.7.2Title"),
-            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_2} />,
+            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_2} key="1.7.2"/>,
           },
           {
             title: t("widget1.7.3Title"),
-            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_3} />,
+            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_3} key="1.7.3"/>,
           },
         ]}
       />
@@ -195,15 +195,15 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.8.1Title"),
-            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_1} />,
+            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_1} key="1.8.1"/>,
           },
           {
             title: t("widget1.8.2Title"),
-            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_2} />,
+            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_2} key="1.8.2"/>,
           },
           {
             title: t("widget1.8.3Title"),
-            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_3} />,
+            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_3} key="1.8.3"/>,
           },
         ]}
       />
@@ -220,15 +220,15 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.10.1Title"),
-            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_1} />,
+            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_1} key="1.10.1"/>,
           },
           {
             title: t("widget1.10.2Title"),
-            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_2} />,
+            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_2} key="1.10.2"/>,
           },
           {
             title: t("widget1.10.3Title"),
-            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_3} />,
+            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_3} key="1.10.3"/>,
           },
         ]}
       />
@@ -239,15 +239,15 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.11.1Title"),
-            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_1} />,
+            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_1} key="1.11.1"/>,
           },
           {
             title: t("widget1.11.2Title"),
-            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_2} />,
+            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_2} key="1.11.2"/>,
           },
           {
             title: t("widget1.11.3Title"),
-            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_3} />,
+            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_3} key="1.11.3"/>,
           },
         ]}
       />
