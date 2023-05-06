@@ -1,9 +1,26 @@
 import React from "react";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+} from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 // const options = {
 //   responsive: true,
 //   maintainAspectRatio: false,
@@ -23,7 +40,71 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 // };
 
 const DoughnutChart = ({ data, options }) => {
-  return <Doughnut data={data} options={options}  plugins={[ChartDataLabels]} />;
+  return (
+    <Doughnut
+      data={data}
+      options={options}
+      plugins={[ChartDataLabels, labelCenter]}
+    />
+  );
 };
 
 export default DoughnutChart;
+
+const labelCenter = {
+  id: "labelCenter",
+  beforeDraw: (chart, args, options) => {
+    if (!options.display) return;
+    if (!Array.isArray(options.labels)) {
+      return console.error('"options.lables" must be array', options.lables);
+    }
+
+    const {
+      ctx,
+      chartArea: { width, height, top },
+    } = chart;
+    const context = ctx.canvas.getContext("2d");
+    context.save();
+
+    const labels = options.labels.slice();
+    const totalFontSize = labels.reduce((x, y, index) => {
+      let prevSize = x[index - 1] || 0;
+      x.push(prevSize + y.font.size);
+      return x;
+    }, []);
+    labels.forEach((label, index) => {
+      let textPosition = totalFontSize[index] - label.font.size;
+      const values = {
+        text:
+          typeof label.text === "function"
+            ? label.text(chart)
+            : label.text || "?",
+        font: {
+          size: label.font.size || 30,
+          family: label.font.family || "Noto Sans Lao Looped",
+          color: label.font.color || "black",
+          style: label.font.style || "normal",
+          unit: label.font.unit || "px",
+        },
+      };
+      switch (values.font.unit) {
+        case "em":
+          values.font.size = label.font.size * 0.05;
+          textPosition *= 0.8;
+          break;
+        default:
+          break;
+      }
+
+      context.font = `${values.font.style} ${values.font.size}${values.font.unit} ${values.font.family}`;
+      context.textAlign = "center";
+      context.fillStyle = values.font.color;
+      context.fillText(
+        values.text,
+        width / 2,
+        height + textPosition + top - 10
+      );
+    });
+    context.restore();
+  },
+};

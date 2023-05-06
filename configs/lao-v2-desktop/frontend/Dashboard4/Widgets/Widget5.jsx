@@ -1,0 +1,135 @@
+import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
+import useDashboardStore from "@/state/dashboard";
+
+import BarChart from "@/components/Widgets/BarChart";
+import useMetadataStore from "@/state/metadata";
+import { pull } from "../../utils";
+
+const Widget5 = ({ setLoading }) => {
+  const { orgUnits, indicators } = useMetadataStore((state) => ({
+    orgUnits: state.hmisOrgUnits,
+    indicators: state.hmisIndicators,
+  }));
+  const additionalState = useDashboardStore((state) => state.additionalState);
+  const [data, setData] = useState(null);
+  const [result, setResult] = useState(null);
+  const { i18n, t } = useTranslation();
+
+  const listTargetPe = useMemo(() => {
+    const listPe = [];
+    let month = new Date().getMonth() + 1;
+    let year = new Date().getFullYear();
+    while (true) {
+      if (listPe.length === 12) {
+        break;
+      }
+      listPe.push(`${year}${month < 10 ? `0${month}` : month}`);
+      if (month === 1) {
+        month = 12;
+        year -= 1;
+      } else {
+        month -= 1;
+      }
+    }
+    return listPe;
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const resultData = await pull("/api/getDashboard4Widget5Data");
+      const response = {};
+      response.data = resultData.data.rows.map((row) => ({
+        dx: row[0],
+        value: row[2],
+        ou: row[1],
+      }));
+      response.ou = resultData.data.metaData.dimensions.ou
+        .map((item) => {
+          const foundOu = orgUnits.find((ou) => ou.id === item);
+          return foundOu;
+        })
+        .filter((item) => item);
+      response.dx = resultData.data.metaData.dimensions.dx.map((item) => {
+        return item;
+      });
+
+      setResult(response);
+      setLoading(false);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!result) return;
+
+    (async () => {
+      const localeName = i18n.language === "en" ? "En" : "Lo";
+
+      const colors = ["#4292C6", "#67000D", "#FCBBA1"];
+      let currentData = {};
+
+      currentData.labels = result.ou.map((ou) => {
+        return localeName === "En" ? ou.nameEn : ou.nameLo;
+      });
+      currentData.datasets = result.dx.map((dx, index) => ({
+        label: dx,
+        data: result.ou.map((ou) => {
+          const foundRow = result.data.filter(
+            (row) => row.ou === ou.id && row.dx === dx
+          );
+
+          return foundRow.length
+            ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
+            : 0;
+        }),
+        borderColor: colors[index],
+        backgroundColor: colors[index],
+        yAxisID: dx === "zXwbQ7jd7mw" ? "A" : "B",
+      }));
+      setData({ ...currentData });
+    })();
+  }, [i18n.language, JSON.stringify(result)]);
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      A: {
+        type: "linear",
+        position: "left",
+        ticks: {
+          stepSize: 30,
+        },
+      },
+      B: {
+        type: "linear",
+        position: "right",
+        ticks: {
+          callback: function (value, index, ticks) {
+            return `${value / 1000}k`;
+          },
+          stepSize: 300000,
+        },
+      },
+    },
+
+    plugins: {
+      legend: {
+        position: "bottom",
+      },
+      datalabels: {
+        anchor: "end",
+        align: "end",
+        offset: -5,
+        // font: {
+        //   weight: 500
+        // }
+      },
+    },
+  };
+
+  return data && <BarChart data={data} customOptions={options} />;
+};
+export default withWidgetChildrenLoader(Widget5);

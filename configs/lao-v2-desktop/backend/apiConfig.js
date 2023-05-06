@@ -1,5 +1,6 @@
 const { apisDashboard1 } = require("./dashboard1");
 const { apisDashboard2 } = require("./dashboard2");
+const { apisDashboard4 } = require("./dashboard4");
 const { apisGeneral } = require("./general");
 
 require("dotenv").config();
@@ -12,7 +13,12 @@ const {
   VITE_FHIS_PASSWORD,
 } = process.env;
 
-const apis = [...apisGeneral, ...apisDashboard1, ...apisDashboard2];
+const apis = [
+  ...apisGeneral,
+  ...apisDashboard1,
+  ...apisDashboard2,
+  ...apisDashboard4,
+];
 const dhis2ApiConfigs = [
   // {
   //   //development
