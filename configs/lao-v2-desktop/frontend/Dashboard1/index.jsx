@@ -32,7 +32,7 @@ const Dashboard1 = () => {
   useEffect(() => {
     (async () => {
       changeAdditionalStateProperty("widget1234567Dashboard1Ready", false);
-      const result = await pull("/api/getDashboard1Widget1234567Data");
+      const result = await pull("/api/getDashboard1Widget123Data");
       changeAdditionalStateProperty("widget1234567Dashboard1Ready", true);
       changeAdditionalStateProperty("widget1234567Dashboard1Data", result.data);
     })();

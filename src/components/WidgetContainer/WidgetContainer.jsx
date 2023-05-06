@@ -23,7 +23,6 @@ const WidgetContainer = (props, ref) => {
   const handleClosePopover = () => {
     setAnchorEl(null);
   };
-
   return (
     <div
       className={`${className} widget-container`}

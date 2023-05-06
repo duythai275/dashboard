@@ -8,7 +8,7 @@ import useMetadataStore from "@/state/metadata";
 
 import { pull } from "../../utils";
 
-const Widget5 = ({ setLoading }) => {
+const Widget13 = ({ setLoading }) => {
   const { hmisGeoJson } = useMetadataStore(
     (state) => ({ hmisGeoJson: state.hmisGeoJson }),
     shallow
@@ -28,7 +28,7 @@ const Widget5 = ({ setLoading }) => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const result = await pull("/api/getDashboard1Widget12Data");
+      const result = await pull("/api/getDashboard1Widget13Data");
       setResult(result.data);
       setLoading(false);
     })();
@@ -58,4 +58,4 @@ const Widget5 = ({ setLoading }) => {
     )
   );
 };
-export default withWidgetChildrenLoader(Widget5);
+export default withWidgetChildrenLoader(Widget13);

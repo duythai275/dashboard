@@ -8,6 +8,7 @@ import useMetadataStore from "@/state/metadata";
 import useSelectionStore from "@/state/selection";
 
 import Dashboard1 from "./Dashboard1";
+import Dashboard1_1 from "./Dashboard1_1";
 import Dashboard2 from "./Dashboard2";
 import Dashboard3 from "./Dashboard3";
 
@@ -15,7 +16,8 @@ import locales from "./locales";
 import { pull } from "./utils";
 
 const dashboards = [
-  { name: "dashboard1Title", dashboard: Dashboard1 },
+  { name: "Mother and Child", dashboard: Dashboard1_1 },
+  { name: "M & C (old)", dashboard: Dashboard1 },
   { name: "dashboard2Title", dashboard: Dashboard2 },
   { name: "dashboard3Title", dashboard: Dashboard3 },
 ];
@@ -57,6 +59,33 @@ const useDashboardInitialization = () => {
       initDashboardState([
         {
           widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
             {
               selectedChildren: 0,
             },
