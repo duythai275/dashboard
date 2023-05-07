@@ -142,9 +142,19 @@ const useDashboardInitialization = () => {
             },
           ],
         },
+        {
+          widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+          ],
+        },
       ]);
       setDashboards(dashboards);
-      selectDashboard({ value: 0, label: t(dashboards[0].name) });
+      selectDashboard({ value: 3, label: t(dashboards[3].name) });
       setMetadata("hmisOrgUnits", results[0].data);
       setMetadata("hmisDataItems", results[1].data);
       setMetadata("hmisIndicators", results[2].data);
