@@ -70,10 +70,22 @@ const Widget10 = ({ setLoading }) => {
 
       const colors = ["#A8BF24"];
       let currentData = {};
+      const dataMappingAlongDx = result.dx
+        .map((dx) => {
+          const foundRow = result.data.filter((row) => row.dx === dx);
 
-      currentData.labels = result.dx.map((dx) => {
+          return {
+            data: foundRow.length
+              ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
+              : 0,
+            dx,
+          };
+        })
+        .filter((item) => item.data)
+        .sort((a, b) => a.data - b.data);
+      currentData.labels = dataMappingAlongDx.map((item) => {
         const foundIndicator = indicators.find(
-          (indicator) => indicator.id === dx
+          (indicator) => indicator.id === item.dx
         );
         const name =
           localeName === "En" ? foundIndicator.nameEn : foundIndicator.nameLo;
@@ -81,9 +93,9 @@ const Widget10 = ({ setLoading }) => {
       });
       currentData.datasets = result.ou.map((ou, index) => ({
         label: localeName === "En" ? ou.nameEn : ou.nameLo,
-        data: result.dx.map((dx) => {
+        data: dataMappingAlongDx.map((item) => {
           const foundRow = result.data.filter(
-            (row) => row.ou === ou.id && row.dx === dx
+            (row) => row.ou === ou.id && row.dx === item.dx
           );
 
           return foundRow.length
