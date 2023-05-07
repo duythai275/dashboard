@@ -9,9 +9,10 @@ import useMetadataStore from "@/state/metadata";
 import { pull } from "../../utils";
 
 const Widget5 = ({ setLoading }) => {
-  const { orgUnits, indicators } = useMetadataStore((state) => ({
+  const { orgUnits, indicators, dataItems } = useMetadataStore((state) => ({
     orgUnits: state.hmisOrgUnits,
-    indicators: state.hmisIndicators,
+    indicators: state.fhisIndicators,
+    dataItems: state.fhisDataItems,
   }));
   const additionalState = useDashboardStore((state) => state.additionalState);
   const [data, setData] = useState(null);
@@ -75,7 +76,28 @@ const Widget5 = ({ setLoading }) => {
         return localeName === "En" ? ou.nameEn : ou.nameLo;
       });
       currentData.datasets = result.dx.map((dx, index) => ({
-        label: dx,
+        label: (() => {
+          const foundIndicator = indicators.find(
+            (indicator) => indicator.id === dx
+          );
+
+          const foundDataItems = dataItems.find(
+            (dataItem) => dataItem.id === dx
+          );
+          if (foundIndicator) {
+            const name =
+              localeName === "En"
+                ? foundIndicator?.nameEn
+                : foundIndicator?.nameLo;
+            return `${name}`;
+          }
+
+          const name =
+            localeName === "En"
+              ? foundDataItems?.nameEn
+              : foundDataItems?.nameLo;
+          return `${name}`;
+        })(),
         data: result.ou.map((ou) => {
           const foundRow = result.data.filter(
             (row) => row.ou === ou.id && row.dx === dx

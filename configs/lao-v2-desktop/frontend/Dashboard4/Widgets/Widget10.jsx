@@ -11,7 +11,7 @@ import { pull } from "../../utils";
 const Widget10 = ({ setLoading }) => {
   const { orgUnits, indicators } = useMetadataStore((state) => ({
     orgUnits: state.hmisOrgUnits,
-    indicators: state.hmisIndicators,
+    indicators: state.fhisIndicators,
   }));
   const additionalState = useDashboardStore((state) => state.additionalState);
   const [data, setData] = useState(null);
@@ -72,7 +72,12 @@ const Widget10 = ({ setLoading }) => {
       let currentData = {};
 
       currentData.labels = result.dx.map((dx) => {
-        return dx;
+        const foundIndicator = indicators.find(
+          (indicator) => indicator.id === dx
+        );
+        const name =
+          localeName === "En" ? foundIndicator.nameEn : foundIndicator.nameLo;
+        return name;
       });
       currentData.datasets = result.ou.map((ou, index) => ({
         label: localeName === "En" ? ou.nameEn : ou.nameLo,
