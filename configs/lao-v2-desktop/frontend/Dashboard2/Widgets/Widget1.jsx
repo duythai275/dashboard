@@ -99,10 +99,12 @@ const Widget1 = ({ setLoading }) => {
               textAlign="center"
               sx={{ fontWeight: "700", fontSize: "50px" }}
             >
-              {data.currentYearData}
+              {data.currentYearData.toLocaleString("en-US")}
             </Typography>
             <Typography textAlign="center">
-              {t("lastPeriod", { value: data.lastYearData })}
+              {t("lastPeriod", {
+                value: data.lastYearData.toLocaleString("en-US"),
+              })}
               <Typography
                 sx={{
                   display: "flex",

@@ -58,6 +58,8 @@ const useDashboardInitialization = () => {
         pull("/api/indicators"),
         pull("/api/orgUnitGeoJson"),
         pull("/api/dataSets"),
+        pull("/api/fhisIndicators"),
+        pull("/api/fhisDataItems"),
       ]);
       initDashboardState([
         {
@@ -186,6 +188,8 @@ const useDashboardInitialization = () => {
       setMetadata("hmisIndicators", results[2].data);
       setMetadata("hmisGeoJson", results[3].data);
       setMetadata("hmisDataSets", results[4].data);
+      setMetadata("fhisIndicators", results[5].data);
+      setMetadata("fhisDataItems", results[6].data);
       setReady(true);
     })();
   }, []);

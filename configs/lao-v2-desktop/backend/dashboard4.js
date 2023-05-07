@@ -1,5 +1,3 @@
-const moment = require("moment");
-
 const apisDashboard4 = [
   {
     route: `/api/getDashboard4Widget1Data`,
@@ -91,63 +89,6 @@ const apisDashboard4 = [
       return result.data;
     },
   },
-  //   {
-  //     route: `/api/getDashboard2Widget14_15_17Data`,
-  //     handler: async (dhis2Apis) => {
-  //       const pes = [];
-  //       const month = moment().month() + 1;
-  //       const year = moment().year();
-  //       for (let i = 0; i <= 2; i++) {
-  //         for (let j = i > 0 ? 12 : month; j >= 1; j--) {
-  //           pes.push(`${year - i}${j >= 10 ? j : `0${j}`}`);
-  //         }
-  //       }
-  //       const result = await dhis2Apis[0].get(
-  //         `/api/analytics.json?dimension=dx:KcdTp96b0QX&dimension=pe:${pes.join(
-  //           ";"
-  //         )}&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=false&skipData=false&skipMeta=false`
-  //       );
-  //       return result.data;
-  //     },
-  //   },
-  //   {
-  //     route: `/api/getDashboard2Widget34_25_26Data`,
-  //     handler: async (dhis2Apis) => {
-  //       const pes = [];
-  //       const month = moment().month() + 1;
-  //       const year = moment().year();
-  //       for (let i = 0; i <= 2; i++) {
-  //         for (let j = i > 0 ? 12 : month; j >= 1; j--) {
-  //           pes.push(`${year - i}${j >= 10 ? j : `0${j}`}`);
-  //         }
-  //       }
-  //       const result = await dhis2Apis[0].get(
-  //         `/api/analytics.json?dimension=dx:r2wLxYXH75x&dimension=pe:${pes.join(
-  //           ";"
-  //         )}&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=false&skipData=false&skipMeta=false`
-  //       );
-  //       return result.data;
-  //     },
-  //   },
-  //   {
-  //     route: `/api/getDashboard2Widget2Data`,
-  //     handler: async (dhis2Apis) => {
-  //       const pes = [];
-  //       const month = moment().month() + 1;
-  //       const year = moment().year();
-  //       for (let i = 0; i <= 1; i++) {
-  //         for (let j = i > 0 ? 12 : month; j >= 1; j--) {
-  //           pes.push(`${year - i}${j >= 10 ? j : `0${j}`}`);
-  //         }
-  //       }
-  //       const result = await dhis2Apis[0].get(
-  //         `/api/analytics.json?dimension=dx:Nt5y1WYCqv3&dimension=pe:${pes.join(
-  //           ";"
-  //         )}&dimension=ou:IWp9dQGM0bS&includeNumDen=false&skipData=false&skipMeta=false`
-  //       );
-  //       return result.data;
-  //     },
-  //   },
 ];
 
 module.exports = { apisDashboard4 };

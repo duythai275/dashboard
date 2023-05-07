@@ -78,8 +78,8 @@ const Widget4_1 = ({ setLoading }) => {
       currentData.datasets = listYear.map((year, index) => ({
         label: year,
         data: listMonth().map((month) => {
-          const foundRow = result.data.filter(
-            (row) => row.pe.includes(month) && row.pe.includes(year)
+          const foundRow = result.data.filter((row) =>
+            row.pe.includes(`${year}${month}`)
           );
           return foundRow.length
             ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)

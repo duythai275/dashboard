@@ -1,20 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
-import { Box, Typography } from "@mui/material";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import Custom from "@/components/Widgets/Custom";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 
 import { pull } from "../../utils";
-import DoughnutChart from "@/components/Widgets/DoughnutChart";
 import PieChart from "@/components/Widgets/PieChart";
+import useMetadataStore from "@/state/metadata";
 
 const Widget7 = ({ setLoading }) => {
+  const { indicators } = useMetadataStore((state) => ({
+    indicators: state.fhisIndicators,
+  }));
   const [data, setData] = useState(null);
   const [result, setResult] = useState(null);
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   useEffect(() => {
     (async () => {
@@ -36,8 +35,16 @@ const Widget7 = ({ setLoading }) => {
   useEffect(() => {
     if (!result) return;
     (async () => {
+      const localeName = i18n.language === "en" ? "En" : "Lo";
       setData({
-        labels: result.dx,
+        labels: result.dx.map((dx) => {
+          const foundIndicator = indicators.find(
+            (indicator) => indicator.id === dx
+          );
+          const indicatorsName =
+            localeName === "En" ? foundIndicator.nameEn : foundIndicator.nameLo;
+          return indicatorsName;
+        }),
         datasets: [
           {
             label: "",
@@ -66,11 +73,16 @@ const Widget7 = ({ setLoading }) => {
   }, [i18n.language, JSON.stringify(result)]);
 
   const formatLabel = (chart, index) => {
+    const localeName = i18n.language === "en" ? "En" : "Lo";
     const sum = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
     const percent = ((chart.data.datasets[0].data[index] * 100) / sum).toFixed(
       2
     );
-    const indicatorsName = result.dx[index];
+    const foundIndicator = indicators.find(
+      (indicator) => indicator.id === result.dx[index]
+    );
+    const indicatorsName =
+      localeName === "En" ? foundIndicator.nameEn : foundIndicator.nameLo;
     const dataValue = chart.data.datasets[0].data[index];
     return `${indicatorsName}: ${dataValue}(${percent}%)`;
   };
@@ -81,7 +93,7 @@ const Widget7 = ({ setLoading }) => {
     plugins: {
       title: {
         display: true,
-        text: ["Family primary source of water", "2019 - Lao PDR"],
+        text: [t("widget4.7Title"), "2019 - Lao PDR"],
       },
       legend: {
         display: false,

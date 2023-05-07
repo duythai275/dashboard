@@ -86,7 +86,7 @@ const Widget5_1 = ({ setLoading }) => {
         ),
         data: result.ou.map((ou) => {
           const foundRow = result.data.filter(
-            (row) => row.ou === ou.id && row.pe.includes(month)
+            (row) => row.ou === ou.id && row.pe.slice(4) === month
           );
           return foundRow.length
             ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)

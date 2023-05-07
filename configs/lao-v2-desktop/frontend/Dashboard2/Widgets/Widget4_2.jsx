@@ -7,6 +7,7 @@ import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenL
 import useDashboardStore from "@/state/dashboard";
 
 import { getMonthName } from "../../Dashboard1/common/function/getMonthName";
+import { pull } from "../../utils";
 
 const Widget4_2 = ({ setLoading }) => {
   const additionalState = useDashboardStore((state) => state.additionalState);
@@ -27,27 +28,19 @@ const Widget4_2 = ({ setLoading }) => {
   }, []);
 
   useEffect(() => {
-    if (additionalState.widget34_25_26Dashboard2Ready) {
+    (async () => {
+      setLoading(true);
+      const resultData = await pull("/api/getDashboard2Widget4_2Data");
       const response = {};
-      response.data = additionalState.widget34_25_26Dashboard2Data.rows.map(
-        (row) => ({
-          pe: row[1],
-          item: row[0],
-          value: parseInt(row[3]),
-        })
-      );
-      response.pes =
-        additionalState.widget34_25_26Dashboard2Data.metaData.dimensions.pe
-          .filter((item) => {
-            if (listTargetPe.includes(item)) {
-              return item;
-            }
-          })
-          .reverse();
+      response.data = resultData.data.rows.map((row) => ({
+        pe: row[1],
+        value: row[3],
+      }));
+
       setResult(response);
-    }
-    setLoading(!additionalState.widget34_25_26Dashboard2Ready);
-  }, [additionalState.widget34_25_26Dashboard2Ready]);
+      setLoading(false);
+    })();
+  }, []);
 
   useEffect(() => {
     if (!result) return;
@@ -78,8 +71,8 @@ const Widget4_2 = ({ setLoading }) => {
       currentData.datasets = listYear.map((year, index) => ({
         label: year,
         data: listMonth().map((month) => {
-          const foundRow = result.data.filter(
-            (row) => row.pe.includes(month) && row.pe.includes(year)
+          const foundRow = result.data.filter((row) =>
+            row.pe.includes(`${year}${month}`)
           );
           return foundRow.length
             ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)

@@ -9,9 +9,10 @@ import useMetadataStore from "@/state/metadata";
 import { pull } from "../../utils";
 
 const Widget5 = ({ setLoading }) => {
-  const { orgUnits, indicators } = useMetadataStore((state) => ({
+  const { orgUnits, indicators, dataItems } = useMetadataStore((state) => ({
     orgUnits: state.hmisOrgUnits,
-    indicators: state.hmisIndicators,
+    indicators: state.fhisIndicators,
+    dataItems: state.fhisDataItems,
   }));
   const additionalState = useDashboardStore((state) => state.additionalState);
   const [data, setData] = useState(null);
@@ -71,14 +72,50 @@ const Widget5 = ({ setLoading }) => {
       const colors = ["#4292C6", "#67000D", "#FCBBA1"];
       let currentData = {};
 
-      currentData.labels = result.ou.map((ou) => {
-        return localeName === "En" ? ou.nameEn : ou.nameLo;
+      const dataMappingAlongOu = result.ou
+        .map((ou) => {
+          const foundRow = result.data.filter(
+            (row) => row.ou === ou.id && row.dx === "zXwbQ7jd7mw"
+          );
+
+          return {
+            data: foundRow.length
+              ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
+              : 0,
+            ou,
+          };
+        })
+        .sort((a, b) => b.data - a.data);
+
+      currentData.labels = dataMappingAlongOu.map((item) => {
+        return localeName === "En" ? item.ou.nameEn : item.ou.nameLo;
       });
       currentData.datasets = result.dx.map((dx, index) => ({
-        label: dx,
-        data: result.ou.map((ou) => {
+        label: (() => {
+          const foundIndicator = indicators.find(
+            (indicator) => indicator.id === dx
+          );
+
+          const foundDataItems = dataItems.find(
+            (dataItem) => dataItem.id === dx
+          );
+          if (foundIndicator) {
+            const name =
+              localeName === "En"
+                ? foundIndicator?.nameEn
+                : foundIndicator?.nameLo;
+            return `${name}`;
+          }
+
+          const name =
+            localeName === "En"
+              ? foundDataItems?.nameEn
+              : foundDataItems?.nameLo;
+          return `${name}`;
+        })(),
+        data: dataMappingAlongOu.map((item) => {
           const foundRow = result.data.filter(
-            (row) => row.ou === ou.id && row.dx === dx
+            (row) => row.ou === item.ou.id && row.dx === dx
           );
 
           return foundRow.length
@@ -104,6 +141,12 @@ const Widget5 = ({ setLoading }) => {
         },
       },
       B: {
+        display: (chart) => {
+          return (chart.scale.ticks[chart.scale.ticks.length]?.value || 0) <
+            1000
+            ? false
+            : true;
+        },
         type: "linear",
         position: "right",
         ticks: {

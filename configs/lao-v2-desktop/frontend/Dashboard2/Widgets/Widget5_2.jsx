@@ -7,6 +7,7 @@ import useDashboardStore from "@/state/dashboard";
 import BarChart from "@/components/Widgets/BarChart";
 import useMetadataStore from "@/state/metadata";
 import { getMonthName } from "../../Dashboard1/common/function/getMonthName";
+import { pull } from "../../utils";
 
 const Widget5_2 = ({ setLoading }) => {
   const { orgUnits } = useMetadataStore((state) => ({
@@ -37,9 +38,12 @@ const Widget5_2 = ({ setLoading }) => {
   }, []);
 
   useEffect(() => {
-    if (additionalState.widget34_25_26Dashboard2Ready) {
+    (async () => {
+      setLoading(true);
+      const resultData = await pull("/api/getDashboard2Widget5_2Data");
       const response = {};
-      response.data = additionalState.widget34_25_26Dashboard2Data.rows
+      console.log(resultData.data);
+      response.data = resultData.data.rows
         .map((row) => ({
           pe: row[1],
           item: row[0],
@@ -47,22 +51,21 @@ const Widget5_2 = ({ setLoading }) => {
           ou: row[2],
         }))
         .filter((row) => listTargetPe.includes(row.pe));
-      response.ou =
-        additionalState.widget34_25_26Dashboard2Data.metaData.dimensions.ou
-          .map((item) => {
-            const foundOu = orgUnits.find(
-              (ou) =>
-                ou.id === item &&
-                ou.oug.find((ougItem) => ougItem.id === "jblbYwuvO33")
-            );
-            return foundOu;
-          })
-          .filter((item) => item);
+      response.ou = resultData.data.metaData.dimensions.ou
+        .map((item) => {
+          const foundOu = orgUnits.find(
+            (ou) =>
+              ou.id === item &&
+              ou.oug.find((ougItem) => ougItem.id === "jblbYwuvO33")
+          );
+          return foundOu;
+        })
+        .filter((item) => item);
 
       setResult(response);
-    }
-    setLoading(!additionalState.widget34_25_26Dashboard2Ready);
-  }, [additionalState.widget34_25_26Dashboard2Ready]);
+      setLoading(false);
+    })();
+  }, []);
 
   useEffect(() => {
     if (!result) return;
@@ -86,7 +89,7 @@ const Widget5_2 = ({ setLoading }) => {
         ),
         data: result.ou.map((ou) => {
           const foundRow = result.data.filter(
-            (row) => row.ou === ou.id && row.pe.includes(month)
+            (row) => row.ou === ou.id && row.pe.slice(4) === month
           );
           return foundRow.length
             ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)

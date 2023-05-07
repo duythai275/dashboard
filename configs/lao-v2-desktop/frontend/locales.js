@@ -137,13 +137,13 @@ const locales = [
       },
       {
         key: "widget2.1Title",
-        value: "Less than 1 year Death {{currentYear}}",
+        value: "SBA total",
       },
       {
         key: "widget2.2Title",
-        value: "Less than 5 year Death {{currentYear}}",
+        value: "Estimated live births",
       },
-      { key: "widget2.3Title", value: "Mother Death {{currentYear}}" },
+      { key: "widget2.3Title", value: "SBA Coverage (Annualized)" },
       { key: "widget2.4.1Title", value: "Lao PDR - MCH: Total number of SBA" },
       {
         key: "widget2.4.2Title",
@@ -163,17 +163,17 @@ const locales = [
       { key: "widget2.9Title", value: "Repoting rate heat map" },
       {
         key: "widget4.1Title",
-        value: "% members registered",
+        value: "% Members registered",
       },
       {
         key: "widget4.2Title",
-        value: "% family without Family book number",
+        value: "% Family without Family book number",
       },
-      { key: "widget4.3Title", value: "total family registered" },
-      { key: "widget4.4Title", value: "total members registered" },
+      { key: "widget4.3Title", value: "Total family registered" },
+      { key: "widget4.4Title", value: "Total members registered" },
       {
         key: "widget4.5Title",
-        value: "% members registered vs LSB",
+        value: "% Members registered vs LSB",
       },
       { key: "widget4.6Title", value: "Family source of water" },
       { key: "widget4.7Title", value: "Family sanitation" },
@@ -185,7 +185,7 @@ const locales = [
         key: "widget4.9Title",
         value: "Members by Ethnicity",
       },
-      { key: "widget4.10Title", value: "family with Disability" },
+      { key: "widget4.10Title", value: "Family with Disability" },
       {
         key: "dashboard4Title",
         value: "Family Health Information System (FHIS)",
@@ -375,13 +375,13 @@ const locales = [
       },
       {
         key: "widget2.1Title",
-        value: "Less than 1 year Death {{currentYear}}",
+        value: "SBA total",
       },
       {
         key: "widget2.2Title",
-        value: "Less than 5 year Death {{currentYear}}",
+        value: "Estimated live births",
       },
-      { key: "widget2.3Title", value: "Mother Death {{currentYear}}" },
+      { key: "widget2.3Title", value: "SBA Coverage (Annualized)" },
       { key: "widget2.4.1Title", value: "Lao PDR - MCH: Total number of SBA" },
       {
         key: "widget2.4.2Title",
@@ -401,17 +401,17 @@ const locales = [
       { key: "widget2.9Title", value: "Repoting rate heat map" },
       {
         key: "widget4.1Title",
-        value: "% members registered",
+        value: "% Members registered",
       },
       {
         key: "widget4.2Title",
-        value: "% family without Family book number",
+        value: "% Family without Family book number",
       },
-      { key: "widget4.3Title", value: "total family registered" },
-      { key: "widget4.4Title", value: "total members registered" },
+      { key: "widget4.3Title", value: "Total family registered" },
+      { key: "widget4.4Title", value: "Total members registered" },
       {
         key: "widget4.5Title",
-        value: "% members registered vs LSB",
+        value: "% Members registered vs LSB",
       },
       { key: "widget4.6Title", value: "Family source of water" },
       { key: "widget4.7Title", value: "Family sanitation" },
@@ -423,7 +423,7 @@ const locales = [
         key: "widget4.9Title",
         value: "Members by Ethnicity",
       },
-      { key: "widget4.10Title", value: "family with Disability" },
+      { key: "widget4.10Title", value: "Family with Disability" },
       {
         key: "dashboard4Title",
         value: "Family Health Information System (FHIS)",

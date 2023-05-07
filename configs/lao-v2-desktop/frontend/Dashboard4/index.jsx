@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
 import { useTranslation } from "react-i18next";
-import useDashboardStore from "@/state/dashboard";
 import Widget1 from "./Widgets/Widget1";
 import Widget3 from "./Widgets/Widget3";
 import Widget4 from "./Widgets/Widget4";
@@ -18,30 +17,7 @@ const ReactGridLayout = WidthProvider(Responsive);
 
 const Dashboard4 = () => {
   const { t } = useTranslation();
-  const changeAdditionalStateProperty = useDashboardStore(
-    (state) => state.changeAdditionalStateProperty
-  );
 
-  //   useEffect(() => {
-  //     (async () => {
-  //       changeAdditionalStateProperty("widget14_15_17Dashboard2Ready", false);
-  //       changeAdditionalStateProperty("widget34_25_26Dashboard2Ready", false);
-  //       const result = await Promise.all([
-  //         pull("/api/getDashboard2Widget14_15_17Data"),
-  //         pull("/api/getDashboard2Widget34_25_26Data"),
-  //       ]);
-  //       changeAdditionalStateProperty("widget14_15_17Dashboard2Ready", true);
-  //       changeAdditionalStateProperty("widget34_25_26Dashboard2Ready", true);
-  //       changeAdditionalStateProperty(
-  //         "widget14_15_17Dashboard2Data",
-  //         result[0].data
-  //       );
-  //       changeAdditionalStateProperty(
-  //         "widget34_25_26Dashboard2Data",
-  //         result[1].data
-  //       );
-  //     })();
-  //   }, []);
   return (
     <ReactGridLayout
       isDraggable={false}

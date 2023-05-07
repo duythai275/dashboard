@@ -6,44 +6,28 @@ import { useTranslation } from "react-i18next";
 
 import Custom from "@/components/Widgets/Custom";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
-import useDashboardStore from "@/state/dashboard";
+import { pull } from "../../utils";
 
 const Widget3 = ({ setLoading }) => {
-  const additionalState = useDashboardStore((state) => state.additionalState);
   const [data, setData] = useState(null);
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
-
-  const listTargetPe = useMemo(() => {
-    const currentYear = [],
-      lastYear = [];
-    let month = new Date().getMonth() + 1;
-    let year = new Date().getFullYear();
-    for (let i = 1; i <= month; i++) {
-      currentYear.push(`${year}${i > 9 ? i : `0${i}`}`);
-      lastYear.push(`${year - 1}${i > 9 ? i : `0${i}`}`);
-    }
-    return { currentYear, lastYear };
-  }, []);
-
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
   useEffect(() => {
-    if (additionalState.widget34_25_26Dashboard2Ready) {
+    (async () => {
+      setLoading(true);
+      const resultData = await pull("/api/getDashboard2Widget3Data");
       const response = {};
-      response.data = additionalState.widget34_25_26Dashboard2Data.rows
-        .filter(
-          (row) =>
-            listTargetPe.currentYear.includes(row[1]) ||
-            listTargetPe.lastYear.includes(row[1])
-        )
-        .map((row) => ({
-          pe: row[1],
-          value: parseInt(row[3]),
-        }));
+      response.data = resultData.data.rows.map((row) => ({
+        pe: row[1],
+        value: row[3],
+      }));
 
       setResult(response);
-    }
-    setLoading(!additionalState.widget34_25_26Dashboard2Ready);
-  }, [additionalState.widget34_25_26Dashboard2Ready]);
+      setLoading(false);
+    })();
+  }, []);
 
   useEffect(() => {
     if (!result) return;
@@ -53,14 +37,14 @@ const Widget3 = ({ setLoading }) => {
 
       currentData.currentYearData = result.data
         .filter((item) => {
-          if (listTargetPe.currentYear.includes(item.pe)) {
+          if (item.pe === `${year}${month >= 10 ? month : `0${month}`}`) {
             return item;
           }
         })
         .reduce((prev, curr) => prev + (curr?.value * 1 || 0), 0);
       currentData.lastYearData = result.data
         .filter((item) => {
-          if (listTargetPe.lastYear.includes(item.pe)) {
+          if (item.pe === `${year - 1}${month >= 10 ? month : `0${month}`}`) {
             return item;
           }
         })
