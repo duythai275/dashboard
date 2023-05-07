@@ -97,25 +97,6 @@ const apisDashboard2 = [
     },
   },
   {
-    route: `/api/getDashboard2Widget34_25_26Data`,
-    handler: async (dhis2Apis) => {
-      const pes = [];
-      const month = moment().month() + 1;
-      const year = moment().year();
-      for (let i = 0; i <= 2; i++) {
-        for (let j = i > 0 ? 12 : month; j >= 1; j--) {
-          pes.push(`${year - i}${j >= 10 ? j : `0${j}`}`);
-        }
-      }
-      const result = await dhis2Apis[0].get(
-        `/api/analytics.json?dimension=dx:r2wLxYXH75x&dimension=pe:${pes.join(
-          ";"
-        )}&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=false&skipData=false&skipMeta=false`
-      );
-      return result.data;
-    },
-  },
-  {
     route: `/api/getDashboard2Widget2Data`,
     handler: async (dhis2Apis) => {
       const pes = [];
