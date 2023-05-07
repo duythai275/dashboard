@@ -55,9 +55,9 @@ const Widget10 = ({ setLoading, dataItemId }) => {
     const currentData = {};
     result.forEach((row) => {
       if (currentData[row.ou]) {
-        currentData[row.ou] += row.value;
+        currentData[row.ou] += row.value * 1;
       } else {
-        currentData[row.ou] = row.value;
+        currentData[row.ou] = row.value * 1;
       }
     });
     setData({ ...currentData });

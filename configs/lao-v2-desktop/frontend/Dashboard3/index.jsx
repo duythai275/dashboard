@@ -12,7 +12,7 @@ import Widget4 from "./Widgets/Widget4";
 import Widget5 from "./Widgets/Widget5";
 import Widget6 from "./Widgets/Widget6";
 import Widget9 from "./Widgets/Widget9";
-import Widget10 from "./Widgets/Widget10";
+import Widget8 from "./Widgets/Widget8";
 import Widget11 from "./Widgets/Widget11";
 import Widget12 from "./Widgets/Widget12";
 import {
@@ -225,7 +225,7 @@ const Dashboard3 = () => {
             title: t("dashboard3_Widget10.1Title", {
               year: new Date().getFullYear(),
             }),
-            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_3_DATA_ITEM} />,
+            widget: <Widget8 dataItemId={WIDGET_10_DASHBOARD_3_DATA_ITEM} />,
           },
         ]}
       />
