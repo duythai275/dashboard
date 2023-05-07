@@ -14,12 +14,14 @@ import Dashboard3 from "./Dashboard3";
 
 import locales from "./locales";
 import { pull } from "./utils";
+import Dashboard4 from "./Dashboard4";
 
 const dashboards = [
   { name: "Mother and Child", dashboard: Dashboard1_1 },
   { name: "M & C (old)", dashboard: Dashboard1 },
   { name: "dashboard2Title", dashboard: Dashboard2 },
   { name: "dashboard3Title", dashboard: Dashboard3 },
+  { name: "dashboard4Title", dashboard: Dashboard4 },
 ];
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -144,6 +146,30 @@ const useDashboardInitialization = () => {
         },
         {
           widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
             {
               selectedChildren: 0,
             },

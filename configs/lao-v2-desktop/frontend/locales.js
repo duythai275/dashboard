@@ -135,6 +135,61 @@ const locales = [
         key: "widget1.8.3Title",
         value: "Maternal mortality rate (annualised)",
       },
+      {
+        key: "widget2.1Title",
+        value: "Less than 1 year Death {{currentYear}}",
+      },
+      {
+        key: "widget2.2Title",
+        value: "Less than 5 year Death {{currentYear}}",
+      },
+      { key: "widget2.3Title", value: "Mother Death {{currentYear}}" },
+      { key: "widget2.4.1Title", value: "Lao PDR - MCH: Total number of SBA" },
+      {
+        key: "widget2.4.2Title",
+        value: "Lao PDR - MCH: SBA coverage (Annualized)",
+      },
+      { key: "widget2.5.1Title", value: "MCH: Total number of SBA" },
+      { key: "widget2.5.2Title", value: "MCH: SBA coverage (Annualized)" },
+      {
+        key: "widget2.6Title",
+        value: "SBA Coverage (Annualized) by provinces {{currentYear}}",
+      },
+      {
+        key: "widget2.7Title",
+        value: "SBA total by provinces {{currentYear}}",
+      },
+      { key: "widget2.8Title", value: "Reporting Rate" },
+      { key: "widget2.9Title", value: "Repoting rate heat map" },
+      {
+        key: "widget4.1Title",
+        value: "% members registered",
+      },
+      {
+        key: "widget4.2Title",
+        value: "% family without Family book number",
+      },
+      { key: "widget4.3Title", value: "total family registered" },
+      { key: "widget4.4Title", value: "total members registered" },
+      {
+        key: "widget4.5Title",
+        value: "% members registered vs LSB",
+      },
+      { key: "widget4.6Title", value: "Family source of water" },
+      { key: "widget4.7Title", value: "Family sanitation" },
+      {
+        key: "widget4.8Title",
+        value: "Member education",
+      },
+      {
+        key: "widget4.9Title",
+        value: "Members by Ethnicity",
+      },
+      { key: "widget4.10Title", value: "family with Disability" },
+      {
+        key: "dashboard4Title",
+        value: "Family Health Information System (FHIS)",
+      },
     ],
   },
   {
@@ -272,6 +327,61 @@ const locales = [
       {
         key: "widget1.8.3Title",
         value: "Maternal mortality rate (annualised)",
+      },
+      {
+        key: "widget2.1Title",
+        value: "Less than 1 year Death {{currentYear}}",
+      },
+      {
+        key: "widget2.2Title",
+        value: "Less than 5 year Death {{currentYear}}",
+      },
+      { key: "widget2.3Title", value: "Mother Death {{currentYear}}" },
+      { key: "widget2.4.1Title", value: "Lao PDR - MCH: Total number of SBA" },
+      {
+        key: "widget2.4.2Title",
+        value: "Lao PDR - MCH: SBA coverage (Annualized)",
+      },
+      { key: "widget2.5.1Title", value: "MCH: Total number of SBA" },
+      { key: "widget2.5.2Title", value: "MCH: SBA coverage (Annualized)" },
+      {
+        key: "widget2.6Title",
+        value: "SBA Coverage (Annualized) by provinces {{currentYear}}",
+      },
+      {
+        key: "widget2.7Title",
+        value: "SBA total by provinces {{currentYear}}",
+      },
+      { key: "widget2.8Title", value: "Reporting Rate" },
+      { key: "widget2.9Title", value: "Repoting rate heat map" },
+      {
+        key: "widget4.1Title",
+        value: "% members registered",
+      },
+      {
+        key: "widget4.2Title",
+        value: "% family without Family book number",
+      },
+      { key: "widget4.3Title", value: "total family registered" },
+      { key: "widget4.4Title", value: "total members registered" },
+      {
+        key: "widget4.5Title",
+        value: "% members registered vs LSB",
+      },
+      { key: "widget4.6Title", value: "Family source of water" },
+      { key: "widget4.7Title", value: "Family sanitation" },
+      {
+        key: "widget4.8Title",
+        value: "Member education",
+      },
+      {
+        key: "widget4.9Title",
+        value: "Members by Ethnicity",
+      },
+      { key: "widget4.10Title", value: "family with Disability" },
+      {
+        key: "dashboard4Title",
+        value: "Family Health Information System (FHIS)",
       },
     ],
   },
