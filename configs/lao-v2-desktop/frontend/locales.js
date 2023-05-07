@@ -190,6 +190,51 @@ const locales = [
         key: "dashboard4Title",
         value: "Family Health Information System (FHIS)",
       },
+      { key: "lastMonth", value: `Last month: {{value}}` },
+      {
+        key: "dashboard3_widget1.1Title",
+        value: `Penta3 Immunization total this month {{year}}`,
+      },
+      {
+        key: "dashboard3_widget2.1Title",
+        value: `Penta3 Immunization coverage this month {{year}}`,
+      },
+      {
+        key: "dashboard3_widget3.1Title",
+        value: `Penta3 Immunization total {{year}}`,
+      },
+      {
+        key: "dashboard3_widget4.1Title",
+        value: `Penta3 Immunization coverage {{year}}`,
+      },
+      {
+        key: "dashboard3_widget5.1Title",
+        value: `Monthly Penta3`,
+      },
+      {
+        key: "dashboard3_widget6.1Title",
+        value: `Monthly Penta 3 By Province`,
+      },
+      {
+        key: "dashboard3_Widget9.1Title",
+        value: `Epi Penta3 Coverage {{year}}`,
+      },
+      {
+        key: "dashboard3_Widget10.1Title",
+        value: `Monthly Penta 3 {{year}}`,
+      },
+      {
+        key: "dashboard3_Widget11.1Title",
+        value: `EPI DB Reporting and Timeliness Rate Lao PDR {{year}}`,
+      },
+      {
+        key: "dashboard3_Widget12.1Title",
+        value: `EPI DB Reporting Rate Heat Map Lao PDR {{year}}`,
+      },
+      {
+        key: "target",
+        value: "Target",
+      },
     ],
   },
   {
@@ -382,6 +427,51 @@ const locales = [
       {
         key: "dashboard4Title",
         value: "Family Health Information System (FHIS)",
+      },
+      { key: "lastMonth", value: `Last month: {{value}}` },
+      {
+        key: "dashboard3_widget1.1Title",
+        value: `Penta3 Immunization total this month {{year}}`,
+      },
+      {
+        key: "dashboard3_widget2.1Title",
+        value: `Penta3 Immunization coverage this month {{year}}`,
+      },
+      {
+        key: "dashboard3_widget3.1Title",
+        value: `Penta3 Immunization total {{year}}`,
+      },
+      {
+        key: "dashboard3_widget4.1Title",
+        value: `Penta3 Immunization coverage {{year}}`,
+      },
+      {
+        key: "dashboard3_widget5.1Title",
+        value: `Monthly Penta3`,
+      },
+      {
+        key: "dashboard3_widget6.1Title",
+        value: `Monthly Penta 3 By Province`,
+      },
+      {
+        key: "dashboard3_Widget9.1Title",
+        value: `Epi Penta3 Coverage {{year}}`,
+      },
+      {
+        key: "dashboard3_Widget10.1Title",
+        value: `Monthly Penta 3 {{year}}`,
+      },
+      {
+        key: "dashboard3_Widget11.1Title",
+        value: `EPI DB Reporting and Timeliness Rate Lao PDR {{year}}`,
+      },
+      {
+        key: "dashboard3_Widget12.1Title",
+        value: `EPI DB Reporting Rate Heat Map Lao PDR {{year}}`,
+      },
+      {
+        key: "target",
+        value: "Target",
       },
     ],
   },
