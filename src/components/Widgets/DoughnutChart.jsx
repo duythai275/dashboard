@@ -1,26 +1,10 @@
 import React from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-} from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+const { VITE_FONT } = import.meta.env;
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 // const options = {
 //   responsive: true,
 //   maintainAspectRatio: false,
@@ -40,13 +24,7 @@ ChartJS.register(
 // };
 
 const DoughnutChart = ({ data, options }) => {
-  return (
-    <Doughnut
-      data={data}
-      options={options}
-      plugins={[ChartDataLabels, labelCenter]}
-    />
-  );
+  return <Doughnut data={data} options={options} plugins={[ChartDataLabels, labelCenter]} />;
 };
 
 export default DoughnutChart;
@@ -61,7 +39,7 @@ const labelCenter = {
 
     const {
       ctx,
-      chartArea: { width, height, top },
+      chartArea: { width, height, top }
     } = chart;
     const context = ctx.canvas.getContext("2d");
     context.save();
@@ -75,17 +53,14 @@ const labelCenter = {
     labels.forEach((label, index) => {
       let textPosition = totalFontSize[index] - label.font.size;
       const values = {
-        text:
-          typeof label.text === "function"
-            ? label.text(chart)
-            : label.text || "?",
+        text: typeof label.text === "function" ? label.text(chart) : label.text || "?",
         font: {
-          size: label.font.size || 30,
-          family: label.font.family || "Noto Sans Lao Looped",
+          size: 20,
+          family: VITE_FONT,
           color: label.font.color || "black",
           style: label.font.style || "normal",
-          unit: label.font.unit || "px",
-        },
+          unit: label.font.unit || "px"
+        }
       };
       switch (values.font.unit) {
         case "em":
@@ -99,12 +74,8 @@ const labelCenter = {
       context.font = `${values.font.style} ${values.font.size}${values.font.unit} ${values.font.family}`;
       context.textAlign = "center";
       context.fillStyle = values.font.color;
-      context.fillText(
-        values.text,
-        width / 2,
-        height + textPosition + top - 10
-      );
+      context.fillText(values.text, width / 2, height + textPosition + top - 10);
     });
     context.restore();
-  },
+  }
 };

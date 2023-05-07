@@ -1,50 +1,30 @@
 import React from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-} from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement
-);
-// const options = {
-//   responsive: true,
-//   maintainAspectRatio: false,
-//   plugins: {
-//     legend: {
-//       position: "bottom"
-//     },
-//     datalabels: {
-//       anchor: "end",
-//       align: "end",
-//       offset: -5
-//       // font: {
-//       //   weight: 500
-//       // }
-//     }
-//   }
-// };
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "bottom"
+    },
+    datalabels: {
+      anchor: "center",
+      align: "center",
+      offset: -5
+    }
+  }
+};
 
-const PieChart = ({ data, options }) => {
+const PieChart = ({ data }) => {
   return (
     <Pie
       data={data}
       options={options}
-      plugins={[ChartDataLabels, pieLabelsLine]}
+      // plugins={[ChartDataLabels]}
     />
   );
 };
@@ -57,7 +37,7 @@ const pieLabelsLine = {
     if (!options.display) return;
     const {
       ctx,
-      chartArea: { width, height },
+      chartArea: { width, height }
     } = chart;
 
     const cx = chart._metasets[0].data[0].x;
@@ -91,17 +71,14 @@ const pieLabelsLine = {
 
         // text
         const values = {
-          text:
-            typeof options.text === "function"
-              ? options.text(chart, index)
-              : options.text || "?",
+          text: typeof options.text === "function" ? options.text(chart, index) : options.text || "?",
           font: {
             size: options.font.size || 30,
             family: options.font.family || "Noto Sans Lao Looped",
             color: options.font.color || "black",
             style: options.font.style || "normal",
-            unit: options.font.unit || "px",
-          },
+            unit: options.font.unit || "px"
+          }
         };
         switch (values.font.unit) {
           case "em":
@@ -122,5 +99,5 @@ const pieLabelsLine = {
         ctx.fillText(values.text, xLine + extraLine + plusFivePx, yLine);
       });
     });
-  },
+  }
 };

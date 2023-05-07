@@ -1,5 +1,7 @@
 import DashboardSelector from "./DashboardSelector";
 import DashboardButtons from "./DashboardButtons";
+import { customControl } from "@/config/config";
+
 import "./ControlBar.css";
 
 const ControlBar = () => {
@@ -8,6 +10,7 @@ const ControlBar = () => {
       <div>
         <DashboardSelector />
       </div>
+      <div>{customControl}</div>
       <div>
         <DashboardButtons />
       </div>

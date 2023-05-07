@@ -30,14 +30,10 @@ const Widget1 = ({ setLoading }) => {
     if (additionalState.widget14_15_17Dashboard2Ready) {
       const response = {};
       response.data = additionalState.widget14_15_17Dashboard2Data.rows
-        .filter(
-          (row) =>
-            listTargetPe.currentYear.includes(row[1]) ||
-            listTargetPe.lastYear.includes(row[1])
-        )
+        .filter((row) => listTargetPe.currentYear.includes(row[1]) || listTargetPe.lastYear.includes(row[1]))
         .map((row) => ({
           pe: row[1],
-          value: parseInt(row[3]),
+          value: parseInt(row[3])
         }));
 
       setResult(response);
@@ -65,9 +61,7 @@ const Widget1 = ({ setLoading }) => {
           }
         })
         .reduce((prev, curr) => prev + (curr?.value * 1 || 0), 0);
-      currentData.trend = Math.round(
-        100 - (currentData.currentYearData / currentData.lastYearData) * 100
-      );
+      currentData.trend = Math.round(100 - (currentData.currentYearData / currentData.lastYearData) * 100);
       setData({ ...currentData });
     })();
   }, [i18n.language, JSON.stringify(result)]);
@@ -83,7 +77,7 @@ const Widget1 = ({ setLoading }) => {
             alignItems: "center",
             justifyContent: "center",
             padding: "0 30px",
-            height: "100%",
+            height: "100%"
           }}
         >
           <Box
@@ -92,18 +86,15 @@ const Widget1 = ({ setLoading }) => {
               flexDirection: "column",
               gap: "15px",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "center"
             }}
           >
-            <Typography
-              textAlign="center"
-              sx={{ fontWeight: "700", fontSize: "50px" }}
-            >
+            <Typography textAlign="center" sx={{ fontWeight: "700", fontSize: "35px" }}>
               {data.currentYearData.toLocaleString("en-US")}
             </Typography>
             <Typography textAlign="center">
               {t("lastPeriod", {
-                value: data.lastYearData.toLocaleString("en-US"),
+                value: data.lastYearData.toLocaleString("en-US")
               })}
               <Typography
                 sx={{
@@ -112,22 +103,11 @@ const Widget1 = ({ setLoading }) => {
                   gap: "5px",
                   alignItems: "center",
                   justifyContent: "center",
-                  color:
-                    data.trend < 0
-                      ? "#E61B1B"
-                      : data.trend === 0
-                      ? "#F3F3F3"
-                      : "#118861",
+                  color: data.trend < 0 ? "#E61B1B" : data.trend === 0 ? "#F3F3F3" : "#118861"
                 }}
               >
                 {` ( ${data.trend === 0 ? "-" : Math.abs(data.trend)}%`}
-                {data.trend > 0 ? (
-                  <ArrowDownwardIcon />
-                ) : data.trend === 0 ? (
-                  ""
-                ) : (
-                  <ArrowUpwardIcon />
-                )}
+                {data.trend > 0 ? <ArrowDownwardIcon /> : data.trend === 0 ? "" : <ArrowUpwardIcon />}
                 {")"}
               </Typography>
             </Typography>

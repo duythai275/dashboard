@@ -33,7 +33,7 @@ import {
   WIDGET_10_DASHBOARD_1_DATA_ITEM_3,
   WIDGET_11_DASHBOARD_1_DATA_ITEM_1,
   WIDGET_11_DASHBOARD_1_DATA_ITEM_2,
-  WIDGET_11_DASHBOARD_1_DATA_ITEM_3,
+  WIDGET_11_DASHBOARD_1_DATA_ITEM_3
 } from "./common/constant/dataItem";
 
 import { pull } from "../utils";
@@ -42,9 +42,7 @@ const ReactGridLayout = WidthProvider(Responsive);
 
 const Dashboard1_1 = () => {
   const { t } = useTranslation();
-  const changeAdditionalStateProperty = useDashboardStore(
-    (state) => state.changeAdditionalStateProperty
-  );
+  const changeAdditionalStateProperty = useDashboardStore((state) => state.changeAdditionalStateProperty);
 
   useEffect(() => {
     (async () => {
@@ -69,35 +67,35 @@ const Dashboard1_1 = () => {
       breakpoints={{ desktop: 1200, mobile: 480 }}
       layouts={{
         desktop: [
-          { i: "1", x: 0, y: 0, w: 2, h: 25 },
-          { i: "2", x: 2, y: 0, w: 2, h: 25 },
-          { i: "3", x: 4, y: 0, w: 2, h: 25 },
-          { i: "4", x: 6, y: 0, w: 2, h: 25 },
-          { i: "5", x: 8, y: 0, w: 2, h: 25 },
-          { i: "6", x: 10, y: 0, w: 2, h: 25 },
-          { i: "7", x: 0, y: 25, w: 6, h: 50 },
-          { i: "8", x: 6, y: 25, w: 6, h: 50 },
-          { i: "9", x: 0, y: 75, w: 4, h: 50 },
-          { i: "10", x: 4, y: 75, w: 4, h: 50 },
-          { i: "11", x: 8, y: 75, w: 4, h: 50 },
+          { i: "1", x: 0, y: 0, w: 2, h: 22 },
+          { i: "2", x: 2, y: 0, w: 2, h: 22 },
+          { i: "3", x: 4, y: 0, w: 2, h: 22 },
+          { i: "4", x: 6, y: 0, w: 2, h: 22 },
+          { i: "5", x: 8, y: 0, w: 2, h: 22 },
+          { i: "6", x: 10, y: 0, w: 2, h: 22 },
+          { i: "7", x: 0, y: 25, w: 6, h: 40 },
+          { i: "8", x: 6, y: 25, w: 6, h: 40 },
+          { i: "9", x: 0, y: 75, w: 4, h: 40 },
+          { i: "10", x: 4, y: 75, w: 4, h: 40 },
+          { i: "11", x: 8, y: 75, w: 4, h: 40 },
           { i: "12", x: 0, y: 125, w: 8, h: 50 },
-          { i: "13", x: 8, y: 175, w: 4, h: 50 },
+          { i: "13", x: 8, y: 175, w: 4, h: 50 }
         ],
         mobile: [
-          { i: "1", x: 0, y: 0, w: 12, h: 25 },
-          { i: "2", x: 0, y: 25, w: 12, h: 25 },
-          { i: "3", x: 0, y: 50, w: 12, h: 25 },
-          { i: "4", x: 0, y: 75, w: 12, h: 50 },
-          { i: "5", x: 0, y: 125, w: 12, h: 50 },
-          { i: "6", x: 0, y: 175, w: 12, h: 50 },
-          { i: "7", x: 0, y: 225, w: 12, h: 50 },
-          { i: "8", x: 0, y: 275, w: 12, h: 50 },
-          { i: "9", x: 0, y: 275, w: 12, h: 50 },
-          { i: "10", x: 0, y: 275, w: 12, h: 50 },
-          { i: "11", x: 0, y: 275, w: 12, h: 50 },
+          { i: "1", x: 0, y: 0, w: 12, h: 22 },
+          { i: "2", x: 0, y: 25, w: 12, h: 22 },
+          { i: "3", x: 0, y: 50, w: 12, h: 22 },
+          { i: "4", x: 0, y: 75, w: 12, h: 22 },
+          { i: "5", x: 0, y: 125, w: 12, h: 22 },
+          { i: "6", x: 0, y: 175, w: 12, h: 22 },
+          { i: "7", x: 0, y: 225, w: 12, h: 40 },
+          { i: "8", x: 0, y: 275, w: 12, h: 40 },
+          { i: "9", x: 0, y: 275, w: 12, h: 40 },
+          { i: "10", x: 0, y: 275, w: 12, h: 40 },
+          { i: "11", x: 0, y: 275, w: 12, h: 40 },
           { i: "12", x: 0, y: 275, w: 12, h: 50 },
-          { i: "13", x: 0, y: 275, w: 12, h: 50 },
-        ],
+          { i: "13", x: 0, y: 275, w: 12, h: 50 }
+        ]
       }}
       cols={{ desktop: 12, mobile: 6 }}
       rowHeight={1}
@@ -110,8 +108,8 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.1Title", { year: new Date().getFullYear() }),
-            widget: <Widget123 dataItemId={WIDGET_1_DASHBOARD_1_DATA_ITEM} />,
-          },
+            widget: <Widget123 dataItemId={WIDGET_1_DASHBOARD_1_DATA_ITEM} />
+          }
         ]}
       />
       <WidgetContainer
@@ -121,8 +119,8 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.2Title", { year: new Date().getFullYear() }),
-            widget: <Widget123 dataItemId={WIDGET_2_DASHBOARD_1_DATA_ITEM} />,
-          },
+            widget: <Widget123 dataItemId={WIDGET_2_DASHBOARD_1_DATA_ITEM} />
+          }
         ]}
       />
       <WidgetContainer
@@ -132,8 +130,8 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.3Title", { year: new Date().getFullYear() }),
-            widget: <Widget123 dataItemId={WIDGET_3_DASHBOARD_1_DATA_ITEM} />,
-          },
+            widget: <Widget123 dataItemId={WIDGET_3_DASHBOARD_1_DATA_ITEM} />
+          }
         ]}
       />
       <WidgetContainer
@@ -143,8 +141,8 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.4Title", { year: new Date().getFullYear() }),
-            widget: <Widget456 dataItemId={WIDGET_4_DASHBOARD_1_DATA_ITEM} />,
-          },
+            widget: <Widget456 dataItemId={WIDGET_4_DASHBOARD_1_DATA_ITEM} />
+          }
         ]}
       />
       <WidgetContainer
@@ -154,8 +152,8 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.5Title", { year: new Date().getFullYear() }),
-            widget: <Widget456 dataItemId={WIDGET_5_DASHBOARD_1_DATA_ITEM} />,
-          },
+            widget: <Widget456 dataItemId={WIDGET_5_DASHBOARD_1_DATA_ITEM} />
+          }
         ]}
       />
       <WidgetContainer
@@ -165,8 +163,8 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.6Title", { year: new Date().getFullYear() }),
-            widget: <Widget456 dataItemId={WIDGET_6_DASHBOARD_1_DATA_ITEM} />,
-          },
+            widget: <Widget456 dataItemId={WIDGET_6_DASHBOARD_1_DATA_ITEM} />
+          }
         ]}
       />
       <WidgetContainer
@@ -176,16 +174,16 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.7.1Title"),
-            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_1} key="1.7.1"/>,
+            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_1} key="1.7.1" />
           },
           {
             title: t("widget1.7.2Title"),
-            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_2} key="1.7.2"/>,
+            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_2} key="1.7.2" />
           },
           {
             title: t("widget1.7.3Title"),
-            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_3} key="1.7.3"/>,
-          },
+            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_1_DATA_ITEM_3} key="1.7.3" />
+          }
         ]}
       />
       <WidgetContainer
@@ -195,24 +193,19 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.8.1Title"),
-            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_1} key="1.8.1"/>,
+            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_1} key="1.8.1" />
           },
           {
             title: t("widget1.8.2Title"),
-            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_2} key="1.8.2"/>,
+            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_2} key="1.8.2" />
           },
           {
             title: t("widget1.8.3Title"),
-            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_3} key="1.8.3"/>,
-          },
+            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_1_DATA_ITEM_3} key="1.8.3" />
+          }
         ]}
       />
-      <WidgetContainer
-        key="9"
-        dashboardIndex={0}
-        widgetIndex={8}
-        childrenWidgets={[{ title: t("widget1.9Title"), widget: <Widget9 /> }]}
-      />
+      <WidgetContainer key="9" dashboardIndex={0} widgetIndex={8} childrenWidgets={[{ title: t("widget1.9Title"), widget: <Widget9 /> }]} />
       <WidgetContainer
         key="10"
         dashboardIndex={0}
@@ -220,16 +213,16 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.10.1Title"),
-            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_1} key="1.10.1"/>,
+            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_1} key="1.10.1" />
           },
           {
             title: t("widget1.10.2Title"),
-            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_2} key="1.10.2"/>,
+            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_2} key="1.10.2" />
           },
           {
             title: t("widget1.10.3Title"),
-            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_3} key="1.10.3"/>,
-          },
+            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_1_DATA_ITEM_3} key="1.10.3" />
+          }
         ]}
       />
       <WidgetContainer
@@ -239,34 +232,20 @@ const Dashboard1_1 = () => {
         childrenWidgets={[
           {
             title: t("widget1.11.1Title"),
-            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_1} key="1.11.1"/>,
+            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_1} key="1.11.1" />
           },
           {
             title: t("widget1.11.2Title"),
-            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_2} key="1.11.2"/>,
+            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_2} key="1.11.2" />
           },
           {
             title: t("widget1.11.3Title"),
-            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_3} key="1.11.3"/>,
-          },
+            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_1_DATA_ITEM_3} key="1.11.3" />
+          }
         ]}
       />
-      <WidgetContainer
-        key="12"
-        dashboardIndex={0}
-        widgetIndex={11}
-        childrenWidgets={[
-          { title: t("widget1.12Title"), widget: <Widget12 /> },
-        ]}
-      />
-      <WidgetContainer
-        key="13"
-        dashboardIndex={0}
-        widgetIndex={12}
-        childrenWidgets={[
-          { title: t("widget1.13Title"), widget: <Widget13 /> },
-        ]}
-      />
+      <WidgetContainer key="12" dashboardIndex={0} widgetIndex={11} childrenWidgets={[{ title: t("widget1.12Title"), widget: <Widget12 /> }]} />
+      <WidgetContainer key="13" dashboardIndex={0} widgetIndex={12} childrenWidgets={[{ title: t("widget1.13Title"), widget: <Widget13 /> }]} />
     </ReactGridLayout>
   );
 };

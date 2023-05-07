@@ -9,5 +9,8 @@
   -moz-box-shadow: 1px 7px 5px -1px rgba(0, 0, 0, 0.11); */
 }
 .control-bar-container > div:nth-child(2) {
+  margin-left: 10px;
+}
+.control-bar-container > div:last-child {
   margin-left: auto;
 }

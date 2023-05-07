@@ -32,15 +32,10 @@ const Widget1 = ({ setLoading, dataItemId }) => {
     if (additionalState.widget1Dashboard3Ready) {
       const response = {};
       response.data = additionalState.widget1Dashboard3Data.rows
-        .filter(
-          (row) =>
-            (listTargetPe.currentMonths.includes(row[1]) ||
-              listTargetPe.lastMonths.includes(row[1])) &&
-            row[0] === dataItemId
-        )
+        .filter((row) => (listTargetPe.currentMonths.includes(row[1]) || listTargetPe.lastMonths.includes(row[1])) && row[0] === dataItemId)
         .map((row) => ({
           pe: row[1],
-          value: parseInt(row[3]),
+          value: parseInt(row[3])
         }));
       setResult(response);
     }
@@ -66,9 +61,7 @@ const Widget1 = ({ setLoading, dataItemId }) => {
           }
         })
         .reduce((prev, curr) => prev + (curr?.value * 1 || 0), 0);
-      currentData.trend = Math.round(
-        100 - (currentData.currentMonthData / currentData.lastMonthData) * 100
-      );
+      currentData.trend = Math.round(100 - (currentData.currentMonthData / currentData.lastMonthData) * 100);
       setData({ ...currentData });
     })();
   }, [i18n.language, JSON.stringify(result)]);
@@ -84,7 +77,7 @@ const Widget1 = ({ setLoading, dataItemId }) => {
             alignItems: "center",
             justifyContent: "center",
             padding: "0 30px",
-            height: "100%",
+            height: "100%"
           }}
         >
           <Box
@@ -93,13 +86,10 @@ const Widget1 = ({ setLoading, dataItemId }) => {
               flexDirection: "column",
               gap: "15px",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "center"
             }}
           >
-            <Typography
-              textAlign="center"
-              sx={{ fontWeight: "700", fontSize: "50px" }}
-            >
+            <Typography textAlign="center" sx={{ fontWeight: "700", fontSize: "50px" }}>
               {data.currentMonthData}
             </Typography>
             <Typography textAlign="center">
@@ -111,22 +101,11 @@ const Widget1 = ({ setLoading, dataItemId }) => {
                   gap: "5px",
                   alignItems: "center",
                   justifyContent: "center",
-                  color:
-                    data.trend < 0
-                      ? "#E61B1B"
-                      : data.trend === 0
-                      ? "#F3F3F3"
-                      : "#118861",
+                  color: data.trend < 0 ? "#E61B1B" : data.trend === 0 ? "#F3F3F3" : "#118861"
                 }}
               >
                 {` ( ${data.trend === 0 ? "-" : Math.abs(data.trend)}%`}
-                {data.trend > 0 ? (
-                  <ArrowDownwardIcon />
-                ) : data.trend === 0 ? (
-                  ""
-                ) : (
-                  <ArrowUpwardIcon />
-                )}
+                {data.trend > 0 ? <ArrowDownwardIcon /> : data.trend === 0 ? "" : <ArrowUpwardIcon />}
                 {")"}
               </Typography>
             </Typography>

@@ -17,7 +17,7 @@ const Widget3 = ({ setLoading }) => {
       const resultData = await pull("/api/getDashboard4Widget3Data");
       const response = {};
       response.data = resultData.data.rows.map((row) => ({
-        value: row[1],
+        value: row[1]
       }));
       setResult(response);
       setLoading(false);
@@ -39,15 +39,11 @@ const Widget3 = ({ setLoading }) => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          height: "100%",
+          height: "100%"
         }}
       >
-        <Typography sx={{ fontSize: "12px", color: "#666666" }}>
-          Total family members registered
-        </Typography>
-        <Typography sx={{ fontSize: "32px" }}>
-          {data.toLocaleString("en-US")}
-        </Typography>
+        {/* <Typography sx={{ fontSize: "12px", color: "#666666" }}>Total family members registered</Typography> */}
+        <Typography sx={{ fontSize: "35px", fontWeight: 700 }}>{data.toLocaleString("en-US")}</Typography>
       </Box>
     )
   );
