@@ -18,9 +18,9 @@ import Dashboard4 from "./Dashboard4";
 
 const dashboards = [
   { name: "Mother and Child", dashboard: Dashboard1_1 },
-  { name: "M & C (old)", dashboard: Dashboard1 },
+  // { name: "M & C (old)", dashboard: Dashboard1 },
   { name: "dashboard2Title", dashboard: Dashboard2 },
-  { name: "dashboard3Title", dashboard: Dashboard3 },
+  // { name: "dashboard3Title", dashboard: Dashboard3 },
   { name: "dashboard4Title", dashboard: Dashboard4 },
 ];
 const languages = locales.map((locale) => ({

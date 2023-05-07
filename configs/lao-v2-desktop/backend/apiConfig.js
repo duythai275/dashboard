@@ -1,5 +1,6 @@
 const { apisDashboard1 } = require("./dashboard1");
 const { apisDashboard2 } = require("./dashboard2");
+const { apisDashboard3 } = require("./dashboard3");
 const { apisDashboard4 } = require("./dashboard4");
 const { apisGeneral } = require("./general");
 
@@ -17,6 +18,7 @@ const apis = [
   ...apisGeneral,
   ...apisDashboard1,
   ...apisDashboard2,
+  ...apisDashboard3,
   ...apisDashboard4,
 ];
 const dhis2ApiConfigs = [
