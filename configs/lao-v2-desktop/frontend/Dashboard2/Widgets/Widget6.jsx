@@ -5,17 +5,15 @@ import { shallow } from "zustand/shallow";
 import ThematicMap from "@/components/Widgets/ThematicMap";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import useMetadataStore from "@/state/metadata";
-import useDashboardStore from "@/state/dashboard";
 
 import { WIDGET_6_DASHBOARD_1_LEGEND_COLORS } from "../common/constant/color";
-import { WIDGET_5_DASHBOARD_1_DATA_ITEM } from "../common/constant/dataItem";
+import { pull } from "../../utils";
 
 const Widget6 = ({ setLoading }) => {
   const { hmisGeoJson } = useMetadataStore(
     (state) => ({ hmisGeoJson: state.hmisGeoJson }),
     shallow
   );
-  const additionalState = useDashboardStore((state) => state.additionalState);
 
   const [data, setData] = useState({});
   const [result, setResult] = useState(null);
@@ -32,27 +30,26 @@ const Widget6 = ({ setLoading }) => {
   }, []);
 
   useEffect(() => {
-    if (additionalState.widget34_25_26Dashboard2Ready) {
-      const response = additionalState.widget34_25_26Dashboard2Data.rows
-        .filter((row) => listTargetPe.includes(row[1]) && row)
-        .map((row) => ({
-          ou: row[2],
-          value: parseInt(row[3]),
-          pe: row[1],
-        }));
+    (async () => {
+      setLoading(true);
+      const resultData = await pull("/api/getDashboard2Widget6Data");
+      const response = resultData.data.rows.map((row) => ({
+        ou: row[2],
+        value: row[3],
+      }));
       setResult(response);
-    }
-    setLoading(!additionalState.widget34_25_26Dashboard2Ready);
-  }, [additionalState.widget34_25_26Dashboard2Ready]);
+      setLoading(false);
+    })();
+  }, []);
 
   useEffect(() => {
     if (!result) return;
     const currentData = {};
     result.forEach((row) => {
       if (currentData[row.ou]) {
-        currentData[row.ou] += row.value;
+        currentData[row.ou] += row.value * 1;
       } else {
-        currentData[row.ou] = row.value;
+        currentData[row.ou] = row.value * 1;
       }
     });
     setData({ ...currentData });
