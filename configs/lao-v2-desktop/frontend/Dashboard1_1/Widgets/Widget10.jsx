@@ -36,7 +36,7 @@ const Widget10 = ({ setLoading, dataItemId }) => {
       const response = additionalState.widget10Dashboard1Data.rows
         .filter(
           (row) =>
-            row[1] === `${year}` &&
+            // row[1] === `${year}` &&
             row[0] === dataItemId &&
             row
         )

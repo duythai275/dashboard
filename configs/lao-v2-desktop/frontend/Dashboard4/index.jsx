@@ -54,7 +54,7 @@ const Dashboard4 = () => {
     >
       <WidgetContainer
         key="1"
-        dashboardIndex={3}
+        dashboardIndex={1}
         widgetIndex={0}
         childrenWidgets={[
           {
@@ -65,7 +65,7 @@ const Dashboard4 = () => {
       />
       <WidgetContainer
         key="2"
-        dashboardIndex={3}
+        dashboardIndex={1}
         widgetIndex={1}
         childrenWidgets={[
           {
@@ -76,7 +76,7 @@ const Dashboard4 = () => {
       />
       <WidgetContainer
         key="3"
-        dashboardIndex={3}
+        dashboardIndex={1}
         widgetIndex={2}
         childrenWidgets={[
           {
@@ -87,7 +87,7 @@ const Dashboard4 = () => {
       />
       <WidgetContainer
         key="4"
-        dashboardIndex={3}
+        dashboardIndex={1}
         widgetIndex={3}
         childrenWidgets={[
           {
@@ -98,7 +98,7 @@ const Dashboard4 = () => {
       />
       <WidgetContainer
         key="5"
-        dashboardIndex={3}
+        dashboardIndex={1}
         widgetIndex={4}
         childrenWidgets={[
           {
@@ -109,7 +109,7 @@ const Dashboard4 = () => {
       />
       <WidgetContainer
         key="6"
-        dashboardIndex={3}
+        dashboardIndex={1}
         widgetIndex={5}
         childrenWidgets={[
           {
@@ -120,7 +120,7 @@ const Dashboard4 = () => {
       />
       <WidgetContainer
         key="7"
-        dashboardIndex={3}
+        dashboardIndex={1}
         widgetIndex={6}
         childrenWidgets={[
           {
@@ -131,7 +131,7 @@ const Dashboard4 = () => {
       />
       <WidgetContainer
         key="8"
-        dashboardIndex={3}
+        dashboardIndex={1}
         widgetIndex={7}
         childrenWidgets={[
           {
@@ -140,8 +140,8 @@ const Dashboard4 = () => {
           }
         ]}
       />
-      <WidgetContainer key="9" dashboardIndex={3} widgetIndex={8} childrenWidgets={[{ title: t("widget4.9Title"), widget: <Widget9 /> }]} />
-      <WidgetContainer key="10" dashboardIndex={3} widgetIndex={9} childrenWidgets={[{ title: t("widget4.10Title"), widget: <Widget10 /> }]} />
+      <WidgetContainer key="9" dashboardIndex={1} widgetIndex={8} childrenWidgets={[{ title: t("widget4.9Title"), widget: <Widget9 /> }]} />
+      <WidgetContainer key="10" dashboardIndex={1} widgetIndex={9} childrenWidgets={[{ title: t("widget4.10Title"), widget: <Widget10 /> }]} />
     </ReactGridLayout>
   );
 };
