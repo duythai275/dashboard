@@ -113,27 +113,27 @@ const locales = [
       },
       {
         key: "widget1.7.1Title",
-        value: "Infant Death",
+        value: "Infant Death - Last 3 Years",
       },
       {
         key: "widget1.7.2Title",
-        value: "Child Death",
+        value: "Child Death - Last 3 Years",
       },
       {
         key: "widget1.7.3Title",
-        value: "Maternal Death",
+        value: "Maternal Death - Last 3 Years",
       },
       {
         key: "widget1.8.1Title",
-        value: "Infant mortality rate (Annualised)",
+        value: "Infant mortality rate (Annualised) - Last 3 Years",
       },
       {
         key: "widget1.8.2Title",
-        value: "Child mortality rate (Annualised)",
+        value: "Child mortality rate (Annualised) - Last 3 Years",
       },
       {
         key: "widget1.8.3Title",
-        value: "Maternal mortality rate (Annualised)",
+        value: "Maternal mortality rate (Annualised) - Last 3 Years",
       },
       {
         key: "widget2.1Title",
@@ -251,6 +251,7 @@ const locales = [
         key: "lastUpdated",
         value: "Last updated",
       },
+      { key: "asAt", value: "As at" },
     ],
   },
   {
@@ -366,27 +367,27 @@ const locales = [
       },
       {
         key: "widget1.7.1Title",
-        value: "Infant Death",
+        value: "Infant Death - Last 3 Years",
       },
       {
         key: "widget1.7.2Title",
-        value: "Child Death",
+        value: "Child Death - Last 3 Years",
       },
       {
         key: "widget1.7.3Title",
-        value: "Maternal Death",
+        value: "Maternal Death - Last 3 Years",
       },
       {
         key: "widget1.8.1Title",
-        value: "Infant mortality rate (Annualised)",
+        value: "Infant mortality rate (Annualised) - Last 3 Years",
       },
       {
         key: "widget1.8.2Title",
-        value: "Child mortality rate (Annualised)",
+        value: "Child mortality rate (Annualised) - Last 3 Years",
       },
       {
         key: "widget1.8.3Title",
-        value: "Maternal mortality rate (Annualised)",
+        value: "Maternal mortality rate (Annualised) - Last 3 Years",
       },
       {
         key: "widget2.1Title",
@@ -504,6 +505,7 @@ const locales = [
         key: "lastUpdated",
         value: "Last updated",
       },
+      { key: "asAt", value: "As at" },
     ],
   },
 ];

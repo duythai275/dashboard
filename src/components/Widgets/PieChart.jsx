@@ -14,7 +14,14 @@ const options = {
     datalabels: {
       anchor: "center",
       align: "center",
-      offset: -5
+      offset: -5,
+      color: "#fff",
+      borderColor: "#000",
+      textStrokeColor: "black", // <-- added this
+      textStrokeWidth: 3, // <-- added this,
+      font: {
+        size: 10
+      }
     }
   }
 };

@@ -8,6 +8,9 @@ const options = {
   indexAxis: "y",
   responsive: true,
   maintainAspectRatio: false,
+  layout: {
+    padding: 18
+  },
   plugins: {
     legend: {
       position: "bottom"
@@ -15,10 +18,14 @@ const options = {
     datalabels: {
       anchor: "end",
       align: "end",
-      offset: -35
-      // font: {
-      //   weight: 500
-      // }
+      offset: -5,
+      color: "#fff",
+      borderColor: "#000",
+      textStrokeColor: "black", // <-- added this
+      textStrokeWidth: 3, // <-- added this,
+      font: {
+        size: 10
+      }
     }
   }
 };

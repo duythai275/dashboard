@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { shallow } from "zustand/shallow";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import useAdditionalLocale from "@/hooks/App/useAdditionalLocale";
 import useDashboardStore from "@/state/dashboard";
 import useMetadataStore from "@/state/metadata";
@@ -14,13 +14,10 @@ import Dashboard3 from "./Dashboard3";
 import Dashboard4 from "./Dashboard4";
 import locales from "./locales";
 import { pull } from "./utils";
-import { format } from "date-fns";
+import { format, sub } from "date-fns";
 
 const dashboards = [
-  
-  // { name: "M & C (old)", dashboard: Dashboard1 },
   { name: "dashboard2Title", dashboard: Dashboard2 },
-  // { name: "dashboard3Title", dashboard: Dashboard3 },
   { name: "dashboard4Title", dashboard: Dashboard4 },
   { name: "dashboard1Title", dashboard: Dashboard1_1 }
 ];
@@ -94,6 +91,31 @@ const useDashboardInitialization = () => {
             },
             {
               selectedChildren: 0
+            }
+          ]
+        },
+        {
+          widgets: [
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
             },
             {
               selectedChildren: 0
@@ -134,11 +156,10 @@ const useDashboardInitialization = () => {
             },
             {
               selectedChildren: 0
-            }
-          ]
-        },
-        {
-          widgets: [
+            },
+            {
+              selectedChildren: 0
+            },
             {
               selectedChildren: 0
             },
@@ -146,41 +167,7 @@ const useDashboardInitialization = () => {
               selectedChildren: 0
             }
           ]
-        },
-        // {
-        //   widgets: [
-        //     {
-        //       selectedChildren: 0
-        //     },
-        //     {
-        //       selectedChildren: 0
-        //     },
-        //     {
-        //       selectedChildren: 0
-        //     },
-        //     {
-        //       selectedChildren: 0
-        //     },
-        //     {
-        //       selectedChildren: 0
-        //     },
-        //     {
-        //       selectedChildren: 0
-        //     },
-        //     {
-        //       selectedChildren: 0
-        //     },
-        //     {
-        //       selectedChildren: 0
-        //     },
-        //     {
-        //       selectedChildren: 0
-        //     },
-        //     {
-        //       selectedChildren: 0
-        //     }
-        //   ]
-        // }
+        }
       ]);
       setDashboards(dashboards);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });
@@ -202,21 +189,40 @@ const CustomControl = () => {
   const { t } = useTranslation();
   const lastUpdated = useMetadataStore((state) => state.lastUpdated);
   return (
-    <div
-      style={{
-        fontWeight: "bold",
-        height: 40,
-        padding: 8,
-        backgroundColor: "#edf7ed",
-        borderRadius: 5,
-        display: "flex",
-        alignItems: "center",
-        color: "#1e4620",
-        fontSize: 14
-      }}
-    >
-      <FontAwesomeIcon icon={faCircleCheck} />
-      &nbsp;&nbsp;{t("lastUpdated")}: {lastUpdated ? format(new Date(lastUpdated), "yyyy-MM-dd") : "N/A"}
+    <div style={{ display: "flex" }}>
+      <div
+        style={{
+          fontWeight: "bold",
+          height: 40,
+          padding: 8,
+          backgroundColor: "#edf7ed",
+          borderRadius: 5,
+          display: "flex",
+          alignItems: "center",
+          color: "#1e4620",
+          fontSize: 14
+        }}
+      >
+        <FontAwesomeIcon icon={faCircleCheck} />
+        &nbsp;&nbsp;{t("lastUpdated")}: {lastUpdated ? format(new Date(lastUpdated), "yyyy-MM-dd") : "N/A"}
+      </div>
+      &nbsp;&nbsp;
+      <div
+        style={{
+          fontWeight: "bold",
+          height: 40,
+          padding: 8,
+          backgroundColor: "#fff4e5",
+          borderRadius: 5,
+          display: "flex",
+          alignItems: "center",
+          color: "#663c00",
+          fontSize: 14
+        }}
+      >
+        <FontAwesomeIcon icon={faCircleInfo} />
+        &nbsp;&nbsp;{t("asAt")}: {lastUpdated ? format(sub(new Date(lastUpdated), { months: 1 }), "MMMM yyyy") : "N/A"}
+      </div>
     </div>
   );
 };

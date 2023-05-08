@@ -10,6 +10,9 @@ const options = {
   responsive: true,
   maintainAspectRatio: false,
   pointRadius: 4,
+  layout: {
+    padding: 18
+  },
   plugins: {
     legend: {
       position: "bottom",
@@ -19,9 +22,12 @@ const options = {
       anchor: "end",
       align: "end",
       offset: -5,
+      color: "#fff",
+      borderColor: "#000",
+      textStrokeColor: "black", // <-- added this
+      textStrokeWidth: 3, // <-- added this,
       font: {
-        family: VITE_FONT,
-        weight: 500
+        size: 10
       }
     }
   }
