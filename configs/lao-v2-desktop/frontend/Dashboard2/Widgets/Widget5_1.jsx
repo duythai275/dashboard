@@ -7,6 +7,7 @@ import useDashboardStore from "@/state/dashboard";
 import BarChart from "@/components/Widgets/BarChart";
 import useMetadataStore from "@/state/metadata";
 import { getMonthName } from "../../Dashboard1/common/function/getMonthName";
+import moment from "moment";
 
 const Widget5_1 = ({ setLoading }) => {
   const { orgUnits } = useMetadataStore((state) => ({
@@ -79,22 +80,21 @@ const Widget5_1 = ({ setLoading }) => {
       currentData.labels = result.ou.map((ou) => {
         return localeName === "En" ? ou.nameEn : ou.nameLo;
       });
-      currentData.datasets = listMonth.map((month, index) => ({
-        label: getMonthName(
-          month * 1,
-          localeName === "En" ? "en-US" : localeName
-        ),
-        data: result.ou.map((ou) => {
-          const foundRow = result.data.filter(
-            (row) => row.ou === ou.id && row.pe.slice(4) === month
-          );
-          return foundRow.length
-            ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
-            : 0;
-        }),
-        borderColor: colors[index],
-        backgroundColor: colors[index],
-      }));
+      currentData.datasets = [
+        {
+          label: moment().year(),
+          data: result.ou.map((ou) => {
+            const foundRow = result.data.filter(
+              (row) => row.ou === ou.id && listMonth.includes(row.pe.slice(4))
+            );
+            return foundRow.length
+              ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
+              : 0;
+          }),
+          borderColor: "#A8BF23",
+          backgroundColor: "#A8BF23",
+        },
+      ];
 
       setData({ ...currentData });
     })();

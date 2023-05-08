@@ -20,15 +20,6 @@ const Widget6 = ({ setLoading }) => {
   const { i18n, t } = useTranslation();
   const legend = WIDGET_6_DASHBOARD_1_LEGEND_COLORS;
 
-  const listTargetPe = useMemo(() => {
-    const listPe = [];
-    let year = new Date().getFullYear();
-    for (let i = 1; i <= 12; i++) {
-      listPe.push(`${year}${i > 9 ? i : `0${i}`}`);
-    }
-    return listPe;
-  }, []);
-
   useEffect(() => {
     (async () => {
       setLoading(true);
