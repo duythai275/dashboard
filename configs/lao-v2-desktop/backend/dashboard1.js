@@ -124,7 +124,7 @@ const apisDashboard1 = [
   {
     route: `/api/getDashboard1Widget10Data`,
     handler: async (dhis2Apis) => {
-      const year = moment().year() - 1;
+      const year = moment().year();
       const result = await dhis2Apis[0].get(
         `/api/analytics.json?dimension=dx:ZGuni8UTDTK;U2Tmx7kjSzc;OjUHkTCv6cd&dimension=pe:${year}&dimension=ou:IWp9dQGM0bS;LEVEL-2&includeNumDen=false&skipData=false&skipMeta=false`
       );
@@ -135,7 +135,7 @@ const apisDashboard1 = [
     route: `/api/getDashboard1Widget12Data`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get(
-        `/api/analytics.json?dimension=dx%3Aw8XQmI94Spv.REPORTING_RATE%3Bw8XQmI94Spv.REPORTING_RATE_ON_TIME%3BQ21U47uf0xo.REPORTING_RATE%3BQ21U47uf0xo.REPORTING_RATE_ON_TIME&dimension=ou%3AW6sNfkJcXGC%3BYvLOmtTQD6b%3BXKGgynPS1WZ%3BrO2RVJWHpCe%3BFRmrFTE63D0%3BMBZYTqkEgwf%3BhdeC7uX9Cko%3BRdNV4tTRNEo%3BVWGSudnonm5%3BquFXhkOJGB4%3BvBWtCmNNnCG%3Bc4HrGRJoarj%3BpFCZqWnXtoU%3BTOgZ99Jv0bN%3BdOhqCNenSjS%3Bsv6c7CpPcrc%3BhRQsZhmvqgS%3BK27JzTKmBKh&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&completedOnly=false&outputIdScheme=UID&filter=pe%3ALAST_12_MONTHS`
+        `/api/analytics.json?dimension=dx%3Aw8XQmI94Spv.REPORTING_RATE%3Bw8XQmI94Spv.REPORTING_RATE_ON_TIME&dimension=ou%3AW6sNfkJcXGC%3BYvLOmtTQD6b%3BXKGgynPS1WZ%3BrO2RVJWHpCe%3BFRmrFTE63D0%3BMBZYTqkEgwf%3BhdeC7uX9Cko%3BRdNV4tTRNEo%3BVWGSudnonm5%3BquFXhkOJGB4%3BvBWtCmNNnCG%3Bc4HrGRJoarj%3BpFCZqWnXtoU%3BTOgZ99Jv0bN%3BdOhqCNenSjS%3Bsv6c7CpPcrc%3BhRQsZhmvqgS%3BK27JzTKmBKh&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&completedOnly=false&outputIdScheme=UID&filter=pe%3ALAST_12_MONTHS`
       );
       return result.data;
     },

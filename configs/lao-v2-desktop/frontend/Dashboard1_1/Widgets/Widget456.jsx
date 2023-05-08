@@ -22,7 +22,7 @@ const Widget456 = ({ setLoading, dataItemId }) => {
       lastYear = [];
     let month = new Date().getMonth() + 1;
     let year = new Date().getFullYear();
-    for (let i = month; i <= month; i++) {
+    for (let i = month - 1; i <= month; i++) {
       currentYear.push(`${year}${i > 9 ? i : `0${i}`}`);
       lastYear.push(`${year - 1}${i > 9 ? i : `0${i}`}`);
     }

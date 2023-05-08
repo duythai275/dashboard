@@ -73,13 +73,16 @@ const Dashboard1_1 = () => {
           { i: "4", x: 6, y: 0, w: 2, h: 22 },
           { i: "5", x: 8, y: 0, w: 2, h: 22 },
           { i: "6", x: 10, y: 0, w: 2, h: 22 },
-          { i: "7", x: 0, y: 25, w: 6, h: 40 },
-          { i: "8", x: 6, y: 25, w: 6, h: 40 },
-          { i: "9", x: 0, y: 75, w: 4, h: 40 },
-          { i: "10", x: 4, y: 75, w: 4, h: 40 },
-          { i: "11", x: 8, y: 75, w: 4, h: 40 },
-          { i: "12", x: 0, y: 125, w: 8, h: 50 },
-          { i: "13", x: 8, y: 175, w: 4, h: 50 }
+          { i: "7", x: 0, y: 25, w: 8, h: 40 },
+          { i: "10", x: 8, y: 25, w: 4, h: 40 },
+          { i: "8", x: 0, y: 65, w: 8, h: 40 },
+          { i: "11", x: 8, y: 65, w: 4, h: 40 },
+          { i: "9", x: 0, y: 105, w: 4, h: 40 },
+          { i: "12", x: 4, y: 105, w: 8, h: 40 },
+          // { i: "10", x: 4, y: 75, w: 4, h: 40 },
+          // { i: "11", x: 8, y: 75, w: 4, h: 40 },
+          // { i: "12", x: 0, y: 125, w: 8, h: 50 },
+          // { i: "13", x: 8, y: 175, w: 4, h: 50 }
         ],
         mobile: [
           { i: "1", x: 0, y: 0, w: 12, h: 22 },
@@ -89,12 +92,12 @@ const Dashboard1_1 = () => {
           { i: "5", x: 0, y: 125, w: 12, h: 22 },
           { i: "6", x: 0, y: 175, w: 12, h: 22 },
           { i: "7", x: 0, y: 225, w: 12, h: 40 },
-          { i: "8", x: 0, y: 275, w: 12, h: 40 },
-          { i: "9", x: 0, y: 275, w: 12, h: 40 },
           { i: "10", x: 0, y: 275, w: 12, h: 40 },
+          { i: "8", x: 0, y: 275, w: 12, h: 40 },
           { i: "11", x: 0, y: 275, w: 12, h: 40 },
-          { i: "12", x: 0, y: 275, w: 12, h: 50 },
-          { i: "13", x: 0, y: 275, w: 12, h: 50 }
+          { i: "9", x: 0, y: 275, w: 12, h: 40 },
+          { i: "12", x: 0, y: 275, w: 12, h: 40 },
+          //{ i: "13", x: 0, y: 275, w: 12, h: 50 }
         ]
       }}
       cols={{ desktop: 12, mobile: 6 }}
@@ -245,7 +248,7 @@ const Dashboard1_1 = () => {
         ]}
       />
       <WidgetContainer key="12" dashboardIndex={0} widgetIndex={11} childrenWidgets={[{ title: t("widget1.12Title"), widget: <Widget12 /> }]} />
-      <WidgetContainer key="13" dashboardIndex={0} widgetIndex={12} childrenWidgets={[{ title: t("widget1.13Title"), widget: <Widget13 /> }]} />
+      {/* <WidgetContainer key="13" dashboardIndex={0} widgetIndex={12} childrenWidgets={[{ title: t("widget1.13Title"), widget: <Widget13 /> }]} /> */}
     </ReactGridLayout>
   );
 };

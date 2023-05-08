@@ -25,7 +25,7 @@ const Widget11 = ({ setLoading, dataItemId }) => {
     const listPe = [];
     let year = new Date().getFullYear();
     for (let i = 1; i <= 12; i++) {
-      listPe.push(`${year - 1}${i > 9 ? i : `0${i}`}`);
+      listPe.push(`${year}${i > 9 ? i : `0${i}`}`);
     }
     return listPe;
   }, []);

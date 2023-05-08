@@ -17,11 +17,12 @@ import { pull } from "./utils";
 import { format } from "date-fns";
 
 const dashboards = [
-  { name: "dashboard1Title", dashboard: Dashboard1_1 },
+  
   // { name: "M & C (old)", dashboard: Dashboard1 },
   { name: "dashboard2Title", dashboard: Dashboard2 },
   // { name: "dashboard3Title", dashboard: Dashboard3 },
-  { name: "dashboard4Title", dashboard: Dashboard4 }
+  { name: "dashboard4Title", dashboard: Dashboard4 },
+  { name: "dashboard1Title", dashboard: Dashboard1_1 }
 ];
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -146,40 +147,40 @@ const useDashboardInitialization = () => {
             }
           ]
         },
-        {
-          widgets: [
-            {
-              selectedChildren: 0
-            },
-            {
-              selectedChildren: 0
-            },
-            {
-              selectedChildren: 0
-            },
-            {
-              selectedChildren: 0
-            },
-            {
-              selectedChildren: 0
-            },
-            {
-              selectedChildren: 0
-            },
-            {
-              selectedChildren: 0
-            },
-            {
-              selectedChildren: 0
-            },
-            {
-              selectedChildren: 0
-            },
-            {
-              selectedChildren: 0
-            }
-          ]
-        }
+        // {
+        //   widgets: [
+        //     {
+        //       selectedChildren: 0
+        //     },
+        //     {
+        //       selectedChildren: 0
+        //     },
+        //     {
+        //       selectedChildren: 0
+        //     },
+        //     {
+        //       selectedChildren: 0
+        //     },
+        //     {
+        //       selectedChildren: 0
+        //     },
+        //     {
+        //       selectedChildren: 0
+        //     },
+        //     {
+        //       selectedChildren: 0
+        //     },
+        //     {
+        //       selectedChildren: 0
+        //     },
+        //     {
+        //       selectedChildren: 0
+        //     },
+        //     {
+        //       selectedChildren: 0
+        //     }
+        //   ]
+        // }
       ]);
       setDashboards(dashboards);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });

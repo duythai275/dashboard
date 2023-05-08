@@ -32,7 +32,7 @@ const Widget10 = ({ setLoading, dataItemId }) => {
 
   useEffect(() => {
     if (additionalState.widget10Dashboard1Ready) {
-      let year = new Date().getFullYear() - 1;
+      let year = new Date().getFullYear();
       const response = additionalState.widget10Dashboard1Data.rows
         .filter(
           (row) =>

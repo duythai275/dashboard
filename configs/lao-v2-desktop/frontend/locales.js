@@ -7,7 +7,7 @@ const locales = [
     translations: [
       {
         key: "dashboard1Title",
-        value: "Mother and Child"
+        value: "Mortality"
       },
       {
         key: "dashboard2Title",
@@ -19,27 +19,27 @@ const locales = [
       },
       {
         key: "widget1.1Title",
-        value: `Infant Death {{year}}`
+        value: `Infant Death This Year`
       },
       {
         key: "widget1.2Title",
-        value: `Child Death {{year}}`
+        value: `Child Death This Year`
       },
       {
         key: "widget1.3Title",
-        value: `Maternal Death {{year}}`
+        value: `Maternal Death This Year`
       },
       {
         key: "widget1.4Title",
-        value: `Infant Mortality {{year}}`
+        value: `Infant Mortality This Year`
       },
       {
         key: "widget1.5Title",
-        value: `Child Mortality {{year}}`
+        value: `Child Mortality This Year`
       },
       {
         key: "widget1.6Title",
-        value: `Maternal Mortality {{year}}`
+        value: `Maternal Mortality This Year`
       },
       // {
       //   key: "widget1.4Title",
@@ -85,31 +85,31 @@ const locales = [
       { key: "dec", value: "December" },
       {
         key: "widget1.12Title",
-        value: "Reporting Rate"
+        value: "Reporting Rate - This Year"
       },
       {
         key: "widget1.11.1Title",
-        value: "Infant Death by Province Last Year"
+        value: "Infant Death by Province - This Year"
       },
       {
         key: "widget1.11.2Title",
-        value: "Child Death by Province Last Year"
+        value: "Child Death by Province - This Year"
       },
       {
         key: "widget1.11.3Title",
-        value: "Maternal Death by Province Last Year"
+        value: "Maternal Death by Province - This Year"
       },
       {
         key: "widget1.10.1Title",
-        value: "Infant mortality rate by Province Last Year"
+        value: "Infant mortality rate (Annualised) by Province - This Year"
       },
       {
         key: "widget1.10.2Title",
-        value: "Child mortality rate by Province Last Year"
+        value: "Child mortality rate (Annualised) by Province - This Year"
       },
       {
         key: "widget1.10.3Title",
-        value: "Maternal mortality rate by Province Last Year"
+        value: "Maternal mortality rate (Annualised) by Province - This Year"
       },
       {
         key: "widget1.7.1Title",
@@ -125,15 +125,15 @@ const locales = [
       },
       {
         key: "widget1.8.1Title",
-        value: "Infant mortality rate (annualised)"
+        value: "Infant mortality rate (Annualised)"
       },
       {
         key: "widget1.8.2Title",
-        value: "Child mortality rate (annualised)"
+        value: "Child mortality rate (Annualised)"
       },
       {
         key: "widget1.8.3Title",
-        value: "Maternal mortality rate (annualised)"
+        value: "Maternal mortality rate (Annualised)"
       },
       {
         key: "widget2.1Title",
@@ -247,7 +247,7 @@ const locales = [
     translations: [
       {
         key: "dashboard1Title",
-        value: "Mother and Child"
+        value: "Mortality"
       },
       {
         key: "dashboard2Title",
@@ -259,27 +259,27 @@ const locales = [
       },
       {
         key: "widget1.1Title",
-        value: `Infant Death {{year}}`
+        value: `Infant Death This Year`
       },
       {
         key: "widget1.2Title",
-        value: `Child Death {{year}}`
+        value: `Child Death This Year`
       },
       {
         key: "widget1.3Title",
-        value: `Maternal Death {{year}}`
+        value: `Maternal Death This Year`
       },
       {
         key: "widget1.4Title",
-        value: `Infant Mortality {{year}}`
+        value: `Infant Mortality This Year`
       },
       {
         key: "widget1.5Title",
-        value: `Child Mortality {{year}}`
+        value: `Child Mortality This Year`
       },
       {
         key: "widget1.6Title",
-        value: `Maternal Mortality {{year}}`
+        value: `Maternal Mortality This Year`
       },
       // {
       //   key: "widget1.4Title",
@@ -326,33 +326,32 @@ const locales = [
       { key: "dec", value: "December" },
       {
         key: "widget1.12Title",
-        value: "Reporting Rate"
+        value: "Reporting Rate - This Year"
       },
       {
         key: "widget1.11.1Title",
-        value: "Infant Death by Province Last Year"
+        value: "Infant Death by Province - This Year"
       },
       {
         key: "widget1.11.2Title",
-        value: "Child Death by Province Last Year"
+        value: "Child Death by Province - This Year"
       },
       {
         key: "widget1.11.3Title",
-        value: "Maternal Death by Province Last Year"
+        value: "Maternal Death by Province - This Year"
       },
       {
         key: "widget1.10.1Title",
-        value: "Infant mortality rate by Province Last Year"
+        value: "Infant mortality rate (Annualised) by Province - This Year"
       },
       {
         key: "widget1.10.2Title",
-        value: "Child mortality rate by Province Last Year"
+        value: "Child mortality rate (Annualised) by Province - This Year"
       },
       {
         key: "widget1.10.3Title",
-        value: "Maternal mortality rate by Province Last Year"
+        value: "Maternal mortality rate (Annualised) by Province - This Year"
       },
-
       {
         key: "widget1.7.1Title",
         value: "Infant Death"
@@ -367,15 +366,15 @@ const locales = [
       },
       {
         key: "widget1.8.1Title",
-        value: "Infant mortality rate (annualised)"
+        value: "Infant mortality rate (Annualised)"
       },
       {
         key: "widget1.8.2Title",
-        value: "Child mortality rate (annualised)"
+        value: "Child mortality rate (Annualised)"
       },
       {
         key: "widget1.8.3Title",
-        value: "Maternal mortality rate (annualised)"
+        value: "Maternal mortality rate (Annualised)"
       },
       {
         key: "widget2.1Title",
