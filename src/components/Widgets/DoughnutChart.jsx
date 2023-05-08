@@ -5,26 +5,9 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 const { VITE_FONT } = import.meta.env;
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
-// const options = {
-//   responsive: true,
-//   maintainAspectRatio: false,
-//   plugins: {
-//     legend: {
-//       position: "bottom"
-//     },
-//     datalabels: {
-//       anchor: "end",
-//       align: "end",
-//       offset: -5
-//       // font: {
-//       //   weight: 500
-//       // }
-//     }
-//   }
-// };
 
-const DoughnutChart = ({ data, options }) => {
-  return <Doughnut data={data} options={options} plugins={[ChartDataLabels, labelCenter]} />;
+const DoughnutChart = ({ data, customOptions }) => {
+  return <Doughnut data={data} options={customOptions ? customOptions : options} plugins={[ChartDataLabels, labelCenter]} />;
 };
 
 export default DoughnutChart;

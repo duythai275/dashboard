@@ -19,11 +19,11 @@ const options = {
   }
 };
 
-const PieChart = ({ data }) => {
+const PieChart = ({ data, customOptions }) => {
   return (
     <Pie
       data={data}
-      options={options}
+      options={customOptions ? customOptions : options}
       // plugins={[ChartDataLabels]}
     />
   );

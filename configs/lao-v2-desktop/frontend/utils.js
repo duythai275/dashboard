@@ -16,9 +16,7 @@ const sortStringInArrayOfObject = (array, property) => {
 };
 
 const pull = async (url) => {
-  return axios.get(
-    (VITE_APP_MODE === "production" ? VITE_PRODUCTION_BASE : "") + url
-  );
+  return axios.get((VITE_APP_MODE === "production" ? VITE_PRODUCTION_BASE : "") + url);
 };
 
 export { sortStringInArrayOfObject, pull };

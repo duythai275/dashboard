@@ -33,8 +33,8 @@ const options = {
   }
 };
 
-const MultitypeChart = ({ data }) => {
-  return <Chart options={options} data={data} plugins={[ChartDataLabels]} />;
+const MultitypeChart = ({ data, customOptions }) => {
+  return <Chart options={customOptions ? customOptions : options} data={data} plugins={[ChartDataLabels]} />;
 };
 
 export default MultitypeChart;
