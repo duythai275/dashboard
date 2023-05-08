@@ -103,6 +103,6 @@ const Widget1 = ({ setLoading }) => {
     }
   };
 
-  return data && <DoughnutChart data={data} options={options} />;
+  return data && <DoughnutChart data={data} customOptions={options} />;
 };
 export default withWidgetChildrenLoader(Widget1);

@@ -23,8 +23,8 @@ const options = {
   }
 };
 
-const HorizontalBarChart = ({ data }) => {
-  return <Bar options={options} data={data} plugins={[ChartDataLabels]} />;
+const HorizontalBarChart = ({ data, customOptions }) => {
+  return <Bar options={customOptions ? customOptions : options} data={data} plugins={[ChartDataLabels]} />;
 };
 
 export default HorizontalBarChart;

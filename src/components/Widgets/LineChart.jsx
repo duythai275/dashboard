@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-} from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 const { VITE_FONT } = import.meta.env;
@@ -36,8 +27,8 @@ const options = {
   }
 };
 
-const LineChart = ({ data }) => {
-  return <Line options={options} data={data} plugins={[ChartDataLabels]} />;
+const LineChart = ({ data, customOptions }) => {
+  return <Line options={customOptions ? customOptions : options} data={data} plugins={[ChartDataLabels]} />;
 };
 
 export default LineChart;
