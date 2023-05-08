@@ -141,17 +141,13 @@ const Widget5 = ({ setLoading }) => {
         },
       },
       B: {
-        display: (chart) => {
-          console.log(chart.scale.ticks);
-          return (chart.scale.ticks[chart.scale.ticks.length - 1]?.value || 0) <
-            1000
-            ? false
-            : true;
-        },
         type: "linear",
         position: "right",
         ticks: {
           callback: function (value, index, ticks) {
+            if (value < 1000) {
+              return;
+            }
             return `${value / 1000}k`;
           },
           stepSize: 300000,
