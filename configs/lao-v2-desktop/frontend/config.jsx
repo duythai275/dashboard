@@ -21,11 +21,11 @@ const dashboards = [
   { name: "dashboard2Title", dashboard: Dashboard2 },
   { name: "dashboard4Title", dashboard: Dashboard4 },
   { name: "dashboard1Title", dashboard: Dashboard1_1 },
-  { name: "dashboard5Title", dashboard: Dashboard5 },
+  { name: "dashboard5Title", dashboard: Dashboard5 }
 ];
 const languages = locales.map((locale) => ({
   name: locale.name,
-  code: locale.code,
+  code: locale.code
 }));
 
 const useDashboardInitialization = () => {
@@ -36,15 +36,14 @@ const useDashboardInitialization = () => {
   const setMetadata = useMetadataStore((state) => state.setMetadata);
   const [ready, setReady] = useState(false);
   const { t } = useTranslation();
-  const { initDashboardState, selectDashboard, setDashboards } =
-    useDashboardStore(
-      (state) => ({
-        initDashboardState: state.initDashboardState,
-        selectDashboard: state.selectDashboard,
-        setDashboards: state.setDashboards,
-      }),
-      shallow
-    );
+  const { initDashboardState, selectDashboard, setDashboards } = useDashboardStore(
+    (state) => ({
+      initDashboardState: state.initDashboardState,
+      selectDashboard: state.selectDashboard,
+      setDashboards: state.setDashboards
+    }),
+    shallow
+  );
 
   const selectLanguage = useSelectionStore((state) => state.selectLanguage);
 
@@ -60,175 +59,175 @@ const useDashboardInitialization = () => {
         pull("/api/dataSets"),
         pull("/api/fhisIndicators"),
         pull("/api/fhisDataItems"),
-        pull("/api/lastUpdated"),
+        pull("/api/lastUpdated")
       ]);
       initDashboardState([
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
-        },
+              selectedChildren: 0
+            }
+          ]
+        }
       ]);
       setDashboards(dashboards);
-      selectDashboard({ value: 3, label: t(dashboards[3].name) });
+      selectDashboard({ value: 1, label: t(dashboards[1].name) });
       setMetadata("hmisOrgUnits", results[0].data);
       setMetadata("hmisDataItems", results[1].data);
       setMetadata("hmisIndicators", results[2].data);
@@ -258,12 +257,11 @@ const CustomControl = () => {
           display: "flex",
           alignItems: "center",
           color: "#1e4620",
-          fontSize: 14,
+          fontSize: 14
         }}
       >
         <FontAwesomeIcon icon={faCircleCheck} />
-        &nbsp;&nbsp;{t("lastUpdated")}:{" "}
-        {lastUpdated ? format(new Date(lastUpdated), "yyyy-MM-dd") : "N/A"}
+        &nbsp;&nbsp;{t("lastUpdated")}: {lastUpdated ? format(new Date(lastUpdated), "yyyy-MM-dd") : "N/A"}
       </div>
       &nbsp;&nbsp;
       <div
@@ -276,14 +274,11 @@ const CustomControl = () => {
           display: "flex",
           alignItems: "center",
           color: "#663c00",
-          fontSize: 14,
+          fontSize: 14
         }}
       >
         <FontAwesomeIcon icon={faCircleInfo} />
-        &nbsp;&nbsp;{t("asAt")}:{" "}
-        {lastUpdated
-          ? format(sub(new Date(lastUpdated), { months: 1 }), "MMMM yyyy")
-          : "N/A"}
+        &nbsp;&nbsp;{t("asAt")}: {lastUpdated ? format(sub(new Date(lastUpdated), { months: 1 }), "MMMM yyyy") : "N/A"}
       </div>
     </div>
   );

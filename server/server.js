@@ -7,6 +7,7 @@ const { VITE_APP_MODE, VITE_CONFIG_NAME } = process.env;
 const isProduction = VITE_APP_MODE === "production";
 const app = express();
 const port = isProduction ? 80 : 3001;
+const mcache = require("memory-cache");
 
 const generateDhis2Apis = async (dhis2ApiConfigs) => {
   const dhis2Apis = await Promise.all(
@@ -29,9 +30,27 @@ const startServer = async () => {
 
   await generateDhis2Apis(dhis2ApiConfigs);
 
-  setInterval(() => {
-    generateDhis2Apis(dhis2ApiConfigs);
-  }, 3600000);
+  // setInterval(() => {
+  //   generateDhis2Apis(dhis2ApiConfigs);
+  // }, 3600000);
+
+  const cache = (duration) => {
+    return (req, res, next) => {
+      let key = "__express__" + req.originalUrl || req.url;
+      let cachedBody = mcache.get(key);
+      if (cachedBody) {
+        res.send(cachedBody);
+        return;
+      } else {
+        res.sendResponse = res.send;
+        res.send = (body) => {
+          mcache.put(key, body, duration * 1000);
+          res.sendResponse(body);
+        };
+        next();
+      }
+    };
+  };
 
   app.get("/", (req, res) => {
     res.sendFile(path.resolve("./index.html"));
@@ -48,7 +67,7 @@ const startServer = async () => {
   // });
 
   apis.forEach((api) => {
-    app.get(api.route, async (req, res) => {
+    app.get(api.route, cache(86400), async (req, res) => {
       const result = await api.handler(req.app.get("dhis2Apis"), req);
       res.json(result);
     });
