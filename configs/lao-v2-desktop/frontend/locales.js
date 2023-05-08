@@ -238,7 +238,8 @@ const locales = [
       {
         key: "lastUpdated",
         value: "Last updated"
-      }
+      },
+      { key: "asAt", value: "As at" }
     ]
   },
   {
@@ -479,7 +480,8 @@ const locales = [
       {
         key: "lastUpdated",
         value: "Last updated"
-      }
+      },
+      { key: "asAt", value: "As at" }
     ]
   }
 ];
