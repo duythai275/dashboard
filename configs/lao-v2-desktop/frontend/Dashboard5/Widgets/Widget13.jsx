@@ -32,17 +32,15 @@ const Widget13 = ({ setLoading, dataItemId }) => {
 
   useEffect(() => {
     if (additionalState.widgetDashboard5EventReady) {
-    //   const response = {
-    //     data: [],
-    //   };
+      //   const response = {
+      //     data: [],
+      //   };
       let markers = [];
       dataItemId.forEach((da) => {
         if (additionalState.widgetDashboard5EventData[da]) {
           markers = [
             ...markers,
-            ...additionalState.widgetDashboard5EventData[da].map((row) => {
-              return [parseFloat(row.lat), parseFloat(row.long)];
-            }),
+            ...additionalState.widgetDashboard5EventData[da],
           ];
         }
         // response.data = [

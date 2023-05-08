@@ -40,9 +40,7 @@ const Widget7 = ({ setLoading, dataItemId }) => {
         if (additionalState.widgetDashboard5EventData[da]) {
           markers = [
             ...markers,
-            ...additionalState.widgetDashboard5EventData[da].map((row) => {
-              return [parseFloat(row.lat), parseFloat(row.long)];
-            }),
+            ...additionalState.widgetDashboard5EventData[da],
           ];
         }
         // response.data = [

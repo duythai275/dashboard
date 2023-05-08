@@ -112,29 +112,26 @@ const apisDashboard5 = [
         "7.2",
         "7.3",
       ];
-      diseaseCodes.forEach(d=>{
+      diseaseCodes.forEach((d) => {
         arr[d] = [];
-      })
+      });
       values.data.rows.forEach((row) => {
         if (
           diseaseCodes.includes(
             row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]
           )
         ) {
-          let object = {
-            de: row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")],
-            long: row[findHeaderIndex(values.data.headers, "longitude")],
-            lat: row[findHeaderIndex(values.data.headers, "latitude")],
-          };
           if (arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]]) {
-            arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push(
-              object
-            );
+            arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push([
+              row[findHeaderIndex(values.data.headers, "latitude")],
+              row[findHeaderIndex(values.data.headers, "longitude")],
+            ]);
           } else {
             arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]] = [];
-            arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push(
-              object
-            );
+            arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push([
+              row[findHeaderIndex(values.data.headers, "latitude")],
+              row[findHeaderIndex(values.data.headers, "longitude")],
+            ]);
           }
         }
       });
