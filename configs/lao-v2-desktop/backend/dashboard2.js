@@ -22,7 +22,7 @@ const apisDashboard2 = [
         }
       }
       const result = await dhis2Apis[0].get(
-        `/api/analytics.json?dimension=dx:KcdTp96b0QX&dimension=pe:${pes.join(
+        `/api/analytics.json?dimension=dx:QxmjNDdZSSS&dimension=pe:${pes.join(
           ";"
         )}&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=false&skipData=false&skipMeta=false`
       );
