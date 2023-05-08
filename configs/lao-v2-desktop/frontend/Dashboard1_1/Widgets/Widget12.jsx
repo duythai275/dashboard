@@ -33,23 +33,48 @@ const Widget12 = ({ setLoading }) => {
       labels: [],
       datasets: [],
     };
-    result.metaData.dimensions.dx.forEach((ds) => {
-      let object = {
-        label: result.metaData.items[ds].name,
-        data: [],
-      };
-      result.metaData.dimensions.ou.forEach((org) => {
-        const findData = result.rows.find(
-          (row) => row[0] === ds && row[1] === org
-        );
-        if (findData) {
-          object.data.push(parseFloat(findData[2]).toFixed(1));
-        } else {
-          object.data.push(0);
+    ["REPORTING_RATE", "REPORTING_RATE_ON_TIME"].forEach((type) => {
+      result.metaData.dimensions.dx.forEach((ds) => {
+        if (ds.includes("w8XQmI94Spv") && ds.split(".")[1] === type) {
+          let object = {
+            label: result.metaData.items[ds].name,
+            data: [],
+          };
+          result.metaData.dimensions.ou.forEach((org) => {
+            const findData = result.rows.find(
+              (row) => row[0].split(".")[1] === type && row[1] === org
+            );
+            if (findData) {
+              object.data.push(parseFloat(findData[2]).toFixed(1));
+            } else {
+              object.data.push(0);
+            }
+          });
+          currentData.datasets.push(object);
         }
       });
-      currentData.datasets.push(object);
     });
+
+    // result.metaData.dimensions.dx.forEach((ds) => {
+    //   // if (ds.includes("w8XQmI94Spv")) {
+    //      let object = {
+    //        label: result.metaData.items[ds].name,
+    //        data: [],
+    //      };
+    //      result.metaData.dimensions.ou.forEach((org) => {
+    //        const findData = result.rows.find(
+    //          (row) => row[0] === ds && row[1] === org
+    //        );
+    //        if (findData) {
+    //          object.data.push(parseFloat(findData[2]).toFixed(1));
+    //        } else {
+    //          object.data.push(0);
+    //        }
+    //      });
+    //      currentData.datasets.push(object);
+    //    //}
+    //  });
+
     result.metaData.dimensions.ou.forEach((org) => {
       currentData.labels.push(result.metaData.items[org].name);
     });
