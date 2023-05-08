@@ -77,18 +77,25 @@ const Widget4_1 = ({ setLoading }) => {
       });
       currentData.datasets = listYear.map((year, index) => ({
         label: year,
-        data: listMonth().map((month) => {
-          const foundRow = result.data.filter((row) =>
-            row.pe.includes(`${year}${month}`)
-          );
-          return foundRow.length
-            ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
-            : 0;
-        }),
+        data: listMonth()
+          .map((month) => {
+            if (
+              Number(year) === moment().year() &&
+              Number(month) >= moment().month() + 1
+            ) {
+              return null;
+            }
+            const foundRow = result.data.filter((row) =>
+              row.pe.includes(`${year}${month}`)
+            );
+            return foundRow.length
+              ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
+              : 0;
+          })
+          .filter((item) => item !== null),
         borderColor: colors[index],
         backgroundColor: colors[index],
       }));
-
       setData({ ...currentData });
     })();
   }, [i18n.language, JSON.stringify(result)]);

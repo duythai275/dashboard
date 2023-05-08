@@ -23,8 +23,9 @@ const Widget7 = ({ setLoading }) => {
 
   const listTargetPe = useMemo(() => {
     const listPe = [];
-    let year = new Date().getFullYear();
-    for (let i = 1; i <= 12; i++) {
+    const month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
+    for (let i = 1; i <= month; i++) {
       listPe.push(`${year}${i > 9 ? i : `0${i}`}`);
     }
     return listPe;

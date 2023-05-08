@@ -50,16 +50,16 @@ const Widget8 = ({ setLoading }) => {
       }));
       response.ou = resultData.data.metaData.dimensions.ou
         .map((item) => {
-          const foundOu = orgUnits.find(
-            (ou) =>
-              ou.id === item &&
-              ou.oug.find((ougItem) => ougItem.id === "jblbYwuvO33")
-          );
+          const foundOu = orgUnits.find((ou) => ou.id === item);
           return foundOu;
         })
         .filter((item) => item);
-      response.dx = resultData.data.metaData.dimensions.dx.map((item) => {
-        return item;
+      response.dx = [];
+      resultData.data.metaData.dimensions.dx.forEach((item) => {
+        const reportingText = item.split(".")[1];
+        if (!response.dx.includes(reportingText)) {
+          response.dx.push(reportingText);
+        }
       });
 
       setResult(response);
@@ -80,19 +80,10 @@ const Widget8 = ({ setLoading }) => {
         return localeName === "En" ? ou.nameEn : ou.nameLo;
       });
       currentData.datasets = result.dx.map((dx, index) => ({
-        label: (() => {
-          const dataSetId = dx.split(".")[0];
-          const reportingText = dx.split(".")[1];
-          const foundDataSet = dataSets.find(
-            (dataSet) => dataSet.id === dataSetId
-          );
-          const name =
-            localeName === "En" ? foundDataSet.nameEn : foundDataSet.nameLo;
-          return `${name} ${reportingText}`;
-        })(),
+        label: dx,
         data: result.ou.map((ou) => {
           const foundRow = result.data.filter(
-            (row) => row.ou === ou.id && row.dx === dx
+            (row) => row.ou === ou.id && row.dx.includes(dx)
           );
 
           return foundRow.length
