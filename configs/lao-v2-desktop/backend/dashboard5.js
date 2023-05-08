@@ -1,5 +1,10 @@
 const moment = require("moment");
 
+const findHeaderIndex = (headers, name) => {
+  const found = headers.findIndex((header) => header.name === name);
+  return found;
+};
+
 const apisDashboard5 = [
   {
     route: `/api/getDashboard5Data`,
@@ -84,10 +89,58 @@ const apisDashboard5 = [
         }
         page++;
       }
-
-      return values.data;
+      let arr = {};
+      const diseaseCodes = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "7.1",
+        "7.2",
+        "7.3",
+      ];
+      diseaseCodes.forEach(d=>{
+        arr[d] = [];
+      })
+      values.data.rows.forEach((row) => {
+        if (
+          diseaseCodes.includes(
+            row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]
+          )
+        ) {
+          let object = {
+            de: row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")],
+            long: row[findHeaderIndex(values.data.headers, "longitude")],
+            lat: row[findHeaderIndex(values.data.headers, "latitude")],
+          };
+          if (arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]]) {
+            arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push(
+              object
+            );
+          } else {
+            arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]] = [];
+            arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push(
+              object
+            );
+          }
+        }
+      });
+      return arr;
     },
-  }
+  },
 ];
 
 module.exports = { apisDashboard5 };

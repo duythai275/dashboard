@@ -53,6 +53,25 @@ const Widget16 = ({ setLoading }) => {
       name: pe,
       header:
         additionalState.widgetDashboard5DataWidget16.metaData.items[pe].name,
+      render: ({ value, rowIndex }) => {
+        let color = "white";
+        if (value < 60) {
+          color = "#FA7D7D";
+        } else {
+          if (value >= 60 && value <= 90) {
+            color = "#FAF69E";
+          } else {
+            color = "#97F0A7";
+          }
+        }
+        return (
+          <div style={{ background: color, paddingLeft: "10px" }}>
+            <Typography>
+              <b>{value}</b>
+            </Typography>
+          </div>
+        );
+      },
     }));
     currentData.columns.unshift({
       name: "ou",

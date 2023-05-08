@@ -32,53 +32,40 @@ const Widget11 = ({ setLoading, dataItemId }) => {
 
   useEffect(() => {
     if (additionalState.widgetDashboard5EventReady) {
-      const response = {};
-      response.data = additionalState.widgetDashboard5EventData.rows
-        .filter((row) =>
-          dataItemId.includes(
-            row[
-              findHeaderIndex(
-                additionalState.widgetDashboard5EventData.headers,
-                "Dyq13cMGMzT"
-              )
-            ]
-          )
-        )
-        .map((row) => ({
-          de: row[
-            findHeaderIndex(
-              additionalState.widgetDashboard5EventData.headers,
-              "Dyq13cMGMzT"
-            )
-          ],
-          long: row[
-            findHeaderIndex(
-              additionalState.widgetDashboard5EventData.headers,
-              "longitude"
-            )
-          ],
-          lat: row[
-            findHeaderIndex(
-              additionalState.widgetDashboard5EventData.headers,
-              "latitude"
-            )
-          ],
-        }));
-      setResult(response);
+    //   const response = {
+    //     data: [],
+    //   };
+      let markers = [];
+      dataItemId.forEach((da) => {
+        if (additionalState.widgetDashboard5EventData[da]) {
+          markers = [
+            ...markers,
+            ...additionalState.widgetDashboard5EventData[da].map((row) => {
+              return [parseFloat(row.lat), parseFloat(row.long)];
+            }),
+          ];
+        }
+        // response.data = [
+        //   ...response.data,
+        //   ...additionalState.widgetDashboard5EventData[da],
+        // ];
+      });
+      setData([...markers]);
+      //setResult(response);
     }
     setLoading(!additionalState.widgetDashboard5EventReady);
   }, [additionalState.widgetDashboard5EventReady]);
 
-  useEffect(() => {
-    if (!result) return;
+  //   useEffect(() => {
+  //     if (!result) return;
 
-    (async () => {
-      const markers = result.data.map((row) => {
-        return [parseFloat(row.lat), parseFloat(row.long)];
-      });
-      setData([...markers]);
-    })();
-  }, [i18n.language, JSON.stringify(result)]);
+  //     (async () => {
+  //       const markers = result.data.map((row) => {
+  //         return [parseFloat(row.lat), parseFloat(row.long)];
+  //       });
+  //       setData([...markers]);
+  //     })();
+  //   }, [i18n.language, JSON.stringify(result)]);
 
   return (
     data && (
