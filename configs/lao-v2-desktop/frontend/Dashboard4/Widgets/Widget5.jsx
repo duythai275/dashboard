@@ -142,7 +142,8 @@ const Widget5 = ({ setLoading }) => {
       },
       B: {
         display: (chart) => {
-          return (chart.scale.ticks[chart.scale.ticks.length]?.value || 0) <
+          console.log(chart.scale.ticks);
+          return (chart.scale.ticks[chart.scale.ticks.length - 1]?.value || 0) <
             1000
             ? false
             : true;
