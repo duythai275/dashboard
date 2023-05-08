@@ -67,10 +67,7 @@ const Widget5_2 = ({ setLoading }) => {
       });
       currentData.datasets = [
         {
-          label: getMonthName(
-            moment().month() || 12,
-            localeName === "En" ? "en-US" : localeName
-          ),
+          label: t("widget2.5.2Title").split(" - ")[0],
           data: result.ou.map((ou) => {
             const foundRow = result.data.filter((row) => row.ou === ou.id);
             return foundRow.length

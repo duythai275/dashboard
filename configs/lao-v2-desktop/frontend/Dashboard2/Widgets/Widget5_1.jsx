@@ -82,7 +82,7 @@ const Widget5_1 = ({ setLoading }) => {
       });
       currentData.datasets = [
         {
-          label: moment().year(),
+          label: t("widget2.5.1Title").split(" - ")[0],
           data: result.ou.map((ou) => {
             const foundRow = result.data.filter(
               (row) => row.ou === ou.id && listMonth.includes(row.pe.slice(4))
