@@ -252,6 +252,54 @@ const locales = [
         value: "Last updated",
       },
       { key: "asAt", value: "As at" },
+      { key: "dashboard5_widget1.1Title", value: "VPD Total - This year" },
+      { key: "dashboard5_widget2.1Title", value: "Dengue Total - This year" },
+      { key: "dashboard5_widget3.1Title", value: "FWB Total - This year" },
+      { key: "dashboard5_widget4.1Title", value: "SARI Total - This year" },
+      {
+        key: "dashboard5_widget5.1Title",
+        value: "Zoonotic Diseases and Others Total - This year",
+      },
+      { key: "dashboard5_widget6.1Title", value: "VPD Total - This year" },
+      {
+        key: "dashboard5_widget7.1Title",
+        value: "VPD Total by Province - This year",
+      },
+      { key: "dashboard5_widget8.1Title", value: "Dengue Total - This year" },
+      {
+        key: "dashboard5_widget9.1Title",
+        value: "Dengue Total by Province - This year",
+      },
+      { key: "dashboard5_widget10.1Title", value: "FWB Total - This year" },
+      {
+        key: "dashboard5_widget11.1Title",
+        value: "FWB Total by Province - This year",
+      },
+      { key: "dashboard5_widget12.1Title", value: "SARI Total - Last 3 years" },
+      {
+        key: "dashboard5_widget13.1Title",
+        value: "SARI Total by Province - This year",
+      },
+      {
+        key: "dashboard5_widget14.1Title",
+        value: "Zoonotic Diseases and Others Total - This year",
+      },
+      {
+        key: "dashboard5_widget15.1Title",
+        value: "Zoonotic Diseases and Others Total - This year",
+      },
+      {
+        key: "dashboard5_widget16.1Title",
+        value: "Notifiable Disease Reporting Rate - This year",
+      },
+      {
+        key: "dashboard5_widget17.1Title",
+        value: "Notifiable Disease Reporting Rate (annualised) - This year",
+      },
+      {
+        key: "dashboard5Title",
+        value: "NCLE"
+      }
     ],
   },
   {
@@ -506,6 +554,54 @@ const locales = [
         value: "Last updated",
       },
       { key: "asAt", value: "As at" },
+      { key: "dashboard5_widget1.1Title", value: "VPD Total - This year" },
+      { key: "dashboard5_widget2.1Title", value: "Dengue Total - This year" },
+      { key: "dashboard5_widget3.1Title", value: "FWB Total - This year" },
+      { key: "dashboard5_widget4.1Title", value: "SARI Total - This year" },
+      {
+        key: "dashboard5_widget5.1Title",
+        value: "Zoonotic Diseases and Others Total - This year",
+      },
+      { key: "dashboard5_widget6.1Title", value: "VPD Total - This year" },
+      {
+        key: "dashboard5_widget7.1Title",
+        value: "VPD Total by Province - This year",
+      },
+      { key: "dashboard5_widget8.1Title", value: "Dengue Total - This year" },
+      {
+        key: "dashboard5_widget9.1Title",
+        value: "Dengue Total by Province - This year",
+      },
+      { key: "dashboard5_widget10.1Title", value: "FWB Total - This year" },
+      {
+        key: "dashboard5_widget11.1Title",
+        value: "FWB Total by Province - This year",
+      },
+      { key: "dashboard5_widget12.1Title", value: "SARI Total - Last 3 years" },
+      {
+        key: "dashboard5_widget13.1Title",
+        value: "SARI Total by Province - This year",
+      },
+      {
+        key: "dashboard5_widget14.1Title",
+        value: "Zoonotic Diseases and Others Total - This year",
+      },
+      {
+        key: "dashboard5_widget15.1Title",
+        value: "Zoonotic Diseases and Others Total - This year",
+      },
+      {
+        key: "dashboard5_widget16.1Title",
+        value: "Notifiable Disease Reporting Rate - This year",
+      },
+      {
+        key: "dashboard5_widget17.1Title",
+        value: "Notifiable Disease Reporting Rate (annualised) - This year",
+      },
+      {
+        key: "dashboard5Title",
+        value: "NCLE"
+      }
     ],
   },
 ];

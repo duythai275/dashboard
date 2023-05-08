@@ -7,22 +7,22 @@ import { pull } from "../utils";
 const ReactGridLayout = WidthProvider(Responsive);
 
 import Widget1 from "./Widgets/Widget1";
-import Widget2 from "./Widgets/Widget1";
-import Widget3 from "./Widgets/Widget1";
-import Widget4 from "./Widgets/Widget1";
-import Widget5 from "./Widgets/Widget1";
-// import Widget6 from "./Widgets/Widget1";
-// import Widget7 from "./Widgets/Widget1";
-// import Widget8 from "./Widgets/Widget1";
-// import Widget9 from "./Widgets/Widget1";
-// import Widget10 from "./Widgets/Widget1";
-// import Widget11 from "./Widgets/Widget1";
-// import Widget12 from "./Widgets/Widget1";
-// import Widget13 from "./Widgets/Widget1";
-// import Widget14 from "./Widgets/Widget1";
-// import Widget15 from "./Widgets/Widget1";
-// import Widget16 from "./Widgets/Widget1";
-// import Widget17 from "./Widgets/Widget1";
+import Widget2 from "./Widgets/Widget2";
+import Widget3 from "./Widgets/Widget3";
+import Widget4 from "./Widgets/Widget4";
+import Widget5 from "./Widgets/Widget5";
+import Widget6 from "./Widgets/Widget6";
+import Widget7 from "./Widgets/Widget7";
+import Widget8 from "./Widgets/Widget8";
+import Widget9 from "./Widgets/Widget9";
+import Widget10 from "./Widgets/Widget10";
+import Widget11 from "./Widgets/Widget11";
+import Widget12 from "./Widgets/Widget12";
+import Widget13 from "./Widgets/Widget13";
+import Widget14 from "./Widgets/Widget14";
+import Widget15 from "./Widgets/Widget15";
+import Widget16 from "./Widgets/Widget16";
+import Widget17 from "./Widgets/Widget17";
 
 import {
   WIDGET_1_DASHBOARD_5_DATA_ITEM,
@@ -53,9 +53,30 @@ const Dashboard5 = () => {
   useEffect(() => {
     (async () => {
       changeAdditionalStateProperty("widgetDashboard5Ready", false);
+      changeAdditionalStateProperty("widgetDashboard5Widget16Ready", false);
+      changeAdditionalStateProperty("widgetDashboard5Widget17Ready", false);
+      changeAdditionalStateProperty("widgetDashboard5EventReady", false);
       const result = await pull("/api/getDashboard5Data");
+      const result16 = await pull("/api/getDashboard5DataWidget16");
+      const result17 = await pull("/api/getDashboard5DataWidget17");
+      const resultEvents = await pull("/api/getDashboard5EventData");
       changeAdditionalStateProperty("widgetDashboard5Ready", true);
+      changeAdditionalStateProperty("widgetDashboard5Widget16Ready", true);
+      changeAdditionalStateProperty("widgetDashboard5Widget17Ready", true);
+      changeAdditionalStateProperty("widgetDashboard5EventReady", true);
       changeAdditionalStateProperty("widgetDashboard5Data", result.data);
+      changeAdditionalStateProperty(
+        "widgetDashboard5DataWidget16",
+        result16.data
+      );
+      changeAdditionalStateProperty(
+        "widgetDashboard5DataWidget17",
+        result17.data
+      );  
+      changeAdditionalStateProperty(
+        "widgetDashboard5EventData",
+        resultEvents.data
+      );
     })();
   }, []);
 
@@ -169,7 +190,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget6.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget6 dataItemId={WIDGET_6_DASHBOARD_5_DATA_ITEM} />,
           },
         ]}
       />
@@ -180,7 +201,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget7.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_5_DATA_ITEM} />,
           },
         ]}
       />
@@ -191,7 +212,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget8.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget8 dataItemId={WIDGET_8_DASHBOARD_5_DATA_ITEM} />,
           },
         ]}
       />
@@ -202,7 +223,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget9.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget9 dataItemId={WIDGET_9_DASHBOARD_5_DATA_ITEM} />,
           },
         ]}
       />
@@ -213,7 +234,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget10.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget10 dataItemId={WIDGET_10_DASHBOARD_5_DATA_ITEM} />,
           },
         ]}
       />
@@ -224,7 +245,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget11.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_5_DATA_ITEM} />,
           },
         ]}
       />
@@ -235,7 +256,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget12.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget12 dataItemId={WIDGET_12_DASHBOARD_5_DATA_ITEM} />,
           },
         ]}
       />
@@ -246,7 +267,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget13.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget13 dataItemId={WIDGET_13_DASHBOARD_5_DATA_ITEM} />,
           },
         ]}
       />
@@ -257,7 +278,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget14.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget14 dataItemId={WIDGET_14_DASHBOARD_5_DATA_ITEM} />,
           },
         ]}
       />
@@ -268,7 +289,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget15.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget15 dataItemId={WIDGET_15_DASHBOARD_5_DATA_ITEM} />,
           },
         ]}
       />
@@ -279,7 +300,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget16.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget16 />,
           },
         ]}
       />
@@ -290,7 +311,7 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget17.1Title"),
-            widget: <div>hehe</div>,
+            widget: <Widget17 />,
           },
         ]}
       />
