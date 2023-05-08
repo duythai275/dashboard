@@ -32,9 +32,9 @@ const Widget15 = ({ setLoading, dataItemId }) => {
 
   useEffect(() => {
     if (additionalState.widgetDashboard5EventReady) {
-      const response = {
-        data: [],
-      };
+    //   const response = {
+    //     data: [],
+    //   };
       let markers = [];
       dataItemId.forEach((da) => {
         if (additionalState.widgetDashboard5EventData[da]) {
@@ -45,10 +45,10 @@ const Widget15 = ({ setLoading, dataItemId }) => {
             }),
           ];
         }
-        response.data = [
-          ...response.data,
-          ...additionalState.widgetDashboard5EventData[da],
-        ];
+        // response.data = [
+        //   ...response.data,
+        //   ...additionalState.widgetDashboard5EventData[da],
+        // ];
       });
       setData([...markers]);
       //setResult(response);
