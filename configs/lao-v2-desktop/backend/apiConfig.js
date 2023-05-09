@@ -3,6 +3,7 @@ const { apisDashboard2 } = require("./dashboard2");
 const { apisDashboard3 } = require("./dashboard3");
 const { apisDashboard4 } = require("./dashboard4");
 const { apisDashboard5 } = require("./dashboard5");
+const { apisDashboard6 } = require("./dashboard6");
 const { apisGeneral } = require("./general");
 
 require("dotenv").config();
@@ -21,7 +22,8 @@ const apis = [
   ...apisDashboard2,
   ...apisDashboard3,
   ...apisDashboard4,
-  ...apisDashboard5
+  ...apisDashboard5,
+  ...apisDashboard6,
 ];
 const dhis2ApiConfigs = [
   // {

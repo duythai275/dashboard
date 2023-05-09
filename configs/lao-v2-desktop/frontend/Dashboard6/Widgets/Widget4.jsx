@@ -1,31 +1,37 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
-import useDashboardStore from "@/state/dashboard";
 
 import BarChart from "@/components/Widgets/BarChart";
 import useMetadataStore from "@/state/metadata";
 import { pull } from "../../utils";
 
-const Widget8 = ({ setLoading }) => {
+const colors = [
+  "#A8BF24",
+  "#518CC3",
+  "#D74554",
+  "#FF9E21",
+  "#968F8F",
+  "#BA3BA1",
+  "#FFDA54",
+];
+
+const Widget4 = ({ setLoading }) => {
   const { orgUnits, dataSets } = useMetadataStore((state) => ({
     orgUnits: state.hmisOrgUnits,
     dataSets: state.hmisDataSets,
   }));
-  const additionalState = useDashboardStore((state) => state.additionalState);
   const [data, setData] = useState(null);
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
-
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const resultData = await pull("/api/getDashboard2Widget8Data");
+      const resultData = await pull("/api/getDashboard6Widget4Data");
       const response = {};
-
       response.data = resultData.data.rows.map((row) => ({
-        dx: row[0],
+        item: row[0],
         value: row[2],
         ou: row[1],
       }));
@@ -35,42 +41,38 @@ const Widget8 = ({ setLoading }) => {
           return foundOu;
         })
         .filter((item) => item);
-      response.dx = [];
-      resultData.data.metaData.dimensions.dx.forEach((item) => {
-        const reportingText = item.split(".")[1];
-        if (!response.dx.includes(reportingText)) {
-          response.dx.push(reportingText);
-        }
+      response.dx = resultData.data.metaData.dimensions.dx.map((item) => {
+        const foundDataSet = dataSets.find(
+          (dataSet) => dataSet.id === item.split(".")[0]
+        );
+        return { ...foundDataSet, reportingType: item.split(".")[1] };
       });
-
       setResult(response);
       setLoading(false);
     })();
-  }, [additionalState.widget14_15_17Dashboard2Ready]);
+  }, []);
 
   useEffect(() => {
     if (!result) return;
 
     (async () => {
       const localeName = i18n.language === "en" ? "En" : "Lo";
-
-      const colors = ["#A8BF24", "#5790C6", "#D52E45", "#FF9E21"];
       let currentData = {};
-
       currentData.labels = result.ou.map((ou) => {
         return localeName === "En" ? ou.nameEn : ou.nameLo;
       });
       currentData.datasets = result.dx.map((dx, index) => ({
-        label: t(dx),
+        label:
+          localeName === "En"
+            ? `${dx.nameEn} ${t(dx.reportingType)}`
+            : `${dx.nameLo} ${t(dx.reportingType)}`,
         data: result.ou.map((ou) => {
           const foundRow = result.data.filter(
-            (row) => row.ou === ou.id && row.dx.includes(dx)
+            (row) =>
+              row.ou === ou.id && row.item === `${dx.id}.${dx.reportingType}`
           );
-
           return foundRow.length
-            ? foundRow
-                .reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
-                .toFixed(1)
+            ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
             : 0;
         }),
         borderColor: colors[index],
@@ -80,7 +82,35 @@ const Widget8 = ({ setLoading }) => {
       setData({ ...currentData });
     })();
   }, [i18n.language, JSON.stringify(result)]);
-
-  return data && <BarChart data={data} />;
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: 18,
+    },
+    plugins: {
+      lineAt: {
+        lineAt: 95,
+        thickness: 2,
+        color: "black",
+      },
+      legend: {
+        position: "bottom",
+      },
+      datalabels: {
+        anchor: "end",
+        align: "end",
+        offset: -5,
+        color: "#fff",
+        borderColor: "#000",
+        textStrokeColor: "black", // <-- added this
+        textStrokeWidth: 3, // <-- added this,
+        font: {
+          size: 10,
+        },
+      },
+    },
+  };
+  return data && <BarChart data={data} customOptions={options} />;
 };
-export default withWidgetChildrenLoader(Widget8);
+export default withWidgetChildrenLoader(Widget4);

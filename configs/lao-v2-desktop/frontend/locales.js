@@ -137,7 +137,7 @@ const locales = [
       },
       {
         key: "widget2.1Title",
-        value: "SBA total - This year",
+        value: "SBA Total - This year",
       },
       {
         key: "widget2.2Title",
@@ -146,7 +146,7 @@ const locales = [
       { key: "widget2.3Title", value: "SBA Coverage (Annualized) - This year" },
       {
         key: "widget2.4.1Title",
-        value: "Lao PDR - MCH: Total number of SBA - Last 3 years",
+        value: "Lao PDR - SBA Total - Last 3 years",
       },
       {
         key: "widget2.4.2Title",
@@ -154,19 +154,19 @@ const locales = [
       },
       {
         key: "widget2.5.1Title",
-        value: "MCH: Total number of SBA - This year",
+        value: "SBA Total by Province - This year",
       },
       {
         key: "widget2.5.2Title",
-        value: "MCH: SBA coverage (Annualized) - This year",
+        value: "MCH: SBA coverage (Annualized) by Province - This year",
       },
       {
         key: "widget2.6Title",
-        value: "SBA Coverage (Annualized) by Province - This year",
+        value: "SBA Total by Provinces - This year",
       },
       {
         key: "widget2.7Title",
-        value: "SBA total by Provinces - This year",
+        value: "SBA Coverage (Annualized) by Province - This year",
       },
       {
         key: "widget2.8Title",
@@ -298,8 +298,48 @@ const locales = [
       },
       {
         key: "dashboard5Title",
-        value: "NCLE"
-      }
+        value: "NCLE",
+      },
+      {
+        key: "dashboard6_widget1Title",
+        value: "Life Cycle Chart - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget2Title",
+        value: "ANC1 - ANC4 Dropout Rate - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget3Title",
+        value: "Penta1 - Penta3 Dropout Rate - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget4Title",
+        value: "EPI Reporting and Timeliness Rate by Province - Last 12 months",
+      },
+      {
+        key: "dashboard6Title",
+        value: "Mother and Child",
+      },
+      {
+        key: "REPORTING_RATE",
+        value: "Reporting rate",
+      },
+      {
+        key: "REPORTING_RATE_ON_TIME",
+        value: "Reporting rate on time",
+      },
+      {
+        key: "dataFromDhis2",
+        value: "Data reported in DHIS2 only",
+      },
+      {
+        key: "widget2.5.1LegendTitle",
+        value: "SBA Total",
+      },
+      {
+        key: "widget2.5.2LegendTitle",
+        value: "MCH: SBA coverage (Annualized)",
+      },
     ],
   },
   {
@@ -439,7 +479,7 @@ const locales = [
       },
       {
         key: "widget2.1Title",
-        value: "SBA total - This year",
+        value: "SBA Total - This year",
       },
       {
         key: "widget2.2Title",
@@ -448,7 +488,7 @@ const locales = [
       { key: "widget2.3Title", value: "SBA Coverage (Annualized) - This year" },
       {
         key: "widget2.4.1Title",
-        value: "Lao PDR - MCH: Total number of SBA - Last 3 years",
+        value: "Lao PDR - SBA Total - Last 3 years",
       },
       {
         key: "widget2.4.2Title",
@@ -456,19 +496,19 @@ const locales = [
       },
       {
         key: "widget2.5.1Title",
-        value: "MCH: Total number of SBA - This year",
+        value: "SBA Total by Province - This year",
       },
       {
         key: "widget2.5.2Title",
-        value: "MCH: SBA coverage (Annualized) - This year",
+        value: "MCH: SBA coverage (Annualized) by Province - This year",
       },
       {
         key: "widget2.6Title",
-        value: "SBA Coverage (Annualized) by Province - This year",
+        value: "SBA Total by Provinces - This year",
       },
       {
         key: "widget2.7Title",
-        value: "SBA total by Provinces - This year",
+        value: "SBA Coverage (Annualized) by Province - This year",
       },
       {
         key: "widget2.8Title",
@@ -600,8 +640,48 @@ const locales = [
       },
       {
         key: "dashboard5Title",
-        value: "NCLE"
-      }
+        value: "NCLE",
+      },
+      {
+        key: "dashboard6_widget1Title",
+        value: "Life Cycle Chart - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget2Title",
+        value: "ANC1 - ANC4 Dropout Rate - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget3Title",
+        value: "Penta1 - Penta3 Dropout Rate - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget4Title",
+        value: "EPI Reporting and Timeliness Rate by Province - Last 12 months",
+      },
+      {
+        key: "dashboard6Title",
+        value: "Mother and Child",
+      },
+      {
+        key: "REPORTING_RATE",
+        value: "Reporting rate",
+      },
+      {
+        key: "REPORTING_RATE_ON_TIME",
+        value: "Reporting rate on time",
+      },
+      {
+        key: "dataFromDhis2",
+        value: "Data reported in DHIS2 only",
+      },
+      {
+        key: "widget2.5.1LegendTitle",
+        value: "SBA Total",
+      },
+      {
+        key: "widget2.5.2LegendTitle",
+        value: "MCH: SBA coverage (Annualized)",
+      },
     ],
   },
 ];
