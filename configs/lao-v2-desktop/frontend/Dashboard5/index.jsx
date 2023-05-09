@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
 import useDashboardStore from "@/state/dashboard";
+import useMetadataStore from "@/state/metadata";
 import { useTranslation } from "react-i18next";
 import { pull } from "../utils";
 const ReactGridLayout = WidthProvider(Responsive);
@@ -50,6 +51,11 @@ const Dashboard5 = () => {
     (state) => state.changeAdditionalStateProperty
   );
 
+  let hmisGeoJson = useMetadataStore((state) => state.hmisGeoJson);
+  hmisGeoJson = hmisGeoJson.features.filter(
+    (f) => f.properties.level === "2" && f.geometry.type !== "Point"
+  );
+
   useEffect(() => {
     (async () => {
       changeAdditionalStateProperty("widgetDashboard5Ready", false);
@@ -60,6 +66,7 @@ const Dashboard5 = () => {
       const result16 = await pull("/api/getDashboard5DataWidget16");
       const result17 = await pull("/api/getDashboard5DataWidget17");
       const resultEvents = await pull("/api/getDashboard5EventData");
+      console.log(resultEvents);
       changeAdditionalStateProperty("widgetDashboard5Ready", true);
       changeAdditionalStateProperty("widgetDashboard5Widget16Ready", true);
       changeAdditionalStateProperty("widgetDashboard5Widget17Ready", true);
@@ -72,7 +79,7 @@ const Dashboard5 = () => {
       changeAdditionalStateProperty(
         "widgetDashboard5DataWidget17",
         result17.data
-      );  
+      );
       changeAdditionalStateProperty(
         "widgetDashboard5EventData",
         resultEvents.data
@@ -201,7 +208,12 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget7.1Title"),
-            widget: <Widget7 dataItemId={WIDGET_7_DASHBOARD_5_DATA_ITEM} />,
+            widget: (
+              <Widget7
+                dataItemId={WIDGET_7_DASHBOARD_5_DATA_ITEM}
+                hmisGeoJson={hmisGeoJson}
+              />
+            ),
           },
         ]}
       />
@@ -223,7 +235,12 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget9.1Title"),
-            widget: <Widget9 dataItemId={WIDGET_9_DASHBOARD_5_DATA_ITEM} />,
+            widget: (
+              <Widget9
+                dataItemId={WIDGET_9_DASHBOARD_5_DATA_ITEM}
+                hmisGeoJson={hmisGeoJson}
+              />
+            ),
           },
         ]}
       />
@@ -245,7 +262,12 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget11.1Title"),
-            widget: <Widget11 dataItemId={WIDGET_11_DASHBOARD_5_DATA_ITEM} />,
+            widget: (
+              <Widget11
+                dataItemId={WIDGET_11_DASHBOARD_5_DATA_ITEM}
+                hmisGeoJson={hmisGeoJson}
+              />
+            ),
           },
         ]}
       />
@@ -267,7 +289,12 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget13.1Title"),
-            widget: <Widget13 dataItemId={WIDGET_13_DASHBOARD_5_DATA_ITEM} />,
+            widget: (
+              <Widget13
+                dataItemId={WIDGET_13_DASHBOARD_5_DATA_ITEM}
+                hmisGeoJson={hmisGeoJson}
+              />
+            ),
           },
         ]}
       />
@@ -289,7 +316,12 @@ const Dashboard5 = () => {
         childrenWidgets={[
           {
             title: t("dashboard5_widget15.1Title"),
-            widget: <Widget15 dataItemId={WIDGET_15_DASHBOARD_5_DATA_ITEM} />,
+            widget: (
+              <Widget15
+                dataItemId={WIDGET_15_DASHBOARD_5_DATA_ITEM}
+                hmisGeoJson={hmisGeoJson}
+              />
+            ),
           },
         ]}
       />

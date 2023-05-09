@@ -5,6 +5,30 @@ const findHeaderIndex = (headers, name) => {
   return found;
 };
 
+const returnEventValue = (values, arr, diseaseCodes) => {
+  values.data.rows.forEach((row) => {
+    if (
+      diseaseCodes.includes(
+        row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]
+      )
+    ) {
+      if (arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]]) {
+        arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push([
+          row[findHeaderIndex(values.data.headers, "latitude")],
+          row[findHeaderIndex(values.data.headers, "longitude")],
+        ]);
+      } else {
+        arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]] = [];
+        arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push([
+          row[findHeaderIndex(values.data.headers, "latitude")],
+          row[findHeaderIndex(values.data.headers, "longitude")],
+        ]);
+      }
+    }
+  });
+  return arr;
+};
+
 const apisDashboard5 = [
   {
     route: `/api/getDashboard5Data`,
@@ -68,27 +92,6 @@ const apisDashboard5 = [
       for (let i = 1; i < month; i++) {
         pes.push(`${year}${i > 9 ? i : `0${i}`}`);
       }
-      let flag = true;
-      let page = 1;
-      let values = null;
-      while (flag) {
-        const result = await dhis2Apis[0].get(
-          `/api/analytics/events/query/h6x4kyzKyK3.json?dimension=pe:${pes.join(
-            ";"
-          )}&dimension=ou:IWp9dQGM0bS&dimension=SoDTon4X8Kt.Dyq13cMGMzT&stage=SoDTon4X8Kt&displayProperty=NAME&outputType=EVENT&desc=eventdate&pageSize=5000&page=${page}&totalPages=true`
-        );
-        if (page === 1) {
-          values = result;
-        }
-        if (result.data.rows.length === 0) {
-          flag = false;
-        } else {
-          if (page > 1) {
-            values.data.rows = [...values.data.rows, ...result.data.rows];
-          }
-        }
-        page++;
-      }
       let arr = {};
       const diseaseCodes = [
         "1",
@@ -115,26 +118,52 @@ const apisDashboard5 = [
       diseaseCodes.forEach((d) => {
         arr[d] = [];
       });
-      values.data.rows.forEach((row) => {
-        if (
-          diseaseCodes.includes(
-            row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]
-          )
-        ) {
-          if (arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]]) {
-            arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push([
-              row[findHeaderIndex(values.data.headers, "latitude")],
-              row[findHeaderIndex(values.data.headers, "longitude")],
-            ]);
-          } else {
-            arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]] = [];
-            arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push([
-              row[findHeaderIndex(values.data.headers, "latitude")],
-              row[findHeaderIndex(values.data.headers, "longitude")],
-            ]);
-          }
+      let flag = true;
+      let page = 1;
+      // let values = null;
+      // while (flag) {
+      //   const result = await dhis2Apis[0].get(
+      //     `/api/analytics/events/query/h6x4kyzKyK3.json?dimension=pe:${pes.join(
+      //       ";"
+      //     )}&dimension=ou:IWp9dQGM0bS&dimension=SoDTon4X8Kt.Dyq13cMGMzT&stage=SoDTon4X8Kt&displayProperty=NAME&outputType=EVENT&desc=eventdate&pageSize=5000&page=${page}&totalPages=true`
+      //   );
+      //   // if (page === 1) {
+      //   //   //values = result;
+      //   //   arr = returnEventValue(result,arr, diseaseCodes)
+      //   // }
+      //   if (result.data.rows.length === 0) {
+      //     flag = false;
+      //   } else {
+      //     //if (page > 1) {
+      //     arr = returnEventValue(result, arr, diseaseCodes);
+      //     //values.data.rows = [...values.data.rows, ...result.data.rows];
+      //     //}
+      //   }
+      //   page++;
+      // }
+
+      while (flag) {
+        let arrRequests = [];
+        for (let i = page; i <= page + 9; i++) {
+          arrRequests.push(
+            dhis2Apis[0].get(
+              `/api/analytics/events/query/h6x4kyzKyK3.json?dimension=pe:${pes.join(
+                ";"
+              )}&dimension=ou:IWp9dQGM0bS&dimension=SoDTon4X8Kt.Dyq13cMGMzT&stage=SoDTon4X8Kt&displayProperty=NAME&outputType=EVENT&desc=eventdate&pageSize=1000&page=${i}&totalPages=true`
+            )
+          );
         }
-      });
+        const results = await Promise.all(arrRequests);
+        results.forEach((result) => {
+          if (result.data.rows.length === 0) {
+            flag = false;
+          } else {
+            arr = returnEventValue(result, arr, diseaseCodes);
+          }
+        });
+        page += 10;
+      }
+
       return arr;
     },
   },

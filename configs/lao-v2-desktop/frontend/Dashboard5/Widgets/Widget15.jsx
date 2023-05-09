@@ -23,9 +23,9 @@ const caseMarker = new L.Icon({
 
 const ReactGridLayout = WidthProvider(Responsive);
 
-const Widget15 = ({ setLoading, dataItemId }) => {
+const Widget15 = ({ setLoading, dataItemId, hmisGeoJson }) => {
   const { i18n, t } = useTranslation();
-  const hmisGeoJson = useMetadataStore((state) => state.hmisGeoJson);
+  //const hmisGeoJson = useMetadataStore((state) => state.hmisGeoJson);
   const [data, setData] = useState([]);
   const additionalState = useDashboardStore((state) => state.additionalState);
   const [result, setResult] = useState(null);
@@ -48,7 +48,9 @@ const Widget15 = ({ setLoading, dataItemId }) => {
         //   ...additionalState.widgetDashboard5EventData[da],
         // ];
       });
-      setData([...markers]);
+      setData(markers);
+      console.log("hehe_15")
+      console.log(markers)
       //setResult(response);
     }
     setLoading(!additionalState.widgetDashboard5EventReady);
@@ -68,9 +70,7 @@ const Widget15 = ({ setLoading, dataItemId }) => {
   return (
     data && (
       <ClusterMap
-        features={hmisGeoJson.features.filter(
-          (f) => f.properties.level === "2" && f.geometry.type !== "Point"
-        )}
+        features={hmisGeoJson}
         markers={data}
         icon={caseMarker}
       />
