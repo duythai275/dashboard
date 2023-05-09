@@ -91,7 +91,7 @@ const Widget456 = ({ setLoading, dataItemId }) => {
             }}
           >
             <Typography textAlign="center" sx={{ fontWeight: "700", fontSize: "35px" }}>
-              {data.currentYearData}
+              {data.currentYearData} %
             </Typography>
             <Typography textAlign="center" sx={{ fontSize: "15px" }}>
               {t("lastPeriod", { value: data.lastYearData })}
