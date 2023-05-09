@@ -340,6 +340,10 @@ const locales = [
         key: "widget2.5.2LegendTitle",
         value: "MCH: SBA coverage (Annualized)",
       },
+      {
+        key: "dashboard7Title",
+        value: "ຄູ່ມືລະບົບ HMIS ຂອງ ສປປລາວ",
+      },
     ],
   },
   {
@@ -681,6 +685,10 @@ const locales = [
       {
         key: "widget2.5.2LegendTitle",
         value: "MCH: SBA coverage (Annualized)",
+      },
+      {
+        key: "dashboard7Title",
+        value: "HMIS Super Doc",
       },
     ],
   },
