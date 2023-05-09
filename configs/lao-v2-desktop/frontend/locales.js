@@ -298,8 +298,36 @@ const locales = [
       },
       {
         key: "dashboard5Title",
-        value: "NCLE"
-      }
+        value: "NCLE",
+      },
+      {
+        key: "dashboard6_widget1Title",
+        value: "Life Cycle Chart - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget2Title",
+        value: "ANC1 - ANC4 Dropout Rate - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget3Title",
+        value: "Penta1 - Penta3 Dropout Rate - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget4Title",
+        value: "EPI Reporting and Timeliness Rate by Province - Last 12 months",
+      },
+      {
+        key: "dashboard6Title",
+        value: "Mother and Child",
+      },
+      {
+        key: "REPORTING_RATE",
+        value: "Reporting rate",
+      },
+      {
+        key: "REPORTING_RATE_ON_TIME",
+        value: "Reporting rate on time",
+      },
     ],
   },
   {
@@ -600,8 +628,36 @@ const locales = [
       },
       {
         key: "dashboard5Title",
-        value: "NCLE"
-      }
+        value: "NCLE",
+      },
+      {
+        key: "dashboard6_widget1Title",
+        value: "Life Cycle Chart - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget2Title",
+        value: "ANC1 - ANC4 Dropout Rate - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget3Title",
+        value: "Penta1 - Penta3 Dropout Rate - Last 12 months",
+      },
+      {
+        key: "dashboard6_widget4Title",
+        value: "EPI Reporting and Timeliness Rate by Province - Last 12 months",
+      },
+      {
+        key: "dashboard6Title",
+        value: "Mother and Child",
+      },
+      {
+        key: "REPORTING_RATE",
+        value: "Reporting rate",
+      },
+      {
+        key: "REPORTING_RATE_ON_TIME",
+        value: "Reporting rate on time",
+      },
     ],
   },
 ];
