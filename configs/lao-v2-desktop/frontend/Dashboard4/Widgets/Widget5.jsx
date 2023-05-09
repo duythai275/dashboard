@@ -12,7 +12,7 @@ const Widget5 = ({ setLoading }) => {
   const { orgUnits, indicators, dataItems } = useMetadataStore((state) => ({
     orgUnits: state.hmisOrgUnits,
     indicators: state.fhisIndicators,
-    dataItems: state.fhisDataItems
+    dataItems: state.fhisDataItems,
   }));
   const additionalState = useDashboardStore((state) => state.additionalState);
   const [data, setData] = useState(null);
@@ -46,7 +46,7 @@ const Widget5 = ({ setLoading }) => {
       response.data = resultData.data.rows.map((row) => ({
         dx: row[0],
         value: row[2],
-        ou: row[1]
+        ou: row[1],
       }));
       response.ou = resultData.data.metaData.dimensions.ou
         .map((item) => {
@@ -74,11 +74,15 @@ const Widget5 = ({ setLoading }) => {
 
       const dataMappingAlongOu = result.ou
         .map((ou) => {
-          const foundRow = result.data.filter((row) => row.ou === ou.id && row.dx === "zXwbQ7jd7mw");
+          const foundRow = result.data.filter(
+            (row) => row.ou === ou.id && row.dx === "zXwbQ7jd7mw"
+          );
 
           return {
-            data: foundRow.length ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0) : 0,
-            ou
+            data: foundRow.length
+              ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
+              : 0,
+            ou,
           };
         })
         .sort((a, b) => b.data - a.data);
@@ -88,25 +92,39 @@ const Widget5 = ({ setLoading }) => {
       });
       currentData.datasets = result.dx.map((dx, index) => ({
         label: (() => {
-          const foundIndicator = indicators.find((indicator) => indicator.id === dx);
+          const foundIndicator = indicators.find(
+            (indicator) => indicator.id === dx
+          );
 
-          const foundDataItems = dataItems.find((dataItem) => dataItem.id === dx);
+          const foundDataItems = dataItems.find(
+            (dataItem) => dataItem.id === dx
+          );
           if (foundIndicator) {
-            const name = localeName === "En" ? foundIndicator?.nameEn : foundIndicator?.nameLo;
+            const name =
+              localeName === "En"
+                ? foundIndicator?.nameEn
+                : foundIndicator?.nameLo;
             return `${name}`;
           }
 
-          const name = localeName === "En" ? foundDataItems?.nameEn : foundDataItems?.nameLo;
+          const name =
+            localeName === "En"
+              ? foundDataItems?.nameEn
+              : foundDataItems?.nameLo;
           return `${name}`;
         })(),
         data: dataMappingAlongOu.map((item) => {
-          const foundRow = result.data.filter((row) => row.ou === item.ou.id && row.dx === dx);
+          const foundRow = result.data.filter(
+            (row) => row.ou === item.ou.id && row.dx === dx
+          );
 
-          return foundRow.length ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0) : 0;
+          return foundRow.length
+            ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
+            : 0;
         }),
         borderColor: colors[index],
         backgroundColor: colors[index],
-        yAxisID: dx === "zXwbQ7jd7mw" ? "A" : "B"
+        yAxisID: dx === "zXwbQ7jd7mw" ? "A" : "B",
       }));
       setData({ ...currentData });
     })();
@@ -119,27 +137,27 @@ const Widget5 = ({ setLoading }) => {
         type: "linear",
         position: "left",
         ticks: {
-          stepSize: 30
-        }
+          stepSize: 30,
+        },
       },
       B: {
         type: "linear",
         position: "right",
         ticks: {
           callback: function (value, index, ticks) {
-            if (value < 1000) {
+            if (value < 300000) {
               return;
             }
             return `${value / 1000}k`;
           },
-          stepSize: 300000
-        }
-      }
+          stepSize: 300000,
+        },
+      },
     },
 
     plugins: {
       legend: {
-        position: "bottom"
+        position: "bottom",
       },
       datalabels: {
         anchor: "end",
@@ -150,10 +168,10 @@ const Widget5 = ({ setLoading }) => {
         textStrokeColor: "black", // <-- added this
         textStrokeWidth: 3, // <-- added this,
         font: {
-          size: 10
-        }
-      }
-    }
+          size: 10,
+        },
+      },
+    },
   };
 
   return data && <BarChart data={data} customOptions={options} />;
