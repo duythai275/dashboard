@@ -19,16 +19,22 @@ import { format, sub } from "date-fns";
 import Dashboard6 from "./Dashboard6";
 
 const dashboards = [
-  { name: "dashboard2Title", dashboard: Dashboard2 },
   { name: "dashboard4Title", dashboard: Dashboard4 },
-  { name: "dashboard1Title", dashboard: Dashboard1_1 },
   { name: "dashboard5Title", dashboard: Dashboard5 },
+  { name: "dashboard2Title", dashboard: Dashboard2 },
   { name: "dashboard6Title", dashboard: Dashboard6 },
+  { name: "dashboard1Title", dashboard: Dashboard1_1 },
 ];
 const languages = locales.map((locale) => ({
   name: locale.name,
   code: locale.code,
 }));
+
+// { name: "dashboard2Title", dashboard: Dashboard2 },
+// { name: "dashboard4Title", dashboard: Dashboard4 },
+// { name: "dashboard1Title", dashboard: Dashboard1_1 },
+// { name: "dashboard5Title", dashboard: Dashboard5 },
+// { name: "dashboard6Title", dashboard: Dashboard6 },
 
 const useDashboardInitialization = () => {
   locales.forEach((locale) => {
@@ -131,25 +137,6 @@ const useDashboardInitialization = () => {
             {
               selectedChildren: 0,
             },
-          ],
-        },
-        {
-          widgets: [
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
             {
               selectedChildren: 0,
             },
@@ -175,27 +162,6 @@ const useDashboardInitialization = () => {
         },
         {
           widgets: [
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
             {
               selectedChildren: 0,
             },
@@ -230,6 +196,46 @@ const useDashboardInitialization = () => {
         },
         {
           widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+          ],
+        },
+        {
+          widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
             {
               selectedChildren: 0,
             },

@@ -68,7 +68,7 @@ const Dashboard2 = () => {
     >
       <WidgetContainer
         key="1"
-        dashboardIndex={0}
+        dashboardIndex={2}
         widgetIndex={0}
         childrenWidgets={[
           {
@@ -81,7 +81,7 @@ const Dashboard2 = () => {
       />
       <WidgetContainer
         key="2"
-        dashboardIndex={0}
+        dashboardIndex={2}
         widgetIndex={1}
         childrenWidgets={[
           {
@@ -94,7 +94,7 @@ const Dashboard2 = () => {
       />
       <WidgetContainer
         key="3"
-        dashboardIndex={0}
+        dashboardIndex={2}
         widgetIndex={2}
         childrenWidgets={[
           {
@@ -107,7 +107,7 @@ const Dashboard2 = () => {
       />
       <WidgetContainer
         key="4"
-        dashboardIndex={0}
+        dashboardIndex={2}
         widgetIndex={3}
         childrenWidgets={[
           { title: t("widget2.4.1Title"), widget: <Widget4_1 /> },
@@ -116,7 +116,7 @@ const Dashboard2 = () => {
       />
       <WidgetContainer
         key="5"
-        dashboardIndex={0}
+        dashboardIndex={2}
         widgetIndex={4}
         childrenWidgets={[
           { title: t("widget2.5.1Title"), widget: <Widget5_1 /> },
@@ -125,7 +125,7 @@ const Dashboard2 = () => {
       />
       <WidgetContainer
         key="6"
-        dashboardIndex={0}
+        dashboardIndex={2}
         widgetIndex={5}
         childrenWidgets={[
           {
@@ -138,7 +138,7 @@ const Dashboard2 = () => {
       />
       <WidgetContainer
         key="7"
-        dashboardIndex={0}
+        dashboardIndex={2}
         widgetIndex={6}
         childrenWidgets={[
           {
@@ -151,13 +151,13 @@ const Dashboard2 = () => {
       />
       <WidgetContainer
         key="8"
-        dashboardIndex={0}
+        dashboardIndex={2}
         widgetIndex={7}
         childrenWidgets={[{ title: t("widget2.8Title"), widget: <Widget8 /> }]}
       />
       {/* <WidgetContainer
         key="9"
-        dashboardIndex={0}
+        dashboardIndex={2}
         widgetIndex={8}
         childrenWidgets={[
           { title: t("widget2.9Title"), widget: <div>widget9</div> },

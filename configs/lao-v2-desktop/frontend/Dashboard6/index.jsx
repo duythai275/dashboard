@@ -35,7 +35,7 @@ const Dashboard6 = () => {
     >
       <WidgetContainer
         key="1"
-        dashboardIndex={4}
+        dashboardIndex={3}
         widgetIndex={0}
         childrenWidgets={[
           {
@@ -46,7 +46,7 @@ const Dashboard6 = () => {
       />
       <WidgetContainer
         key="2"
-        dashboardIndex={4}
+        dashboardIndex={3}
         widgetIndex={1}
         childrenWidgets={[
           {
@@ -57,7 +57,7 @@ const Dashboard6 = () => {
       />
       <WidgetContainer
         key="3"
-        dashboardIndex={4}
+        dashboardIndex={3}
         widgetIndex={2}
         childrenWidgets={[
           {
@@ -68,7 +68,7 @@ const Dashboard6 = () => {
       />
       <WidgetContainer
         key="4"
-        dashboardIndex={4}
+        dashboardIndex={3}
         widgetIndex={3}
         childrenWidgets={[
           {
