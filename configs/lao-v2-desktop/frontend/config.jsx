@@ -301,7 +301,8 @@ const CustomControl = () => {
         &nbsp;&nbsp;{t("asAt")}:{" "}
         {lastUpdated
           ? format(sub(new Date(lastUpdated), { months: 1 }), "MMMM yyyy")
-          : "N/A"}
+          : "N/A"}{" "}
+        ({t("dataFromDhis2")})
       </div>
     </div>
   );

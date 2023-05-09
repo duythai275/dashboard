@@ -328,6 +328,10 @@ const locales = [
         key: "REPORTING_RATE_ON_TIME",
         value: "Reporting rate on time",
       },
+      {
+        key: "dataFromDhis2",
+        value: "Data reported in DHIS2 only",
+      },
     ],
   },
   {
@@ -657,6 +661,10 @@ const locales = [
       {
         key: "REPORTING_RATE_ON_TIME",
         value: "Reporting rate on time",
+      },
+      {
+        key: "dataFromDhis2",
+        value: "Data reported in DHIS2 only",
       },
     ],
   },
