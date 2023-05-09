@@ -30,7 +30,6 @@ const Widget4 = ({ setLoading }) => {
       setLoading(true);
       const resultData = await pull("/api/getDashboard6Widget4Data");
       const response = {};
-      console.log(resultData.data);
       response.data = resultData.data.rows.map((row) => ({
         item: row[0],
         value: row[2],
@@ -46,7 +45,7 @@ const Widget4 = ({ setLoading }) => {
         const foundDataSet = dataSets.find(
           (dataSet) => dataSet.id === item.split(".")[0]
         );
-        return { ...foundDataSet, reportingType: t(item.split(".")[1]) };
+        return { ...foundDataSet, reportingType: item.split(".")[1] };
       });
       setResult(response);
       setLoading(false);
@@ -65,8 +64,8 @@ const Widget4 = ({ setLoading }) => {
       currentData.datasets = result.dx.map((dx, index) => ({
         label:
           localeName === "En"
-            ? `${dx.nameEn} ${dx.reportingType}`
-            : `${dx.nameLo} ${dx.reportingType}`,
+            ? `${dx.nameEn} ${t(dx.reportingType)}`
+            : `${dx.nameLo} ${t(dx.reportingType)}`,
         data: result.ou.map((ou) => {
           const foundRow = result.data.filter(
             (row) =>
