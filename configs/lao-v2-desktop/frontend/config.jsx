@@ -7,11 +7,12 @@ import useAdditionalLocale from "@/hooks/App/useAdditionalLocale";
 import useDashboardStore from "@/state/dashboard";
 import useMetadataStore from "@/state/metadata";
 import useSelectionStore from "@/state/selection";
-import Dashboard1 from "./Dashboard1";
+// import Dashboard1 from "./Dashboard1";
 import Dashboard1_1 from "./Dashboard1_1";
 import Dashboard2 from "./Dashboard2";
-import Dashboard3 from "./Dashboard3";
+// import Dashboard3 from "./Dashboard3";
 import Dashboard4 from "./Dashboard4";
+import Dashboard5 from "./Dashboard5";
 import locales from "./locales";
 import { pull } from "./utils";
 import { format, sub } from "date-fns";
@@ -19,7 +20,8 @@ import { format, sub } from "date-fns";
 const dashboards = [
   { name: "dashboard2Title", dashboard: Dashboard2 },
   { name: "dashboard4Title", dashboard: Dashboard4 },
-  { name: "dashboard1Title", dashboard: Dashboard1_1 }
+  { name: "dashboard1Title", dashboard: Dashboard1_1 },
+  { name: "dashboard5Title", dashboard: Dashboard5 }
 ];
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -130,6 +132,61 @@ const useDashboardInitialization = () => {
         },
         {
           widgets: [
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            }
+          ]
+        },
+        {
+          widgets: [
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
+            {
+              selectedChildren: 0
+            },
             {
               selectedChildren: 0
             },

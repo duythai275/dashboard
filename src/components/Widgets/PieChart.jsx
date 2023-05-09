@@ -27,13 +27,7 @@ const options = {
 };
 
 const PieChart = ({ data, customOptions }) => {
-  return (
-    <Pie
-      data={data}
-      options={customOptions ? customOptions : options}
-      // plugins={[ChartDataLabels]}
-    />
-  );
+  return <Pie data={data} options={customOptions ? customOptions : options} plugins={[ChartDataLabels]} />;
 };
 
 export default PieChart;

@@ -19,4 +19,9 @@ const pull = async (url) => {
   return axios.get((VITE_APP_MODE === "production" ? VITE_PRODUCTION_BASE : "") + url);
 };
 
-export { sortStringInArrayOfObject, pull };
+const findHeaderIndex = (headers, name) => {
+  const found = headers.findIndex((header) => header.name === name);
+  return found;
+};
+
+export { sortStringInArrayOfObject, pull, findHeaderIndex };
