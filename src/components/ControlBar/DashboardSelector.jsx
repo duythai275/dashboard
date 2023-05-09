@@ -21,10 +21,15 @@ const DashboardSelector = () => {
       sx={{ width: 400 }}
       options={dashboards.map((d, index) => ({
         value: index,
-        label: t(d.name)
+        label: t(d.name),
+        callback: d.callback
       }))}
       renderInput={(params) => <TextField {...params} />}
       onChange={(event, newValue) => {
+        if (newValue.callback) {
+          newValue.callback();
+          return;
+        }
         selectDashboard(newValue);
       }}
     />
