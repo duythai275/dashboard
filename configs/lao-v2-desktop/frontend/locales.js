@@ -137,7 +137,7 @@ const locales = [
       },
       {
         key: "widget2.1Title",
-        value: "SBA total - This year",
+        value: "SBA Total - This year",
       },
       {
         key: "widget2.2Title",
@@ -146,7 +146,7 @@ const locales = [
       { key: "widget2.3Title", value: "SBA Coverage (Annualized) - This year" },
       {
         key: "widget2.4.1Title",
-        value: "Lao PDR - MCH: Total number of SBA - Last 3 years",
+        value: "Lao PDR - SBA Total - Last 3 years",
       },
       {
         key: "widget2.4.2Title",
@@ -154,19 +154,19 @@ const locales = [
       },
       {
         key: "widget2.5.1Title",
-        value: "MCH: Total number of SBA - This year",
+        value: "SBA Total by Province - This year",
       },
       {
         key: "widget2.5.2Title",
-        value: "MCH: SBA coverage (Annualized) - This year",
+        value: "MCH: SBA coverage (Annualized) by Province - This year",
       },
       {
         key: "widget2.6Title",
-        value: "SBA Coverage (Annualized) by Province - This year",
+        value: "SBA Total by Provinces - This year",
       },
       {
         key: "widget2.7Title",
-        value: "SBA total by Provinces - This year",
+        value: "SBA Coverage (Annualized) by Province - This year",
       },
       {
         key: "widget2.8Title",
@@ -331,6 +331,14 @@ const locales = [
       {
         key: "dataFromDhis2",
         value: "Data reported in DHIS2 only",
+      },
+      {
+        key: "widget2.5.1LegendTitle",
+        value: "SBA Total",
+      },
+      {
+        key: "widget2.5.2LegendTitle",
+        value: "MCH: SBA coverage (Annualized)",
       },
     ],
   },
@@ -471,7 +479,7 @@ const locales = [
       },
       {
         key: "widget2.1Title",
-        value: "SBA total - This year",
+        value: "SBA Total - This year",
       },
       {
         key: "widget2.2Title",
@@ -480,7 +488,7 @@ const locales = [
       { key: "widget2.3Title", value: "SBA Coverage (Annualized) - This year" },
       {
         key: "widget2.4.1Title",
-        value: "Lao PDR - MCH: Total number of SBA - Last 3 years",
+        value: "Lao PDR - SBA Total - Last 3 years",
       },
       {
         key: "widget2.4.2Title",
@@ -488,19 +496,19 @@ const locales = [
       },
       {
         key: "widget2.5.1Title",
-        value: "MCH: Total number of SBA - This year",
+        value: "SBA Total by Province - This year",
       },
       {
         key: "widget2.5.2Title",
-        value: "MCH: SBA coverage (Annualized) - This year",
+        value: "MCH: SBA coverage (Annualized) by Province - This year",
       },
       {
         key: "widget2.6Title",
-        value: "SBA Coverage (Annualized) by Province - This year",
+        value: "SBA Total by Provinces - This year",
       },
       {
         key: "widget2.7Title",
-        value: "SBA total by Provinces - This year",
+        value: "SBA Coverage (Annualized) by Province - This year",
       },
       {
         key: "widget2.8Title",
@@ -665,6 +673,14 @@ const locales = [
       {
         key: "dataFromDhis2",
         value: "Data reported in DHIS2 only",
+      },
+      {
+        key: "widget2.5.1LegendTitle",
+        value: "SBA Total",
+      },
+      {
+        key: "widget2.5.2LegendTitle",
+        value: "MCH: SBA coverage (Annualized)",
       },
     ],
   },

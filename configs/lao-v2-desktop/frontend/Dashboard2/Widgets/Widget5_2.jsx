@@ -67,7 +67,7 @@ const Widget5_2 = ({ setLoading }) => {
       });
       currentData.datasets = [
         {
-          label: t("widget2.5.2Title").split(" - ")[0],
+          label: t("widget2.5.2LegendTitle"),
           data: result.ou.map((ou) => {
             const foundRow = result.data.filter((row) => row.ou === ou.id);
             return foundRow.length

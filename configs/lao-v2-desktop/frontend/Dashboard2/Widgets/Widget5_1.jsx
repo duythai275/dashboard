@@ -20,27 +20,18 @@ const Widget5_1 = ({ setLoading }) => {
 
   const listTargetPe = useMemo(() => {
     const listPe = [];
-    let month = new Date().getMonth() + 1;
-    let year = new Date().getFullYear();
-    while (true) {
-      if (listPe.length === 3) {
-        break;
-      }
-      listPe.push(`${year}${month < 10 ? `0${month}` : month}`);
-      if (month === 1) {
-        month = 12;
-        year -= 1;
-      } else {
-        month -= 1;
-      }
+    const month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
+    for (let i = 1; i <= month; i++) {
+      listPe.push(`${year}${i > 9 ? i : `0${i}`}`);
     }
     return listPe;
   }, []);
 
   useEffect(() => {
-    if (additionalState.widget14_15_17Dashboard2Ready) {
+    if (additionalState.widget14_15_16Dashboard2Ready) {
       const response = {};
-      response.data = additionalState.widget14_15_17Dashboard2Data.rows
+      response.data = additionalState.widget14_15_16Dashboard2Data.rows
         .map((row) => ({
           pe: row[1],
           item: row[0],
@@ -49,7 +40,7 @@ const Widget5_1 = ({ setLoading }) => {
         }))
         .filter((row) => listTargetPe.includes(row.pe));
       response.ou =
-        additionalState.widget14_15_17Dashboard2Data.metaData.dimensions.ou
+        additionalState.widget14_15_16Dashboard2Data.metaData.dimensions.ou
           .map((item) => {
             const foundOu = orgUnits.find(
               (ou) =>
@@ -62,8 +53,8 @@ const Widget5_1 = ({ setLoading }) => {
 
       setResult(response);
     }
-    setLoading(!additionalState.widget14_15_17Dashboard2Ready);
-  }, [additionalState.widget14_15_17Dashboard2Ready]);
+    setLoading(!additionalState.widget14_15_16Dashboard2Ready);
+  }, [additionalState.widget14_15_16Dashboard2Ready]);
 
   useEffect(() => {
     if (!result) return;
@@ -82,7 +73,7 @@ const Widget5_1 = ({ setLoading }) => {
       });
       currentData.datasets = [
         {
-          label: t("widget2.5.1Title").split(" - ")[0],
+          label: t("widget2.5.1LegendTitle"),
           data: result.ou.map((ou) => {
             const foundRow = result.data.filter(
               (row) => row.ou === ou.id && listMonth.includes(row.pe.slice(4))

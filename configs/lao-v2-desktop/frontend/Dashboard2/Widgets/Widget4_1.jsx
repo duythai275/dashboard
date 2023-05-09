@@ -27,9 +27,9 @@ const Widget4_1 = ({ setLoading }) => {
   }, []);
 
   useEffect(() => {
-    if (additionalState.widget14_15_17Dashboard2Ready) {
+    if (additionalState.widget14_15_16Dashboard2Ready) {
       const response = {};
-      response.data = additionalState.widget14_15_17Dashboard2Data.rows.map(
+      response.data = additionalState.widget14_15_16Dashboard2Data.rows.map(
         (row) => ({
           pe: row[1],
           item: row[0],
@@ -37,7 +37,7 @@ const Widget4_1 = ({ setLoading }) => {
         })
       );
       response.pes =
-        additionalState.widget14_15_17Dashboard2Data.metaData.dimensions.pe
+        additionalState.widget14_15_16Dashboard2Data.metaData.dimensions.pe
           .filter((item) => {
             if (listTargetPe.includes(item)) {
               return item;
@@ -46,8 +46,8 @@ const Widget4_1 = ({ setLoading }) => {
           .reverse();
       setResult(response);
     }
-    setLoading(!additionalState.widget14_15_17Dashboard2Ready);
-  }, [additionalState.widget14_15_17Dashboard2Ready]);
+    setLoading(!additionalState.widget14_15_16Dashboard2Ready);
+  }, [additionalState.widget14_15_16Dashboard2Ready]);
 
   useEffect(() => {
     if (!result) return;

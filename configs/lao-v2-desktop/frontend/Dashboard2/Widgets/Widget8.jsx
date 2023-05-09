@@ -18,25 +18,6 @@ const Widget8 = ({ setLoading }) => {
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
 
-  const listTargetPe = useMemo(() => {
-    const listPe = [];
-    let month = new Date().getMonth() + 1;
-    let year = new Date().getFullYear();
-    while (true) {
-      if (listPe.length === 12) {
-        break;
-      }
-      listPe.push(`${year}${month < 10 ? `0${month}` : month}`);
-      if (month === 1) {
-        month = 12;
-        year -= 1;
-      } else {
-        month -= 1;
-      }
-    }
-    return listPe;
-  }, []);
-
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -80,14 +61,16 @@ const Widget8 = ({ setLoading }) => {
         return localeName === "En" ? ou.nameEn : ou.nameLo;
       });
       currentData.datasets = result.dx.map((dx, index) => ({
-        label: dx,
+        label: t(dx),
         data: result.ou.map((ou) => {
           const foundRow = result.data.filter(
             (row) => row.ou === ou.id && row.dx.includes(dx)
           );
 
           return foundRow.length
-            ? foundRow.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
+            ? foundRow
+                .reduce((prev, curr) => prev + (curr.value * 1 || 0), 0)
+                .toFixed(1)
             : 0;
         }),
         borderColor: colors[index],
