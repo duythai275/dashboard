@@ -63,7 +63,7 @@ const useDashboardInitialization = () => {
   const selectLanguage = useSelectionStore((state) => state.selectLanguage);
 
   useEffect(() => {
-    selectLanguage("en");
+    selectLanguage("lo");
     (async () => {
       setReady(false);
       const results = await Promise.all([
