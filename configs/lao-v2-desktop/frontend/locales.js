@@ -1,5 +1,3 @@
-import { getMonthName } from "./Dashboard1/common/function/getMonthName";
-
 const locales = [
   {
     code: "lo",
@@ -7,11 +5,11 @@ const locales = [
     translations: [
       {
         key: "dashboard1Title",
-        value: "Mortality",
+        value: "ແມ່ ແລະ ເດັກ: ການເສຍຊີວິດ",
       },
       {
         key: "dashboard2Title",
-        value: "Skilled birth attendance (SBA)",
+        value: "ເກີດລູກມີແພດຊ່ວຍ",
       },
       {
         key: "dashboard3Title",
@@ -19,27 +17,27 @@ const locales = [
       },
       {
         key: "widget1.1Title",
-        value: `Infant Death This Year`,
+        value: `ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ1ປີ ເສຍຊີວິດ (ກໍລະນີ) - ປີນີ້`,
       },
       {
         key: "widget1.2Title",
-        value: `Child Death This Year`,
+        value: `ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ5ປີ ເສຍຊີວິດ (ກໍລະນີ) - ປີນີ້`,
       },
       {
         key: "widget1.3Title",
-        value: `Maternal Death This Year`,
+        value: `ແມ່ ເສຍຊີວິດ (ກໍລະນີ) - ປີນີ້`,
       },
       {
         key: "widget1.4Title",
-        value: `Infant Mortality This Year`,
+        value: `ອັດຕາການເສຍຊີວິດ ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ1ປີ - ປີນີ້`,
       },
       {
         key: "widget1.5Title",
-        value: `Child Mortality This Year`,
+        value: `ອັດຕາການເສຍຊີວິດ ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ5ປີ - ປີນີ້`,
       },
       {
         key: "widget1.6Title",
-        value: `Maternal Mortality This Year`,
+        value: `ອັດຕາການເສຍຊີວິດ ແມ່ - ປີນີ້`,
       },
       // {
       //   key: "widget1.4Title",
@@ -85,122 +83,138 @@ const locales = [
       { key: "dec", value: "December" },
       {
         key: "widget1.12Title",
-        value: "Reporting Rate - This Year",
+        value:
+          "ແມ່ແລະເດັກ: ອັດຕາການລາຍງານຂໍ້ມູນແລະລາຍງານຕົງເວລາ ເບິ່ງເປັນແຂວງ - ປີນີ້",
       },
       {
         key: "widget1.11.1Title",
-        value: "Infant Death by Province - This Year",
+        value: "ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ1ປີ ເສຍຊີວິດ (ກໍລະນີ) ເບິ່ງເປັນແຂວງ - ປີນີ້",
       },
       {
         key: "widget1.11.2Title",
-        value: "Child Death by Province - This Year",
+        value: "ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ5ປີ ເສຍຊີວິດ (ກໍລະນີ) ເບິ່ງເປັນແຂວງ - ປີນີ້",
       },
       {
         key: "widget1.11.3Title",
-        value: "Maternal Death by Province - This Year",
+        value: "ແມ່ ເສຍຊີວິດ (ກໍລະນີ) ເບິ່ງເປັນແຂວງ - ປີນີ້",
       },
       {
         key: "widget1.10.1Title",
-        value: "Infant mortality rate (Annualised) by Province - This Year",
+        value:
+          "ອັດຕາການເສຍຊີວິດ ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ1ປີ (ສະເລ່ຍເປັນປີ) ເບິ່ງເປັນແຂວງ - ປີນີ້",
       },
       {
         key: "widget1.10.2Title",
-        value: "Child mortality rate (Annualised) by Province - This Year",
+        value:
+          "ອັດຕາການເສຍຊີວິດ ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ5ປີ (ສະເລ່ຍເປັນປີ) ເບິ່ງເປັນແຂວງ - ປີນີ້",
       },
       {
         key: "widget1.10.3Title",
-        value: "Maternal mortality rate (Annualised) by Province - This Year",
+        value: "ອັດຕາການເສຍຊີວິດ ແມ່ (ສະເລ່ຍເປັນປີ) ເບິ່ງເປັນແຂວງ - ປີນີ້",
       },
       {
         key: "widget1.7.1Title",
-        value: "Infant Death - Last 3 Years",
+        value: "ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ1ປີ ເສຍຊີວິດ (ກໍລະນີ) - 3 ປີຜ່ານມາ",
       },
       {
         key: "widget1.7.2Title",
-        value: "Child Death - Last 3 Years",
+        value: "ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ5ປີ ເສຍຊີວິດ (ກໍລະນີ) - 3 ປີຜ່ານມາ",
       },
       {
         key: "widget1.7.3Title",
-        value: "Maternal Death - Last 3 Years",
+        value: "ແມ່ ເສຍຊີວິດ (ກໍລະນີ) - 3 ປີຜ່ານມາ",
       },
       {
         key: "widget1.8.1Title",
-        value: "Infant mortality rate (Annualised) - Last 3 Years",
+        value:
+          "ອັດຕາການເສຍຊີວິດ ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ1ປີ (ສະເລ່ຍເປັນປີ) - 3 ປີຜ່ານມາ",
       },
       {
         key: "widget1.8.2Title",
-        value: "Child mortality rate (Annualised) - Last 3 Years",
+        value:
+          "ອັດຕາການເສຍຊີວິດ ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ5ປີ (ສະເລ່ຍເປັນປີ) - 3 ປີຜ່ານມາ",
       },
       {
         key: "widget1.8.3Title",
-        value: "Maternal mortality rate (Annualised) - Last 3 Years",
+        value: "ອັດຕາການເສຍຊີວິດ ແມ່ (ສະເລ່ຍເປັນປີ) - 3 ປີຜ່ານມາ",
       },
       {
         key: "widget2.1Title",
-        value: "SBA Total - This year",
+        value: "ເກີດລູກມີແພດຊ່ວຍ (ກໍລະນີ) - ປີນີ້",
       },
       {
         key: "widget2.2Title",
-        value: "Estimated live births - This year",
+        value: "ຄາດຄະເນການເກີດມີຊີວິດ (ກໍລະນີ) - ປີນີ້",
       },
-      { key: "widget2.3Title", value: "SBA Coverage (Annualized) - This year" },
+      {
+        key: "widget2.3Title",
+        value: "ອັດຕາການຄອບຄຸມ ຂອງການເກີດລູກມີແພດຊ່ວຍ (ສະເລ່ຍເປັນປີ) - ປີນີ້",
+      },
       {
         key: "widget2.4.1Title",
-        value: "SBA Total - Last 3 years",
+        value: "ການເກີດລູກມີແພດຊ່ວຍ (ກໍລະນີ) - 3 ປີຜ່ານມາ",
       },
       {
         key: "widget2.4.2Title",
-        value: "SBA coverage (Annualized) - Last 3 years",
+        value:
+          "ອັດຕາການຄອບຄຸມ ຂອງການເກີດລູກມີແພດຊ່ວຍ (ສະເລ່ຍເປັນປີ) - 3 ປີຜ່ານມາ",
       },
       {
         key: "widget2.5.1Title",
-        value: "SBA Total by Province - This year",
+        value: "ການເກີດລູກມີແພດຊ່ວຍ ເບິ່ງເປັນແຂວງ(ກໍລະນີ) - ປີນີ້",
       },
       {
         key: "widget2.5.2Title",
-        value: "SBA coverage (Annualized) by Province - This year",
+        value:
+          "ອັດຕາການຄອບຄຸມ ຂອງການເກີດລູກມີແພດຊ່ວຍ (ສະເລ່ຍເປັນປີ) ເບິ່ງເປັນແຂວງ - ປີນີ້",
       },
       {
         key: "widget2.6Title",
-        value: "SBA Total by Provinces - This year",
+        value: "ການເກີດລູກມີແພດຊ່ວຍ ເບິ່ງເປັນແຂວງ(ກໍລະນີ) - ປີນີ້",
       },
       {
         key: "widget2.7Title",
-        value: "SBA Coverage (Annualized) by Province - This year",
+        value:
+          "ອັດຕາການຄອບຄຸມ ຂອງການເກີດລູກມີແພດຊ່ວຍ (ສະເລ່ຍເປັນປີ) ເບິ່ງເປັນແຂວງ - ປີນີ້",
       },
       {
         key: "widget2.8Title",
-        value: "SBA: Reporting and Timeliness Rate by Province - This year",
+        value:
+          "ການເກີດລູກມີແພດຊ່ວຍ: ອັດຕາການລາຍງານຂໍ້ມູນແລະລາຍງານຕົງເວລາ ເບິ່ງເປັນແຂວງ - ປີນີ້",
       },
       { key: "widget2.9Title", value: "Repoting rate heat map" },
       {
         key: "widget4.1Title",
-        value: "% Members registered",
+        value: "% ສະມາຊິກຄອບຄົວທີ່ໄດ້ຮັບການລົງທະບຽນ",
       },
       {
         key: "widget4.2Title",
-        value: "% Family without Family book number",
+        value: "% ຂອງຄອບຄົວທີ່ບໍ່ມີເລກສຳມະໂນຄົວ",
       },
-      { key: "widget4.3Title", value: "Total family registered" },
-      { key: "widget4.4Title", value: "Total members registered" },
+      { key: "widget4.3Title", value: "ຈຳນວນຂອງຄອບຄົວທີ່ໄດ້ຮັບການລົງທະບຽນ" },
+      {
+        key: "widget4.4Title",
+        value: "ຈຳນວນຂອງສະມາຊິກຄອບຄົວທີ່ໄດ້ຮັບການລົງທະບຽນ",
+      },
       {
         key: "widget4.5Title",
-        value: "% Members registered vs LSB",
+        value:
+          "% ປຽບທຽບ ສະມາຊິກຄອບຄົວທີ່ໄດ້ຮັບການລົງທະບຽນ ກັບ ຕົວເລກຂອງສູນສະຖິຕິ",
       },
-      { key: "widget4.6Title", value: "Family source of water" },
-      { key: "widget4.7Title", value: "Family sanitation" },
+      { key: "widget4.6Title", value: "ປະເພດແຫຼ່ງນ້ຳຂອງຄອບຄົວ" },
+      { key: "widget4.7Title", value: "ປະເພດວິດຖ່າຍຂອງຄອບຄົວ" },
       {
         key: "widget4.8Title",
-        value: "Member education",
+        value: "ລະດັບການສຶກສາຂອງສະມາຊິກຄອບຄົວ",
       },
       {
         key: "widget4.9Title",
-        value: "Members by Ethnicity",
+        value: "ປະເພດຊົນເຜົ່າຂອງສະມາຊິກຄອບຄົວ",
       },
-      { key: "widget4.10Title", value: "Family with Disability" },
+      { key: "widget4.10Title", value: "ປະເພດຄວາມພິການຂອງຄອບຄົວ" },
       {
         key: "dashboard4Title",
-        value: "Family Health Information System (FHIS)",
+        value: "ລະບົບຂໍ້ມູນຂ່າວສານແຟ້ມຄອບຄົວ",
       },
       { key: "lastMonth", value: `Last month: {{value}}` },
       {
@@ -252,73 +266,102 @@ const locales = [
         value: "Last updated",
       },
       { key: "asAt", value: "As at" },
-      { key: "dashboard5_widget1.1Title", value: "VPD Total - This year" },
-      { key: "dashboard5_widget2.1Title", value: "Dengue Total - This year" },
-      { key: "dashboard5_widget3.1Title", value: "FWB Total - This year" },
-      { key: "dashboard5_widget4.1Title", value: "SARI Total - This year" },
+      {
+        key: "dashboard5_widget1.1Title",
+        value: "ພະຍາດ/ອາການປ້ອງກັນດ້ວຍຢາວັກຊິນ (ກໍລະນີ) - ປີນີ້",
+      },
+      {
+        key: "dashboard5_widget2.1Title",
+        value: "ໄຂ້​ຍຸງ​ລາຍ (ກໍລະນີ) - ປີນີ້",
+      },
+      {
+        key: "dashboard5_widget3.1Title",
+        value: "ພະຍາດທີ່ເກີດຈາກອາຫານ ແລະ ນໍ້າ (ກໍລະນີ) - ປີນີ້",
+      },
+      {
+        key: "dashboard5_widget4.1Title",
+        value: "ອາການຊຶມເຊື້ອລະບົບຫາຍໃຈຮຸນແຮງກະທັນຫັນ (ກໍລະນີ) - ປີນີ້",
+      },
       {
         key: "dashboard5_widget5.1Title",
-        value: "Zoonotic Diseases and Others Total - This year",
+        value: "ອາການຈາກສັດສູ່ຄົນ ແລະ ອຶ່ນໆ (ກໍລະນີ) - ປີນີ້",
       },
-      { key: "dashboard5_widget6.1Title", value: "VPD Total - This year" },
+      {
+        key: "dashboard5_widget6.1Title",
+        value: "ພະຍາດ/ອາການປ້ອງກັນດ້ວຍຢາວັກຊິນ (ກໍລະນີ) - ປີນີ້",
+      },
       {
         key: "dashboard5_widget7.1Title",
-        value: "VPD Total by Province - This year",
+        value: "ພະຍາດ/ອາການປ້ອງກັນດ້ວຍຢາວັກຊິນ ເບິ່ງເປັນແຂວງ (ກໍລະນີ) - ປີນີ້",
       },
-      { key: "dashboard5_widget8.1Title", value: "Dengue Total - This year" },
+      {
+        key: "dashboard5_widget8.1Title",
+        value: "ໄຂ້​ຍຸງ​ລາຍ (ກໍລະນີ) - ປີນີ້",
+      },
       {
         key: "dashboard5_widget9.1Title",
-        value: "Dengue Total by Province - This year",
+        value: "ໄຂ້​ຍຸງ​ລາຍ ເບິ່ງເປັນແຂວງ (ກໍລະນີ) - ປີນີ້",
       },
-      { key: "dashboard5_widget10.1Title", value: "FWB Total - This year" },
+      {
+        key: "dashboard5_widget10.1Title",
+        value: "ພະຍາດທີ່ເກີດຈາກອາຫານ ແລະ ນໍ້າ (ກໍລະນີ) - ປີນີ້",
+      },
       {
         key: "dashboard5_widget11.1Title",
-        value: "FWB Total by Province - This year",
+        value: "ພະຍາດທີ່ເກີດຈາກອາຫານ ແລະ ນໍ້າ ເບິ່ງເປັນແຂວງ (ກໍລະນີ) - ປີນີ້",
       },
-      { key: "dashboard5_widget12.1Title", value: "SARI Total - Last 3 years" },
+      {
+        key: "dashboard5_widget12.1Title",
+        value: "ອາການຊຶມເຊື້ອລະບົບຫາຍໃຈຮຸນແຮງກະທັນຫັນ (ກໍລະນີ) - 3 ປີຜ່ານມາ",
+      },
       {
         key: "dashboard5_widget13.1Title",
-        value: "SARI Total by Province - This year",
+        value:
+          "ອາການຊຶມເຊື້ອລະບົບຫາຍໃຈຮຸນແຮງກະທັນຫັນ ເບິ່ງເປັນແຂວງ (ກໍລະນີ) - ປີນີ້",
       },
       {
         key: "dashboard5_widget14.1Title",
-        value: "Zoonotic Diseases and Others Total - This year",
+        value: "ອາການຈາກສັດສູ່ຄົນ ແລະ ອຶ່ນໆ (ກໍລະນີ) - ປີນີ້",
       },
       {
         key: "dashboard5_widget15.1Title",
-        value: "Zoonotic Diseases and Others Total - This year",
+        value: "ອາການຈາກສັດສູ່ຄົນ ແລະ ອຶ່ນໆ (ກໍລະນີ) - ປີນີ້",
       },
       {
         key: "dashboard5_widget16.1Title",
-        value: "Notifiable Disease Reporting Rate - This year",
+        value: "ອັດຕາການລາຍງານຂໍ້ມູນພະຍາດເຝົ້າລະວັງຂອງແຕ່ລະແຂວງ - ປີນີ້",
       },
       {
         key: "dashboard5_widget17.1Title",
-        value: "Notifiable Disease Reporting Rate (annualised) - This year",
+        value:
+          "ອັດຕາການລາຍງານຂໍ້ມູນພະຍາດເຝົ້າລະວັງຂອງແຕ່ລະແຂວງ (ສະເລ່ຍເປັນປີ) - ປີນີ້",
       },
       {
         key: "dashboard5Title",
-        value: "NCLE - 18 Notifiable Diseases Surveillance",
+        value: "ສວລ - ເຝົ້າລະວັງ 18 ອາການພະຍາດ",
       },
       {
         key: "dashboard6_widget1Title",
-        value: "Life Cycle Chart - Last 12 months",
+        value: "ເສັ້ນສະແດງ ວົງຈອນຊີວິດ - 12 ເດືອນທີ່ຜ່ານມາ",
       },
       {
         key: "dashboard6_widget2Title",
-        value: "ANC1 - ANC4 Dropout Rate - Last 12 months",
+        value:
+          "ອັດຕາການຕົກຫຼົ່ນ ຂອງຈຳນວນແມ່ຍິງທີ່ມາກວດທ້ອງກ່ອນເກີດຄັ້ງທີ1 ແລະ ຄັ້ງທີ4 - 12 ເດືອນທີ່ຜ່ານມາ",
       },
       {
         key: "dashboard6_widget3Title",
-        value: "Penta1 - Penta3 Dropout Rate - Last 12 months",
+        value:
+          "ອັດຕາການຕົກຫຼົ່ນ ຂອງຈຳນວນທີ່ສັກຢາ Penta1 ແລະ Penta3 - 12 ເດືອນທີ່ຜ່ານມາ",
       },
       {
         key: "dashboard6_widget4Title",
-        value: "EPI Reporting and Timeliness Rate by Province - Last 12 months",
+        value:
+          "ຂໍ້ມູນສັກຢາ: ອັດຕາການລາຍງານຂໍ້ມູນແລະລາຍງານຕົງເວລາ ເບິ່ງເປັນແຂວງ - 12 ເດືອນທີ່ຜ່ານມາ",
       },
       {
         key: "dashboard6Title",
-        value: "Mother and Child",
+        value: "ແມ່ ແລະ ເດັກ",
       },
       {
         key: "REPORTING_RATE",
