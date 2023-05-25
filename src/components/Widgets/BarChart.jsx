@@ -26,6 +26,13 @@ const options = {
     padding: 18,
   },
   plugins: {
+    tooltip: {
+      callbacks: {
+        title: (context) => {
+          return context[0].label.replaceAll(",", "");
+        },
+      },
+    },
     legend: {
       position: "bottom",
     },

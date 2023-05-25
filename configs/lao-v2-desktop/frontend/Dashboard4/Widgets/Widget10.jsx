@@ -62,6 +62,27 @@ const Widget10 = ({ setLoading }) => {
     })();
   }, []);
 
+  const wrap = (str, limit) => {
+    const words = str.split(" ");
+    let aux = [];
+    let concat = [];
+
+    for (let i = 0; i < words.length; i++) {
+      concat.push(words[i]);
+      let join = concat.join(" ");
+      if (join.length > limit) {
+        aux.push(join);
+        concat = [];
+      }
+    }
+
+    if (concat.length) {
+      aux.push(concat.join(" ").trim());
+    }
+
+    return aux;
+  };
+
   useEffect(() => {
     if (!result) return;
 
@@ -89,7 +110,7 @@ const Widget10 = ({ setLoading }) => {
         );
         const name =
           localeName === "En" ? foundIndicator.nameEn : foundIndicator.nameLo;
-        return name;
+        return wrap(name, 15);
       });
       currentData.datasets = result.ou.map((ou, index) => ({
         label: localeName === "En" ? ou.nameEn : ou.nameLo,

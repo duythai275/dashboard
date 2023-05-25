@@ -87,11 +87,11 @@ const Widget3 = ({ setLoading }) => {
       padding: 18,
     },
     plugins: {
-      lineAt: {
-        lineAt: 10,
-        thickness: 1,
-        color: "black",
-      },
+      // lineAt: {
+      //   lineAt: 10,
+      //   thickness: 1,
+      //   color: "black",
+      // },
       legend: {
         position: "bottom",
       },

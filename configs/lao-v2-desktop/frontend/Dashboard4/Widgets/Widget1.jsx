@@ -21,7 +21,7 @@ const Widget1 = ({ setLoading }) => {
       const resultData = await pull("/api/getDashboard4Widget1Data");
       const response = {};
       response.data = resultData.data.rows.map((row) => ({
-        value: row[1]
+        value: row[1],
       }));
 
       setResult(response);
@@ -59,16 +59,16 @@ const Widget1 = ({ setLoading }) => {
             data: [result.data[0].value * 1, 100 - result.data[0].value * 1],
             circumference: 180,
             rotation: 270,
-            backgroundColor: ["#D1CF0B", "#F1F1F1"]
-          }
-        ]
+            backgroundColor: ["#D1CF0B", "#F1F1F1"],
+          },
+        ],
       });
     })();
   }, [i18n.language, JSON.stringify(result)]);
 
   const getTotal = (chart) => {
     var sum = chart.config.data.datasets[0].data[0];
-    return `${sum}`;
+    return `${sum} %`;
   };
 
   const options = {
@@ -77,16 +77,16 @@ const Widget1 = ({ setLoading }) => {
     plugins: {
       title: {
         display: true,
-        text: ""
+        text: "",
       },
       legend: {
-        display: false
+        display: false,
       },
       datalabels: {
-        display: false
+        display: false,
       },
       tooltip: {
-        enabled: false
+        enabled: false,
       },
       labelCenter: {
         display: true,
@@ -95,12 +95,12 @@ const Widget1 = ({ setLoading }) => {
             text: getTotal,
             font: {
               size: 40,
-              style: "bold"
-            }
-          }
-        ]
-      }
-    }
+              style: "bold",
+            },
+          },
+        ],
+      },
+    },
   };
 
   return data && <DoughnutChart data={data} customOptions={options} />;

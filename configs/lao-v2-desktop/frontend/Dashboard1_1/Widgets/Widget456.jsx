@@ -33,10 +33,15 @@ const Widget456 = ({ setLoading, dataItemId }) => {
     if (additionalState.widget456Dashboard1Ready) {
       const response = {};
       response.data = additionalState.widget456Dashboard1Data.rows
-        .filter((row) => (listTargetPe.currentYear.includes(row[1]) || listTargetPe.lastYear.includes(row[1])) && row[0] === dataItemId)
+        .filter(
+          (row) =>
+            (listTargetPe.currentYear.includes(row[1]) ||
+              listTargetPe.lastYear.includes(row[1])) &&
+            row[0] === dataItemId
+        )
         .map((row) => ({
           pe: row[1],
-          value: parseFloat(row[2]).toFixed(1)
+          value: parseFloat(row[2]).toFixed(1),
         }));
       setResult(response);
     }
@@ -62,7 +67,9 @@ const Widget456 = ({ setLoading, dataItemId }) => {
           }
         })
         .reduce((prev, curr) => prev + (curr?.value * 1 || 0), 0);
-      currentData.trend = Math.round(100 - (currentData.currentYearData / currentData.lastYearData) * 100);
+      currentData.trend = Math.round(
+        100 - (currentData.currentYearData / currentData.lastYearData) * 100
+      );
       setData({ ...currentData });
     })();
   }, [i18n.language, JSON.stringify(result)]);
@@ -78,7 +85,7 @@ const Widget456 = ({ setLoading, dataItemId }) => {
             alignItems: "center",
             justifyContent: "center",
             padding: "0 30px",
-            height: "100%"
+            height: "100%",
           }}
         >
           <Box
@@ -87,11 +94,14 @@ const Widget456 = ({ setLoading, dataItemId }) => {
               flexDirection: "column",
               gap: "15px",
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "center",
             }}
           >
-            <Typography textAlign="center" sx={{ fontWeight: "700", fontSize: "35px" }}>
-              {data.currentYearData} %
+            <Typography
+              textAlign="center"
+              sx={{ fontWeight: "700", fontSize: "35px" }}
+            >
+              {data.currentYearData}
             </Typography>
             <Typography textAlign="center" sx={{ fontSize: "15px" }}>
               {t("lastPeriod", { value: data.lastYearData })}
@@ -102,11 +112,22 @@ const Widget456 = ({ setLoading, dataItemId }) => {
                   gap: "5px",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: data.trend < 0 ? "#E61B1B" : data.trend === 0 ? "#F3F3F3" : "#118861"
+                  color:
+                    data.trend < 0
+                      ? "#E61B1B"
+                      : data.trend === 0
+                      ? "#F3F3F3"
+                      : "#118861",
                 }}
               >
                 {` ( ${data.trend === 0 ? "-" : Math.abs(data.trend)}%`}
-                {data.trend > 0 ? <ArrowDownwardIcon /> : data.trend === 0 ? "" : <ArrowUpwardIcon />}
+                {data.trend > 0 ? (
+                  <ArrowDownwardIcon />
+                ) : data.trend === 0 ? (
+                  ""
+                ) : (
+                  <ArrowUpwardIcon />
+                )}
                 {")"}
               </Typography>
             </Typography>

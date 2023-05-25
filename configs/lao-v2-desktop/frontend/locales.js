@@ -29,15 +29,15 @@ const locales = [
       },
       {
         key: "widget1.4Title",
-        value: `ອັດຕາການເສຍຊີວິດ ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ1ປີ - ປີນີ້`,
+        value: `ອັດຕາການເສຍຊີວິດ ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ1ປີ (ຕໍ່ 10,000) - ປີນີ້`,
       },
       {
         key: "widget1.5Title",
-        value: `ອັດຕາການເສຍຊີວິດ ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ5ປີ - ປີນີ້`,
+        value: `ອັດຕາການເສຍຊີວິດ ເດັກນ້ອຍອາຍຸຕ່ຳກວ່າ5ປີ (ຕໍ່ 10,000) - ປີນີ້`,
       },
       {
         key: "widget1.6Title",
-        value: `ອັດຕາການເສຍຊີວິດ ແມ່ - ປີນີ້`,
+        value: `ອັດຕາການເສຍຊີວິດ ແມ່ (ຕໍ່ 100,000) - ປີນີ້`,
       },
       // {
       //   key: "widget1.4Title",
@@ -419,15 +419,15 @@ const locales = [
       },
       {
         key: "widget1.4Title",
-        value: `Infant Mortality This Year`,
+        value: `Infant mortality (per 10,000) - This year`,
       },
       {
         key: "widget1.5Title",
-        value: `Child Mortality This Year`,
+        value: `Child mortality (per 10,000) - This year`,
       },
       {
         key: "widget1.6Title",
-        value: `Maternal Mortality This Year`,
+        value: `Maternal mortality (per 100,000) - This year`,
       },
       // {
       //   key: "widget1.4Title",

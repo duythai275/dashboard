@@ -12,7 +12,7 @@ const apisDashboard6 = [
     route: `/api/getDashboard6Widget2Data`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get(
-        `/api/analytics.json?dimension=dx:LpxweNXlfSm&filter=pe:LAST_12_MONTHS&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=false&skipData=false&skipMeta=false`
+        `/api/analytics.json?dimension=dx:MB9Y4omDJ9C&filter=pe:LAST_12_MONTHS&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=false&skipData=false&skipMeta=false`
       );
       return result.data;
     },
