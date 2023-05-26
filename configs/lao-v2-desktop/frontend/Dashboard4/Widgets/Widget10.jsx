@@ -110,7 +110,7 @@ const Widget10 = ({ setLoading }) => {
         );
         const name =
           localeName === "En" ? foundIndicator.nameEn : foundIndicator.nameLo;
-        return wrap(name, 15);
+        return name;
       });
       currentData.datasets = result.ou.map((ou, index) => ({
         label: localeName === "En" ? ou.nameEn : ou.nameLo,
@@ -129,7 +129,43 @@ const Widget10 = ({ setLoading }) => {
       setData({ ...currentData });
     })();
   }, [i18n.language, JSON.stringify(result)]);
-
-  return data && <BarChart data={data} />;
+  const options = {
+    indexAxis: "y",
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: 18,
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          title: (context) => {
+            return context[0].label.replaceAll(",", "");
+          },
+        },
+      },
+      legend: {
+        position: "bottom",
+      },
+      datalabels: {
+        anchor: "end",
+        align: "end",
+        offset: -5,
+        color: "#fff",
+        borderColor: "#000",
+        textStrokeColor: "black", // <-- added this
+        textStrokeWidth: 3, // <-- added this,
+        font: {
+          size: 10,
+        },
+      },
+    },
+  };
+  return data && <BarChart data={data} customOptions={options} />;
 };
 export default withWidgetChildrenLoader(Widget10);
