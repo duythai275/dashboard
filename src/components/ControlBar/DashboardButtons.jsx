@@ -18,12 +18,7 @@ const DashboardButtons = () => {
     <>
       <Button
         variant="outlined"
-        endIcon={
-          <img
-            src={`https://flagcdn.com/h20/${convertLanguageNametoCountryName(selectedLanguage.code)}.png`}
-            width="25"
-          />
-        }
+        endIcon={<img src={`https://flagcdn.com/h20/${convertLanguageNametoCountryName(selectedLanguage.code)}.png`} width="25" />}
         onClick={(event) => {
           setAnchorEl(event.currentTarget);
         }}
@@ -52,12 +47,9 @@ const DashboardButtons = () => {
             >
               <ListItemButton>
                 <ListItemIcon>
-                  <img
-                    src={`https://flagcdn.com/h20/${convertLanguageNametoCountryName(language.code)}.png`}
-                    width="25"
-                  />
+                  <img src={`https://flagcdn.com/h20/${convertLanguageNametoCountryName(language.code)}.png`} width="25" />
                 </ListItemIcon>
-                <ListItemText primary={language.code === "lo" ? t(language.code) : language.name} />
+                <ListItemText primary={language.name} />
               </ListItemButton>
             </ListItem>
           ))}

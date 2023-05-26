@@ -5,8 +5,7 @@ const resources = {
       loading: "... Loading ...",
       apply: "Apply",
       selectUnit: "Select unit",
-      noData: "No data",
-      lo: "Lao"
+      noData: "No data"
     }
   },
   lo: {
@@ -24,8 +23,7 @@ const resources = {
       initializing: "Đang khởi chạy",
       loading: "Đang tải dữ liệu",
       apply: "Áp dụng",
-      noData: "Không có dữ liệu",
-      lo: "Lào"
+      noData: "Không có dữ liệu"
     }
   }
 };
