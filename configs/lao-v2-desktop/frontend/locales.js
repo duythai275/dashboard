@@ -66,21 +66,21 @@ const locales = [
       { key: "monthlyHeaderTitleOfWidget1.9", value: `{{month}} {{year}}` },
       { key: "weeklyHeaderTitleOfWidget1.9", value: `ອາທິດ{{month}} {{year}}` },
       { key: "widget1.1Date", value: `As on {{date}}` },
-      { key: "lastPeriod", value: `Same period last year: {{value}}` },
-      { key: "headerTitleWidget1.7", value: "Data/Period" },
-      { key: "headerTitleWidget1.9", value: "Org Units/Period" },
-      { key: "jan", value: "January" },
-      { key: "feb", value: "Febuary" },
-      { key: "mar", value: "March" },
-      { key: "apr", value: "April" },
-      { key: "may", value: "May" },
-      { key: "jun", value: "June" },
-      { key: "jul", value: "July" },
-      { key: "aug", value: "August" },
-      { key: "sep", value: "September" },
-      { key: "oct", value: "October" },
-      { key: "nov", value: "November" },
-      { key: "dec", value: "December" },
+      { key: "lastPeriod", value: `ໄລຍະເວລາດຽວກັນ ຂອງປີທີ່ແລ້ວ: {{value}}` },
+      { key: "headerTitleWidget1.7", value: "ຂໍ້ມູນ/ຊ່ວງເວລາ" },
+      { key: "headerTitleWidget1.9", value: "ຫົວໜ່ວຍການຈັດຕັ້ງ/ຊ່ວງເວລາ" },
+      { key: "jan", value: "ເດືອນມັງກອນ" },
+      { key: "feb", value: "ເດືອນກຸມພາ" },
+      { key: "mar", value: "ເດືອນມີນາ" },
+      { key: "apr", value: "ເດືອນເມສາ" },
+      { key: "may", value: "ເດືອນພຶດສະພາ" },
+      { key: "jun", value: "ເດືອນມິຖຸນາ" },
+      { key: "jul", value: "ເດືອນກໍລະກົດ" },
+      { key: "aug", value: "ເດືອນສິງຫາ" },
+      { key: "sep", value: "ເດືອນກັນຍາ" },
+      { key: "oct", value: "ເດືອນຕຸລາ" },
+      { key: "nov", value: "ເດືອນພະຈິກ" },
+      { key: "dec", value: "ເດືອນທັນວາ" },
       {
         key: "widget1.12Title",
         value:
@@ -263,9 +263,9 @@ const locales = [
       },
       {
         key: "lastUpdated",
-        value: "Last updated",
+        value: "ອັບເດດລ່າສຸດ",
       },
-      { key: "asAt", value: "As at" },
+      { key: "asAt", value: "ນະ ວັນທີ" },
       {
         key: "dashboard5_widget1.1Title",
         value: "ພະຍາດ/ອາການປ້ອງກັນດ້ວຍຢາວັກຊິນ (ກໍລະນີ) - ປີນີ້",
@@ -365,28 +365,28 @@ const locales = [
       },
       {
         key: "REPORTING_RATE",
-        value: "Reporting rate",
+        value: "ອັັດຕາການລາຍງານ",
       },
       {
         key: "REPORTING_RATE_ON_TIME",
-        value: "Reporting rate on time",
+        value: "ອັັດຕາການລາຍງານ ຕົງເວລາ",
       },
       {
         key: "dataFromDhis2",
-        value: "Data reported in DHIS2 only",
+        value: "ຂໍ້ມູນທີ່ລາຍງານໃນລະບົບ DHIS 2 ເທົ່ານັ້ນ",
       },
       {
         key: "widget2.5.1LegendTitle",
-        value: "SBA Total",
+        value: "ຈຳນວນເກີດລູກມີແພດຊ່ວຍ ທັງໝົດ",
       },
       {
         key: "widget2.5.2LegendTitle",
-        value: "MCH: SBA coverage (Annualized)",
+        value: "MCH: ອັດຕາການຄອບຄຸມ ຂອງການເກີດລູກມີແພດຊ່ວຍ (ສະເລ່ຍເປັນປີ)",
       },
       {
         key: "dashboard7Title",
         value: "ຄູ່ມືລະບົບ HMIS ຂອງ ສປປລາວ",
-      },
+      }
     ],
   },
   {
@@ -732,8 +732,9 @@ const locales = [
       {
         key: "dashboard7Title",
         value: "HMIS Super Doc",
-      },
+      }
     ],
   },
 ];
+
 export default locales;

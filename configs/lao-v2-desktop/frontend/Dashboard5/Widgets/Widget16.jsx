@@ -15,13 +15,46 @@ const Widget16 = ({ setLoading }) => {
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
   const additionalState = useDashboardStore((state) => state.additionalState);
-
+  const { orgUnits, indicators, dataItems, options } = useMetadataStore(
+    (state) => ({
+      orgUnits: state.hmisOrgUnits,
+      indicators: state.hmisIndicators,
+      dataItems: state.hmisDataItems,
+      options: state.hmisOptions,
+    })
+  );
   const { hmisDataItems } = useMetadataStore(
     (state) => ({
       hmisDataItems: state.hmisDataItems,
     }),
     shallow
   );
+
+  const periodObject = {
+    January: "jan",
+    February: "feb",
+    March: "mar",
+    April: "apr",
+    May: "may",
+    June: "june",
+    July: "jul",
+    August: "aug",
+    September: "sep",
+    October: "oct",
+    November: "nov",
+    December: "dec",
+  };
+
+  const returnPeriodName = (value) => {
+    let name = value;
+    let year = value.split(" ")[1];
+    Object.entries(periodObject).forEach((obj) => {
+      if (value.includes(obj[0])) {
+        name = `${t(obj[1])} ${year}`;
+      }
+    });
+    return name;
+  };
 
   useEffect(() => {
     if (additionalState.widgetDashboard5Widget16Ready) {
@@ -45,14 +78,17 @@ const Widget16 = ({ setLoading }) => {
 
   useEffect(() => {
     if (!result) return;
+    const localeName = i18n.language === "en" ? "En" : "Lo";
     let currentData = {
       columns: [],
       rows: [],
     };
+    console.log(additionalState.widgetDashboard5DataWidget16.metaData.items);
     currentData.columns = result.pes.map((pe, index) => ({
       name: pe,
-      header:
-        additionalState.widgetDashboard5DataWidget16.metaData.items[pe].name,
+      header: returnPeriodName(
+        additionalState.widgetDashboard5DataWidget16.metaData.items[pe].name
+      ),
       render: ({ value, rowIndex }) => {
         let color = "white";
         if (value < 60) {
@@ -79,9 +115,9 @@ const Widget16 = ({ setLoading }) => {
       width: 300,
     });
     currentData.rows = result.ous.map((org) => {
+      const findOu = orgUnits.find((e) => e.id === org);
       const row = {
-        ou: additionalState.widgetDashboard5DataWidget16.metaData.items[org]
-          .name,
+        ou: findOu ? (localeName === "En" ? findOu.nameEn : findOu.nameLo) : "",
       };
       result.pes.forEach((pe) => {
         const foundValue = result.data.find((e) => e.pe === pe && e.ou === org);

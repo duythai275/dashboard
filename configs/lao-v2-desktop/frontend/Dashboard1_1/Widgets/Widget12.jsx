@@ -10,10 +10,14 @@ import { WIDGET_12_DASHBOARD_1_COLORS } from "../common/constant/color";
 import { pull } from "../../utils";
 
 const Widget12 = ({ setLoading }) => {
-  const { hmisGeoJson } = useMetadataStore(
-    (state) => ({ hmisGeoJson: state.hmisGeoJson }),
-    shallow
-  );
+  const { orgUnits, indicators, dataItems, options, dataSets } =
+    useMetadataStore((state) => ({
+      orgUnits: state.hmisOrgUnits,
+      indicators: state.hmisIndicators,
+      dataItems: state.hmisDataItems,
+      options: state.hmisOptions,
+      dataSets: state.hmisDataSets,
+    }));
   const [data, setData] = useState(null);
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
@@ -29,15 +33,24 @@ const Widget12 = ({ setLoading }) => {
 
   useEffect(() => {
     if (!result) return;
+    const localeName = i18n.language === "en" ? "En" : "Lo";
     const currentData = {
       labels: [],
       datasets: [],
     };
     ["REPORTING_RATE", "REPORTING_RATE_ON_TIME"].forEach((type) => {
       result.metaData.dimensions.dx.forEach((ds) => {
+        const findDataSet = dataSets.find((e) => e.id === ds.split(".")[0]);
+        console.log(findDataSet)
         if (ds.includes("w8XQmI94Spv") && ds.split(".")[1] === type) {
           let object = {
-            label: result.metaData.items[ds].name,
+            label: `${
+              findDataSet
+                ? localeName === "En"
+                  ? findDataSet.nameEn
+                  : findDataSet.nameLo
+                : ""
+            } ${t(type)}`,
             data: [],
           };
           result.metaData.dimensions.ou.forEach((org) => {
@@ -76,7 +89,10 @@ const Widget12 = ({ setLoading }) => {
     //  });
 
     result.metaData.dimensions.ou.forEach((org) => {
-      currentData.labels.push(result.metaData.items[org].name);
+      const findOu = orgUnits.find((e) => e.id === org);
+      currentData.labels.push(
+        findOu ? (localeName === "En" ? findOu.nameEn : findOu.nameLo) : ""
+      );
     });
     result.rows.forEach((row) => {
       currentData[row.ou] = row.value;

@@ -49,8 +49,6 @@ const Widget13 = ({ setLoading, dataItemId, hmisGeoJson }) => {
         // ];
       });
       setData(markers);
-      console.log("hehe_13")
-      console.log(markers)
       //setResult(response);
     }
     setLoading(!additionalState.widgetDashboard5EventReady);

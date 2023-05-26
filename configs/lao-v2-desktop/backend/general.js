@@ -54,6 +54,22 @@ const apisGeneral = [
     }
   },
   {
+    route: `/api/options`,
+    handler: async (dhis2Apis) => {
+      const result = await dhis2Apis[0].get(
+        "/api/options.json?paging=false&fields=id,code,displayFormName,translations"
+      );
+      return result.data.options.map((op) => {
+        const foundNameLo = op.translations.find((translation) => translation.property === "NAME" && translation.locale === "lo");
+        return {
+          id: op.id,
+          nameEn: op.displayFormName,
+          nameLo: foundNameLo ? foundNameLo.value : op.name
+        };
+      });
+    }
+  },
+  {
     route: `/api/fhisDataItems`,
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[1].get(
@@ -74,7 +90,7 @@ const apisGeneral = [
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get("/api/indicators?paging=false&fields=id,name,translations");
       return result.data.indicators.map((i) => {
-        const foundNameLo = i.translations.find((translation) => translation.property === "FORM_NAME" && translation.locale === "lo");
+        const foundNameLo = i.translations.find((translation) => translation.property === "NAME" && translation.locale === "lo");
         return {
           id: i.id,
           nameEn: i.name,
@@ -88,7 +104,7 @@ const apisGeneral = [
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[1].get("/api/indicators?paging=false&fields=id,name,translations");
       return result.data.indicators.map((i) => {
-        const foundNameLo = i.translations.find((translation) => translation.property === "FORM_NAME" && translation.locale === "lo");
+        const foundNameLo = i.translations.find((translation) => translation.property === "NAME" && translation.locale === "lo");
         return {
           id: i.id,
           nameEn: i.name,
@@ -102,7 +118,7 @@ const apisGeneral = [
     handler: async (dhis2Apis) => {
       const result = await dhis2Apis[0].get("/api/dataSets.json?paging=false&fields=id,name,translations");
       return result.data.dataSets.map((i) => {
-        const foundNameLo = i.translations.find((translation) => translation.property === "FORM_NAME" && translation.locale === "lo");
+        const foundNameLo = i.translations.find((translation) => translation.property === "NAME" && translation.locale === "lo");
         return {
           id: i.id,
           nameEn: i.name,

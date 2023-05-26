@@ -10,6 +10,14 @@ import { WIDGET_8_DASHBOARD_5_COLORS } from "../common/constant/color";
 
 const Widget8 = ({ setLoading, dataItemId }) => {
   const additionalState = useDashboardStore((state) => state.additionalState);
+  const { orgUnits, indicators, dataItems, options } = useMetadataStore(
+    (state) => ({
+      orgUnits: state.hmisOrgUnits,
+      indicators: state.hmisIndicators,
+      dataItems: state.hmisDataItems,
+      options: state.hmisOptions,
+    })
+  );
   const [data, setData] = useState(null);
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
@@ -49,6 +57,7 @@ const Widget8 = ({ setLoading, dataItemId }) => {
 
   useEffect(() => {
     if (!result) return;
+    const localeName = i18n.language === "en" ? "En" : "Lo";
     const currentData = {
       labels: [],
       datasets: [],
@@ -60,7 +69,7 @@ const Widget8 = ({ setLoading, dataItemId }) => {
     };
 
     dataItemId.forEach((item) => {
-      const findLabel = Object.entries(
+      let findLabel = Object.entries(
         additionalState.widgetDashboard5Data.metaData.items
       ).find((e) => {
         if (e[1].code) {
@@ -69,7 +78,18 @@ const Widget8 = ({ setLoading, dataItemId }) => {
           }
         }
       });
-      currentData.labels.push(findLabel ? findLabel[1].name : "");
+      if (findLabel) {
+        findLabel = options.find((e) => {
+          return e.id === findLabel[0];
+        });
+      }
+      currentData.labels.push(
+        findLabel
+          ? localeName === "En"
+            ? findLabel.nameEn
+            : findLabel.nameLo
+          : ""
+      );
 
       let total = 0;
       total = result.data

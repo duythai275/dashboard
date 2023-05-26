@@ -3,8 +3,10 @@ import { IconButton, Button, Popover, List, ListItem, ListItemButton, ListItemIc
 import { useState } from "react";
 import { languages } from "@/config/config";
 import { convertLanguageNametoCountryName } from "@/utils/utils";
+import { useTranslation } from "react-i18next";
 
 const DashboardButtons = () => {
+  const { t } = useTranslation();
   const { language, selectLanguage } = useSelectionStore((state) => ({
     language: state.language,
     selectLanguage: state.selectLanguage
@@ -26,7 +28,7 @@ const DashboardButtons = () => {
           setAnchorEl(event.currentTarget);
         }}
       >
-        {selectedLanguage.name}
+        {selectedLanguage.code === "lo" ? t(selectedLanguage.code) : selectedLanguage.name}
       </Button>
       <Popover
         open={Boolean(anchorEl)}
@@ -55,7 +57,7 @@ const DashboardButtons = () => {
                     width="25"
                   />
                 </ListItemIcon>
-                <ListItemText primary={language.name} />
+                <ListItemText primary={language.code === "lo" ? t(language.code) : language.name} />
               </ListItemButton>
             </ListItem>
           ))}
