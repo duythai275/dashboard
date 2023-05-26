@@ -7,6 +7,7 @@ import useDashboardStore from "@/state/dashboard";
 import BarChart from "@/components/Widgets/BarChart";
 import useMetadataStore from "@/state/metadata";
 import { pull } from "../../utils";
+import { useCallback } from "react";
 
 const Widget10 = ({ setLoading }) => {
   const { orgUnits, indicators } = useMetadataStore((state) => ({
@@ -14,6 +15,7 @@ const Widget10 = ({ setLoading }) => {
     indicators: state.fhisIndicators,
   }));
   const additionalState = useDashboardStore((state) => state.additionalState);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [data, setData] = useState(null);
   const [result, setResult] = useState(null);
   const { i18n, t } = useTranslation();
@@ -62,7 +64,7 @@ const Widget10 = ({ setLoading }) => {
     })();
   }, []);
 
-  const wrap = (str, limit) => {
+  const wrap = useCallback((str, limit) => {
     const words = str.split(" ");
     let aux = [];
     let concat = [];
@@ -81,7 +83,7 @@ const Widget10 = ({ setLoading }) => {
     }
 
     return aux;
-  };
+  }, []);
 
   useEffect(() => {
     if (!result) return;
@@ -110,7 +112,7 @@ const Widget10 = ({ setLoading }) => {
         );
         const name =
           localeName === "En" ? foundIndicator.nameEn : foundIndicator.nameLo;
-        return name;
+        return wrap(name, windowWidth <= 480 ? 10 : 20);
       });
       currentData.datasets = result.ou.map((ou, index) => ({
         label: localeName === "En" ? ou.nameEn : ou.nameLo,
@@ -128,7 +130,19 @@ const Widget10 = ({ setLoading }) => {
       }));
       setData({ ...currentData });
     })();
-  }, [i18n.language, JSON.stringify(result)]);
+  }, [i18n.language, JSON.stringify(result), windowWidth]);
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+
   const options = {
     indexAxis: "y",
     elements: {
@@ -136,7 +150,7 @@ const Widget10 = ({ setLoading }) => {
         borderWidth: 2,
       },
     },
-    responsive: true,
+    // responsive: true,
     maintainAspectRatio: false,
     layout: {
       padding: 18,
