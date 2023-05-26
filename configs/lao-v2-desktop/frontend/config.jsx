@@ -17,6 +17,18 @@ import locales from "./locales";
 import { pull } from "./utils";
 import { format, sub } from "date-fns";
 import Dashboard6 from "./Dashboard6";
+const gaScript1 = document.createElement("script");
+gaScript1.setAttribute("src", "https://www.googletagmanager.com/gtag/js?id=G-E6C7SB4FEP");
+const gaScript2 = document.createElement("script");
+gaScript2.innerHTML = `
+window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E6C7SB4FEP');
+`;
+document.head.appendChild(gaScript1);
+document.head.appendChild(gaScript2);
 
 const dashboards = [
   { name: "dashboard4Title", dashboard: Dashboard4 },
@@ -28,13 +40,13 @@ const dashboards = [
     name: "dashboard7Title",
     callback: () => {
       window.open("https://hmis.gov.la/doc", "_blank");
-    },
-  },
+    }
+  }
 ];
 
 const languages = locales.map((locale) => ({
   name: locale.name,
-  code: locale.code,
+  code: locale.code
 }));
 
 // { name: "dashboard2Title", dashboard: Dashboard2 },
@@ -51,17 +63,35 @@ const useDashboardInitialization = () => {
   const setMetadata = useMetadataStore((state) => state.setMetadata);
   const [ready, setReady] = useState(false);
   const { t } = useTranslation();
-  const { initDashboardState, selectDashboard, setDashboards } =
-    useDashboardStore(
-      (state) => ({
-        initDashboardState: state.initDashboardState,
-        selectDashboard: state.selectDashboard,
-        setDashboards: state.setDashboards,
-      }),
-      shallow
-    );
+  const { initDashboardState, selectDashboard, selectedDashboard, setDashboards } = useDashboardStore(
+    (state) => ({
+      initDashboardState: state.initDashboardState,
+      selectDashboard: state.selectDashboard,
+      setDashboards: state.setDashboards,
+      selectedDashboard: state.selectedDashboard
+    }),
+    shallow
+  );
 
   const selectLanguage = useSelectionStore((state) => state.selectLanguage);
+
+  useEffect(() => {
+    gtag("config", "TAG_ID", {
+      send_page_view: false
+    });
+  }, []);
+
+  useEffect(() => {
+    if (selectedDashboard && selectedDashboard.label) {
+      const currentDashboard = dashboards[selectedDashboard.value];
+      const en = t(currentDashboard.name, { lng: "en" });
+      gtag("event", "page_view", {
+        // app_name: "hispvn_public_dashboard",
+        page_title: en,
+        page_location: en
+      });
+    }
+  }, [selectedDashboard ? selectedDashboard.value : null]);
 
   useEffect(() => {
     selectLanguage("lo");
@@ -76,188 +106,188 @@ const useDashboardInitialization = () => {
         pull("/api/fhisIndicators"),
         pull("/api/fhisDataItems"),
         pull("/api/lastUpdated"),
-        pull("/api/options"),
+        pull("/api/options")
       ]);
       initDashboardState([
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         {
           widgets: [
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
+              selectedChildren: 0
             },
             {
-              selectedChildren: 0,
-            },
-          ],
-        },
+              selectedChildren: 0
+            }
+          ]
+        }
       ]);
       setDashboards(dashboards);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });
@@ -292,12 +322,11 @@ const CustomControl = () => {
           display: "flex",
           alignItems: "center",
           color: "#1e4620",
-          fontSize: 14,
+          fontSize: 14
         }}
       >
         <FontAwesomeIcon icon={faCircleCheck} />
-        &nbsp;&nbsp;{t("lastUpdated")}:{" "}
-        {lastUpdated ? format(new Date(lastUpdated), "yyyy-MM-dd") : "N/A"}
+        &nbsp;&nbsp;{t("lastUpdated")}: {lastUpdated ? format(new Date(lastUpdated), "yyyy-MM-dd") : "N/A"}
       </div>
       &nbsp;&nbsp;
       <div
@@ -310,21 +339,12 @@ const CustomControl = () => {
           display: "flex",
           alignItems: "center",
           color: "#663c00",
-          fontSize: 14,
+          fontSize: 14
         }}
       >
         <FontAwesomeIcon icon={faCircleInfo} />
-        &nbsp;&nbsp;{t("asAt")}:{" "}
-        {lastUpdated
-          ? t(
-              format(
-                sub(new Date(lastUpdated), { months: 1 }),
-                "MMM"
-              ).toLowerCase()
-            )
-          : "N/A"}{" "}
-        {format(sub(new Date(lastUpdated), { months: 1 }), "yyyy")} (
-        {t("dataFromDhis2")})
+        &nbsp;&nbsp;{t("asAt")}: {lastUpdated ? t(format(sub(new Date(lastUpdated), { months: 1 }), "MMM").toLowerCase()) : "N/A"}{" "}
+        {format(sub(new Date(lastUpdated), { months: 1 }), "yyyy")} ({t("dataFromDhis2")})
       </div>
     </div>
   );
