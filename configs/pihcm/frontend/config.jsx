@@ -13,7 +13,7 @@ import changeMapWidgetChildren from "./hooks/changeMapWidgetChildren";
 import _ from "lodash";
 const languages = locales.map((locale) => ({
   name: locale.name,
-  code: locale.code,
+  code: locale.code
 }));
 
 const useDashboardInitialization = () => {
@@ -22,24 +22,16 @@ const useDashboardInitialization = () => {
   });
 
   const selectLanguage = useSelectionStore((state) => state.selectLanguage);
-  const { setMetadata, diseases } = useMetadataStore(
-    (state) => ({ diseases: state.diseases, setMetadata: state.setMetadata }),
-    shallow
-  );
+  const { setMetadata, diseases } = useMetadataStore((state) => ({ diseases: state.diseases, setMetadata: state.setMetadata }), shallow);
   const [ready, setReady] = useState(false);
 
   const { t, i18n } = useTranslation();
-  const {
-    selectedDashboard,
-    initDashboardState,
-    selectDashboard,
-    setDashboards,
-  } = useDashboardStore(
+  const { selectedDashboard, initDashboardState, selectDashboard, setDashboards } = useDashboardStore(
     (state) => ({
       selectedDashboard: state.selectedDashboard,
       initDashboardState: state.initDashboardState,
       selectDashboard: state.selectDashboard,
-      setDashboards: state.setDashboards,
+      setDashboards: state.setDashboards
     }),
     shallow
   );
@@ -50,18 +42,14 @@ const useDashboardInitialization = () => {
       const dashboards = [
         {
           name: "bulletin",
-          dashboard: <BulletinDashboard title="bulletin" />,
-        },
+          dashboard: <BulletinDashboard title="bulletin" />
+        }
       ];
       setReady(false);
       const results = await Promise.all([
-        pull(
-          "/api/optionSets?filter=id:eq:d5fivOeWHIb&fields=id,name,translations,options[id,name,code,translations"
-        ),
-        pull(
-          "/api/organisationUnits?fields=id,name,level,ancestors[id,name,level]&paging=false"
-        ),
-        pull("/api/organisationUnits.geojson?level=2"),
+        pull("/api/optionSets?filter=id:eq:d5fivOeWHIb&fields=id,name,translations,options[id,name,code,translations"),
+        pull("/api/organisationUnits?fields=id,name,level,ancestors[id,name,level]&paging=false"),
+        pull("/api/organisationUnits.geojson?level=2")
       ]);
       setMetadata("diseases", results[0].optionSets[0].options);
 
@@ -71,50 +59,42 @@ const useDashboardInitialization = () => {
 
       results[0].optionSets[0].options.forEach((option, index) => {
         dashboards.push({
-          name:
-            i18n.language === "vi"
-              ? option.translations[0]?.value
-              : option.name,
-          dashboard: (
-            <DiseaseDashboard
-              disease={option.code}
-              dashboardIndex={index + 1}
-            />
-          ),
+          name: i18n.language === "vi" ? option.translations[0]?.value : option.name,
+          dashboard: <DiseaseDashboard disease={option.code} dashboardIndex={index + 1} />
         });
       });
       initDashboardState([
         {
           widgets: [
             {
-              selectedChildren: 0,
-            },
-          ],
+              selectedChildren: 0
+            }
+          ]
         },
         ...results[0].optionSets[0].options.map((_) => {
           return {
             widgets: [
               {
-                selectedChildren: 0,
+                selectedChildren: 0
               },
               {
-                selectedChildren: 0,
+                selectedChildren: 0
               },
               {
-                selectedChildren: 0,
+                selectedChildren: 0
               },
               {
-                selectedChildren: 0,
+                selectedChildren: 0
               },
               {
-                selectedChildren: 0,
+                selectedChildren: 0
               },
               {
-                selectedChildren: 0,
-              },
-            ],
+                selectedChildren: 0
+              }
+            ]
           };
-        }),
+        })
       ]);
       setDashboards(dashboards);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });
@@ -127,29 +107,20 @@ const useDashboardInitialization = () => {
       const dashboards = [
         {
           name: "bulletin",
-          dashboard: <BulletinDashboard title="bulletin" />,
-        },
+          dashboard: <BulletinDashboard title="bulletin" />
+        }
       ];
       diseases.forEach((option, index) => {
-        const foundTranslation = option.translations.find(
-          (translation) =>
-            translation.locale === i18n.language &&
-            translation.property === "NAME"
-        );
+        const foundTranslation = option.translations.find((translation) => translation.locale === i18n.language && translation.property === "NAME");
         dashboards.push({
           name: foundTranslation ? foundTranslation.value : option.name,
-          dashboard: (
-            <DiseaseDashboard
-              disease={option.code}
-              dashboardIndex={index + 1}
-            />
-          ),
+          dashboard: <DiseaseDashboard disease={option.code} dashboardIndex={index + 1} />
         });
       });
       setDashboards(dashboards);
       selectDashboard({
         value: selectedDashboard.value,
-        label: t(dashboards[selectedDashboard.value].name),
+        label: t(dashboards[selectedDashboard.value].name)
       });
     }
   }, [i18n.language]);
@@ -157,4 +128,6 @@ const useDashboardInitialization = () => {
   return ready;
 };
 
-export { useDashboardInitialization, languages };
+const customControl = [];
+
+export { useDashboardInitialization, languages, customControl };
