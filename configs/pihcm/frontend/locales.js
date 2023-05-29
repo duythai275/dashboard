@@ -135,6 +135,7 @@ const locales = [
         value: `Top 10 tỉnh có số ca mắc {{diseaseName}}  cao nhất (tuần {{currentWeek}})`,
       },
       { key: "arithmeticMeanLast5Year", value: "Trung bình 5 năm trước" },
+      { key: "back", value: "Quay lại" },
     ],
   },
   {
@@ -260,6 +261,7 @@ const locales = [
         value: `Top 10 provinces with highest {{diseaseName}} cases (week {{currentWeek}})`,
       },
       { key: "arithmeticMeanLast5Year", value: "Average last 5 years" },
+      { key: "back", value: "Back" },
     ],
   },
 ];

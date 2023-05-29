@@ -14,8 +14,9 @@ import Widget5 from "./widgets/Widget5";
 import Widget4 from "./widgets/Widget4";
 import { getISOWeek } from "date-fns";
 import Widget6 from "./widgets/Widget6";
+import { Box } from "@mui/material";
 
-const DiseaseDashboard = ({ disease, dashboardIndex }) => {
+const DiseaseDashboard = ({ disease }) => {
   const { t, i18n } = useTranslation();
   const { diseases, communes } = useMetadataStore(
     (state) => ({
@@ -61,8 +62,8 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
     >
       <WidgetContainer
         key="1"
-        dashboardIndex={dashboardIndex}
-        widgetIndex={0}
+        dashboardIndex={0}
+        widgetIndex={1}
         childrenWidgets={[
           {
             title: t("widget1Title", { diseaseName }),
@@ -81,8 +82,8 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
       />
       <WidgetContainer
         key="2"
-        dashboardIndex={dashboardIndex}
-        widgetIndex={1}
+        dashboardIndex={0}
+        widgetIndex={2}
         childrenWidgets={[
           {
             title: t("widget2Title", { diseaseName }),
@@ -92,8 +93,8 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
       />
       <WidgetContainer
         key="3"
-        dashboardIndex={dashboardIndex}
-        widgetIndex={2}
+        dashboardIndex={0}
+        widgetIndex={3}
         childrenWidgets={[
           {
             title: t("widget3.1Title", { diseaseName, lastYear, currentWeek }),
@@ -114,8 +115,8 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
       />
       <WidgetContainer
         key="4"
-        dashboardIndex={dashboardIndex}
-        widgetIndex={3}
+        dashboardIndex={0}
+        widgetIndex={4}
         childrenWidgets={[
           {
             title: t("widget4.1Title", {
@@ -151,8 +152,8 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
       />
       <WidgetContainer
         key="5"
-        dashboardIndex={dashboardIndex}
-        widgetIndex={4}
+        dashboardIndex={0}
+        widgetIndex={5}
         childrenWidgets={[
           {
             title: t("widget5.1Title", {
@@ -185,8 +186,8 @@ const DiseaseDashboard = ({ disease, dashboardIndex }) => {
       />
       <WidgetContainer
         key="6"
-        dashboardIndex={dashboardIndex}
-        widgetIndex={5}
+        dashboardIndex={0}
+        widgetIndex={6}
         childrenWidgets={[
           {
             title: t("widget6.1Title", {

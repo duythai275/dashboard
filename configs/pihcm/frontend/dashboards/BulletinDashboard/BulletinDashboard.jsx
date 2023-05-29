@@ -26,7 +26,8 @@ import HorizontalRuleRoundedIcon from "@mui/icons-material/HorizontalRuleRounded
 import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
 import useDashboardStore from "@/state/dashboard";
-
+import DiseaseDashboard from "../DiseaseDashboard";
+import { shallow } from "zustand/shallow";
 const styles = {
   "& td, th": {
     textAlign: "center",
@@ -123,7 +124,15 @@ const StatusIcon = ({ status }) => {
 const BulletinDashboard = ({ title }) => {
   const { t, i18n } = useTranslation();
   const diseases = useMetadataStore((state) => state.diseases);
-  const selectDashboard = useDashboardStore((state) => state.selectDashboard);
+  const { selectDashboard, changeAdditionalStateProperty, additionalState } =
+    useDashboardStore(
+      (state) => ({
+        selectDashboard: state.selectDashboard,
+        changeAdditionalStateProperty: state.changeAdditionalStateProperty,
+        additionalState: state.additionalState,
+      }),
+      shallow
+    );
   const diseaseNames = useMemo(() => {
     const result = {};
     const language = i18n.language;
@@ -140,6 +149,7 @@ const BulletinDashboard = ({ title }) => {
   }, [i18n.language, diseases]);
 
   const [tableData, setTableData] = useState([]);
+  const [selectedDisease, setSelectedDisease] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -163,7 +173,9 @@ const BulletinDashboard = ({ title }) => {
       );
     })();
   }, [diseases]);
-
+  if (additionalState.selectedDisease) {
+    return <DiseaseDashboard disease={additionalState.selectedDisease.value} />;
+  }
   return (
     <Paper sx={{ mt: 1, pt: 2, border: "1px solid #ededed" }}>
       <Box sx={{ width: 1, textAlign: "center", pb: 2 }}>
@@ -227,11 +239,11 @@ const BulletinDashboard = ({ title }) => {
                   sx={{ cursor: "pointer" }}
                   key={row.code}
                   onClick={() => {
-                    const foundIndex = diseases.findIndex(
+                    const foundIndex = diseases.find(
                       (d) => d.code === row.code
                     );
-                    selectDashboard({
-                      value: foundIndex + 1,
+                    changeAdditionalStateProperty("selectedDisease", {
+                      value: foundIndex.code,
                       label: diseaseNames[row.code],
                     });
                   }}
