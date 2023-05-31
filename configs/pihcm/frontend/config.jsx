@@ -8,10 +8,11 @@ import locales from "./locales";
 import { pull } from "@/utils/fetch";
 import { useTranslation } from "react-i18next";
 import BulletinDashboard from "./dashboards/BulletinDashboard/BulletinDashboard";
-import DiseaseDashboard from "./dashboards/DiseaseDashboard";
 import changeMapWidgetChildren from "./hooks/changeMapWidgetChildren";
 import _ from "lodash";
-import { Box, Button } from "@mui/material";
+import { Autocomplete, Box, Button, TextField } from "@mui/material";
+import DengueDashboard from "./dashboards/DengueDashboard";
+import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
 const languages = locales.map((locale) => ({
   name: locale.name,
   code: locale.code,
@@ -53,6 +54,10 @@ const useDashboardInitialization = () => {
           name: "bulletin",
           dashboard: <BulletinDashboard title="bulletin" />,
         },
+        {
+          name: "dengue",
+          dashboard: <DengueDashboard title="dengue" />,
+        },
       ];
       setReady(false);
       const results = await Promise.all([
@@ -60,9 +65,9 @@ const useDashboardInitialization = () => {
           "/api/optionSets?filter=id:eq:d5fivOeWHIb&fields=id,name,translations,options[id,name,code,translations"
         ),
         pull(
-          "/api/organisationUnits?fields=id,name,level,ancestors[id,name,level]&paging=false"
+          "/api/organisationUnits?fields=id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id]&paging=false"
         ),
-        pull("/api/organisationUnits.geojson?level=2"),
+        pull("/api/organisationUnits.geojson?level=2&level=3"),
       ]);
       setMetadata("diseases", results[0].optionSets[0].options);
 
@@ -108,6 +113,31 @@ const useDashboardInitialization = () => {
             {
               selectedChildren: 0,
             },
+          ],
+        },
+        {
+          widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
             {
               selectedChildren: 0,
             },
@@ -115,7 +145,7 @@ const useDashboardInitialization = () => {
         },
       ]);
       setDashboards(dashboards);
-      selectDashboard({ value: 0, label: t(dashboards[0].name) });
+      selectDashboard({ value: 1, label: t(dashboards[1].name) });
       setReady(true);
     })();
   }, []);
@@ -126,6 +156,10 @@ const useDashboardInitialization = () => {
         {
           name: "bulletin",
           dashboard: <BulletinDashboard title="bulletin" />,
+        },
+        {
+          name: "dengue",
+          dashboard: <DengueDashboard title="dengue" />,
         },
       ];
       setDashboards(dashboards);
@@ -139,15 +173,78 @@ const useDashboardInitialization = () => {
   return ready;
 };
 
-const CustomControl = () => {
+const CustomControlForDiseaseBulletin = () => {
   const { t } = useTranslation();
-  const { changeAdditionalStateProperty, additionalState } = useDashboardStore(
-    (state) => ({
-      changeAdditionalStateProperty: state.changeAdditionalStateProperty,
-      additionalState: state.additionalState,
-    }),
+  const { orgUnits } = useMetadataStore(
+    (state) => ({ orgUnits: state.communes }),
     shallow
   );
+  const { changeAdditionalStateProperty, additionalState, selectedDashboard } =
+    useDashboardStore(
+      (state) => ({
+        changeAdditionalStateProperty: state.changeAdditionalStateProperty,
+        additionalState: state.additionalState,
+        selectedDashboard: state.selectedDashboard,
+      }),
+      shallow
+    );
+  useEffect(() => {
+    if (selectedDashboard?.value !== BULLETIN_DASHBOARD_VALUE)
+      changeAdditionalStateProperty("selectedDisease", null);
+    if (selectedDashboard.value !== DENGUE_DASHBOARD_VALUE) {
+      changeAdditionalStateProperty("selectedPeriod", null);
+      changeAdditionalStateProperty("selectedOrgUnit", null);
+    } else {
+      changeAdditionalStateProperty("selectedPeriod", 2023);
+      changeAdditionalStateProperty(
+        "selectedOrgUnit",
+        orgUnits.find((ou) => ou.level === 1)
+      );
+    }
+  }, [selectedDashboard?.value]);
+
+  if (selectedDashboard?.value === DENGUE_DASHBOARD_VALUE) {
+    return (
+      <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <Autocomplete
+          disableClearable={true}
+          value={
+            additionalState.selectedPeriod ? additionalState.selectedPeriod : ""
+          }
+          sx={{ width: 200 }}
+          options={(() => {
+            let currentYear = new Date().getFullYear();
+            let result = [];
+            while (currentYear >= 2011) {
+              result.push(currentYear);
+              currentYear--;
+            }
+            return result;
+          })()}
+          renderInput={(params) => (
+            <TextField {...params} placeholder={t("selectYear")} />
+          )}
+          onChange={(event, newValue) => {
+            if (newValue.callback) {
+              newValue.callback();
+              return;
+            }
+            changeAdditionalStateProperty("selectedPeriod", newValue);
+          }}
+        />
+        <OrgUnitSelector
+          orgUnits={orgUnits.filter(
+            (ou) =>
+              !ou.organisationUnitGroups.find((oug) => oug.id === "GFmTbzHbILH")
+          )}
+          initialOrgUnit={orgUnits.find((ou) => ou.level === 1)}
+          accept={(orgUnit) => {
+            changeAdditionalStateProperty("selectedOrgUnit", orgUnit);
+          }}
+        />
+      </Box>
+    );
+  }
   return (
     <Button
       disabled={additionalState.selectedDisease ? false : true}
@@ -161,6 +258,9 @@ const CustomControl = () => {
   );
 };
 
-const customControl = <CustomControl />;
+const customControl = <CustomControlForDiseaseBulletin />;
 
 export { useDashboardInitialization, languages, customControl };
+
+const BULLETIN_DASHBOARD_VALUE = 0;
+const DENGUE_DASHBOARD_VALUE = 1;

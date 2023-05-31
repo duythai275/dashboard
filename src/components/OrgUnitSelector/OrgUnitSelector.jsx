@@ -80,8 +80,8 @@ const OrgUnitSelector = ({ orgUnits, initialOrgUnit, accept }) => {
           setAnchorEl(event.currentTarget);
         }}
       >
-        {t("selectUnit")}
         <TextField
+          placeholder={t("selectUnit")}
           value={
             orgUnit
               ? orgUnit.displayName

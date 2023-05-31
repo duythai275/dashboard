@@ -14,7 +14,7 @@ const locales = [
         key: "dashboard1Title",
         value: "dashboard1Title",
       },
-      { key: "bulletin", value: "Bảng tin dịch bệnh" },
+      { key: "bulletin", value: "Bảng tin dịch bệnh truyền nhiễm (TT54)" },
       {
         key: "disease",
         value: "Tên bệnh",
@@ -135,7 +135,44 @@ const locales = [
         value: `Top 10 tỉnh có số ca mắc {{diseaseName}}  cao nhất (tuần {{currentWeek}})`,
       },
       { key: "arithmeticMeanLast5Year", value: "Trung bình 5 năm trước" },
-      { key: "back", value: "Quay lại" },
+      { key: "back", value: "Bảng tin" },
+      { key: "dengue", value: "Bệnh sốt xuất huyết" },
+      {
+        key: "widget1DengueDashboardTitle",
+        value: "Số mắc SXHD KVPN theo tuần 5 năm liền kề",
+      },
+      { key: "legendWidget1DengueDashboard", value: "Mắc {{year}}" },
+      {
+        key: "widget2DengueDashboardTitle",
+        value: "Số mắc tử vong do SXHD cộng dồn theo tuần 5 năm liền kề",
+      },
+      { key: "legendWidget2DengueDashboard", value: "Mắc {{year}}" },
+      {
+        key: "widget3DengueDashboardTitle",
+        value: "Số mắc SXHD và tử vong do SXHD phân bố theo địa phương",
+      },
+      { key: "selectYear", value: "Chọn năm" },
+      { key: "selectUnit", value: "Chọn đơn vị" },
+      {
+        key: "widget4DengueDashboardTitle",
+        value: "Số mắc SXHD theo nhóm tuổi",
+      },
+      {
+        key: "widget5DengueDashboardTitle",
+        value: "Số tử vong do SXHD theo nhóm tuổi",
+      },
+      {
+        key: "widget6DengueDashboardTitle",
+        value: "Số mắc SXHD phân bố theo nhóm tuổi và địa phương",
+      },
+      {
+        key: "widget7DengueDashboardTitle",
+        value: "Số mắc SXHD theo độ nặng ca bệnh",
+      },
+      {
+        key: "widget8DengueDashboardTitle",
+        value: "Số mắc SXHD theo độ nặng ca bệnh và địa phương",
+      },
     ],
   },
   {
@@ -261,7 +298,44 @@ const locales = [
         value: `Top 10 provinces with highest {{diseaseName}} cases (week {{currentWeek}})`,
       },
       { key: "arithmeticMeanLast5Year", value: "Average last 5 years" },
-      { key: "back", value: "Back" },
+      { key: "back", value: "Bulletin" },
+      { key: "dengue", value: "Dengue Fever" },
+      {
+        key: "widget1DengueDashboardTitle",
+        value: "Số mắc SXHD KVPN theo tuần 5 năm liền kề",
+      },
+      { key: "legendWidget1DengueDashboard", value: "{{year}}" },
+      {
+        key: "widget2DengueDashboardTitle",
+        value: "Số mắc tử vong do SXHD cộng dồn theo tuần 5 năm liền kề",
+      },
+      { key: "legendWidget2DengueDashboard", value: "Mắc {{year}}" },
+      {
+        key: "widget3DengueDashboardTitle",
+        value: "Số mắc SXHD và tử vong do SXHD phân bố theo địa phương",
+      },
+      { key: "selectYear", value: "Select year" },
+      { key: "selectUnit", value: "Select Org Unit" },
+      {
+        key: "widget4DengueDashboardTitle",
+        value: "Số mắc SXHD theo nhóm tuổi",
+      },
+      {
+        key: "widget5DengueDashboardTitle",
+        value: "Số tử vong do SXHD theo nhóm tuổi",
+      },
+      {
+        key: "widget6DengueDashboardTitle",
+        value: "Số mắc SXHD phân bố theo nhóm tuổi và địa phương",
+      },
+      {
+        key: "widget7DengueDashboardTitle",
+        value: "Số mắc SXHD theo độ nặng ca bệnh",
+      },
+      {
+        key: "widget8DengueDashboardTitle",
+        value: "Số mắc SXHD theo độ nặng ca bệnh và địa phương",
+      },
     ],
   },
 ];
