@@ -11,8 +11,14 @@ import useMetadataStore from "@/state/metadata";
 const Widget8 = ({ setLoading }) => {
   const [data, setData] = useState(null);
   const { i18n, t } = useTranslation();
-  const { orgUnits } = useMetadataStore((state) => ({ orgUnits: state.communes }), shallow);
-  const { additionalState } = useDashboardStore((state) => ({ additionalState: state.additionalState }), shallow);
+  const { orgUnits } = useMetadataStore(
+    (state) => ({ orgUnits: state.communes }),
+    shallow
+  );
+  const { additionalState } = useDashboardStore(
+    (state) => ({ additionalState: state.additionalState }),
+    shallow
+  );
   const { selectedPeriod, selectedOrgUnit } = additionalState;
   useEffect(() => {
     if (!selectedPeriod || !selectedOrgUnit) return;
@@ -30,7 +36,9 @@ const Widget8 = ({ setLoading }) => {
           }
         })();
         const result = await pull(
-          `/api/analytics?dimension=dx:z0p4ckI0hxj;QdnFUDnx43c,ou:${selectedOrgUnit?.id}${
+          `/api/analytics?dimension=dx:z0p4ckI0hxj;QdnFUDnx43c,ou:${
+            selectedOrgUnit?.id
+          }${
             ouGroup && `;OU_GROUP-${ouGroup}`
           }&filter=pe:${selectedPeriod}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
         );
@@ -43,7 +51,7 @@ const Widget8 = ({ setLoading }) => {
           dataResult.data = result.rows.map((row) => ({
             dx: row[dxIndex],
             ou: row[ouIndex],
-            value: row[valueIndex] * 1
+            value: row[valueIndex] * 1,
           }));
           dataResult.ous = result.metaData.dimensions.ou;
           setData(dataResult);
@@ -61,19 +69,26 @@ const Widget8 = ({ setLoading }) => {
     data && (
       <BarChart
         data={{
-          labels: data.ous.map((ou) => orgUnits.find((item) => item.id === ou)?.displayName || ""),
+          labels: data.ous.map(
+            (ou) => orgUnits.find((item) => item.id === ou)?.displayName || ""
+          ),
           datasets: listLegend.map((legend, index) => ({
             label: legend.label,
             data: data.ous.map((ou) => {
               const getTotal = (array) => {
-                return array.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0);
+                return array.reduce(
+                  (prev, curr) => prev + (curr.value * 1 || 0),
+                  0
+                );
               };
-              const dataArray = data.data.filter((item) => item.dx === legend.value && item.ou === ou);
+              const dataArray = data.data.filter(
+                (item) => item.dx === legend.value && item.ou === ou
+              );
 
               return getTotal(dataArray);
             }),
-            backgroundColor: listColorForLegend[index]
-          }))
+            backgroundColor: listColorForLegend[index],
+          })),
         }}
       />
     )
@@ -83,8 +98,8 @@ const Widget8 = ({ setLoading }) => {
 export default withWidgetChildrenLoader(Widget8);
 
 const listLegend = [
-  { value: "z0p4ckI0hxj", label: "SXHD/SXHD có cảnh báo" },
-  { value: "QdnFUDnx43c", label: "SXHD/SXHD nặng" }
+  { value: "z0p4ckI0hxj", label: "dengueWarning" },
+  { value: "QdnFUDnx43c", label: "dengueSeverer" },
 ];
 
 const listColorForLegend = ["#50B432", "#058DC7"];

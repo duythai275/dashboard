@@ -11,8 +11,11 @@ import LineChart from "@/components/Widgets/LineChart";
 
 const Widget1 = ({ setLoading }) => {
   const { t, i18n } = useTranslation();
-  const { additionalState } = useDashboardStore((state) => ({ additionalState: state.additionalState }), shallow);
-  const { selectedPeriod, dengueDataReady, dengueData } = additionalState;
+  const { additionalState } = useDashboardStore(
+    (state) => ({ additionalState: state.additionalState }),
+    shallow
+  );
+  const { selectedPeriod, selectedOrgUnit } = additionalState;
 
   const [data, setData] = useState(null);
 
@@ -44,38 +47,68 @@ const Widget1 = ({ setLoading }) => {
   }, [selectedPeriod]);
 
   useEffect(() => {
-    setLoading(!dengueDataReady);
-    if (dengueDataReady) {
-      const currentData = {};
-      currentData.labels = weeks.map((week) => t("labelWidget1", { week: week.slice(1) }));
-      currentData.datasets = listLast5Year.map((year, index) => ({
-        type: "line",
-        label: t("legendWidget1DengueDashboard", { year }),
-        backgroundColor: listColors[index],
-        data: weeks.map((week) => {
-          const weekNumber = week.slice(1) * 1;
-          if (year === currentYear && weekNumber > currentWeek) {
-            return null;
-          }
-          const foundData = dengueData.case.find((item) => item.period === `${year}${week}`);
-          return foundData?.value || 0;
-        }),
-        pointBorderWidth: 0,
-        borderColor: listColors[index],
-        borderWidth: 2,
-        tension: 0.4,
-        ...listLineStyle[index]
-      }));
-      setData(currentData);
-    }
-  }, [dengueDataReady]);
+    if (!listLast5Year || !selectedOrgUnit) return;
+    (async () => {
+      try {
+        setLoading(true);
+        const listPeriod = listLast5Year
+          .map((year) => weeks.map((week) => `${year}${week}`))
+          .flat();
+        const result = await pull(
+          `/api/analytics?dimension=dx:laUqDdeLgDx,pe:${listPeriod.join(
+            ";"
+          )}&filter=ou:${
+            selectedOrgUnit?.id
+          }&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
+        );
+        if (result) {
+          const periodIndex = findHeaderIndex(result.headers, "pe");
+          const valueIndex = findHeaderIndex(result.headers, "value");
+
+          const dataResult = result.rows.map((row) => ({
+            period: row[periodIndex],
+            value: row[valueIndex] * 1,
+          }));
+          const currentData = {};
+          currentData.labels = weeks.map((week) =>
+            t("labelWidget1", { week: week.slice(1) })
+          );
+          currentData.datasets = listLast5Year.map((year, index) => ({
+            type: "line",
+            label: t("legendWidget1DengueDashboard", { year }),
+            backgroundColor: listColors[index],
+            data: weeks.map((week) => {
+              const weekNumber = week.slice(1) * 1;
+              if (year === currentYear && weekNumber > currentWeek) {
+                return null;
+              }
+              const foundData = dataResult.find(
+                (item) => item.period === `${year}${week}`
+              );
+              return foundData?.value || 0;
+            }),
+            pointBorderWidth: 0,
+            borderColor: listColors[index],
+            borderWidth: 2,
+            tension: 0.4,
+            ...listLineStyle[index],
+          }));
+          setData(currentData);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [listLast5Year, selectedOrgUnit?.id]);
 
   if (!data) return null;
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     layout: {
-      padding: 18
+      padding: 18,
     },
     plugins: {
       legend: {
@@ -83,8 +116,8 @@ const Widget1 = ({ setLoading }) => {
         labels: {
           useLineStyle: true,
           //   pointStyle: "line",
-          boxHeight: 0
-        }
+          boxHeight: 0,
+        },
       },
       datalabels: {
         display: false,
@@ -96,10 +129,10 @@ const Widget1 = ({ setLoading }) => {
         textStrokeColor: "black", // <-- added this
         textStrokeWidth: 3, // <-- added this,
         font: {
-          size: 12
-        }
-      }
-    }
+          size: 12,
+        },
+      },
+    },
   };
 
   return <LineChart data={data} customOptions={options} />;
@@ -107,43 +140,50 @@ const Widget1 = ({ setLoading }) => {
 
 export default withWidgetChildrenLoader(Widget1);
 
-const listColors = ["#FF0000", "#FAC090", "#4990A4", "#00B050", "#7030A0", "#C72020"];
+const listColors = [
+  "#FF0000",
+  "#FAC090",
+  "#4990A4",
+  "#00B050",
+  "#7030A0",
+  "#C72020",
+];
 
 const listLineStyle = [
   {
     pointRadius: 3,
     borderDash: [0, 0],
     borderCapStyle: "butt",
-    borderWidth: 2
+    borderWidth: 2,
   },
   {
     pointRadius: 0,
     borderDash: [0, 0],
     borderCapStyle: "butt",
-    borderWidth: 2
+    borderWidth: 2,
   },
   {
     pointRadius: 0,
     borderDash: [0, 0],
     borderCapStyle: "butt",
-    borderWidth: 2
+    borderWidth: 2,
   },
   {
     pointRadius: 0,
     borderDash: [0, 0],
     borderCapStyle: "butt",
-    borderWidth: 2
+    borderWidth: 2,
   },
   {
     borderDash: [7, 15],
     pointRadius: 0,
     borderCapStyle: "butt",
-    borderWidth: 2
+    borderWidth: 2,
   },
   {
     borderDash: [1, 15],
     borderCapStyle: "round",
     borderWidth: 3,
-    pointRadius: 0
-  }
+    pointRadius: 0,
+  },
 ];
