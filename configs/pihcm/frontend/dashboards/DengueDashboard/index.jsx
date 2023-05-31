@@ -21,73 +21,6 @@ import Widget8 from "./widgets/Widget8";
 import "./index.css";
 const DengueDashboard = () => {
   const { t } = useTranslation();
-  const { additionalState, changeAdditionalStateProperty } = useDashboardStore(
-    (state) => ({
-      additionalState: state.additionalState,
-      changeAdditionalStateProperty: state.changeAdditionalStateProperty
-    }),
-    shallow
-  );
-  const { selectedPeriod, selectedOrgUnit } = additionalState;
-  const weeks = useMemo(() => {
-    let weeks = [];
-    for (let i = 1; i <= 52; i++) {
-      weeks.push(`W${i}`);
-    }
-    return weeks;
-  }, []);
-  const listLast5Year = useMemo(() => {
-    if (!selectedPeriod) return null;
-    let result = [];
-    let currentYear = selectedPeriod;
-    while (currentYear >= 2011 && result.length < 6) {
-      result.push(currentYear);
-      currentYear--;
-    }
-    return result;
-  }, [selectedPeriod]);
-  useEffect(() => {
-    if (!listLast5Year || !selectedOrgUnit) return;
-    (async () => {
-      try {
-        changeAdditionalStateProperty("dengueDataReady", false);
-        const listPeriod = listLast5Year.map((year) => weeks.map((week) => `${year}${week}`)).flat();
-        const result = await Promise.all([
-          pull(
-            `/api/analytics?dimension=dx:laUqDdeLgDx,pe:${listPeriod.join(";")}&filter=ou:${
-              selectedOrgUnit?.id
-            }&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
-          ),
-          pull(
-            `/api/analytics?dimension=dx:mVrQMb86ESf,pe:${listPeriod.join(";")}&filter=ou:${
-              selectedOrgUnit?.id
-            }&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
-          )
-        ]);
-        if (result) {
-          const periodIndex = findHeaderIndex(result[0].headers, "pe");
-          const valueIndex = findHeaderIndex(result[0].headers, "value");
-
-          const caseDataResult = result[0].rows.map((row) => ({
-            period: row[periodIndex],
-            value: row[valueIndex] * 1
-          }));
-          const deathDataResult = result[1].rows.map((row) => ({
-            period: row[periodIndex],
-            value: row[valueIndex] * 1
-          }));
-          changeAdditionalStateProperty("dengueData", {
-            case: caseDataResult,
-            death: deathDataResult
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        changeAdditionalStateProperty("dengueDataReady", true);
-      }
-    })();
-  }, [listLast5Year, selectedOrgUnit?.id]);
   return (
     <ReactGridLayout
       isDraggable={false}
@@ -99,7 +32,7 @@ const DengueDashboard = () => {
         { i: "5", x: 6, y: 150, w: 6, h: 50 },
         { i: "6", x: 0, y: 200, w: 12, h: 50 },
         { i: "7", x: 0, y: 250, w: 4, h: 50 },
-        { i: "8", x: 4, y: 250, w: 8, h: 50 }
+        { i: "8", x: 4, y: 250, w: 8, h: 50 },
       ]}
       cols={12}
       rowHeight={1}
@@ -112,8 +45,8 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget1DengueDashboardTitle"),
-            widget: <Widget1 />
-          }
+            widget: <Widget1 />,
+          },
         ]}
       />
       <WidgetContainer
@@ -123,8 +56,8 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget2DengueDashboardTitle"),
-            widget: <Widget2 />
-          }
+            widget: <Widget2 />,
+          },
         ]}
       />
       <WidgetContainer
@@ -134,8 +67,8 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget3DengueDashboardTitle"),
-            widget: <Widget3 />
-          }
+            widget: <Widget3 />,
+          },
         ]}
       />
       <WidgetContainer
@@ -145,8 +78,8 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget4DengueDashboardTitle"),
-            widget: <Widget4 />
-          }
+            widget: <Widget4 />,
+          },
         ]}
       />
       <WidgetContainer
@@ -156,8 +89,8 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget5DengueDashboardTitle"),
-            widget: <Widget5 />
-          }
+            widget: <Widget5 />,
+          },
         ]}
       />
       <WidgetContainer
@@ -167,8 +100,8 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget6DengueDashboardTitle"),
-            widget: <Widget6 />
-          }
+            widget: <Widget6 />,
+          },
         ]}
       />
       <WidgetContainer
@@ -178,8 +111,8 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget7DengueDashboardTitle"),
-            widget: <Widget7 />
-          }
+            widget: <Widget7 />,
+          },
         ]}
       />
       <WidgetContainer
@@ -189,8 +122,8 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget8DengueDashboardTitle"),
-            widget: <Widget8 />
-          }
+            widget: <Widget8 />,
+          },
         ]}
       />
     </ReactGridLayout>
