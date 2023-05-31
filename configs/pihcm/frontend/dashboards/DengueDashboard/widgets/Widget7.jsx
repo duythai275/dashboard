@@ -10,7 +10,10 @@ import { shallow } from "zustand/shallow";
 const Widget7 = ({ setLoading }) => {
   const [data, setData] = useState(null);
   const { i18n, t } = useTranslation();
-  const { additionalState } = useDashboardStore((state) => ({ additionalState: state.additionalState }), shallow);
+  const { additionalState } = useDashboardStore(
+    (state) => ({ additionalState: state.additionalState }),
+    shallow
+  );
   const { selectedPeriod, selectedOrgUnit } = additionalState;
   useEffect(() => {
     if (!selectedPeriod || !selectedOrgUnit) return;
@@ -28,7 +31,9 @@ const Widget7 = ({ setLoading }) => {
           }
         })();
         const result = await pull(
-          `/api/analytics?dimension=dx:z0p4ckI0hxj;QdnFUDnx43c,ou:${selectedOrgUnit?.id}${
+          `/api/analytics?dimension=dx:z0p4ckI0hxj;QdnFUDnx43c,ou:${
+            selectedOrgUnit?.id
+          }${
             ouGroup && `;OU_GROUP-${ouGroup}`
           }&filter=pe:${selectedPeriod}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
         );
@@ -40,7 +45,7 @@ const Widget7 = ({ setLoading }) => {
           const dataResult = result.rows.map((row) => ({
             dx: row[dxIndex],
             ou: row[ouIndex],
-            value: row[valueIndex] * 1
+            value: row[valueIndex] * 1,
           }));
           setData(dataResult);
         }
@@ -57,19 +62,19 @@ const Widget7 = ({ setLoading }) => {
     responsive: true,
     maintainAspectRatio: false,
     layout: {
-      padding: 18
+      padding: 18,
     },
     plugins: {
       tooltip: {
         callbacks: {
           title: (context) => {
             return context[0].label.replaceAll(",", "");
-          }
-        }
+          },
+        },
       },
       legend: {
         position: "bottom",
-        display: false
+        display: false,
       },
       datalabels: {
         anchor: "end",
@@ -80,31 +85,36 @@ const Widget7 = ({ setLoading }) => {
         textStrokeColor: "black", // <-- added this
         textStrokeWidth: 3, // <-- added this,
         font: {
-          size: 12
-        }
-      }
-    }
+          size: 12,
+        },
+      },
+    },
   };
 
   return (
     data && (
       <BarChart
         data={{
-          labels: listLegend.map((legend) => legend.label),
+          labels: listLegend.map((legend) => t(legend.label)),
           datasets: [
             {
               label: "",
               data: listLegend.map((legend) => {
                 const getTotal = (array) => {
-                  return array.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0);
+                  return array.reduce(
+                    (prev, curr) => prev + (curr.value * 1 || 0),
+                    0
+                  );
                 };
-                const dataArray = data.filter((item) => item.dx === legend.value);
+                const dataArray = data.filter(
+                  (item) => item.dx === legend.value
+                );
 
                 return getTotal(dataArray);
               }),
-              backgroundColor: "#50B432"
-            }
-          ]
+              backgroundColor: "#50B432",
+            },
+          ],
         }}
         customOptions={options}
       />
@@ -115,6 +125,6 @@ const Widget7 = ({ setLoading }) => {
 export default withWidgetChildrenLoader(Widget7);
 
 const listLegend = [
-  { value: "QdnFUDnx43c", label: "SXHD/SXHD nặng" },
-  { value: "z0p4ckI0hxj", label: "SXHD/SXHD có cảnh báo" }
+  { value: "QdnFUDnx43c", label: "dengueSeverer" },
+  { value: "z0p4ckI0hxj", label: "dengueWarning" },
 ];

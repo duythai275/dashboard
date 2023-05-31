@@ -173,6 +173,8 @@ const locales = [
         key: "widget8DengueDashboardTitle",
         value: "Số mắc SXHD theo độ nặng ca bệnh và địa phương",
       },
+      { key: "dengueSeverer", value: "SXHD/SXHD nặng" },
+      { key: "dengueWarning", value: "SXHD/SXHD có cảnh báo" },
     ],
   },
   {
@@ -336,6 +338,8 @@ const locales = [
         key: "widget8DengueDashboardTitle",
         value: "Số mắc SXHD theo độ nặng ca bệnh và địa phương",
       },
+      { key: "dengueSeverer", value: "SXHD/SXHD nặng" },
+      { key: "dengueWarning", value: "SXHD/SXHD có cảnh báo" },
     ],
   },
 ];
