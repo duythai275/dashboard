@@ -75,7 +75,6 @@ const Widget12 = ({ setLoading, dataItemId }) => {
       const colors = WIDGET_12_DASHBOARD_5_COLORS;
       let currentData = {};
       currentData.labels = months.map((pe) => {
-        console.log(pe)
         return t(pe);
       });
       currentData.datasets = result.data.map((di, index) => ({

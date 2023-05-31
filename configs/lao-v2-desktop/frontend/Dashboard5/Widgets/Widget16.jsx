@@ -83,7 +83,6 @@ const Widget16 = ({ setLoading }) => {
       columns: [],
       rows: [],
     };
-    console.log(additionalState.widgetDashboard5DataWidget16.metaData.items);
     currentData.columns = result.pes.map((pe, index) => ({
       name: pe,
       header: returnPeriodName(

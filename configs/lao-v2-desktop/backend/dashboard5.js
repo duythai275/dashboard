@@ -13,16 +13,20 @@ const returnEventValue = (values, arr, diseaseCodes) => {
       )
     ) {
       if (arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]]) {
-        arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push([
-          row[findHeaderIndex(values.data.headers, "latitude")],
-          row[findHeaderIndex(values.data.headers, "longitude")],
-        ]);
+        arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push({
+          coordinates: [
+            row[findHeaderIndex(values.data.headers, "latitude")],
+            row[findHeaderIndex(values.data.headers, "longitude")],
+          ]
+        });
       } else {
         arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]] = [];
-        arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push([
-          row[findHeaderIndex(values.data.headers, "latitude")],
-          row[findHeaderIndex(values.data.headers, "longitude")],
-        ]);
+        arr[row[findHeaderIndex(values.data.headers, "Dyq13cMGMzT")]].push({
+          coordinates: [
+            row[findHeaderIndex(values.data.headers, "latitude")],
+            row[findHeaderIndex(values.data.headers, "longitude")],
+          ]
+        });
       }
     }
   });
@@ -141,7 +145,7 @@ const apisDashboard5 = [
       //   }
       //   page++;
       // }
-
+      console.log("start")
       while (flag) {
         let arrRequests = [];
         for (let i = page; i <= page + 9; i++) {
@@ -163,7 +167,7 @@ const apisDashboard5 = [
         });
         page += 10;
       }
-
+      console.log("done")
       return arr;
     },
   },

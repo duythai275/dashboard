@@ -26,7 +26,7 @@ const ReactGridLayout = WidthProvider(Responsive);
 const Widget15 = ({ setLoading, dataItemId, hmisGeoJson }) => {
   const { i18n, t } = useTranslation();
   //const hmisGeoJson = useMetadataStore((state) => state.hmisGeoJson);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const additionalState = useDashboardStore((state) => state.additionalState);
   const [result, setResult] = useState(null);
 
@@ -40,7 +40,9 @@ const Widget15 = ({ setLoading, dataItemId, hmisGeoJson }) => {
         if (additionalState.widgetDashboard5EventData[da]) {
           markers = [
             ...markers,
-            ...additionalState.widgetDashboard5EventData[da],
+            ...additionalState.widgetDashboard5EventData[da].map((e) => {
+              return { ...e, icon: caseMarker };
+            }),
           ];
         }
         // response.data = [
@@ -70,7 +72,7 @@ const Widget15 = ({ setLoading, dataItemId, hmisGeoJson }) => {
       <ClusterMap
         features={hmisGeoJson}
         markers={data}
-        icon={caseMarker}
+        // icon={caseMarker}
       />
     )
   );
