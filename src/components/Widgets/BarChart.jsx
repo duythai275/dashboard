@@ -1,40 +1,25 @@
 import React from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 const options = {
   responsive: true,
   maintainAspectRatio: false,
   layout: {
-    padding: 18,
+    padding: 18
   },
   plugins: {
     tooltip: {
       callbacks: {
         title: (context) => {
           return context[0].label.replaceAll(",", "");
-        },
-      },
+        }
+      }
     },
     legend: {
-      position: "bottom",
+      position: "bottom"
     },
     datalabels: {
       anchor: "end",
@@ -45,20 +30,14 @@ const options = {
       textStrokeColor: "black", // <-- added this
       textStrokeWidth: 3, // <-- added this,
       font: {
-        size: 10,
-      },
-    },
-  },
+        size: 12
+      }
+    }
+  }
 };
 
 const BarChart = ({ data, customOptions }) => {
-  return (
-    <Bar
-      options={customOptions || options}
-      data={data}
-      plugins={[ChartDataLabels, lineAt]}
-    />
-  );
+  return <Bar options={customOptions || options} data={data} plugins={[ChartDataLabels, lineAt]} />;
 };
 
 export default BarChart;
@@ -71,7 +50,7 @@ const lineAt = {
     const {
       ctx,
       chartArea: { top, bottom, left, right, width, height },
-      scales: { x, y },
+      scales: { x, y }
     } = chart;
     ctx.lineWidth = options.thickness || 1;
     ctx.strokeStyle = options.color || "black";
@@ -80,5 +59,5 @@ const lineAt = {
     ctx.moveTo(left, lineAt);
     ctx.lineTo(right, lineAt);
     ctx.stroke();
-  },
+  }
 };

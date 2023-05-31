@@ -79,11 +79,11 @@ const LegendLayer = ({ data, legend }) => {
   );
 };
 
-const ClusterLayer = ({ markers, icon }) => {
+const ClusterLayer = ({ markers }) => {
   return (
     <MarkerClusterGroup chunkedLoading>
       {markers.map((marker, index) => (
-        <Marker key={index} position={marker} icon={icon}></Marker>
+        <Marker key={index} position={marker.coordinates} icon={marker.icon}></Marker>
       ))}
     </MarkerClusterGroup>
   );

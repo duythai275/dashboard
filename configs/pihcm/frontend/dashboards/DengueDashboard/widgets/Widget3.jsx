@@ -3,9 +3,7 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 import L from "leaflet";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { useTranslation } from "react-i18next";
-import ClusterMap from "@/components/Widgets/ClusterMap";
-import caseMarkerImage from "@/config/assets/marker.png";
-import MixMap from "@/components/Widgets/MixMap";
+import MixedMap from "@/components/Widgets/MixedMap";
 import _ from "lodash";
 import useMetadataStore from "@/state/metadata";
 import { shallow } from "zustand/shallow";
@@ -13,39 +11,19 @@ import useDashboardStore from "@/state/dashboard";
 import { pull } from "@/utils/fetch";
 import { findHeaderIndex } from "../../../utils";
 import * as turf from "@turf/turf";
-
-const caseMarker = new L.Icon({
-  iconUrl: caseMarkerImage,
-  iconRetinaUrl: caseMarkerImage,
-  iconAnchor: null,
-  popupAnchor: [0, -12],
-  shadowUrl: null,
-  shadowSize: null,
-  shadowAnchor: null,
-  iconSize: new L.Point(10, 10),
-});
-
 const ReactGridLayout = WidthProvider(Responsive);
 
 const Widget3 = ({ setLoading }) => {
   const { i18n, t } = useTranslation();
   const [data, setData] = useState(null);
-  const { orgUnitGeoJson } = useMetadataStore(
-    (state) => ({ orgUnitGeoJson: state.orgUnitGeoJson }),
-    shallow
-  );
-  const { additionalState } = useDashboardStore(
-    (state) => ({ additionalState: state.additionalState }),
-    shallow
-  );
+  const { orgUnitGeoJson } = useMetadataStore((state) => ({ orgUnitGeoJson: state.orgUnitGeoJson }), shallow);
+  const { additionalState } = useDashboardStore((state) => ({ additionalState: state.additionalState }), shallow);
   const { selectedPeriod, selectedOrgUnit } = additionalState;
   const features = useMemo(() => {
     if (!selectedOrgUnit) return null;
     return orgUnitGeoJson
       ? orgUnitGeoJson.features.filter((feature) =>
-          selectedOrgUnit.level === 1
-            ? feature.properties.level === "2"
-            : feature.properties.level === "3"
+          selectedOrgUnit.level === 1 ? feature.properties.level === "2" : feature.properties.level === "3"
         )
       : [];
   }, [selectedOrgUnit?.id]);
@@ -75,7 +53,7 @@ const Widget3 = ({ setLoading }) => {
             `/api/analytics?dimension=dx:mVrQMb86ESf,ou:${selectedOrgUnit?.id}${
               ouGroup && `;OU_GROUP-${ouGroup}`
             }&filter=pe:${selectedPeriod}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
-          ),
+          )
         ]);
         if (result) {
           const ouIndex = findHeaderIndex(result[0].headers, "ou");
@@ -83,15 +61,15 @@ const Widget3 = ({ setLoading }) => {
 
           const caseDataResult = result[0].rows.map((row) => ({
             ou: row[ouIndex],
-            value: row[valueIndex] * 1,
+            value: row[valueIndex] * 1
           }));
           const deathDataResult = result[1].rows.map((row) => ({
             ou: row[ouIndex],
-            value: row[valueIndex] * 1,
+            value: row[valueIndex] * 1
           }));
           setData({
             case: caseDataResult,
-            death: deathDataResult,
+            death: deathDataResult
           });
         }
       } catch (error) {
@@ -103,18 +81,25 @@ const Widget3 = ({ setLoading }) => {
   }, [selectedPeriod, selectedOrgUnit?.id]);
 
   if (!data || !features) return;
-
   return (
     data && (
-      <MixMap
+      <MixedMap
         features={features}
-        markers={data.death
-          .map((item) => {
+        individualMarkers={_.compact(
+          data.death.map((item) => {
             const foundOu = features.find((feature) => feature.id === item.ou);
-            return turf.centroid(turf.polygon(foundOu.geometry.coordinates[0]));
+            if (!foundOu) return undefined;
+            const centroid = turf.centroid(turf.polygon(foundOu.geometry.coordinates[0]));
+            return {
+              coordinates: centroid.geometry.coordinates.reverse(),
+              icon: L.divIcon({
+                iconSize: 32,
+                className: "dengue-death-case-marker",
+                html: `<b>${item.value}</b>`
+              })
+            };
           })
-          .map((item) => item.geometry.coordinates.reverse())}
-        icon={caseMarker}
+        )}
         data={(() => {
           let result = {};
           data.case.forEach((item) => {

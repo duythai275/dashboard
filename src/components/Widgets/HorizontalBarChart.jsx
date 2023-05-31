@@ -24,7 +24,7 @@ const options = {
       textStrokeColor: "black", // <-- added this
       textStrokeWidth: 3, // <-- added this,
       font: {
-        size: 10
+        size: 12
       }
     }
   }

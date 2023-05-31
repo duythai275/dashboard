@@ -10,10 +10,7 @@ import { shallow } from "zustand/shallow";
 const Widget5 = ({ setLoading }) => {
   const [data, setData] = useState(null);
   const { i18n, t } = useTranslation();
-  const { additionalState } = useDashboardStore(
-    (state) => ({ additionalState: state.additionalState }),
-    shallow
-  );
+  const { additionalState } = useDashboardStore((state) => ({ additionalState: state.additionalState }), shallow);
   const { selectedPeriod, selectedOrgUnit } = additionalState;
   useEffect(() => {
     if (!selectedPeriod || !selectedOrgUnit) return;
@@ -31,9 +28,7 @@ const Widget5 = ({ setLoading }) => {
           }
         })();
         const result = await pull(
-          `/api/analytics?dimension=dx:etpZUT5JAkW;mVrQMb86ESf,ou:${
-            selectedOrgUnit?.id
-          }${
+          `/api/analytics?dimension=dx:etpZUT5JAkW;mVrQMb86ESf,ou:${selectedOrgUnit?.id}${
             ouGroup && `;OU_GROUP-${ouGroup}`
           }&filter=pe:${selectedPeriod}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
         );
@@ -45,7 +40,7 @@ const Widget5 = ({ setLoading }) => {
           const dataResult = result.rows.map((row) => ({
             dx: row[dxIndex],
             ou: row[ouIndex],
-            value: row[valueIndex] * 1,
+            value: row[valueIndex] * 1
           }));
           setData(dataResult);
         }
@@ -61,19 +56,19 @@ const Widget5 = ({ setLoading }) => {
     responsive: true,
     maintainAspectRatio: false,
     layout: {
-      padding: 18,
+      padding: 18
     },
     plugins: {
       tooltip: {
         callbacks: {
           title: (context) => {
             return context[0].label.replaceAll(",", "");
-          },
-        },
+          }
+        }
       },
       legend: {
         position: "bottom",
-        display: false,
+        display: false
       },
       datalabels: {
         anchor: "end",
@@ -84,10 +79,10 @@ const Widget5 = ({ setLoading }) => {
         textStrokeColor: "black", // <-- added this
         textStrokeWidth: 3, // <-- added this,
         font: {
-          size: 10,
-        },
-      },
-    },
+          size: 12
+        }
+      }
+    }
   };
 
   return (
@@ -100,25 +95,18 @@ const Widget5 = ({ setLoading }) => {
               label: "",
               data: listLegend.map((legend) => {
                 const getTotal = (array) => {
-                  return array.reduce(
-                    (prev, curr) => prev + (curr.value * 1 || 0),
-                    0
-                  );
+                  return array.reduce((prev, curr) => prev + (curr.value * 1 || 0), 0);
                 };
-                const totalData = data.filter(
-                  (item) => item.dx === "mVrQMb86ESf"
-                );
-                const lestThanAndEqual15Data = data.filter(
-                  (item) => item.dx === "etpZUT5JAkW"
-                );
+                const totalData = data.filter((item) => item.dx === "mVrQMb86ESf");
+                const lestThanAndEqual15Data = data.filter((item) => item.dx === "etpZUT5JAkW");
                 if (legend === "<=15") {
                   return getTotal(lestThanAndEqual15Data);
                 }
                 return getTotal(totalData) - getTotal(lestThanAndEqual15Data);
               }),
-              backgroundColor: "#50B432",
-            },
-          ],
+              backgroundColor: "#50B432"
+            }
+          ]
         }}
         customOptions={options}
       />
