@@ -73,7 +73,7 @@ const Widget8 = ({ setLoading }) => {
             (ou) => orgUnits.find((item) => item.id === ou)?.displayName || ""
           ),
           datasets: listLegend.map((legend, index) => ({
-            label: legend.label,
+            label: t(legend.label),
             data: data.ous.map((ou) => {
               const getTotal = (array) => {
                 return array.reduce(

@@ -16,18 +16,27 @@ const ReactGridLayout = WidthProvider(Responsive);
 const Widget3 = ({ setLoading }) => {
   const { i18n, t } = useTranslation();
   const [data, setData] = useState(null);
-  const { orgUnitGeoJson } = useMetadataStore((state) => ({ orgUnitGeoJson: state.orgUnitGeoJson }), shallow);
-  const { additionalState } = useDashboardStore((state) => ({ additionalState: state.additionalState }), shallow);
+  const { orgUnitGeoJson } = useMetadataStore(
+    (state) => ({ orgUnitGeoJson: state.orgUnitGeoJson }),
+    shallow
+  );
+  const { additionalState } = useDashboardStore(
+    (state) => ({ additionalState: state.additionalState }),
+    shallow
+  );
   const { selectedPeriod, selectedOrgUnit } = additionalState;
   const features = useMemo(() => {
     if (!selectedOrgUnit) return null;
     return orgUnitGeoJson
       ? orgUnitGeoJson.features.filter((feature) =>
-          selectedOrgUnit.level === 1 ? feature.properties.level === "2" : feature.properties.level === "3"
+          selectedOrgUnit.level === 1
+            ? feature.properties.level === "2"
+            : feature.properties.level === "3" &&
+              feature.properties.parent === selectedOrgUnit.id
         )
       : [];
   }, [selectedOrgUnit?.id]);
-
+  console.log(features);
   useEffect(() => {
     if (!selectedPeriod || !selectedOrgUnit) return;
     (async () => {
@@ -53,7 +62,7 @@ const Widget3 = ({ setLoading }) => {
             `/api/analytics?dimension=dx:mVrQMb86ESf,ou:${selectedOrgUnit?.id}${
               ouGroup && `;OU_GROUP-${ouGroup}`
             }&filter=pe:${selectedPeriod}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
-          )
+          ),
         ]);
         if (result) {
           const ouIndex = findHeaderIndex(result[0].headers, "ou");
@@ -61,15 +70,15 @@ const Widget3 = ({ setLoading }) => {
 
           const caseDataResult = result[0].rows.map((row) => ({
             ou: row[ouIndex],
-            value: row[valueIndex] * 1
+            value: row[valueIndex] * 1,
           }));
           const deathDataResult = result[1].rows.map((row) => ({
             ou: row[ouIndex],
-            value: row[valueIndex] * 1
+            value: row[valueIndex] * 1,
           }));
           setData({
             case: caseDataResult,
-            death: deathDataResult
+            death: deathDataResult,
           });
         }
       } catch (error) {
@@ -89,14 +98,29 @@ const Widget3 = ({ setLoading }) => {
           data.death.map((item) => {
             const foundOu = features.find((feature) => feature.id === item.ou);
             if (!foundOu) return undefined;
-            const centroid = turf.centroid(turf.polygon(foundOu.geometry.coordinates[0]));
+            // if (selectedOrgUnit.level !== 1) {
+            //   const centroid = turf.centroid(
+            //     turf.polygon(foundOu.geometry.coordinates)
+            //   );
+            //   return {
+            //     coordinates: centroid.geometry.coordinates.reverse(),
+            //     icon: L.divIcon({
+            //       iconSize: 32,
+            //       className: "dengue-death-case-marker",
+            //       html: `<b>${item.value}</b>`,
+            //     }),
+            //   };
+            // }
+            const centroid = turf.centroid(
+              turf.polygon(foundOu.geometry.coordinates[0])
+            );
             return {
               coordinates: centroid.geometry.coordinates.reverse(),
               icon: L.divIcon({
                 iconSize: 32,
                 className: "dengue-death-case-marker",
-                html: `<b>${item.value}</b>`
-              })
+                html: `<b>${item.value}</b>`,
+              }),
             };
           })
         )}
