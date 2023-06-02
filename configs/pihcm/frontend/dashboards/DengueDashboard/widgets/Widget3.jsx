@@ -36,7 +36,6 @@ const Widget3 = ({ setLoading }) => {
         )
       : [];
   }, [selectedOrgUnit?.id]);
-  console.log(features);
   useEffect(() => {
     if (!selectedPeriod || !selectedOrgUnit) return;
     (async () => {
@@ -111,8 +110,11 @@ const Widget3 = ({ setLoading }) => {
             //     }),
             //   };
             // }
+            console.log(foundOu.geometry);
             const centroid = turf.centroid(
-              turf.polygon(foundOu.geometry.coordinates[0])
+              foundOu.geometry.type === "Polygon"
+                ? turf.polygon(foundOu.geometry.coordinates)
+                : turf.multiPolygon(foundOu.geometry.coordinates)
             );
             return {
               coordinates: centroid.geometry.coordinates.reverse(),
