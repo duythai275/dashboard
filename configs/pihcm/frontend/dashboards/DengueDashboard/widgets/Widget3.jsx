@@ -97,20 +97,7 @@ const Widget3 = ({ setLoading }) => {
           data.death.map((item) => {
             const foundOu = features.find((feature) => feature.id === item.ou);
             if (!foundOu) return undefined;
-            // if (selectedOrgUnit.level !== 1) {
-            //   const centroid = turf.centroid(
-            //     turf.polygon(foundOu.geometry.coordinates)
-            //   );
-            //   return {
-            //     coordinates: centroid.geometry.coordinates.reverse(),
-            //     icon: L.divIcon({
-            //       iconSize: 32,
-            //       className: "dengue-death-case-marker",
-            //       html: `<b>${item.value}</b>`,
-            //     }),
-            //   };
-            // }
-            console.log(foundOu.geometry);
+
             const centroid = turf.centroid(
               foundOu.geometry.type === "Polygon"
                 ? turf.polygon(foundOu.geometry.coordinates)
