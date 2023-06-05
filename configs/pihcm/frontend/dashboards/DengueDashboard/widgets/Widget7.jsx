@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import BarChart from "@/components/Widgets/BarChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
@@ -15,6 +15,13 @@ const Widget7 = ({ setLoading }) => {
     shallow
   );
   const { selectedPeriod, selectedOrgUnit } = additionalState;
+  const weeks = useMemo(() => {
+    let weeks = [];
+    for (let i = 1; i <= 52; i++) {
+      weeks.push(`W${i}`);
+    }
+    return weeks;
+  }, []);
   useEffect(() => {
     if (!selectedPeriod || !selectedOrgUnit) return;
     (async () => {
@@ -30,12 +37,14 @@ const Widget7 = ({ setLoading }) => {
               return "";
           }
         })();
+        const listPeriod = weeks.map((week) => `${selectedPeriod}${week}`);
+
         const result = await pull(
           `/api/analytics?dimension=dx:z0p4ckI0hxj;QdnFUDnx43c,ou:${
             selectedOrgUnit?.id
-          }${
-            ouGroup && `;OU_GROUP-${ouGroup}`
-          }&filter=pe:${selectedPeriod}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
+          }${ouGroup && `;OU_GROUP-${ouGroup}`}&filter=pe:${listPeriod.join(
+            ";"
+          )}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
         );
         if (result) {
           const dxIndex = findHeaderIndex(result.headers, "dx");

@@ -25,6 +25,14 @@ const Widget3 = ({ setLoading }) => {
     shallow
   );
   const { selectedPeriod, selectedOrgUnit } = additionalState;
+
+  const weeks = useMemo(() => {
+    let weeks = [];
+    for (let i = 1; i <= 52; i++) {
+      weeks.push(`W${i}`);
+    }
+    return weeks;
+  }, []);
   const features = useMemo(() => {
     if (!selectedOrgUnit) return null;
     return orgUnitGeoJson
@@ -51,22 +59,26 @@ const Widget3 = ({ setLoading }) => {
               return "";
           }
         })();
+        const listPeriod = weeks.map((week) => `${selectedPeriod}${week}`);
         const result = await Promise.all([
           pull(
             `/api/analytics?dimension=dx:laUqDdeLgDx,ou:${selectedOrgUnit?.id}${
               ouGroup && `;OU_GROUP-${ouGroup}`
-            }&filter=pe:${selectedPeriod}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
+            }&filter=pe:${listPeriod.join(
+              ";"
+            )}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
           ),
           pull(
             `/api/analytics?dimension=dx:mVrQMb86ESf,ou:${selectedOrgUnit?.id}${
               ouGroup && `;OU_GROUP-${ouGroup}`
-            }&filter=pe:${selectedPeriod}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
+            }&filter=pe:${listPeriod.join(
+              ";"
+            )}&displayProperty=NAME&includeNumDen=false&skipMeta=false&skipData=false`
           ),
         ]);
         if (result) {
           const ouIndex = findHeaderIndex(result[0].headers, "ou");
           const valueIndex = findHeaderIndex(result[0].headers, "value");
-
           const caseDataResult = result[0].rows.map((row) => ({
             ou: row[ouIndex],
             value: row[valueIndex] * 1,
