@@ -9,6 +9,8 @@ import ClusterMap from "@/components/Widgets/ClusterMap";
 import { pull, findHeaderIndex } from "../../utils";
 import useDashboardStore from "@/state/dashboard";
 import caseMarkerImage from "@/config/assets/marker.png";
+import ThematicMap from "@/components/Widgets/ThematicMap";
+import { WIDGET_17_DASHBOARD_5_COLORS } from "../common/constant/color";
 
 const caseMarker = new L.Icon({
   iconUrl: caseMarkerImage,
@@ -23,58 +25,65 @@ const caseMarker = new L.Icon({
 
 const ReactGridLayout = WidthProvider(Responsive);
 
-const Widget9 = ({ setLoading, dataItemId, hmisGeoJson  }) => {
+const Widget9 = ({ setLoading, dataItemId, hmisGeoJson }) => {
   const { i18n, t } = useTranslation();
-  //const hmisGeoJson = useMetadataStore((state) => state.hmisGeoJson);
   const [data, setData] = useState(null);
   const additionalState = useDashboardStore((state) => state.additionalState);
   const [result, setResult] = useState(null);
+  const legend = WIDGET_17_DASHBOARD_5_COLORS;
 
   useEffect(() => {
     if (additionalState.widgetDashboard5EventReady) {
-      //   const response = {
-      //     data: [],
-      //   };
-      let markers = [];
-      dataItemId.forEach((da) => {
-        if (additionalState.widgetDashboard5EventData[da]) {
-          markers = [
-            ...markers,
-            ...additionalState.widgetDashboard5EventData[da].map((e) => {
-              return { ...e, icon: caseMarker };
-            }),
-          ];
+      const response = additionalState.widgetDashboard5EventData.rows.filter(
+        (row) => {
+          if (
+            dataItemId.includes(
+              row[
+                findHeaderIndex(
+                  additionalState.widgetDashboard5EventData.headers,
+                  "Dyq13cMGMzT"
+                )
+              ]
+            )
+          ) {
+            return row;
+          }
         }
-        // response.data = [
-        //   ...response.data,
-        //   ...additionalState.widgetDashboard5EventData[da],
-        // ];
-      });
-      setData(markers);
-      //setResult(response);
+      );
+      setResult(response);
     }
     setLoading(!additionalState.widgetDashboard5EventReady);
   }, [additionalState.widgetDashboard5EventReady]);
 
-  //   useEffect(() => {
-  //     if (!result) return;
-
-  //     (async () => {
-  //       const markers = result.data.map((row) => {
-  //         return [parseFloat(row.lat), parseFloat(row.long)];
-  //       });
-  //       setData([...markers]);
-  //     })();
-  //   }, [i18n.language, JSON.stringify(result)]);
+  useEffect(() => {
+    if (!result) return;
+    const currentData = {};
+    result.forEach((row) => {
+      const ou =
+        row[
+          findHeaderIndex(
+            additionalState.widgetDashboard5EventData.headers,
+            "ou"
+          )
+        ];
+      const value = parseFloat(
+        row[
+          findHeaderIndex(
+            additionalState.widgetDashboard5EventData.headers,
+            "value"
+          )
+        ]
+      ).toFixed(1);
+      if (!currentData[ou]) {
+        currentData[ou] = 0;
+      }
+      currentData[ou] = currentData[ou] + value * 1;
+    });
+    setData({ ...currentData });
+  }, [i18n.language, JSON.stringify(result)]);
 
   return (
-    data && (
-      <ClusterMap
-        features={ hmisGeoJson }
-        markers={data}
-        // icon={caseMarker}
-      />
-    )
+    data && <ThematicMap features={hmisGeoJson} data={data} legend={legend} />
   );
 };
 

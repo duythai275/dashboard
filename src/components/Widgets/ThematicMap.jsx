@@ -143,7 +143,7 @@ const LegendLayer = ({ data, legend }) => {
 const ThematicMap = (props) => {
   const [label, setLabel] = useState("");
   return (
-    <MapContainer scrollWheelZoom={false} dragging={false}>
+    <MapContainer scrollWheelZoom={false} dragging={true}>
       <LegendLayer {...props} />
       <TileLayer
         attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`}

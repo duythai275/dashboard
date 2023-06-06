@@ -104,7 +104,9 @@ const Widget456 = ({ setLoading, dataItemId }) => {
               {data.currentYearData}
             </Typography>
             <Typography textAlign="center" sx={{ fontSize: "15px" }}>
-              {t("lastPeriod", { value: data.lastYearData })}
+              {t("lastPeriod", {
+                value: parseFloat(data.lastYearData).toFixed(1),
+              })}
               <Typography
                 sx={{
                   display: "flex",
