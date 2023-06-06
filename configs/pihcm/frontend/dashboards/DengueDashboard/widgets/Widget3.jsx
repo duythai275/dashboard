@@ -36,12 +36,18 @@ const Widget3 = ({ setLoading }) => {
   const features = useMemo(() => {
     if (!selectedOrgUnit) return null;
     return orgUnitGeoJson
-      ? orgUnitGeoJson.features.filter((feature) =>
-          selectedOrgUnit.level === 1
-            ? feature.properties.level === "2"
-            : feature.properties.level === "3" &&
+      ? orgUnitGeoJson.features.filter((feature) => {
+          if (selectedOrgUnit.level === 1) {
+            return feature.properties.level === "2";
+          }
+          if (selectedOrgUnit.level === 2) {
+            return (
+              feature.properties.level === "3" &&
               feature.properties.parent === selectedOrgUnit.id
-        )
+            );
+          }
+          return feature.id === selectedOrgUnit.id;
+        })
       : [];
   }, [selectedOrgUnit?.id]);
   useEffect(() => {

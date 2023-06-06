@@ -21,18 +21,23 @@ import Widget8 from "./widgets/Widget8";
 import "./index.css";
 const DengueDashboard = () => {
   const { t } = useTranslation();
+  const { additionalState } = useDashboardStore(
+    (state) => ({ additionalState: state.additionalState }),
+    shallow
+  );
+  const { selectedOrgUnit } = additionalState;
   return (
     <ReactGridLayout
       isDraggable={false}
       layout={[
         { i: "1", x: 0, y: 0, w: 12, h: 50 },
         { i: "2", x: 0, y: 50, w: 12, h: 50 },
-        { i: "3", x: 0, y: 100, w: 12, h: 50 },
-        { i: "4", x: 0, y: 150, w: 6, h: 50 },
-        { i: "5", x: 6, y: 150, w: 6, h: 50 },
-        { i: "6", x: 0, y: 200, w: 12, h: 50 },
-        { i: "7", x: 0, y: 250, w: 4, h: 50 },
-        { i: "8", x: 4, y: 250, w: 8, h: 50 },
+        { i: "3", x: 0, y: 100, w: 6, h: 50 },
+        { i: "4", x: 6, y: 100, w: 3, h: 50 },
+        { i: "5", x: 9, y: 100, w: 3, h: 50 },
+        { i: "6", x: 0, y: 150, w: 12, h: 50 },
+        { i: "7", x: 0, y: 200, w: 4, h: 50 },
+        { i: "8", x: 4, y: 200, w: 8, h: 50 },
       ]}
       cols={12}
       rowHeight={1}
@@ -44,7 +49,9 @@ const DengueDashboard = () => {
         widgetIndex={0}
         childrenWidgets={[
           {
-            title: t("widget1DengueDashboardTitle"),
+            title: t("widget1DengueDashboardTitle", {
+              orgUnit: selectedOrgUnit.displayName,
+            }),
             widget: <Widget1 />,
           },
         ]}
@@ -55,7 +62,9 @@ const DengueDashboard = () => {
         widgetIndex={1}
         childrenWidgets={[
           {
-            title: t("widget2DengueDashboardTitle"),
+            title: t("widget2DengueDashboardTitle", {
+              orgUnit: selectedOrgUnit.displayName,
+            }),
             widget: <Widget2 />,
           },
         ]}
@@ -66,7 +75,9 @@ const DengueDashboard = () => {
         widgetIndex={2}
         childrenWidgets={[
           {
-            title: t("widget3DengueDashboardTitle"),
+            title: t("widget3DengueDashboardTitle", {
+              orgUnit: selectedOrgUnit.displayName,
+            }),
             widget: <Widget3 />,
           },
         ]}
@@ -77,7 +88,9 @@ const DengueDashboard = () => {
         widgetIndex={3}
         childrenWidgets={[
           {
-            title: t("widget4DengueDashboardTitle"),
+            title: t("widget4DengueDashboardTitle", {
+              orgUnit: selectedOrgUnit.displayName,
+            }),
             widget: <Widget4 />,
           },
         ]}
@@ -88,7 +101,9 @@ const DengueDashboard = () => {
         widgetIndex={4}
         childrenWidgets={[
           {
-            title: t("widget5DengueDashboardTitle"),
+            title: t("widget5DengueDashboardTitle", {
+              orgUnit: selectedOrgUnit.displayName,
+            }),
             widget: <Widget5 />,
           },
         ]}
@@ -99,7 +114,9 @@ const DengueDashboard = () => {
         widgetIndex={5}
         childrenWidgets={[
           {
-            title: t("widget6DengueDashboardTitle"),
+            title: t("widget6DengueDashboardTitle", {
+              orgUnit: selectedOrgUnit.displayName,
+            }),
             widget: <Widget6 />,
           },
         ]}
@@ -110,7 +127,9 @@ const DengueDashboard = () => {
         widgetIndex={6}
         childrenWidgets={[
           {
-            title: t("widget7DengueDashboardTitle"),
+            title: t("widget7DengueDashboardTitle", {
+              orgUnit: selectedOrgUnit.displayName,
+            }),
             widget: <Widget7 />,
           },
         ]}
@@ -121,7 +140,9 @@ const DengueDashboard = () => {
         widgetIndex={7}
         childrenWidgets={[
           {
-            title: t("widget8DengueDashboardTitle"),
+            title: t("widget8DengueDashboardTitle", {
+              orgUnit: selectedOrgUnit.displayName,
+            }),
             widget: <Widget8 />,
           },
         ]}
