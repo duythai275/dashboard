@@ -122,6 +122,7 @@ const Widget7 = ({ setLoading }) => {
                 return getTotal(dataArray);
               }),
               backgroundColor: "#50B432",
+              maxBarThickness: 60,
             },
           ],
         }}

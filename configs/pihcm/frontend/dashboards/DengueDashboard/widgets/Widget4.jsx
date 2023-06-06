@@ -132,6 +132,7 @@ const Widget4 = ({ setLoading }) => {
                 );
               }),
               backgroundColor: "#50B432",
+              maxBarThickness: 60,
             },
           ],
         }}

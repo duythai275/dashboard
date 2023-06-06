@@ -126,6 +126,7 @@ const Widget5 = ({ setLoading }) => {
                 return getTotal(totalData) - getTotal(lestThanAndEqual15Data);
               }),
               backgroundColor: "#50B432",
+              maxBarThickness: 60,
             },
           ],
         }}
