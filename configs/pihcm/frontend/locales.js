@@ -139,39 +139,43 @@ const locales = [
       { key: "dengue", value: "Bệnh sốt xuất huyết" },
       {
         key: "widget1DengueDashboardTitle",
-        value: "Số mắc SXHD KVPN theo tuần 5 năm liền kề",
+        value: "Số ca mắc SXHD KVPN theo tuần 5 năm liền kề tại {{orgUnit}}",
       },
-      { key: "legendWidget1DengueDashboard", value: "Mắc {{year}}" },
+      { key: "legendWidget1DengueDashboard", value: "{{year}}" },
       {
         key: "widget2DengueDashboardTitle",
-        value: "Số mắc tử vong do SXHD cộng dồn theo tuần 5 năm liền kề",
+        value:
+          "Số ca tử vong do SXHD cộng dồn theo tuần 5 năm liền kề tại {{orgUnit}}",
       },
-      { key: "legendWidget2DengueDashboard", value: "Mắc {{year}}" },
+      { key: "legendWidget2DengueDashboard", value: "{{year}}" },
       {
         key: "widget3DengueDashboardTitle",
-        value: "Số mắc SXHD và tử vong do SXHD phân bố theo địa phương",
+        value:
+          "Số ca mắc SXHD và tử vong do SXHD phân bố theo địa phương tại {{orgUnit}}",
       },
       { key: "selectYear", value: "Chọn năm" },
       { key: "selectUnit", value: "Chọn đơn vị" },
       {
         key: "widget4DengueDashboardTitle",
-        value: "Số mắc SXHD theo nhóm tuổi",
+        value: "Số ca mắc SXHD theo nhóm tuổi tại {{orgUnit}}",
       },
       {
         key: "widget5DengueDashboardTitle",
-        value: "Số tử vong do SXHD theo nhóm tuổi",
+        value: "Số ca tử vong do SXHD theo nhóm tuổi tại {{orgUnit}}",
       },
       {
         key: "widget6DengueDashboardTitle",
-        value: "Số mắc SXHD phân bố theo nhóm tuổi và địa phương",
+        value:
+          "Số ca mắc SXHD phân bố theo nhóm tuổi và địa phương tại {{orgUnit}}",
       },
       {
         key: "widget7DengueDashboardTitle",
-        value: "Số mắc SXHD theo độ nặng ca bệnh",
+        value: "Số ca mắc SXHD theo độ nặng ca bệnh tại {{orgUnit}}",
       },
       {
         key: "widget8DengueDashboardTitle",
-        value: "Số mắc SXHD theo độ nặng ca bệnh và địa phương",
+        value:
+          "Số ca mắc SXHD theo độ nặng ca bệnh và địa phương tại {{orgUnit}}",
       },
       { key: "dengueSeverer", value: "SXHD/SXHD nặng" },
       { key: "dengueWarning", value: "SXHD/SXHD có cảnh báo" },
@@ -304,39 +308,43 @@ const locales = [
       { key: "dengue", value: "Dengue Fever" },
       {
         key: "widget1DengueDashboardTitle",
-        value: "Số mắc SXHD KVPN theo tuần 5 năm liền kề",
+        value: "Số ca mắc SXHD KVPN theo tuần 5 năm liền kề tại {{orgUnit}}",
       },
       { key: "legendWidget1DengueDashboard", value: "{{year}}" },
       {
         key: "widget2DengueDashboardTitle",
-        value: "Số mắc tử vong do SXHD cộng dồn theo tuần 5 năm liền kề",
+        value:
+          "Số ca tử vong do SXHD cộng dồn theo tuần 5 năm liền kề tại {{orgUnit}}",
       },
-      { key: "legendWidget2DengueDashboard", value: "Mắc {{year}}" },
+      { key: "legendWidget2DengueDashboard", value: "{{year}}" },
       {
         key: "widget3DengueDashboardTitle",
-        value: "Số mắc SXHD và tử vong do SXHD phân bố theo địa phương",
+        value:
+          "Số ca mắc SXHD và tử vong do SXHD phân bố theo địa phương tại {{orgUnit}}",
       },
       { key: "selectYear", value: "Select year" },
       { key: "selectUnit", value: "Select Org Unit" },
       {
         key: "widget4DengueDashboardTitle",
-        value: "Số mắc SXHD theo nhóm tuổi",
+        value: "Số ca mắc SXHD theo nhóm tuổi tại {{orgUnit}}",
       },
       {
         key: "widget5DengueDashboardTitle",
-        value: "Số tử vong do SXHD theo nhóm tuổi",
+        value: "Số ca tử vong do SXHD theo nhóm tuổ tại {{orgUnit}}i",
       },
       {
         key: "widget6DengueDashboardTitle",
-        value: "Số mắc SXHD phân bố theo nhóm tuổi và địa phương",
+        value:
+          "Số ca mắc SXHD phân bố theo nhóm tuổi và địa phương tại {{orgUnit}}",
       },
       {
         key: "widget7DengueDashboardTitle",
-        value: "Số mắc SXHD theo độ nặng ca bệnh",
+        value: "Số ca mắc SXHD theo độ nặng ca bệnh tại {{orgUnit}}",
       },
       {
         key: "widget8DengueDashboardTitle",
-        value: "Số mắc SXHD theo độ nặng ca bệnh và địa phương",
+        value:
+          "Số ca mắc SXHD theo độ nặng ca bệnh và địa phương tại {{orgUnit}}",
       },
       { key: "dengueSeverer", value: "SXHD/SXHD nặng" },
       { key: "dengueWarning", value: "SXHD/SXHD có cảnh báo" },
