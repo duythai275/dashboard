@@ -50,7 +50,7 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget1DengueDashboardTitle", {
-              orgUnit: selectedOrgUnit.displayName,
+              orgUnit: selectedOrgUnit?.displayName,
             }),
             widget: <Widget1 />,
           },
@@ -63,7 +63,7 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget2DengueDashboardTitle", {
-              orgUnit: selectedOrgUnit.displayName,
+              orgUnit: selectedOrgUnit?.displayName,
             }),
             widget: <Widget2 />,
           },
@@ -76,7 +76,7 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget3DengueDashboardTitle", {
-              orgUnit: selectedOrgUnit.displayName,
+              orgUnit: selectedOrgUnit?.displayName,
             }),
             widget: <Widget3 />,
           },
@@ -89,7 +89,7 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget4DengueDashboardTitle", {
-              orgUnit: selectedOrgUnit.displayName,
+              orgUnit: selectedOrgUnit?.displayName,
             }),
             widget: <Widget4 />,
           },
@@ -102,7 +102,7 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget5DengueDashboardTitle", {
-              orgUnit: selectedOrgUnit.displayName,
+              orgUnit: selectedOrgUnit?.displayName,
             }),
             widget: <Widget5 />,
           },
@@ -115,7 +115,7 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget6DengueDashboardTitle", {
-              orgUnit: selectedOrgUnit.displayName,
+              orgUnit: selectedOrgUnit?.displayName,
             }),
             widget: <Widget6 />,
           },
@@ -128,7 +128,7 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget7DengueDashboardTitle", {
-              orgUnit: selectedOrgUnit.displayName,
+              orgUnit: selectedOrgUnit?.displayName,
             }),
             widget: <Widget7 />,
           },
@@ -141,7 +141,7 @@ const DengueDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget8DengueDashboardTitle", {
-              orgUnit: selectedOrgUnit.displayName,
+              orgUnit: selectedOrgUnit?.displayName,
             }),
             widget: <Widget8 />,
           },
