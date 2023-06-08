@@ -10,6 +10,23 @@ const locales = [
     code: "vi",
     name: "Tiếng Việt",
     translations: [
+      { key: "hiv", value: "Tổng thể chương trình HIV" },
+      {
+        key: "HivDashboardWidget1Title",
+        value: "90-90-90 ({{month}}/{{year}})",
+      },
+      {
+        key: "HivDashboardWidget2Title",
+        value: "Số người được phát hiện có HIV(+)",
+      },
+      {
+        key: "HivDashboardWidget3Title",
+        value: "Tình hình BN điều trị ARV (Q{{quad}} {{year}})",
+      },
+      {
+        key: "HivDashboardWidget4Title",
+        value: "Số người có kết quả VIRAL LOAD vượt ngưỡng ức chế",
+      },
       {
         key: "dashboard1Title",
         value: "dashboard1Title",
@@ -185,6 +202,23 @@ const locales = [
     code: "en",
     name: "English",
     translations: [
+      { key: "hiv", value: "HIV" },
+      {
+        key: "HivDashboardWidget1Title",
+        value: "90-90-90 ({{month}}/{{year}})",
+      },
+      {
+        key: "HivDashboardWidget2Title",
+        value: "Số người được phát hiện có HIV(+)",
+      },
+      {
+        key: "HivDashboardWidget3Title",
+        value: "Tình hình BN điều trị ARV (Q{{quad}} {{year}})",
+      },
+      {
+        key: "HivDashboardWidget4Title",
+        value: "Số người có kết quả VIRAL LOAD vượt ngưỡng ức chế",
+      },
       {
         key: "dashboard1Title",
         value: "dashboard1Title",

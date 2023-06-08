@@ -13,6 +13,7 @@ import _ from "lodash";
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import DengueDashboard from "./dashboards/DengueDashboard";
 import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
+import HivDashboard from "./dashboards/HivDashboard/HivDashboard";
 const languages = locales.map((locale) => ({
   name: locale.name,
   code: locale.code,
@@ -57,6 +58,10 @@ const useDashboardInitialization = () => {
         {
           name: "dengue",
           dashboard: <DengueDashboard title="dengue" />,
+        },
+        {
+          name: "hiv",
+          dashboard: <HivDashboard title="hiv" />,
         },
       ];
       setReady(false);
@@ -143,6 +148,22 @@ const useDashboardInitialization = () => {
             },
           ],
         },
+        {
+          widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+          ],
+        },
       ]);
       setDashboards(dashboards);
       selectDashboard({ value: 1, label: t(dashboards[1].name) });
@@ -160,6 +181,10 @@ const useDashboardInitialization = () => {
         {
           name: "dengue",
           dashboard: <DengueDashboard title="dengue" />,
+        },
+        {
+          name: "hiv",
+          dashboard: <HivDashboard title="hiv" />,
         },
       ];
       setDashboards(dashboards);
@@ -245,6 +270,9 @@ const CustomControlForDiseaseBulletin = () => {
       </Box>
     );
   }
+
+  if (selectedDashboard?.value === HIV_DASHBOARD_VALUE) return null;
+
   return (
     <Button
       disabled={additionalState.selectedDisease ? false : true}
@@ -264,3 +292,4 @@ export { useDashboardInitialization, languages, customControl };
 
 const BULLETIN_DASHBOARD_VALUE = 0;
 const DENGUE_DASHBOARD_VALUE = 1;
+const HIV_DASHBOARD_VALUE = 2;
