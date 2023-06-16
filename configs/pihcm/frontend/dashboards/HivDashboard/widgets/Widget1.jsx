@@ -3,7 +3,7 @@ import { customOptions, regionLabels } from "../constants";
 import { getElementAtEvent } from "react-chartjs-2";
 import { useRef } from "react";
 import { Box } from "@mui/material";
-import ModalBarChart from "../components/ModalBarChart";
+import { ModalBarChart } from "../components";
 
 const Widget1 = () => {
   const chartRef = useRef();

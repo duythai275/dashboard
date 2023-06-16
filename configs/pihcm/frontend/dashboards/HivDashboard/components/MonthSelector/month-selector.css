@@ -1,0 +1,34 @@
+.period-selector-container {
+  width: 220px;
+}
+.period-selector-popover-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  padding: 15px;
+  /* width: 400px; */
+}
+
+.period-selector-popover-container > div {
+  /* width: 180px; */
+  width: 100%;
+  height: 100%;
+}
+.period-selector-next-prev-year-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+}
+.period-selector-next-prev-year-container > button {
+  width: 200px;
+  padding: 2px;
+}
+
+.period-selector-next-prev-year-container > span {
+  font-size: 15px;
+  margin: 10px;
+  font-weight: bold;
+}

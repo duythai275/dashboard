@@ -1,3 +1,18 @@
+export const months = [
+  "jan",
+  "feb",
+  "mar",
+  "apr",
+  "may",
+  "jun",
+  "jul",
+  "aug",
+  "sep",
+  "oct",
+  "nov",
+  "dec",
+];
+
 export const regionLabels = [
   "20 tỉnh miền nam",
   "7 tỉnh PEPFAR",

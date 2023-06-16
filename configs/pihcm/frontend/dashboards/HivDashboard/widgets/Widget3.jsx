@@ -24,16 +24,28 @@ const Widget3 = () => {
         label: `Chuyển đi`,
         data: regionLabels.map(() => (Math.random(0, 1) * 4000).toFixed() * -1),
         backgroundColor: "#ffca28",
+        datalabels: {
+          anchor: "start",
+          align: "start",
+        },
       },
       {
         label: `Bỏ trị`,
         data: regionLabels.map(() => (Math.random(0, 1) * 4000).toFixed() * -1),
         backgroundColor: "#40c4ff",
+        datalabels: {
+          anchor: "start",
+          align: "start",
+        },
       },
       {
         label: `Tử vong`,
         data: regionLabels.map(() => (Math.random(0, 1) * 4000).toFixed() * -1),
         backgroundColor: "#00e676",
+        datalabels: {
+          anchor: "start",
+          align: "start",
+        },
       },
     ],
   };

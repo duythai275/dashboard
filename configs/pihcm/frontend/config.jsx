@@ -14,6 +14,8 @@ import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import DengueDashboard from "./dashboards/DengueDashboard";
 import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
 import HivDashboard from "./dashboards/HivDashboard/HivDashboard";
+import { MonthSelector } from "./dashboards/HivDashboard/components";
+
 const languages = locales.map((locale) => ({
   name: locale.name,
   code: locale.code,
@@ -271,7 +273,14 @@ const CustomControlForDiseaseBulletin = () => {
     );
   }
 
-  if (selectedDashboard?.value === HIV_DASHBOARD_VALUE) return null;
+  if (selectedDashboard?.value === HIV_DASHBOARD_VALUE)
+    return (
+      <MonthSelector
+        onPeriodChange={(period) => {
+          changeAdditionalStateProperty("hivSelectedPeriod", period);
+        }}
+      />
+    );
 
   return (
     <Button

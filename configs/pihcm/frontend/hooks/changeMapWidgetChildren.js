@@ -20,7 +20,11 @@ const changeMapWidgetChildren = () => {
     : {};
 
   useEffect(() => {
-    if (selectedDashboardIndex && selectedDashboardIndex > 0) {
+    if (
+      selectedDashboardIndex &&
+      selectedDashboardIndex !== 2 &&
+      selectedDashboardIndex > 0
+    ) {
       selectWidgetChild(selectedDashboardIndex, 2, widget4.selectedChildren);
       selectWidgetChild(selectedDashboardIndex, 3, widget4.selectedChildren);
     }
