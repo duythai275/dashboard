@@ -69,31 +69,8 @@ const Widget1 = ({ setLoading }) => {
             period: row[periodIndex],
             value: row[valueIndex] * 1,
           }));
-          const currentData = {};
-          currentData.labels = weeks.map((week) =>
-            t("labelWidget1", { week: week.slice(1) })
-          );
-          currentData.datasets = listLast5Year.map((year, index) => ({
-            type: "line",
-            label: t("legendWidget1DengueDashboard", { year }),
-            backgroundColor: listColors[index],
-            data: weeks.map((week) => {
-              const weekNumber = week.slice(1) * 1;
-              if (year === currentYear && weekNumber > currentWeek) {
-                return null;
-              }
-              const foundData = dataResult.find(
-                (item) => item.period === `${year}${week}`
-              );
-              return foundData?.value || 0;
-            }),
-            pointBorderWidth: 0,
-            borderColor: listColors[index],
-            borderWidth: 2,
-            tension: 0.4,
-            ...listLineStyle[index],
-          }));
-          setData(currentData);
+
+          setData(dataResult);
         }
       } catch (error) {
         console.log(error);
@@ -102,7 +79,6 @@ const Widget1 = ({ setLoading }) => {
       }
     })();
   }, [listLast5Year, selectedOrgUnit?.id]);
-
   if (!data) return null;
   const options = {
     responsive: true,
@@ -135,7 +111,34 @@ const Widget1 = ({ setLoading }) => {
     },
   };
 
-  return <LineChart data={data} customOptions={options} />;
+  return (
+    <LineChart
+      data={{
+        labels: weeks.map((week) => t("labelWidget1", { week: week.slice(1) })),
+        datasets: listLast5Year.map((year, index) => ({
+          type: "line",
+          label: t("legendWidget1DengueDashboard", { year }),
+          backgroundColor: listColors[index],
+          data: weeks.map((week) => {
+            const weekNumber = week.slice(1) * 1;
+            if (year === currentYear && weekNumber > currentWeek) {
+              return null;
+            }
+            const foundData = data.find(
+              (item) => item.period === `${year}${week}`
+            );
+            return foundData?.value || 0;
+          }),
+          pointBorderWidth: 0,
+          borderColor: listColors[index],
+          borderWidth: 2,
+          tension: 0.4,
+          ...listLineStyle[index],
+        })),
+      }}
+      customOptions={options}
+    />
+  );
 };
 
 export default withWidgetChildrenLoader(Widget1);
