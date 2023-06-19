@@ -69,41 +69,7 @@ const Widget2 = ({ setLoading }) => {
             period: row[periodIndex],
             value: row[valueIndex] * 1,
           }));
-          const currentData = {};
-          currentData.labels = weeks.map((week) =>
-            t("labelWidget1", { week: week.slice(1) })
-          );
-          currentData.datasets = listLast5Year.map((year, index) => ({
-            type: "line",
-            label: t("legendWidget2DengueDashboard", { year }),
-            backgroundColor: listColors[index],
-            data: weeks.map((week) => {
-              const weekNumber = week.slice(1) * 1;
-              const getTotal = (array) => {
-                return array.reduce(
-                  (prev, curr) => prev + (curr.value * 1 || 0),
-                  0
-                );
-              };
-              if (year === currentYear && weekNumber > currentWeek) {
-                return null;
-              }
-              const foundData = dataResult.filter((item) => {
-                const weekPeriod = item.period.slice(5) * 1;
-                const yearPeriod = item.period.slice(0, 4) * 1;
-                if (yearPeriod === year && weekPeriod <= weekNumber) {
-                  return item;
-                }
-              });
-              return getTotal(foundData);
-            }),
-            pointBorderWidth: 0,
-            borderColor: listColors[index],
-            borderWidth: 2,
-            tension: 0.4,
-            ...listLineStyle[index],
-          }));
-          setData(currentData);
+          setData(dataResult);
         }
       } catch (error) {
         console.log(error);
@@ -111,7 +77,7 @@ const Widget2 = ({ setLoading }) => {
         setLoading(false);
       }
     })();
-  }, [listLast5Year, selectedOrgUnit?.id, i18n.language]);
+  }, [listLast5Year, selectedOrgUnit?.id]);
 
   if (!data) return null;
   const options = {
@@ -145,7 +111,44 @@ const Widget2 = ({ setLoading }) => {
     },
   };
 
-  return <LineChart data={data} customOptions={options} />;
+  return (
+    <LineChart
+      data={{
+        labels: weeks.map((week) => t("labelWidget1", { week: week.slice(1) })),
+        datasets: listLast5Year.map((year, index) => ({
+          type: "line",
+          label: t("legendWidget2DengueDashboard", { year }),
+          backgroundColor: listColors[index],
+          data: weeks.map((week) => {
+            const weekNumber = week.slice(1) * 1;
+            const getTotal = (array) => {
+              return array.reduce(
+                (prev, curr) => prev + (curr.value * 1 || 0),
+                0
+              );
+            };
+            if (year === currentYear && weekNumber > currentWeek) {
+              return null;
+            }
+            const foundData = data.filter((item) => {
+              const weekPeriod = item.period.slice(5) * 1;
+              const yearPeriod = item.period.slice(0, 4) * 1;
+              if (yearPeriod === year && weekPeriod <= weekNumber) {
+                return item;
+              }
+            });
+            return getTotal(foundData);
+          }),
+          pointBorderWidth: 0,
+          borderColor: listColors[index],
+          borderWidth: 2,
+          tension: 0.4,
+          ...listLineStyle[index],
+        })),
+      }}
+      customOptions={options}
+    />
+  );
 };
 
 export default withWidgetChildrenLoader(Widget2);
