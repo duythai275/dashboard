@@ -1,15 +1,32 @@
-import React from "react";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import React, { useRef } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+} from "chart.js";
+import { Pie, getDatasetAtEvent, getElementAtEvent } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 const options = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: "bottom"
+      position: "bottom",
     },
     datalabels: {
       anchor: "center",
@@ -20,14 +37,58 @@ const options = {
       textStrokeColor: "black", // <-- added this
       textStrokeWidth: 3, // <-- added this,
       font: {
-        size: 10
-      }
-    }
-  }
+        size: 10,
+      },
+    },
+  },
 };
 
-const PieChart = ({ data, customOptions }) => {
-  return <Pie data={data} options={customOptions ? customOptions : options} plugins={[ChartDataLabels]} />;
+const PieChart = ({ data, customOptions, handleClick }) => {
+  const printDatasetAtEvent = (dataset) => {
+    if (!dataset.length) return null;
+
+    const datasetIndex = dataset[0].datasetIndex;
+
+    return data.datasets[datasetIndex].label;
+  };
+
+  const printElementAtEvent = (element) => {
+    if (!element.length) return null;
+
+    const { datasetIndex, index } = element[0];
+
+    return {
+      label: data.labels[index],
+      value: data.datasets[datasetIndex].data[index],
+      datasetIndex,
+      index,
+    };
+  };
+
+  const chartRef = useRef(null);
+
+  const onClick = (event) => {
+    const { current: chart } = chartRef;
+    if (!chart) {
+      return;
+    }
+
+    const dataSetLabel = printDatasetAtEvent(getDatasetAtEvent(chart, event));
+    const dataValue = printElementAtEvent(getElementAtEvent(chart, event));
+    dataSetLabel &&
+      dataValue &&
+      handleClick &&
+      handleClick({ ...dataValue, dataSetLabel });
+  };
+  return (
+    <Pie
+      ref={chartRef}
+      onClick={onClick}
+      data={data}
+      options={customOptions ? customOptions : options}
+      plugins={[ChartDataLabels]}
+    />
+  );
 };
 
 export default PieChart;
@@ -38,7 +99,7 @@ const pieLabelsLine = {
     if (!options.display) return;
     const {
       ctx,
-      chartArea: { width, height }
+      chartArea: { width, height },
     } = chart;
 
     const cx = chart._metasets[0].data[0].x;
@@ -72,14 +133,17 @@ const pieLabelsLine = {
 
         // text
         const values = {
-          text: typeof options.text === "function" ? options.text(chart, index) : options.text || "?",
+          text:
+            typeof options.text === "function"
+              ? options.text(chart, index)
+              : options.text || "?",
           font: {
             size: options.font.size || 30,
             family: options.font.family || "Noto Sans Lao Looped",
             color: options.font.color || "black",
             style: options.font.style || "normal",
-            unit: options.font.unit || "px"
-          }
+            unit: options.font.unit || "px",
+          },
         };
         switch (values.font.unit) {
           case "em":
@@ -100,5 +164,5 @@ const pieLabelsLine = {
         ctx.fillText(values.text, xLine + extraLine + plusFivePx, yLine);
       });
     });
-  }
+  },
 };

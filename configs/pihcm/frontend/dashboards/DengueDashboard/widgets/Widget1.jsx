@@ -101,8 +101,7 @@ const Widget1 = ({ setLoading }) => {
         setLoading(false);
       }
     })();
-  }, [listLast5Year, selectedOrgUnit?.id]);
-
+  }, [listLast5Year, selectedOrgUnit?.id, i18n.language]);
   if (!data) return null;
   const options = {
     responsive: true,
