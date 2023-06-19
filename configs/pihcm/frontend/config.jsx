@@ -14,7 +14,6 @@ import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import DengueDashboard from "./dashboards/DengueDashboard";
 import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
 import HivDashboard from "./dashboards/HivDashboard/HivDashboard";
-import { MonthSelector } from "./dashboards/HivDashboard/components";
 
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -72,13 +71,12 @@ const useDashboardInitialization = () => {
           "/api/optionSets?filter=id:eq:d5fivOeWHIb&fields=id,name,translations,options[id,name,code,translations"
         ),
         pull(
-          "/api/organisationUnits?fields=id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id]&paging=false"
+          "/api/organisationUnits?fields=id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id,name]&paging=false"
         ),
         pull("/api/organisationUnits.geojson?level=2&level=3"),
       ]);
-      setMetadata("diseases", results[0].optionSets[0].options);
 
-      // setMetadata("ouGroups", results[1].organisationUnitGroups);
+      setMetadata("diseases", results[0].optionSets[0].options);
       setMetadata("communes", results[1].organisationUnits);
       setMetadata("orgUnitGeoJson", results[2]);
 
@@ -273,14 +271,7 @@ const CustomControlForDiseaseBulletin = () => {
     );
   }
 
-  if (selectedDashboard?.value === HIV_DASHBOARD_VALUE)
-    return (
-      <MonthSelector
-        onPeriodChange={(period) => {
-          changeAdditionalStateProperty("hivSelectedPeriod", period);
-        }}
-      />
-    );
+  if (selectedDashboard?.value === HIV_DASHBOARD_VALUE) return null;
 
   return (
     <Button
