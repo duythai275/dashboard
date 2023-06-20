@@ -1,18 +1,20 @@
 import BarChart from "@/components/Widgets/BarChart";
-import { Box, Divider, Modal, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Modal, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import CloseIcon from "@mui/icons-material/Close";
 
-const modalWrapperStyle = {
+const modalWrapperStyle = (w, h) => ({
   p: 4,
   pb: 8,
-  width: 1000,
-  height: "50dvh",
+  width: w || "75dvw",
+  height: h || "65dvh",
   borderRadius: 3,
   bgcolor: "background.paper",
   boxShadow: 24,
-};
+  position: "relative",
+});
 
-const ModalBarChart = ({ title, barData, open, onClose }) => {
+const ModalBarChart = ({ title, barData, open, onClose, w, h }) => {
   const { t } = useTranslation();
 
   return (
@@ -27,7 +29,13 @@ const ModalBarChart = ({ title, barData, open, onClose }) => {
         alignItems: "center",
       }}
     >
-      <Box sx={modalWrapperStyle}>
+      <Box sx={modalWrapperStyle(w, h)}>
+        <IconButton
+          onClick={onClose}
+          sx={{ position: "absolute", top: 5, right: 5 }}
+        >
+          <CloseIcon />
+        </IconButton>
         <Typography id="modal-modal-title" sx={{ textAlign: "center" }}>
           {t(title)}
         </Typography>

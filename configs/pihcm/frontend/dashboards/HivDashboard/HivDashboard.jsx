@@ -74,7 +74,7 @@ const HivDashboard = () => {
         widgetIndex={1}
         childrenWidgets={[
           {
-            title: t("arvTreatmentStatus"),
+            title: t("HivDashboardWidget2Title"),
             widget: (
               <Widget2 {...{ pepfarProvinces, outsidePepfarProvinces }} />
             ),

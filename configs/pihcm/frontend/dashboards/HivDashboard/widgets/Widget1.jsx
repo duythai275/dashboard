@@ -1,23 +1,42 @@
 import { Box } from "@mui/material";
 import { regionLabels } from "../constants";
 import { useTranslation } from "react-i18next";
-import { getElementAtEvent } from "react-chartjs-2";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { pull } from "@/utils/fetch";
-import { getRowValue } from "../utils";
+import { calculateAverage, getRowValue, sortArray } from "../utils";
 import BarChart from "@/components/Widgets/BarChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
+import { ModalBarChart } from "../components";
+
+const month = 5;
+const year = 2022;
+const quarter = 2;
 
 const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
-  const chartRef = useRef();
-
   const { t } = useTranslation();
+  const [barData, setBarData] = useState(null);
   const [data, setData] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalIdxActive, setModalIdxActive] = useState(null);
 
-  const month = 5;
-  const year = 2022;
-  const quarter = 2;
+  const baseDatasets = [
+    {
+      name: "greenData",
+      label: t("peopleNewHIVStatusUpto", { month, year }),
+      backgroundColor: "#4caf50",
+    },
+    {
+      name: "blueData",
+      label: t("patientsOnART", { quarter, year }),
+      backgroundColor: "#03a9f4",
+    },
+    {
+      name: "redData",
+      label: t("patientsWithSupressedVlResult", { year }),
+      backgroundColor: "#ff9800",
+    },
+  ];
 
   useEffect(() => {
     (async () => {
@@ -78,7 +97,7 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       };
 
       const getOuData = (ouList) =>
-        ouList.map((ou) => {
+        sortArray(ouList).map((ou) => {
           const greens = getRowValue(resultFrom2015, greenNumeratorIds, ou.id);
           const greenValue = parseInt(greens[0]) - parseInt(greens[1]);
           const green = calculateGreen(greenValue, ou.id);
@@ -112,46 +131,100 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       );
 
       setLoading(false);
-      setData(barData);
+      setData({ resultPepfar, resultOutsidePepfar });
+      setBarData(barData);
     })();
   }, [pepfarProvinces, outsidePepfarProvinces]);
 
-  const chartConfigs = data
+  const chartConfigs = barData
     ? {
         labels: regionLabels,
-        datasets: [
-          {
-            label: t("peopleNewHIVStatusUpto", { month, year }),
-            data: data.greenData.map((total) => Math.round(total / 20)),
-            backgroundColor: "#4caf50",
-          },
-          {
-            label: t("patientsOnART", { quarter, year }),
-            data: data.blueData.map((total) => Math.round(Math.random() * 100)),
-            backgroundColor: "#03a9f4",
-          },
-          {
-            label: t("patientsWithSupressedVlResult", { year }),
-            data: data.redData.map((total) => Math.round(Math.random() * 100)),
-            backgroundColor: "#ff9800",
-          },
-        ],
+        datasets: baseDatasets.map(({ label, backgroundColor, name }) => ({
+          label,
+          backgroundColor,
+          data: barData[name].map((total, idx) =>
+            name === "greenData"
+              ? calculateAverage(total, idx)
+              : Math.round(Math.random() * 100)
+          ),
+        })),
       }
     : null;
 
-  const handleClick = (e) => {
-    console.log(getElementAtEvent(chartRef.current, e));
+  const reduceChartData = (ouList) =>
+    ouList.reduce(
+      ({ redData, greenData, blueData }, { red, green, blue }) => {
+        redData.push(red);
+        greenData.push(green);
+        blueData.push(blue);
+        return { redData, greenData, blueData };
+      },
+      { redData: [], greenData: [], blueData: [] }
+    );
+
+  const modalChartConfigs = useMemo(() => {
+    if (modalIdxActive === null || !data) return null;
+    const { resultPepfar, resultOutsidePepfar } = data;
+
+    let labels, chartData;
+    switch (modalIdxActive) {
+      case 0:
+        labels = sortArray(resultPepfar.concat(resultOutsidePepfar)).map(
+          ({ name }) => name
+        );
+        chartData = reduceChartData(resultPepfar.concat(resultOutsidePepfar));
+        break;
+      case 1:
+        labels = resultPepfar.map(({ name }) => name);
+        chartData = reduceChartData(resultPepfar);
+        break;
+      case 2:
+        labels = resultOutsidePepfar.map(({ name }) => name);
+        chartData = reduceChartData(resultOutsidePepfar);
+        break;
+      default:
+        break;
+    }
+
+    return {
+      labels,
+      datasets: baseDatasets.map(({ label, backgroundColor, name }) => ({
+        label,
+        backgroundColor,
+        data: chartData[name].map((total, idx) =>
+          name === "greenData" ? total : Math.round(Math.random() * 100)
+        ),
+      })),
+    };
+  }, [data, modalIdxActive]);
+
+  const handleClick = (data) => {
+    setModalOpen(true);
+    setModalIdxActive(data.index);
   };
 
   return (
     data && (
       <Box sx={{ width: 1, height: 1 }}>
-        {/*  <ModalBarChart
-        open={true}
-        barData={chartConfigs}
-        title="HivDashboardWidget1ModalTitle"
-      /> */}
-        <BarChart data={chartConfigs} onClick={handleClick} ref={chartRef} />
+        {modalChartConfigs && (
+          <ModalBarChart
+            open={modalOpen}
+            onClose={() => {
+              setModalOpen(false);
+              setModalIdxActive(null);
+            }}
+            barData={modalChartConfigs}
+            title="HivDashboardWidget1ModalTitle"
+            w={
+              modalIdxActive === 0
+                ? "90dvw"
+                : modalIdxActive === 2
+                ? "80dvw"
+                : null
+            }
+          />
+        )}
+        <BarChart data={chartConfigs} handleClick={handleClick} />
       </Box>
     )
   );
