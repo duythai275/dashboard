@@ -1,27 +1,37 @@
-import Input from "@/common/Input/Input";
 import { useTranslation } from "react-i18next";
-import useAppState from "@/hooks/useAppState";
+import CustomSelect from "./CustomSelect";
 
-const MonthSelector = () => {
-  const { state, action } = useAppState();
+const MonthSelector = ({ change, period }) => {
   const { t } = useTranslation();
-  const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  const months = [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec",
+  ];
   const valueSet = months.map((month, index) => {
     return {
       value: index + 1,
-      label: t(month)
+      label: t(month),
     };
   });
   return (
     <div>
-      <Input
-        value={state.selection.period.month}
+      <CustomSelect
+        value={period.month}
         label={t("month")}
         valueType="TEXT"
         valueSet={valueSet}
         change={(value) => {
-          action.selectPeriod("month", value);
-          action.selectPeriod("monthName", t(months[value - 1]));
+          change(value, t(months[value - 1]));
         }}
       />
     </div>

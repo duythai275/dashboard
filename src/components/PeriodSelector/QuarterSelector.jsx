@@ -1,28 +1,25 @@
-import Input from "@/common/Input/Input";
 import { useTranslation } from "react-i18next";
-import useAppState from "@/hooks/useAppState";
+import CustomSelect from "./CustomSelect";
 
-const QuarterSelector = () => {
-  const { state, action } = useAppState();
+const QuarterSelector = ({ change, period }) => {
   const { t } = useTranslation();
   const quarters = [1, 2, 3, 4];
   const valueSet = quarters.map((quarter, index) => {
     return {
       value: quarter,
-      label: t("Q" + quarter)
+      label: t("Q" + quarter),
     };
   });
 
   return (
     <div>
-      <Input
-        value={state.selection.period.quarter}
+      <CustomSelect
+        value={period.quarter}
         label={t("quarter")}
         valueType="TEXT"
         valueSet={valueSet}
         change={(value) => {
-          action.selectPeriod("quarter", value);
-          action.selectPeriod("quarterName", t("Q" + value));
+          change(value, t("Q" + value));
         }}
       />
     </div>

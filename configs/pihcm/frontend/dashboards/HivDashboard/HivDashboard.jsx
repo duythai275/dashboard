@@ -4,16 +4,32 @@ const ReactGridLayout = WidthProvider(RGL);
 
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
 import { Widget1, Widget2, Widget3, Widget4 } from "./widgets";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import useMetadataStore from "@/state/metadata";
 import {
   OUTSIDE_PEPFAR_PROVINCE_GROUP_ID,
   PEPFAR_PROVINCE_GROUP_ID,
 } from "./constants";
+import { IconButton, Popover } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+import PeriodSelector from "@/components/PeriodSelector/PeriodSelector";
+import useDashboardStore from "@/state/dashboard";
+import { shallow } from "zustand/shallow";
 
 const HivDashboard = () => {
   const { t } = useTranslation();
   const communes = useMetadataStore((state) => state.communes);
+  const { changeAdditionalStateProperty } = useDashboardStore(
+    (state) => ({
+      changeAdditionalStateProperty: state.changeAdditionalStateProperty,
+    }),
+    shallow
+  );
+  const [anchorElW1, setAnchorElW1] = useState(null);
+  const [anchorElW2, setAnchorElW2] = useState(null);
+  const [anchorElW3, setAnchorElW3] = useState(null);
+  const [anchorElW4, setAnchorElW4] = useState(null);
 
   const [pepfarProvinces, outsidePepfarProvinces] = useMemo(
     () =>
@@ -67,6 +83,35 @@ const HivDashboard = () => {
             ),
           },
         ]}
+        controlButtons={[
+          <div>
+            <IconButton
+              onClick={(event) => {
+                setAnchorElW1(event.currentTarget);
+              }}
+            >
+              <FontAwesomeIcon icon={faGear} style={{ fontSize: 22 }} />
+            </IconButton>
+            <Popover
+              open={Boolean(anchorElW1)}
+              anchorEl={anchorElW1}
+              onClose={() => {
+                setAnchorElW1(null);
+              }}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <PeriodSelector
+                periodType={"Monthly"}
+                handler={(period) => {
+                  changeAdditionalStateProperty("periodForW1", period);
+                }}
+              />
+            </Popover>
+          </div>,
+        ]}
       />
       <WidgetContainer
         key="2"
@@ -79,6 +124,35 @@ const HivDashboard = () => {
               <Widget2 {...{ pepfarProvinces, outsidePepfarProvinces }} />
             ),
           },
+        ]}
+        controlButtons={[
+          <div>
+            <IconButton
+              onClick={(event) => {
+                setAnchorElW2(event.currentTarget);
+              }}
+            >
+              <FontAwesomeIcon icon={faGear} style={{ fontSize: 22 }} />
+            </IconButton>
+            <Popover
+              open={Boolean(anchorElW2)}
+              anchorEl={anchorElW2}
+              onClose={() => {
+                setAnchorElW2(null);
+              }}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <PeriodSelector
+                periodType={"Yearly"}
+                handler={(period) => {
+                  changeAdditionalStateProperty("periodForW2", period);
+                }}
+              />
+            </Popover>
+          </div>,
         ]}
       />
       <WidgetContainer
@@ -93,6 +167,36 @@ const HivDashboard = () => {
             ),
           },
         ]}
+        controlButtons={[
+          <div>
+            <IconButton
+              onClick={(event) => {
+                setAnchorElW3(event.currentTarget);
+              }}
+            >
+              <FontAwesomeIcon icon={faGear} style={{ fontSize: 22 }} />
+            </IconButton>
+            <Popover
+              open={Boolean(anchorElW3)}
+              anchorEl={anchorElW3}
+              onClose={() => {
+                setAnchorElW3(null);
+              }}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <PeriodSelector
+                periodType={"Quarterly"}
+                handler={(period) => {
+                  console.log(period);
+                  changeAdditionalStateProperty("periodForW3", period);
+                }}
+              />
+            </Popover>
+          </div>,
+        ]}
       />
       <WidgetContainer
         key="4"
@@ -105,6 +209,35 @@ const HivDashboard = () => {
               <Widget4 {...{ pepfarProvinces, outsidePepfarProvinces }} />
             ),
           },
+        ]}
+        controlButtons={[
+          <div>
+            <IconButton
+              onClick={(event) => {
+                setAnchorElW4(event.currentTarget);
+              }}
+            >
+              <FontAwesomeIcon icon={faGear} style={{ fontSize: 22 }} />
+            </IconButton>
+            <Popover
+              open={Boolean(anchorElW4)}
+              anchorEl={anchorElW4}
+              onClose={() => {
+                setAnchorElW4(null);
+              }}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <PeriodSelector
+                periodType={"Yearly"}
+                handler={(period) => {
+                  changeAdditionalStateProperty("periodForW4", period);
+                }}
+              />
+            </Popover>
+          </div>,
         ]}
       />
     </ReactGridLayout>

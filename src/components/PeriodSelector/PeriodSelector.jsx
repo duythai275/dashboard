@@ -1,69 +1,90 @@
 import { useEffect, useState } from "react";
-import Input from "@/common/Input/Input";
-import { Popover } from "@mui/material";
+import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import useAppState from "@/hooks/useAppState";
 import YearSelector from "./YearSelector";
 import MonthSelector from "./MonthSelector";
 import QuarterSelector from "./QuarterSelector";
 import WeekSelector from "./WeekSelector";
 import moment from "moment";
 import "./PeriodSelector.css";
+import CustomSelect from "./CustomSelect";
 
-const PeriodSelector = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openPopover = Boolean(anchorEl);
+const PeriodSelector = ({ handler, periodType }) => {
   const { t } = useTranslation();
-  const { state, action } = useAppState();
-  const { period } = state.selection;
-
-  const renderInputValue = () => {
-    let value = "";
-    switch (period.periodType) {
-      case "Yearly":
-        if (period.year) value = period.year;
-        break;
-      case "Monthly":
-        if (period.year && period.month) value = period.monthName + " " + period.year;
-        break;
-      case "Quarterly":
-        if (period.year && period.quarter) value = period.quarterName + " - " + period.year;
-        break;
-      case "Weekly":
-        if (period.year && period.week) value = period.weekName + " - " + period.year;
-        break;
-      case "Daily":
-        if (period.date) value = period.date;
-        break;
-      default:
-        break;
-    }
-    action.selectPeriod("periodName", value);
-    return <Input valueType="TEXT" label={t("selectPeriod")} value={value} />;
-  };
-
+  const [selectedPeriod, setSelectedPeriod] = useState({});
   const renderSelectors = () => {
-    switch (period.periodType) {
+    switch (periodType) {
       case "Yearly":
-        return <YearSelector />;
+        return (
+          <YearSelector
+            period={selectedPeriod}
+            change={(value) => {
+              setSelectedPeriod({ ...selectedPeriod, year: value });
+            }}
+          />
+        );
       case "Monthly":
-        return [<YearSelector />, <MonthSelector />];
+        return [
+          <YearSelector
+            period={selectedPeriod}
+            change={(value) => {
+              setSelectedPeriod({ ...selectedPeriod, year: value });
+            }}
+          />,
+          <MonthSelector
+            period={selectedPeriod}
+            change={(value, monthName) => {
+              setSelectedPeriod({ ...selectedPeriod, month: value, monthName });
+            }}
+          />,
+        ];
       case "Quarterly":
-        return [<YearSelector />, <QuarterSelector />];
+        return [
+          <YearSelector
+            period={selectedPeriod}
+            change={(value) => {
+              setSelectedPeriod({ ...selectedPeriod, year: value });
+            }}
+          />,
+          <QuarterSelector
+            period={selectedPeriod}
+            change={(value, quarterName) => {
+              setSelectedPeriod({
+                ...selectedPeriod,
+                quarter: value,
+                quarterName,
+              });
+            }}
+          />,
+        ];
       case "Weekly":
-        return [<YearSelector />, <WeekSelector />];
+        return [
+          <YearSelector
+            period={selectedPeriod}
+            change={(value) => {
+              setSelectedPeriod({ ...selectedPeriod, year: value });
+            }}
+          />,
+          <WeekSelector
+            period={selectedPeriod}
+            change={(value, weekName) => {
+              setSelectedPeriod({ ...selectedPeriod, week: value, weekName });
+            }}
+          />,
+        ];
       case "Daily":
         return (
-          <div>
-            <Input
-              value={state.selection.period.date}
-              valueType="DATE"
-              label={t("date")}
-              change={(value) => {
-                action.selectPeriod("date", value);
-              }}
-            />
-          </div>
+          <div>ERROR: Please select period type first</div>
+          // <div>
+          //   <CustomSelect
+          //     value={selectedPeriod.date}
+          //     valueType="DATE"
+          //     label={t("date")}
+          //     change={(value) => {
+          //       setSelectedPeriod({ ...selectedPeriod, date: value });
+          //     }}
+          //   />
+          // </div>
         );
       default:
         return <div>ERROR: Please select period type first</div>;
@@ -73,134 +94,166 @@ const PeriodSelector = () => {
   const constConvertToDhis2Period = () => {
     let startDate;
     let endDate;
-    switch (period.periodType) {
+    switch (periodType) {
       case "Yearly":
-        if (period.year) {
-          action.selectPeriod("dhis2Period", `${period.year}`);
-          action.selectPeriod("startDate", `${period.year}-01-01`);
-          action.selectPeriod("endDate", `${period.year}-12-31`);
+        if (selectedPeriod.year) {
+          setSelectedPeriod({
+            ...selectedPeriod,
+            dhis2Period: `${selectedPeriod.year}`,
+            startDate: `${selectedPeriod.year}-01-01`,
+            endDate: `${selectedPeriod.year}-12-31`,
+          });
         } else {
-          action.selectPeriod("dhis2Period", null);
-          action.selectPeriod("startDate", "");
-          action.selectPeriod("endDate", "");
+          setSelectedPeriod({
+            ...selectedPeriod,
+            dhis2Period: null,
+            startDate: "",
+            endDate: "",
+          });
         }
         break;
       case "Monthly":
-        if (period.year && period.month) {
-          action.selectPeriod("dhis2Period", `${period.year}${period.month < 10 ? "0" + period.month : period.month}`);
-          startDate = moment([period.year, period.month - 1])
+        if (selectedPeriod.year && selectedPeriod.month) {
+          startDate = moment([selectedPeriod.year, selectedPeriod.month - 1])
             .startOf("month")
             .format("YYYY-MM-DD");
-          endDate = moment([period.year, period.month - 1])
+          endDate = moment([selectedPeriod.year, selectedPeriod.month - 1])
             .endOf("month")
             .format("YYYY-MM-DD");
-          action.selectPeriod("startDate", startDate);
-          action.selectPeriod("endDate", endDate);
+          setSelectedPeriod({
+            ...selectedPeriod,
+            dhis2Period: `${selectedPeriod.year}${
+              selectedPeriod.month < 10
+                ? "0" + selectedPeriod.month
+                : selectedPeriod.month
+            }`,
+            startDate: startDate,
+            endDate: endDate,
+          });
         } else {
-          action.selectPeriod("dhis2Period", null);
-          action.selectPeriod("startDate", "");
-          action.selectPeriod("endDate", "");
+          setSelectedPeriod({
+            ...selectedPeriod,
+            dhis2Period: null,
+            startDate: "",
+            endDate: "",
+          });
         }
         break;
       case "Quarterly":
-        if (period.year && period.quarter) {
-          action.selectPeriod("dhis2Period", `${period.year}Q${period.quarter}`);
-          startDate = moment([period.year]).quarter(period.quarter).startOf("quarter").format("YYYY-MM-DD");
-          endDate = moment([period.year]).quarter(period.quarter).endOf("quarter").format("YYYY-MM-DD");
-          action.selectPeriod("startDate", startDate);
-          action.selectPeriod("endDate", endDate);
+        if (selectedPeriod.year && selectedPeriod.quarter) {
+          startDate = moment([selectedPeriod.year])
+            .quarter(selectedPeriod.quarter)
+            .startOf("quarter")
+            .format("YYYY-MM-DD");
+          endDate = moment([selectedPeriod.year])
+            .quarter(selectedPeriod.quarter)
+            .endOf("quarter")
+            .format("YYYY-MM-DD");
+          setSelectedPeriod({
+            ...selectedPeriod,
+            dhis2Period: `${selectedPeriod.year}Q${selectedPeriod.quarter}`,
+            startDate,
+            endDate,
+          });
         } else {
-          action.selectPeriod("dhis2Period", null);
-          action.selectPeriod("startDate", "");
-          action.selectPeriod("endDate", "");
+          setSelectedPeriod({
+            ...selectedPeriod,
+            dhis2Period: null,
+            startDate: "",
+            endDate: "",
+          });
         }
         break;
       case "Weekly":
-        if (period.year && period.week) {
-          action.selectPeriod("dhis2Period", `${period.year}W${period.week}`);
-          startDate = moment([period.year, 1, 1]).isoWeek(period.week).startOf("isoWeek").format("YYYY-MM-DD");
-          endDate = moment([period.year, 1, 1]).isoWeek(period.week).endOf("isoWeek").format("YYYY-MM-DD");
-          action.selectPeriod("startDate", startDate);
-          action.selectPeriod("endDate", endDate);
+        if (selectedPeriod.year && selectedPeriod.week) {
+          startDate = moment([selectedPeriod.year, 1, 1])
+            .isoWeek(selectedPeriod.week)
+            .startOf("isoWeek")
+            .format("YYYY-MM-DD");
+          endDate = moment([selectedPeriod.year, 1, 1])
+            .isoWeek(selectedPeriod.week)
+            .endOf("isoWeek")
+            .format("YYYY-MM-DD");
+          setSelectedPeriod({
+            ...selectedPeriod,
+            dhis2Period: `${selectedPeriod.year}W${selectedPeriod.week}`,
+            startDate,
+            endDate,
+          });
         } else {
-          action.selectPeriod("dhis2Period", null);
-          action.selectPeriod("startDate", "");
-          action.selectPeriod("endDate", "");
+          setSelectedPeriod({
+            ...selectedPeriod,
+            dhis2Period: null,
+            startDate: "",
+            endDate: "",
+          });
         }
         break;
       case "Daily":
-        if (period.date) {
-          action.selectPeriod("dhis2Period", `${period.date.replace(/-/g, "")}`);
-          action.selectPeriod("startDate", period.date);
-          action.selectPeriod("endDate", period.date);
+        if (selectedPeriod.date) {
+          setSelectedPeriod({
+            ...selectedPeriod,
+            dhis2Period: `${selectedPeriod.date.replace(/-/g, "")}`,
+            startDate: selectedPeriod.date,
+            endDate: selectedPeriod.date,
+          });
         } else {
-          action.selectPeriod("dhis2Period", null);
-          action.selectPeriod("startDate", "");
-          action.selectPeriod("endDate", "");
+          setSelectedPeriod({
+            ...selectedPeriod,
+            dhis2Period: null,
+            startDate: "",
+            endDate: "",
+          });
         }
         break;
       default:
-        action.selectPeriod("dhis2Period", null);
-        action.selectPeriod("startDate", "");
-        action.selectPeriod("endDate", "");
+        setSelectedPeriod({
+          ...selectedPeriod,
+          dhis2Period: null,
+          startDate: "",
+          endDate: "",
+        });
         break;
     }
   };
 
   useEffect(() => {
     constConvertToDhis2Period();
-  }, [JSON.stringify(period)]);
-
-  useEffect(() => {
-    if (period.dhis2Period) setAnchorEl(null);
-  }, [JSON.stringify(period)]);
+  }, [JSON.stringify(selectedPeriod)]);
 
   useEffect(() => {
     let value = "";
-    switch (period.periodType) {
+    switch (periodType) {
       case "Yearly":
-        if (period.year) value = period.year;
+        if (selectedPeriod.year) value = selectedPeriod.year;
         break;
       case "Monthly":
-        if (period.year && period.month) value = period.monthName + " " + period.year;
+        if (selectedPeriod.year && selectedPeriod.month)
+          value = selectedPeriod.monthName + " " + selectedPeriod.year;
         break;
       case "Quarterly":
-        if (period.year && period.quarter) value = period.quarterName + " - " + period.year;
+        if (selectedPeriod.year && selectedPeriod.quarter)
+          value = selectedPeriod.quarterName + " - " + selectedPeriod.year;
         break;
       case "Weekly":
-        if (period.year && period.week) value = period.weekName + " - " + period.year;
+        if (selectedPeriod.year && selectedPeriod.week)
+          value = selectedPeriod.weekName + " - " + selectedPeriod.year;
         break;
       case "Daily":
-        if (period.date) value = period.date;
+        if (selectedPeriod.date) value = selectedPeriod.date;
         break;
       default:
         break;
     }
-    action.selectPeriod("periodName", value);
-  }, [JSON.stringify(period.dhis2Period)]);
+    setSelectedPeriod({ ...selectedPeriod, periodName: value });
+  }, [selectedPeriod.dhis2Period]);
 
   return (
     <div className="period-selector-container">
-      <div
-        onClick={(event) => {
-          setAnchorEl(event.currentTarget);
-        }}
-      >
-        <Input valueType="TEXT" label={t("selectPeriod")} value={period.periodName} />
-      </div>
-      <Popover
-        open={openPopover}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left"
-        }}
-        onClose={() => {
-          setAnchorEl(null);
-        }}
-      >
-        <div className="period-selector-popover-container">{renderSelectors()}</div>
-      </Popover>
+      {renderSelectors()}
+      <Button variant="contained" onClick={() => handler(selectedPeriod)}>
+        {t("apply")}
+      </Button>
     </div>
   );
 };
