@@ -1,18 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import YearSelector from "./YearSelector";
-import MonthSelector from "./MonthSelector";
+import MonthSelector, { MONTHS } from "./MonthSelector";
 import QuarterSelector from "./QuarterSelector";
 import WeekSelector from "./WeekSelector";
 import moment from "moment";
 import "./PeriodSelector.css";
 import CustomSelect from "./CustomSelect";
+import useDashboardStore from "@/state/dashboard";
+import { shallow } from "zustand/shallow";
+import _ from "lodash";
 
-const PeriodSelector = ({ handler, periodType }) => {
+const PeriodSelector = ({ handler, periodType, initValue }) => {
   const { t } = useTranslation();
+  const { additionalState } = useDashboardStore(
+    (state) => ({ additionalState: state.additionalState }),
+    shallow
+  );
   const [selectedPeriod, setSelectedPeriod] = useState({});
-  const renderSelectors = () => {
+  useEffect(() => {
+    if (_.isEmpty(selectedPeriod)) {
+      setSelectedPeriod((prev) => ({ ...prev, ...additionalState[initValue] }));
+    }
+  }, [JSON.stringify(additionalState)]);
+  const renderSelectors = useMemo(() => {
     switch (periodType) {
       case "Yearly":
         return (
@@ -89,8 +101,7 @@ const PeriodSelector = ({ handler, periodType }) => {
       default:
         return <div>ERROR: Please select period type first</div>;
     }
-  };
-
+  }, [JSON.stringify(selectedPeriod)]);
   const constConvertToDhis2Period = () => {
     let startDate;
     let endDate;
@@ -129,6 +140,7 @@ const PeriodSelector = ({ handler, periodType }) => {
             }`,
             startDate: startDate,
             endDate: endDate,
+            monthName: t(MONTHS[selectedPeriod.month - 1]),
           });
         } else {
           setSelectedPeriod({
@@ -136,6 +148,7 @@ const PeriodSelector = ({ handler, periodType }) => {
             dhis2Period: null,
             startDate: "",
             endDate: "",
+            monthName: "",
           });
         }
         break;
@@ -154,6 +167,7 @@ const PeriodSelector = ({ handler, periodType }) => {
             dhis2Period: `${selectedPeriod.year}Q${selectedPeriod.quarter}`,
             startDate,
             endDate,
+            quarterName: t("Q" + selectedPeriod.quarter),
           });
         } else {
           setSelectedPeriod({
@@ -161,6 +175,7 @@ const PeriodSelector = ({ handler, periodType }) => {
             dhis2Period: null,
             startDate: "",
             endDate: "",
+            quarterName: "",
           });
         }
         break;
@@ -179,6 +194,7 @@ const PeriodSelector = ({ handler, periodType }) => {
             dhis2Period: `${selectedPeriod.year}W${selectedPeriod.week}`,
             startDate,
             endDate,
+            weekName: t("week") + " " + selectedPeriod.week,
           });
         } else {
           setSelectedPeriod({
@@ -186,6 +202,7 @@ const PeriodSelector = ({ handler, periodType }) => {
             dhis2Period: null,
             startDate: "",
             endDate: "",
+            weekName,
           });
         }
         break;
@@ -218,10 +235,12 @@ const PeriodSelector = ({ handler, periodType }) => {
   };
 
   useEffect(() => {
+    if (_.isEmpty(selectedPeriod)) return;
     constConvertToDhis2Period();
   }, [JSON.stringify(selectedPeriod)]);
 
   useEffect(() => {
+    if (_.isEmpty(selectedPeriod)) return;
     let value = "";
     switch (periodType) {
       case "Yearly":
@@ -250,7 +269,7 @@ const PeriodSelector = ({ handler, periodType }) => {
 
   return (
     <div className="period-selector-container">
-      {renderSelectors()}
+      {renderSelectors}
       <Button variant="contained" onClick={() => handler(selectedPeriod)}>
         {t("apply")}
       </Button>

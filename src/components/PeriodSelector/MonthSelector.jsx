@@ -1,23 +1,23 @@
 import { useTranslation } from "react-i18next";
 import CustomSelect from "./CustomSelect";
-
+export const MONTHS = [
+  "jan",
+  "feb",
+  "mar",
+  "apr",
+  "may",
+  "jun",
+  "jul",
+  "aug",
+  "sep",
+  "oct",
+  "nov",
+  "dec",
+];
 const MonthSelector = ({ change, period }) => {
   const { t } = useTranslation();
-  const months = [
-    "jan",
-    "feb",
-    "mar",
-    "apr",
-    "may",
-    "jun",
-    "jul",
-    "aug",
-    "sep",
-    "oct",
-    "nov",
-    "dec",
-  ];
-  const valueSet = months.map((month, index) => {
+
+  const valueSet = MONTHS.map((month, index) => {
     return {
       value: index + 1,
       label: t(month),
@@ -31,7 +31,7 @@ const MonthSelector = ({ change, period }) => {
         valueType="TEXT"
         valueSet={valueSet}
         change={(value) => {
-          change(value, t(months[value - 1]));
+          change(value, t(MONTHS[value - 1]));
         }}
       />
     </div>

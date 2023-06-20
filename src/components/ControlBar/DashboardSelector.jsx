@@ -5,15 +5,20 @@ import { shallow } from "zustand/shallow";
 
 const DashboardSelector = () => {
   const { t } = useTranslation();
-  const { selectedDashboard, selectDashboard, dashboards } = useDashboardStore(
+  const {
+    selectedDashboard,
+    selectDashboard,
+    dashboards,
+    resetAdditionalState,
+  } = useDashboardStore(
     (state) => ({
       selectedDashboard: state.selectedDashboard,
       selectDashboard: state.selectDashboard,
-      dashboards: state.dashboards
+      dashboards: state.dashboards,
+      resetAdditionalState: state.resetAdditionalState,
     }),
     shallow
   );
-
   return (
     <Autocomplete
       disableClearable={true}
@@ -22,7 +27,7 @@ const DashboardSelector = () => {
       options={dashboards.map((d, index) => ({
         value: index,
         label: t(d.name),
-        callback: d.callback
+        callback: d.callback,
       }))}
       renderInput={(params) => <TextField {...params} />}
       onChange={(event, newValue) => {
@@ -30,6 +35,7 @@ const DashboardSelector = () => {
           newValue.callback();
           return;
         }
+        resetAdditionalState();
         selectDashboard(newValue);
       }}
     />

@@ -25,6 +25,7 @@ const DengueDashboard = () => {
     (state) => ({ additionalState: state.additionalState }),
     shallow
   );
+  console.log(additionalState);
   const { selectedOrgUnit } = additionalState;
   return (
     <ReactGridLayout

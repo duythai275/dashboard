@@ -92,7 +92,7 @@ const HivDashboard = () => {
                 setAnchorElW1(event.currentTarget);
               }}
             >
-              <FontAwesomeIcon icon={faGear} style={{ fontSize: 22 }} />
+              <FontAwesomeIcon icon={faGear} style={{ fontSize: 20 }} />
             </IconButton>
             <Popover
               open={Boolean(anchorElW1)}
@@ -110,6 +110,7 @@ const HivDashboard = () => {
                 handler={(period) => {
                   changeAdditionalStateProperty("periodForW1", period);
                 }}
+                initValue="periodForW1"
               />
             </Popover>
           </div>,
@@ -134,7 +135,7 @@ const HivDashboard = () => {
                 setAnchorElW2(event.currentTarget);
               }}
             >
-              <FontAwesomeIcon icon={faGear} style={{ fontSize: 22 }} />
+              <FontAwesomeIcon icon={faGear} style={{ fontSize: 20 }} />
             </IconButton>
             <Popover
               open={Boolean(anchorElW2)}
@@ -152,6 +153,7 @@ const HivDashboard = () => {
                 handler={(period) => {
                   changeAdditionalStateProperty("periodForW2", period);
                 }}
+                initValue="periodForW2"
               />
             </Popover>
           </div>,
@@ -176,7 +178,7 @@ const HivDashboard = () => {
                 setAnchorElW3(event.currentTarget);
               }}
             >
-              <FontAwesomeIcon icon={faGear} style={{ fontSize: 22 }} />
+              <FontAwesomeIcon icon={faGear} style={{ fontSize: 20 }} />
             </IconButton>
             <Popover
               open={Boolean(anchorElW3)}
@@ -195,6 +197,7 @@ const HivDashboard = () => {
                   console.log(period);
                   changeAdditionalStateProperty("periodForW3", period);
                 }}
+                initValue="periodForW3"
               />
             </Popover>
           </div>,
@@ -219,7 +222,7 @@ const HivDashboard = () => {
                 setAnchorElW4(event.currentTarget);
               }}
             >
-              <FontAwesomeIcon icon={faGear} style={{ fontSize: 22 }} />
+              <FontAwesomeIcon icon={faGear} style={{ fontSize: 20 }} />
             </IconButton>
             <Popover
               open={Boolean(anchorElW4)}
@@ -237,6 +240,7 @@ const HivDashboard = () => {
                 handler={(period) => {
                   changeAdditionalStateProperty("periodForW4", period);
                 }}
+                initValue="periodForW4"
               />
             </Popover>
           </div>,

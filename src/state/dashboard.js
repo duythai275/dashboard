@@ -19,7 +19,9 @@ const useDashboardStore = create((set, get) => ({
   selectWidgetChild: (dashboardIndex, widgetIndex, childrenIndex) =>
     set(
       produce((state) => {
-        state.dashboardState[dashboardIndex].widgets[widgetIndex].selectedChildren = childrenIndex;
+        state.dashboardState[dashboardIndex].widgets[
+          widgetIndex
+        ].selectedChildren = childrenIndex;
       })
     ),
   changeAdditionalStateProperty: (property, value) =>
@@ -28,7 +30,8 @@ const useDashboardStore = create((set, get) => ({
         state.additionalState[property] = value;
       })
     ),
-  changeLayout: (layout) => set(() => ({ layout }))
+  resetAdditionalState: () => set(() => ({ additionalState: {} })),
+  changeLayout: (layout) => set(() => ({ layout })),
 }));
 
 export default useDashboardStore;

@@ -14,6 +14,7 @@ import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import DengueDashboard from "./dashboards/DengueDashboard";
 import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
 import HivDashboard from "./dashboards/HivDashboard/HivDashboard";
+import { getMonth, getQuarter, getYear } from "date-fns";
 
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -214,18 +215,45 @@ const CustomControlForDiseaseBulletin = () => {
       shallow
     );
   useEffect(() => {
-    if (selectedDashboard?.value !== BULLETIN_DASHBOARD_VALUE)
-      changeAdditionalStateProperty("selectedDisease", null);
-    if (selectedDashboard.value !== DENGUE_DASHBOARD_VALUE) {
-      changeAdditionalStateProperty("selectedPeriod", null);
-      changeAdditionalStateProperty("selectedOrgUnit", null);
-    } else {
-      changeAdditionalStateProperty("selectedPeriod", 2023);
-      changeAdditionalStateProperty(
-        "selectedOrgUnit",
-        orgUnits.find((ou) => ou.level === 1)
-      );
+    switch (selectedDashboard?.value) {
+      case DENGUE_DASHBOARD_VALUE:
+        changeAdditionalStateProperty("selectedPeriod", 2023);
+        changeAdditionalStateProperty(
+          "selectedOrgUnit",
+          orgUnits.find((ou) => ou.level === 1)
+        );
+        break;
+      case HIV_DASHBOARD_VALUE:
+        changeAdditionalStateProperty("periodForW1", {
+          year: getYear(new Date()),
+          month: getMonth(new Date()),
+        });
+        changeAdditionalStateProperty("periodForW2", {
+          year: getYear(new Date()),
+        });
+        changeAdditionalStateProperty("periodForW3", {
+          year: getYear(new Date()),
+          quarter: getQuarter(new Date()),
+        });
+        changeAdditionalStateProperty("periodForW4", {
+          year: getYear(new Date()),
+        });
+        break;
+      default:
+        break;
     }
+    // if (selectedDashboard?.value !== BULLETIN_DASHBOARD_VALUE)
+    //   changeAdditionalStateProperty("selectedDisease", null);
+    // if (selectedDashboard.value !== DENGUE_DASHBOARD_VALUE) {
+    //   changeAdditionalStateProperty("selectedPeriod", null);
+    //   changeAdditionalStateProperty("selectedOrgUnit", null);
+    // } else {
+    //   changeAdditionalStateProperty("selectedPeriod", 2023);
+    //   changeAdditionalStateProperty(
+    //     "selectedOrgUnit",
+    //     orgUnits.find((ou) => ou.level === 1)
+    //   );
+    // }
   }, [selectedDashboard?.value]);
 
   if (selectedDashboard?.value === DENGUE_DASHBOARD_VALUE) {
