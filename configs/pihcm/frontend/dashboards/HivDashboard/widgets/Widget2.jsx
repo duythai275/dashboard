@@ -1,18 +1,23 @@
-import ThematicMap from "@/components/Widgets/ThematicMap";
-import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
-import useMetadataStore from "@/state/metadata";
 import { shallow } from "zustand/shallow";
 import { getRowValue, sortArray } from "../utils";
 import { useEffect, useMemo, useState } from "react";
 import { pull } from "@/utils/fetch";
+import ThematicMap from "@/components/Widgets/ThematicMap";
+import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
+import useMetadataStore from "@/state/metadata";
 
-const year = 2021;
+import useDashboardStore from "@/state/dashboard";
 
 const Widget2 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   const orgUnitGeoJson = useMetadataStore(
     (state) => state.orgUnitGeoJson,
     shallow
   );
+  const { periodForW2 } = useDashboardStore(
+    (state) => state.additionalState,
+    shallow
+  );
+  const { year } = periodForW2;
 
   const [data, setData] = useState(null);
 

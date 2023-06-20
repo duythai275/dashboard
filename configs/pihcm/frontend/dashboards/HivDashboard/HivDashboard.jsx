@@ -32,6 +32,9 @@ const HivDashboard = () => {
   const [anchorElW3, setAnchorElW3] = useState(null);
   const [anchorElW4, setAnchorElW4] = useState(null);
 
+  const { periodForW1, periodForW2, periodForW3, periodForW4 } =
+    useDashboardStore((state) => state.additionalState, shallow);
+
   const [pepfarProvinces, outsidePepfarProvinces] = useMemo(() => {
     if (!communes) return [[], []];
     const resultReduce = communes.reduce(
@@ -79,7 +82,7 @@ const HivDashboard = () => {
         widgetIndex={0}
         childrenWidgets={[
           {
-            title: t("HivDashboardWidget1Title", { month: 12, year: 2021 }),
+            title: t("HivDashboardWidget1Title", periodForW1),
             widget: (
               <Widget1 {...{ pepfarProvinces, outsidePepfarProvinces }} />
             ),
@@ -165,7 +168,7 @@ const HivDashboard = () => {
         widgetIndex={2}
         childrenWidgets={[
           {
-            title: t("HivDashboardWidget3Title", { quarter: 4, year: 2021 }),
+            title: t("HivDashboardWidget3Title", periodForW3),
             widget: (
               <Widget3 {...{ pepfarProvinces, outsidePepfarProvinces }} />
             ),

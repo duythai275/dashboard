@@ -8,10 +8,9 @@ import { calculateAverage, getRowValue, sortArray } from "../utils";
 import BarChart from "@/components/Widgets/BarChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { ModalBarChart } from "../components";
-
-const month = 5;
-const year = 2022;
-const quarter = 2;
+import useDashboardStore from "@/state/dashboard";
+import { shallow } from "zustand/shallow";
+import { getQuarter } from "date-fns";
 
 const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   const { t } = useTranslation();
@@ -19,6 +18,13 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   const [data, setData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIdxActive, setModalIdxActive] = useState(null);
+  const { periodForW1 } = useDashboardStore(
+    (state) => state.additionalState,
+    shallow
+  );
+
+  const { year, month } = periodForW1;
+  const quarter = getQuarter(new Date().setMonth(month - 1));
 
   const baseDatasets = [
     {
