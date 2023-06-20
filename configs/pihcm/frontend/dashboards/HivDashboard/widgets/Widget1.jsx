@@ -97,7 +97,7 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       };
 
       const getOuData = (ouList) =>
-        sortArray(ouList).map((ou) => {
+        ouList.map((ou) => {
           const greens = getRowValue(resultFrom2015, greenNumeratorIds, ou.id);
           const greenValue = parseInt(greens[0]) - parseInt(greens[1]);
           const green = calculateGreen(greenValue, ou.id);
@@ -134,11 +134,11 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       setData({ resultPepfar, resultOutsidePepfar });
       setBarData(barData);
     })();
-  }, [pepfarProvinces, outsidePepfarProvinces]);
+  }, [pepfarProvinces, outsidePepfarProvinces, year, month, quarter]);
 
   const chartConfigs = barData
     ? {
-        labels: regionLabels,
+        labels: regionLabels.map((label) => t(label)),
         datasets: baseDatasets.map(({ label, backgroundColor, name }) => ({
           label,
           backgroundColor,
@@ -169,9 +169,10 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
     let labels, chartData;
     switch (modalIdxActive) {
       case 0:
-        labels = sortArray(resultPepfar.concat(resultOutsidePepfar)).map(
-          ({ name }) => name
-        );
+        labels = sortArray(
+          resultPepfar.concat(resultOutsidePepfar),
+          "name"
+        ).map(({ name }) => name);
         chartData = reduceChartData(resultPepfar.concat(resultOutsidePepfar));
         break;
       case 1:
@@ -214,7 +215,9 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
               setModalIdxActive(null);
             }}
             barData={modalChartConfigs}
-            title="HivDashboardWidget1ModalTitle"
+            title={`90-90-90 (${month}/${year}) - ${t(
+              regionLabels[modalIdxActive]
+            )}`}
             w={
               modalIdxActive === 0
                 ? "90dvw"

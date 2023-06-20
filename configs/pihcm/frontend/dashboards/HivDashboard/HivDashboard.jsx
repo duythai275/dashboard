@@ -10,37 +10,39 @@ import {
   OUTSIDE_PEPFAR_PROVINCE_GROUP_ID,
   PEPFAR_PROVINCE_GROUP_ID,
 } from "./constants";
+import { sortArray } from "./utils";
 
 const HivDashboard = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const communes = useMetadataStore((state) => state.communes);
 
-  const [pepfarProvinces, outsidePepfarProvinces] = useMemo(
-    () =>
-      communes?.reduce(
-        (result, current) => {
-          const pepfarFound = current.organisationUnitGroups.find(
-            ({ id }) => id === PEPFAR_PROVINCE_GROUP_ID
-          );
-          if (pepfarFound) {
-            result[0].push(current);
-            return result;
-          }
-
-          const outsidePepfarFound = current.organisationUnitGroups.find(
-            ({ id }) => id === OUTSIDE_PEPFAR_PROVINCE_GROUP_ID
-          );
-          if (outsidePepfarFound) {
-            result[1].push(current);
-            return result;
-          }
-
+  const [pepfarProvinces, outsidePepfarProvinces] = useMemo(() => {
+    if (!communes) return [[], []];
+    const resultReduce = communes.reduce(
+      (result, current) => {
+        const pepfarFound = current.organisationUnitGroups.find(
+          ({ id }) => id === PEPFAR_PROVINCE_GROUP_ID
+        );
+        if (pepfarFound) {
+          result[0].push(current);
           return result;
-        },
-        [[], []]
-      ) || [[], []],
-    [communes]
-  );
+        }
+
+        const outsidePepfarFound = current.organisationUnitGroups.find(
+          ({ id }) => id === OUTSIDE_PEPFAR_PROVINCE_GROUP_ID
+        );
+        if (outsidePepfarFound) {
+          result[1].push(current);
+          return result;
+        }
+
+        return result;
+      },
+      [[], []]
+    ) || [[], []];
+
+    return [sortArray(resultReduce[0]), sortArray(resultReduce[1])];
+  }, [communes, i18n.language]);
 
   return (
     <ReactGridLayout
@@ -87,7 +89,7 @@ const HivDashboard = () => {
         widgetIndex={2}
         childrenWidgets={[
           {
-            title: t("HivDashboardWidget3Title", { quad: 4, year: 2021 }),
+            title: t("HivDashboardWidget3Title", { quarter: 4, year: 2021 }),
             widget: (
               <Widget3 {...{ pepfarProvinces, outsidePepfarProvinces }} />
             ),
@@ -110,5 +112,12 @@ const HivDashboard = () => {
     </ReactGridLayout>
   );
 };
+
+const redIds = [
+  "eupLO26vvX8",
+  "ZzGVNzKxZdX",
+  "eupLO26vvX8.CksScNpnanY",
+  "ZzGVNzKxZdX.CksScNpnanY",
+];
 
 export default HivDashboard;

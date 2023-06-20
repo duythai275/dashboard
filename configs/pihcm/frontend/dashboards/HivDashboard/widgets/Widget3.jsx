@@ -127,11 +127,11 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       setData({ resultPepfar, resultOutsidePepfar });
       setBarData(barData);
     })();
-  }, [pepfarProvinces, outsidePepfarProvinces]);
+  }, [pepfarProvinces, outsidePepfarProvinces, year, quarter]);
 
   const chartConfigs = barData
     ? {
-        labels: regionLabels,
+        labels: regionLabels.map((label) => t(label)),
         datasets: baseDatasets.map(
           ({ label, backgroundColor, name, datalabels }, idx) => ({
             label,
@@ -177,9 +177,10 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
     let labels, chartData;
     switch (modalIdxActive) {
       case 0:
-        labels = sortArray(resultPepfar.concat(resultOutsidePepfar)).map(
-          ({ name }) => name
-        );
+        labels = sortArray(
+          resultPepfar.concat(resultOutsidePepfar),
+          "name"
+        ).map(({ name }) => name);
         chartData = reduceChartData(resultPepfar.concat(resultOutsidePepfar));
         break;
       case 1:
@@ -226,7 +227,9 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
               setModalIdxActive(null);
             }}
             barData={modalChartConfigs}
-            title="HivDashboardWidget1ModalTitle"
+            title={`${t("HivDashboardWidget3Title", { quarter, year })} - ${t(
+              regionLabels[modalIdxActive]
+            )}`}
             w={
               modalIdxActive === 0
                 ? "90dvw"

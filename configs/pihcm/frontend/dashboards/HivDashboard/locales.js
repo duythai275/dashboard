@@ -1,20 +1,32 @@
 export const hivLocales = {
   en: [
     {
+      key: "provincesInSouthRegion",
+      value: "20 provinces in South Region",
+    },
+    {
+      key: "provincesInPEPFAR",
+      value: "7 provinces in PEPFAR",
+    },
+    {
+      key: "provincesOutsidePEPFAR",
+      value: "13 provinces outside PEPFAR",
+    },
+    {
       key: "HivDashboardWidget1Title",
       value: "90-90-90 ({{month}}/{{year}})",
     },
     {
       key: "HivDashboardWidget2Title",
-      value: "Số người được phát hiện có HIV(+)",
+      value: "Number of people new HIV status",
     },
     {
       key: "HivDashboardWidget3Title",
-      value: "ARV treatment status (Q{{quad}} {{year}})",
+      value: "ARV treatment status (Q{{quarter}} {{year}})",
     },
     {
       key: "HivDashboardWidget4Title",
-      value: "Số người có kết quả VIRAL LOAD vượt ngưỡng ức chế",
+      value: "Number of patients with supressed VIRAL LOAD result",
     },
     {
       key: "arvTreatmentStatus20provinces",
@@ -47,10 +59,22 @@ export const hivLocales = {
     },
     {
       key: "patientsWithSupressedVlResult",
-      value: "% Patients with supressed VL result {{year}}",
+      value: "% Patients with supressed VIRAL LOAD result {{year}}",
     },
   ],
   vi: [
+    {
+      key: "provincesInSouthRegion",
+      value: "20 tỉnh miền nam",
+    },
+    {
+      key: "provincesInPEPFAR",
+      value: "7 tỉnh PEPFAR",
+    },
+    {
+      key: "provincesOutsidePEPFAR",
+      value: "13 tỉnh ngoài PEPFAR",
+    },
     {
       key: "HivDashboardWidget1Title",
       value: "90-90-90 ({{month}}/{{year}})",
@@ -61,7 +85,7 @@ export const hivLocales = {
     },
     {
       key: "HivDashboardWidget3Title",
-      value: "Tình hình BN điều trị ARV (Q{{quad}} {{year}})",
+      value: "Tình hình BN điều trị ARV (Q{{quarter}} {{year}})",
     },
     {
       key: "HivDashboardWidget4Title",
@@ -99,7 +123,7 @@ export const hivLocales = {
     },
     {
       key: "patientsWithSupressedVlResult",
-      value: "Tỷ lệ bệnh nhân có KQ ức chế VL năm {{year}}",
+      value: "Tỷ lệ bệnh nhân có kết quả ức chế VIRAL LOAD năm {{year}}",
     },
   ],
 };
