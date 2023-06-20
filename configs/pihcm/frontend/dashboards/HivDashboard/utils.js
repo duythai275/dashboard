@@ -1,6 +1,6 @@
 export const sortArray = (ouList, property) =>
   ouList.sort((a, b) => {
-    if (!property) property = "name";
+    if (!property) property = "displayName";
     const fa = a[property].toLowerCase(),
       fb = b[property].toLowerCase();
     if (fa < fb) {

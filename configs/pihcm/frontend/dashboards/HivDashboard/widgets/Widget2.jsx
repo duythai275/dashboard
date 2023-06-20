@@ -1,37 +1,72 @@
 import ThematicMap from "@/components/Widgets/ThematicMap";
+import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import useMetadataStore from "@/state/metadata";
 import { shallow } from "zustand/shallow";
+import { getRowValue, sortArray } from "../utils";
+import { useEffect, useMemo, useState } from "react";
+import { pull } from "@/utils/fetch";
 
-const Widget2 = () => {
-  const { orgUnitGeoJson } = useMetadataStore(
-    (state) => ({ orgUnitGeoJson: state.orgUnitGeoJson }),
+const year = 2021;
+
+const Widget2 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
+  const orgUnitGeoJson = useMetadataStore(
+    (state) => state.orgUnitGeoJson,
     shallow
   );
-  const features = orgUnitGeoJson
-    ? orgUnitGeoJson.features.filter(
-        (feature) => feature.properties.level === "2"
-      )
-    : [];
 
-  const data = features.reduce((result, feature, idx) => {
-    result[feature.id] = (Math.random() * 4000).toFixed() * 1;
-    return result;
-  }, {});
+  const [data, setData] = useState(null);
+
+  const features = useMemo(() => {
+    const converted = orgUnitGeoJson.features.reduce(
+      (result, current) => ({
+        ...result,
+        [current.id]: current,
+      }),
+      {}
+    );
+
+    return sortArray(pepfarProvinces.concat(outsidePepfarProvinces)).map(
+      ({ id }) => converted[id]
+    );
+  }, [orgUnitGeoJson, pepfarProvinces, outsidePepfarProvinces]);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const res = await pull(
+        `/api/analytics.json?dimension=dx:skMWmY6Xh4u&dimension=ou:skMWmY6Xh4u${pepfarProvinces
+          .concat(outsidePepfarProvinces)
+          .map(({ id }) => id)
+          .join(";")}&filter=pe:${year}`
+      );
+
+      const resultReduce = features.reduce((result, feature, idx) => {
+        const value = getRowValue(res, ["skMWmY6Xh4u"], feature.id);
+        result[feature.id] = value * 1;
+        return result;
+      }, {});
+
+      setData(resultReduce);
+      setLoading(false);
+    })();
+  }, [features, year]);
 
   return (
-    <ThematicMap
-      data={data}
-      features={features}
-      legend={["#689F38", "#AFB42B", "#FBC02D", "#F57C00", "#AC0800"]}
-      legendSet={[
-        { color: "#689F38", max: 0, min: 0 },
-        { color: "#AFB42B", max: 33, min: 1 },
-        { color: "#FBC02D", max: 66, min: 34 },
-        { color: "#F57C00", max: 99, min: 67 },
-        { color: "#AC0800", max: 100, min: 100 },
-      ]}
-    />
+    data && (
+      <ThematicMap
+        data={data}
+        features={features}
+        legend={["#689F38", "#AFB42B", "#FBC02D", "#F57C00", "#AC0800"]}
+        legendSet={[
+          { color: "#689F38", max: 0, min: 0 },
+          { color: "#AFB42B", max: 33, min: 1 },
+          { color: "#FBC02D", max: 66, min: 34 },
+          { color: "#F57C00", max: 99, min: 67 },
+          { color: "#AC0800", max: 100, min: 100 },
+        ]}
+      />
+    )
   );
 };
 
-export default Widget2;
+export default withWidgetChildrenLoader(Widget2);
