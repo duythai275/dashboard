@@ -1,7 +1,7 @@
 import ThematicMap from "@/components/Widgets/ThematicMap";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import useMetadataStore from "@/state/metadata";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { shallow } from "zustand/shallow";
 import { getRowValue, sortArray } from "../utils";
 import { pull } from "@/utils/fetch";
@@ -94,4 +94,4 @@ const redIds = [
   "ZzGVNzKxZdX.CksScNpnanY",
 ];
 
-export default withWidgetChildrenLoader(Widget4);
+export default withWidgetChildrenLoader(memo(Widget4));

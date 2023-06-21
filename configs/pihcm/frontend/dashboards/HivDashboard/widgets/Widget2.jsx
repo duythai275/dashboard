@@ -1,6 +1,6 @@
 import { shallow } from "zustand/shallow";
 import { getRowValue, sortArray } from "../utils";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { pull } from "@/utils/fetch";
 import ThematicMap from "@/components/Widgets/ThematicMap";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
@@ -76,4 +76,4 @@ const Widget2 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   );
 };
 
-export default withWidgetChildrenLoader(Widget2);
+export default withWidgetChildrenLoader(memo(Widget2));
