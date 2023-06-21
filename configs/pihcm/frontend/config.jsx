@@ -429,7 +429,7 @@ const CustomControlForDiseaseBulletin = () => {
     //   );
     // }
   }, [selectedDashboard?.value]);
-  console.log(additionalState);
+
   if (selectedDashboard?.value === DENGUE_DASHBOARD_VALUE) {
     return (
       <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>

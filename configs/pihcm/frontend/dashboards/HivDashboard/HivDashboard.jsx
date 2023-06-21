@@ -197,7 +197,6 @@ const HivDashboard = () => {
               <PeriodSelector
                 periodType={"Quarterly"}
                 handler={(period) => {
-                  console.log(period);
                   changeAdditionalStateProperty("periodForW3", period);
                 }}
                 initValue="periodForW3"
