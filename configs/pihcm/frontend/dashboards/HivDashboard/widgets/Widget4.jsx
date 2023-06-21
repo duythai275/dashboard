@@ -12,8 +12,8 @@ const Widget4 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
     (state) => state.orgUnitGeoJson,
     shallow
   );
-  const { periodForW4 } = useDashboardStore(
-    (state) => state.additionalState,
+  const periodForW4 = useDashboardStore(
+    (state) => state.additionalState.periodForW4,
     shallow
   );
 

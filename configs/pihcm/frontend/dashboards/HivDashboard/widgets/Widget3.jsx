@@ -1,5 +1,5 @@
 import { regionLabels } from "../constants";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 
 import { pull } from "@/utils/fetch";
 import { getRowValue, sortArray } from "../utils";
@@ -17,8 +17,8 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   const [data, setData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIdxActive, setModalIdxActive] = useState(null);
-  const { periodForW3 } = useDashboardStore(
-    (state) => state.additionalState,
+  const periodForW3 = useDashboardStore(
+    (state) => state.additionalState.periodForW3,
     shallow
   );
 
@@ -236,7 +236,7 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
               setModalIdxActive(null);
             }}
             barData={modalChartConfigs}
-            title={`${t("HivDashboardWidget3Title", { quarter, year })} - ${t(
+            title={`${t("HivDashboardWidget3Title", periodForW3)} - ${t(
               regionLabels[modalIdxActive]
             )}`}
             w={
@@ -264,4 +264,4 @@ const deIds = [
   "STooCvlxg5S",
 ];
 
-export default withWidgetChildrenLoader(Widget3);
+export default withWidgetChildrenLoader(memo(Widget3));

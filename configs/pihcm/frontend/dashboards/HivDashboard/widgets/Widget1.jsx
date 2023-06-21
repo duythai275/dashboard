@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { regionLabels } from "../constants";
 import { useTranslation } from "react-i18next";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 
 import { pull } from "@/utils/fetch";
 import { calculateAverage, getRowValue, sortArray } from "../utils";
@@ -18,8 +18,8 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   const [data, setData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIdxActive, setModalIdxActive] = useState(null);
-  const { periodForW1 } = useDashboardStore(
-    (state) => state.additionalState,
+  const periodForW1 = useDashboardStore(
+    (state) => state.additionalState.periodForW1,
     shallow
   );
 
@@ -227,7 +227,7 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
               setModalIdxActive(null);
             }}
             barData={modalChartConfigs}
-            title={`90-90-90 (${month}/${year}) - ${t(
+            title={`90-90-90 (${periodForW1.month}/${periodForW1.year}) - ${t(
               regionLabels[modalIdxActive]
             )}`}
             w={
@@ -255,4 +255,4 @@ const redIds = [
   "ZzGVNzKxZdX.CksScNpnanY",
 ];
 
-export default withWidgetChildrenLoader(Widget1);
+export default withWidgetChildrenLoader(memo(Widget1));
