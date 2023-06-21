@@ -5,12 +5,15 @@ import { useEffect, useMemo, useState } from "react";
 import { shallow } from "zustand/shallow";
 import { getRowValue, sortArray } from "../utils";
 import { pull } from "@/utils/fetch";
-
-const year = 2021;
+import useDashboardStore from "@/state/dashboard";
 
 const Widget4 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   const orgUnitGeoJson = useMetadataStore(
     (state) => state.orgUnitGeoJson,
+    shallow
+  );
+  const { periodForW4 } = useDashboardStore(
+    (state) => state.additionalState,
     shallow
   );
 
@@ -33,6 +36,9 @@ const Widget4 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   useEffect(() => {
     (async () => {
       setLoading(true);
+      if (!periodForW4) return;
+      const { year } = periodForW4;
+
       const res = await pull(
         `/api/analytics.json?dimension=dx:${redIds.join(
           ";"
@@ -61,7 +67,7 @@ const Widget4 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       setData(resultReduce);
       setLoading(false);
     })();
-  }, [features, year]);
+  }, [features, periodForW4]);
 
   return (
     data && (

@@ -17,7 +17,6 @@ const Widget2 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
     (state) => state.additionalState,
     shallow
   );
-  const { year } = periodForW2;
 
   const [data, setData] = useState(null);
 
@@ -38,6 +37,9 @@ const Widget2 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   useEffect(() => {
     (async () => {
       setLoading(true);
+      if (!periodForW2) return;
+      const { year } = periodForW2;
+
       const res = await pull(
         `/api/analytics.json?dimension=dx:skMWmY6Xh4u&dimension=ou:skMWmY6Xh4u${pepfarProvinces
           .concat(outsidePepfarProvinces)
@@ -54,7 +56,7 @@ const Widget2 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       setData(resultReduce);
       setLoading(false);
     })();
-  }, [features, year]);
+  }, [features, periodForW2]);
 
   return (
     data && (

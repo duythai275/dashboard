@@ -23,30 +23,36 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
     shallow
   );
 
-  const { year, month } = periodForW1;
-  const quarter = getQuarter(new Date().setMonth(month - 1));
-
-  const baseDatasets = [
-    {
-      name: "greenData",
-      label: t("peopleNewHIVStatusUpto", { month, year }),
-      backgroundColor: "#4caf50",
-    },
-    {
-      name: "blueData",
-      label: t("patientsOnART", { quarter, year }),
-      backgroundColor: "#03a9f4",
-    },
-    {
-      name: "redData",
-      label: t("patientsWithSupressedVlResult", { year }),
-      backgroundColor: "#ff9800",
-    },
-  ];
+  const baseDatasets = useMemo(() => {
+    if (!periodForW1) return [];
+    const { year, month } = periodForW1;
+    const quarter = getQuarter(new Date().setMonth(month - 1));
+    return [
+      {
+        name: "greenData",
+        label: t("peopleNewHIVStatusUpto", { month, year }),
+        backgroundColor: "#4caf50",
+      },
+      {
+        name: "blueData",
+        label: t("patientsOnART", { quarter, year }),
+        backgroundColor: "#03a9f4",
+      },
+      {
+        name: "redData",
+        label: t("patientsWithSupressedVlResult", { year }),
+        backgroundColor: "#ff9800",
+      },
+    ];
+  }, [periodForW1]);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
+      if (!periodForW1) return;
+      const { year, month } = periodForW1;
+      const quarter = getQuarter(new Date().setMonth(month - 1));
+
       const [resultFrom2015, resultYearly, resultQuarterly] = await Promise.all(
         [
           pull(
@@ -140,7 +146,7 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       setData({ resultPepfar, resultOutsidePepfar });
       setBarData(barData);
     })();
-  }, [pepfarProvinces, outsidePepfarProvinces, year, month, quarter]);
+  }, [pepfarProvinces, outsidePepfarProvinces, periodForW1]);
 
   const chartConfigs = barData
     ? {

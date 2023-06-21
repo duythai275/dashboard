@@ -16,6 +16,7 @@ import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
 import HivDashboard from "./dashboards/HivDashboard/HivDashboard";
 import { getMonth, getQuarter, getYear } from "date-fns";
 import { MONTHS } from "@/components/PeriodSelector/MonthSelector";
+import moment from "moment";
 
 const languages = locales.map((locale) => ({
   name: locale.name,
