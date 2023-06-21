@@ -35,7 +35,7 @@ const DashboardSelector = () => {
           newValue.callback();
           return;
         }
-        resetAdditionalState();
+        // resetAdditionalState();
         selectDashboard(newValue);
       }}
     />

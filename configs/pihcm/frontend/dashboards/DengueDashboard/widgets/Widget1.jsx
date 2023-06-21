@@ -110,7 +110,7 @@ const Widget1 = ({ setLoading }) => {
       },
     },
   };
-
+  console.log(data);
   return (
     <LineChart
       data={{

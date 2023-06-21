@@ -15,6 +15,7 @@ import DengueDashboard from "./dashboards/DengueDashboard";
 import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
 import HivDashboard from "./dashboards/HivDashboard/HivDashboard";
 import { getMonth, getQuarter, getYear } from "date-fns";
+import { MONTHS } from "@/components/PeriodSelector/MonthSelector";
 
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -205,16 +206,164 @@ const CustomControlForDiseaseBulletin = () => {
     (state) => ({ orgUnits: state.communes }),
     shallow
   );
-  const { changeAdditionalStateProperty, additionalState, selectedDashboard } =
-    useDashboardStore(
-      (state) => ({
-        changeAdditionalStateProperty: state.changeAdditionalStateProperty,
-        additionalState: state.additionalState,
-        selectedDashboard: state.selectedDashboard,
-      }),
-      shallow
-    );
+  const {
+    changeAdditionalStateProperty,
+    additionalState,
+    selectedDashboard,
+    resetAdditionalState,
+  } = useDashboardStore(
+    (state) => ({
+      changeAdditionalStateProperty: state.changeAdditionalStateProperty,
+      additionalState: state.additionalState,
+      selectedDashboard: state.selectedDashboard,
+      resetAdditionalState: state.resetAdditionalState,
+    }),
+    shallow
+  );
+  const constConvertToDhis2Period = (period, periodType) => {
+    let startDate;
+    let endDate;
+    switch (periodType) {
+      case "Yearly":
+        if (period.year) {
+          return {
+            ...period,
+            dhis2Period: `${period.year}`,
+            startDate: `${period.year}-01-01`,
+            endDate: `${period.year}-12-31`,
+            periodName: period.year,
+          };
+        } else {
+          return {
+            ...period,
+            dhis2Period: null,
+            startDate: "",
+            endDate: "",
+            periodName: "",
+          };
+        }
+      case "Monthly":
+        if (period.year && period.month) {
+          startDate = moment([period.year, period.month - 1])
+            .startOf("month")
+            .format("YYYY-MM-DD");
+          endDate = moment([period.year, period.month - 1])
+            .endOf("month")
+            .format("YYYY-MM-DD");
+          return {
+            ...period,
+            dhis2Period: `${period.year}${
+              period.month < 10 ? "0" + period.month : period.month
+            }`,
+            startDate: startDate,
+            endDate: endDate,
+            monthName: t(MONTHS[period.month - 1]),
+            periodName: period.monthName + " " + period.year,
+          };
+        } else {
+          return {
+            ...period,
+            dhis2Period: null,
+            startDate: "",
+            endDate: "",
+            monthName: "",
+            periodName: "",
+          };
+        }
+      case "Quarterly":
+        if (period.year && period.quarter) {
+          startDate = moment([period.year])
+            .quarter(period.quarter)
+            .startOf("quarter")
+            .format("YYYY-MM-DD");
+          endDate = moment([period.year])
+            .quarter(period.quarter)
+            .endOf("quarter")
+            .format("YYYY-MM-DD");
+          return {
+            ...period,
+            dhis2Period: `${period.year}Q${period.quarter}`,
+            startDate,
+            endDate,
+            quarterName: t("Q" + period.quarter),
+            periodName: period.quarterName + " - " + period.year,
+          };
+        } else {
+          return {
+            ...period,
+            dhis2Period: null,
+            startDate: "",
+            endDate: "",
+            quarterName: "",
+            periodName: "",
+          };
+        }
+      case "Weekly":
+        if (period.year && period.week) {
+          startDate = moment([period.year, 1, 1])
+            .isoWeek(period.week)
+            .startOf("isoWeek")
+            .format("YYYY-MM-DD");
+          endDate = moment([period.year, 1, 1])
+            .isoWeek(period.week)
+            .endOf("isoWeek")
+            .format("YYYY-MM-DD");
+          return {
+            ...period,
+            dhis2Period: `${period.year}W${period.week}`,
+            startDate,
+            endDate,
+            weekName: t("week") + " " + period.week,
+            periodName: period.weekName + " - " + period.year,
+          };
+        } else {
+          return {
+            ...period,
+            dhis2Period: null,
+            startDate: "",
+            endDate: "",
+            weekName,
+            periodName: "",
+          };
+        }
+      case "Daily":
+        if (period.date) {
+          return {
+            ...period,
+            dhis2Period: `${period.date.replace(/-/g, "")}`,
+            startDate: period.date,
+            endDate: period.date,
+            periodName: period.date,
+          };
+        } else {
+          return {
+            ...period,
+            dhis2Period: null,
+            startDate: "",
+            endDate: "",
+            periodName: "",
+          };
+        }
+      default:
+        return {
+          ...period,
+          dhis2Period: null,
+          startDate: "",
+          endDate: "",
+          periodName: "",
+        };
+    }
+  };
   useEffect(() => {
+    resetAdditionalState([
+      "period",
+      "selectedOrgUnit",
+      "selectedDisease",
+      "periodForW1",
+      "periodForW2",
+      "periodForW3",
+      "periodForW4",
+    ]);
     switch (selectedDashboard?.value) {
       case DENGUE_DASHBOARD_VALUE:
         changeAdditionalStateProperty("selectedPeriod", 2023);
@@ -224,20 +373,44 @@ const CustomControlForDiseaseBulletin = () => {
         );
         break;
       case HIV_DASHBOARD_VALUE:
-        changeAdditionalStateProperty("periodForW1", {
-          year: getYear(new Date()),
-          month: getMonth(new Date()),
-        });
-        changeAdditionalStateProperty("periodForW2", {
-          year: getYear(new Date()),
-        });
-        changeAdditionalStateProperty("periodForW3", {
-          year: getYear(new Date()),
-          quarter: getQuarter(new Date()),
-        });
-        changeAdditionalStateProperty("periodForW4", {
-          year: getYear(new Date()),
-        });
+        changeAdditionalStateProperty(
+          "periodForW1",
+          constConvertToDhis2Period(
+            {
+              year: getYear(new Date()),
+              month: getMonth(new Date()),
+            },
+            "Monthly"
+          )
+        );
+        changeAdditionalStateProperty(
+          "periodForW2",
+          constConvertToDhis2Period(
+            {
+              year: getYear(new Date()),
+            },
+            "Yearly"
+          )
+        );
+        changeAdditionalStateProperty(
+          "periodForW3",
+          constConvertToDhis2Period(
+            {
+              year: getYear(new Date()),
+              quarter: getQuarter(new Date()),
+            },
+            "Quarterly"
+          )
+        );
+        changeAdditionalStateProperty(
+          "periodForW4",
+          constConvertToDhis2Period(
+            {
+              year: getYear(new Date()),
+            },
+            "Yearly"
+          )
+        );
         break;
       default:
         break;
@@ -245,17 +418,17 @@ const CustomControlForDiseaseBulletin = () => {
     // if (selectedDashboard?.value !== BULLETIN_DASHBOARD_VALUE)
     //   changeAdditionalStateProperty("selectedDisease", null);
     // if (selectedDashboard.value !== DENGUE_DASHBOARD_VALUE) {
-    //   changeAdditionalStateProperty("selectedPeriod", null);
+    //   changeAdditionalStateProperty("period", null);
     //   changeAdditionalStateProperty("selectedOrgUnit", null);
     // } else {
-    //   changeAdditionalStateProperty("selectedPeriod", 2023);
+    //   changeAdditionalStateProperty("period", 2023);
     //   changeAdditionalStateProperty(
     //     "selectedOrgUnit",
     //     orgUnits.find((ou) => ou.level === 1)
     //   );
     // }
   }, [selectedDashboard?.value]);
-
+  console.log(additionalState);
   if (selectedDashboard?.value === DENGUE_DASHBOARD_VALUE) {
     return (
       <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>

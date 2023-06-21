@@ -30,7 +30,16 @@ const useDashboardStore = create((set, get) => ({
         state.additionalState[property] = value;
       })
     ),
-  resetAdditionalState: () => set(() => ({ additionalState: {} })),
+  resetAdditionalState: (properties) =>
+    set(
+      produce((state) => {
+        properties.forEach((property) => {
+          if (state.additionalState[property]) {
+            state.additionalState[property] = null;
+          }
+        });
+      })
+    ),
   changeLayout: (layout) => set(() => ({ layout })),
 }));
 

@@ -7,7 +7,6 @@ import QuarterSelector from "./QuarterSelector";
 import WeekSelector from "./WeekSelector";
 import moment from "moment";
 import "./PeriodSelector.css";
-import CustomSelect from "./CustomSelect";
 import useDashboardStore from "@/state/dashboard";
 import { shallow } from "zustand/shallow";
 import _ from "lodash";
@@ -19,50 +18,52 @@ const PeriodSelector = ({ handler, periodType, initValue }) => {
     shallow
   );
   const [selectedPeriod, setSelectedPeriod] = useState({});
-  useEffect(() => {
-    if (_.isEmpty(selectedPeriod)) {
-      setSelectedPeriod((prev) => ({ ...prev, ...additionalState[initValue] }));
-    }
-  }, [JSON.stringify(additionalState)]);
+  const targetSelectedPeriod = _.isEmpty(selectedPeriod)
+    ? additionalState[initValue]
+    : selectedPeriod;
   const renderSelectors = useMemo(() => {
     switch (periodType) {
       case "Yearly":
         return (
           <YearSelector
-            period={selectedPeriod}
+            period={targetSelectedPeriod}
             change={(value) => {
-              setSelectedPeriod({ ...selectedPeriod, year: value });
+              setSelectedPeriod({ ...targetSelectedPeriod, year: value });
             }}
           />
         );
       case "Monthly":
         return [
           <YearSelector
-            period={selectedPeriod}
+            period={targetSelectedPeriod}
             change={(value) => {
-              setSelectedPeriod({ ...selectedPeriod, year: value });
+              setSelectedPeriod({ ...targetSelectedPeriod, year: value });
             }}
           />,
           <MonthSelector
-            period={selectedPeriod}
+            period={targetSelectedPeriod}
             change={(value, monthName) => {
-              setSelectedPeriod({ ...selectedPeriod, month: value, monthName });
+              setSelectedPeriod({
+                ...targetSelectedPeriod,
+                month: value,
+                monthName,
+              });
             }}
           />,
         ];
       case "Quarterly":
         return [
           <YearSelector
-            period={selectedPeriod}
+            period={targetSelectedPeriod}
             change={(value) => {
-              setSelectedPeriod({ ...selectedPeriod, year: value });
+              setSelectedPeriod({ ...targetSelectedPeriod, year: value });
             }}
           />,
           <QuarterSelector
-            period={selectedPeriod}
+            period={targetSelectedPeriod}
             change={(value, quarterName) => {
               setSelectedPeriod({
-                ...selectedPeriod,
+                ...targetSelectedPeriod,
                 quarter: value,
                 quarterName,
               });
@@ -72,15 +73,19 @@ const PeriodSelector = ({ handler, periodType, initValue }) => {
       case "Weekly":
         return [
           <YearSelector
-            period={selectedPeriod}
+            period={targetSelectedPeriod}
             change={(value) => {
-              setSelectedPeriod({ ...selectedPeriod, year: value });
+              setSelectedPeriod({ ...targetSelectedPeriod, year: value });
             }}
           />,
           <WeekSelector
-            period={selectedPeriod}
+            period={targetSelectedPeriod}
             change={(value, weekName) => {
-              setSelectedPeriod({ ...selectedPeriod, week: value, weekName });
+              setSelectedPeriod({
+                ...targetSelectedPeriod,
+                week: value,
+                weekName,
+              });
             }}
           />,
         ];
@@ -101,22 +106,22 @@ const PeriodSelector = ({ handler, periodType, initValue }) => {
       default:
         return <div>ERROR: Please select period type first</div>;
     }
-  }, [JSON.stringify(selectedPeriod)]);
+  }, [JSON.stringify(targetSelectedPeriod)]);
   const constConvertToDhis2Period = () => {
     let startDate;
     let endDate;
     switch (periodType) {
       case "Yearly":
-        if (selectedPeriod.year) {
+        if (targetSelectedPeriod.year) {
           setSelectedPeriod({
-            ...selectedPeriod,
-            dhis2Period: `${selectedPeriod.year}`,
-            startDate: `${selectedPeriod.year}-01-01`,
-            endDate: `${selectedPeriod.year}-12-31`,
+            ...targetSelectedPeriod,
+            dhis2Period: `${targetSelectedPeriod.year}`,
+            startDate: `${targetSelectedPeriod.year}-01-01`,
+            endDate: `${targetSelectedPeriod.year}-12-31`,
           });
         } else {
           setSelectedPeriod({
-            ...selectedPeriod,
+            ...targetSelectedPeriod,
             dhis2Period: null,
             startDate: "",
             endDate: "",
@@ -124,27 +129,33 @@ const PeriodSelector = ({ handler, periodType, initValue }) => {
         }
         break;
       case "Monthly":
-        if (selectedPeriod.year && selectedPeriod.month) {
-          startDate = moment([selectedPeriod.year, selectedPeriod.month - 1])
+        if (targetSelectedPeriod.year && targetSelectedPeriod.month) {
+          startDate = moment([
+            targetSelectedPeriod.year,
+            targetSelectedPeriod.month - 1,
+          ])
             .startOf("month")
             .format("YYYY-MM-DD");
-          endDate = moment([selectedPeriod.year, selectedPeriod.month - 1])
+          endDate = moment([
+            targetSelectedPeriod.year,
+            targetSelectedPeriod.month - 1,
+          ])
             .endOf("month")
             .format("YYYY-MM-DD");
           setSelectedPeriod({
-            ...selectedPeriod,
-            dhis2Period: `${selectedPeriod.year}${
-              selectedPeriod.month < 10
-                ? "0" + selectedPeriod.month
-                : selectedPeriod.month
+            ...targetSelectedPeriod,
+            dhis2Period: `${targetSelectedPeriod.year}${
+              targetSelectedPeriod.month < 10
+                ? "0" + targetSelectedPeriod.month
+                : targetSelectedPeriod.month
             }`,
             startDate: startDate,
             endDate: endDate,
-            monthName: t(MONTHS[selectedPeriod.month - 1]),
+            monthName: t(MONTHS[targetSelectedPeriod.month - 1]),
           });
         } else {
           setSelectedPeriod({
-            ...selectedPeriod,
+            ...targetSelectedPeriod,
             dhis2Period: null,
             startDate: "",
             endDate: "",
@@ -153,25 +164,25 @@ const PeriodSelector = ({ handler, periodType, initValue }) => {
         }
         break;
       case "Quarterly":
-        if (selectedPeriod.year && selectedPeriod.quarter) {
-          startDate = moment([selectedPeriod.year])
-            .quarter(selectedPeriod.quarter)
+        if (targetSelectedPeriod.year && targetSelectedPeriod.quarter) {
+          startDate = moment([targetSelectedPeriod.year])
+            .quarter(targetSelectedPeriod.quarter)
             .startOf("quarter")
             .format("YYYY-MM-DD");
-          endDate = moment([selectedPeriod.year])
-            .quarter(selectedPeriod.quarter)
+          endDate = moment([targetSelectedPeriod.year])
+            .quarter(targetSelectedPeriod.quarter)
             .endOf("quarter")
             .format("YYYY-MM-DD");
           setSelectedPeriod({
-            ...selectedPeriod,
-            dhis2Period: `${selectedPeriod.year}Q${selectedPeriod.quarter}`,
+            ...targetSelectedPeriod,
+            dhis2Period: `${targetSelectedPeriod.year}Q${targetSelectedPeriod.quarter}`,
             startDate,
             endDate,
-            quarterName: t("Q" + selectedPeriod.quarter),
+            quarterName: t("Q" + targetSelectedPeriod.quarter),
           });
         } else {
           setSelectedPeriod({
-            ...selectedPeriod,
+            ...targetSelectedPeriod,
             dhis2Period: null,
             startDate: "",
             endDate: "",
@@ -180,25 +191,25 @@ const PeriodSelector = ({ handler, periodType, initValue }) => {
         }
         break;
       case "Weekly":
-        if (selectedPeriod.year && selectedPeriod.week) {
-          startDate = moment([selectedPeriod.year, 1, 1])
-            .isoWeek(selectedPeriod.week)
+        if (targetSelectedPeriod.year && targetSelectedPeriod.week) {
+          startDate = moment([targetSelectedPeriod.year, 1, 1])
+            .isoWeek(targetSelectedPeriod.week)
             .startOf("isoWeek")
             .format("YYYY-MM-DD");
-          endDate = moment([selectedPeriod.year, 1, 1])
-            .isoWeek(selectedPeriod.week)
+          endDate = moment([targetSelectedPeriod.year, 1, 1])
+            .isoWeek(targetSelectedPeriod.week)
             .endOf("isoWeek")
             .format("YYYY-MM-DD");
           setSelectedPeriod({
-            ...selectedPeriod,
-            dhis2Period: `${selectedPeriod.year}W${selectedPeriod.week}`,
+            ...targetSelectedPeriod,
+            dhis2Period: `${targetSelectedPeriod.year}W${targetSelectedPeriod.week}`,
             startDate,
             endDate,
-            weekName: t("week") + " " + selectedPeriod.week,
+            weekName: t("week") + " " + targetSelectedPeriod.week,
           });
         } else {
           setSelectedPeriod({
-            ...selectedPeriod,
+            ...targetSelectedPeriod,
             dhis2Period: null,
             startDate: "",
             endDate: "",
@@ -207,16 +218,16 @@ const PeriodSelector = ({ handler, periodType, initValue }) => {
         }
         break;
       case "Daily":
-        if (selectedPeriod.date) {
+        if (targetSelectedPeriod.date) {
           setSelectedPeriod({
-            ...selectedPeriod,
-            dhis2Period: `${selectedPeriod.date.replace(/-/g, "")}`,
-            startDate: selectedPeriod.date,
-            endDate: selectedPeriod.date,
+            ...targetSelectedPeriod,
+            dhis2Period: `${targetSelectedPeriod.date.replace(/-/g, "")}`,
+            startDate: targetSelectedPeriod.date,
+            endDate: targetSelectedPeriod.date,
           });
         } else {
           setSelectedPeriod({
-            ...selectedPeriod,
+            ...targetSelectedPeriod,
             dhis2Period: null,
             startDate: "",
             endDate: "",
@@ -225,7 +236,7 @@ const PeriodSelector = ({ handler, periodType, initValue }) => {
         break;
       default:
         setSelectedPeriod({
-          ...selectedPeriod,
+          ...targetSelectedPeriod,
           dhis2Period: null,
           startDate: "",
           endDate: "",
@@ -235,42 +246,45 @@ const PeriodSelector = ({ handler, periodType, initValue }) => {
   };
 
   useEffect(() => {
-    if (_.isEmpty(selectedPeriod)) return;
     constConvertToDhis2Period();
-  }, [JSON.stringify(selectedPeriod)]);
+  }, [JSON.stringify(targetSelectedPeriod)]);
 
   useEffect(() => {
-    if (_.isEmpty(selectedPeriod)) return;
     let value = "";
     switch (periodType) {
       case "Yearly":
-        if (selectedPeriod.year) value = selectedPeriod.year;
+        if (targetSelectedPeriod.year) value = targetSelectedPeriod.year;
         break;
       case "Monthly":
-        if (selectedPeriod.year && selectedPeriod.month)
-          value = selectedPeriod.monthName + " " + selectedPeriod.year;
+        if (targetSelectedPeriod.year && targetSelectedPeriod.month)
+          value =
+            targetSelectedPeriod.monthName + " " + targetSelectedPeriod.year;
         break;
       case "Quarterly":
-        if (selectedPeriod.year && selectedPeriod.quarter)
-          value = selectedPeriod.quarterName + " - " + selectedPeriod.year;
+        if (targetSelectedPeriod.year && targetSelectedPeriod.quarter)
+          value =
+            targetSelectedPeriod.quarterName +
+            " - " +
+            targetSelectedPeriod.year;
         break;
       case "Weekly":
-        if (selectedPeriod.year && selectedPeriod.week)
-          value = selectedPeriod.weekName + " - " + selectedPeriod.year;
+        if (targetSelectedPeriod.year && targetSelectedPeriod.week)
+          value =
+            targetSelectedPeriod.weekName + " - " + targetSelectedPeriod.year;
         break;
       case "Daily":
-        if (selectedPeriod.date) value = selectedPeriod.date;
+        if (targetSelectedPeriod.date) value = targetSelectedPeriod.date;
         break;
       default:
         break;
     }
-    setSelectedPeriod({ ...selectedPeriod, periodName: value });
-  }, [selectedPeriod.dhis2Period]);
+    setSelectedPeriod({ ...targetSelectedPeriod, periodName: value });
+  }, [targetSelectedPeriod.dhis2Period]);
 
   return (
     <div className="period-selector-container">
       {renderSelectors}
-      <Button variant="contained" onClick={() => handler(selectedPeriod)}>
+      <Button variant="contained" onClick={() => handler(targetSelectedPeriod)}>
         {t("apply")}
       </Button>
     </div>
