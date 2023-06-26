@@ -18,22 +18,53 @@ import useDashboardStore from "@/state/dashboard";
 import { shallow } from "zustand/shallow";
 import { sortArray } from "./utils";
 
+const WidgetControlButton = ({ periodType, periodProperty }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const changeAdditionalStateProperty = useDashboardStore(
+    (state) => state.changeAdditionalStateProperty,
+    shallow
+  );
+
+  return (
+    <div>
+      <IconButton
+        onClick={(event) => {
+          setAnchorEl(event.currentTarget);
+        }}
+      >
+        <FontAwesomeIcon icon={faGear} style={{ fontSize: 20 }} />
+      </IconButton>
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={() => {
+          setAnchorEl(null);
+        }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <PeriodSelector
+          periodType={periodType}
+          handler={(period) => {
+            changeAdditionalStateProperty(periodProperty, period);
+          }}
+          initValue={periodProperty}
+        />
+      </Popover>
+    </div>
+  );
+};
+
 const HivDashboard = () => {
   const { t, i18n } = useTranslation();
   const communes = useMetadataStore((state) => state.communes);
-  const { changeAdditionalStateProperty } = useDashboardStore(
-    (state) => ({
-      changeAdditionalStateProperty: state.changeAdditionalStateProperty,
-    }),
+
+  const { periodForW1, periodForW3 } = useDashboardStore(
+    (state) => state.additionalState,
     shallow
   );
-  const [anchorElW1, setAnchorElW1] = useState(null);
-  const [anchorElW2, setAnchorElW2] = useState(null);
-  const [anchorElW3, setAnchorElW3] = useState(null);
-  const [anchorElW4, setAnchorElW4] = useState(null);
-
-  const { periodForW1, periodForW2, periodForW3, periodForW4 } =
-    useDashboardStore((state) => state.additionalState, shallow);
 
   const [pepfarProvinces, outsidePepfarProvinces] = useMemo(() => {
     if (!communes) return [[], []];
@@ -84,39 +115,18 @@ const HivDashboard = () => {
           {
             title: t("HivDashboardWidget1Title", periodForW1),
             widget: (
-              <Widget1 {...{ pepfarProvinces, outsidePepfarProvinces }} />
+              <Widget1
+                pepfarProvinces={pepfarProvinces}
+                outsidePepfarProvinces={outsidePepfarProvinces}
+              />
             ),
           },
         ]}
         controlButtons={[
-          <div>
-            <IconButton
-              onClick={(event) => {
-                setAnchorElW1(event.currentTarget);
-              }}
-            >
-              <FontAwesomeIcon icon={faGear} style={{ fontSize: 20 }} />
-            </IconButton>
-            <Popover
-              open={Boolean(anchorElW1)}
-              anchorEl={anchorElW1}
-              onClose={() => {
-                setAnchorElW1(null);
-              }}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <PeriodSelector
-                periodType={"Monthly"}
-                handler={(period) => {
-                  changeAdditionalStateProperty("periodForW1", period);
-                }}
-                initValue="periodForW1"
-              />
-            </Popover>
-          </div>,
+          <WidgetControlButton
+            periodType="Monthly"
+            periodProperty="periodForW1"
+          />,
         ]}
       />
       <WidgetContainer
@@ -127,39 +137,18 @@ const HivDashboard = () => {
           {
             title: t("HivDashboardWidget2Title"),
             widget: (
-              <Widget2 {...{ pepfarProvinces, outsidePepfarProvinces }} />
+              <Widget2
+                pepfarProvinces={pepfarProvinces}
+                outsidePepfarProvinces={outsidePepfarProvinces}
+              />
             ),
           },
         ]}
         controlButtons={[
-          <div>
-            <IconButton
-              onClick={(event) => {
-                setAnchorElW2(event.currentTarget);
-              }}
-            >
-              <FontAwesomeIcon icon={faGear} style={{ fontSize: 20 }} />
-            </IconButton>
-            <Popover
-              open={Boolean(anchorElW2)}
-              anchorEl={anchorElW2}
-              onClose={() => {
-                setAnchorElW2(null);
-              }}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <PeriodSelector
-                periodType={"Yearly"}
-                handler={(period) => {
-                  changeAdditionalStateProperty("periodForW2", period);
-                }}
-                initValue="periodForW2"
-              />
-            </Popover>
-          </div>,
+          <WidgetControlButton
+            periodType="Yearly"
+            periodProperty="periodForW2"
+          />,
         ]}
       />
       <WidgetContainer
@@ -170,40 +159,18 @@ const HivDashboard = () => {
           {
             title: t("HivDashboardWidget3Title", periodForW3),
             widget: (
-              <Widget3 {...{ pepfarProvinces, outsidePepfarProvinces }} />
+              <Widget3
+                pepfarProvinces={pepfarProvinces}
+                outsidePepfarProvinces={outsidePepfarProvinces}
+              />
             ),
           },
         ]}
         controlButtons={[
-          <div>
-            <IconButton
-              onClick={(event) => {
-                setAnchorElW3(event.currentTarget);
-              }}
-            >
-              <FontAwesomeIcon icon={faGear} style={{ fontSize: 20 }} />
-            </IconButton>
-            <Popover
-              open={Boolean(anchorElW3)}
-              anchorEl={anchorElW3}
-              onClose={() => {
-                setAnchorElW3(null);
-              }}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <PeriodSelector
-                periodType={"Quarterly"}
-                handler={(period) => {
-                  console.log(period);
-                  changeAdditionalStateProperty("periodForW3", period);
-                }}
-                initValue="periodForW3"
-              />
-            </Popover>
-          </div>,
+          <WidgetControlButton
+            periodType="Quarterly"
+            periodProperty="periodForW3"
+          />,
         ]}
       />
       <WidgetContainer
@@ -214,50 +181,22 @@ const HivDashboard = () => {
           {
             title: t("HivDashboardWidget4Title"),
             widget: (
-              <Widget4 {...{ pepfarProvinces, outsidePepfarProvinces }} />
+              <Widget4
+                pepfarProvinces={pepfarProvinces}
+                outsidePepfarProvinces={outsidePepfarProvinces}
+              />
             ),
           },
         ]}
         controlButtons={[
-          <div>
-            <IconButton
-              onClick={(event) => {
-                setAnchorElW4(event.currentTarget);
-              }}
-            >
-              <FontAwesomeIcon icon={faGear} style={{ fontSize: 20 }} />
-            </IconButton>
-            <Popover
-              open={Boolean(anchorElW4)}
-              anchorEl={anchorElW4}
-              onClose={() => {
-                setAnchorElW4(null);
-              }}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <PeriodSelector
-                periodType={"Yearly"}
-                handler={(period) => {
-                  changeAdditionalStateProperty("periodForW4", period);
-                }}
-                initValue="periodForW4"
-              />
-            </Popover>
-          </div>,
+          <WidgetControlButton
+            periodType="Yearly"
+            periodProperty="periodForW4"
+          />,
         ]}
       />
     </ReactGridLayout>
   );
 };
-
-const redIds = [
-  "eupLO26vvX8",
-  "ZzGVNzKxZdX",
-  "eupLO26vvX8.CksScNpnanY",
-  "ZzGVNzKxZdX.CksScNpnanY",
-];
 
 export default HivDashboard;

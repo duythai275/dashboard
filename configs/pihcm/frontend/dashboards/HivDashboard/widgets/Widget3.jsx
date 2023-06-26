@@ -1,5 +1,5 @@
 import { regionLabels } from "../constants";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 
 import { pull } from "@/utils/fetch";
 import { getRowValue, sortArray } from "../utils";
@@ -8,9 +8,8 @@ import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenL
 import { useTranslation } from "react-i18next";
 import { Box } from "@mui/material";
 import { ModalBarChart } from "../components";
-
-const year = 2022;
-const quarter = 2;
+import useDashboardStore from "@/state/dashboard";
+import { shallow } from "zustand/shallow";
 
 const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   const { t } = useTranslation();
@@ -18,56 +17,66 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   const [data, setData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIdxActive, setModalIdxActive] = useState(null);
+  const periodForW3 = useDashboardStore(
+    (state) => state.additionalState.periodForW3,
+    shallow
+  );
 
-  const baseDatasets = [
-    {
-      name: "newArv",
-      label: t("newArv"),
-      backgroundColor: "#4caf50",
-    },
-    {
-      name: "relapse",
-      label: t("relapse"),
-      backgroundColor: "#2196f3",
-    },
-    {
-      name: "transferredIn",
-      label: t("transferredIn"),
-      backgroundColor: "#ff9800",
-    },
-    {
-      name: "transferredOut",
-      label: t("transferredOut"),
-      backgroundColor: "#ffca28",
-      datalabels: {
-        anchor: "start",
-        align: "start",
+  const baseDatasets = useMemo(
+    () => [
+      {
+        name: "newArv",
+        label: t("newArv"),
+        backgroundColor: "#4caf50",
       },
-    },
-    {
-      name: "lossFollowUp",
-      label: t("lossFollowUp"),
-      backgroundColor: "#40c4ff",
-      datalabels: {
-        anchor: "start",
-        align: "start",
+      {
+        name: "relapse",
+        label: t("relapse"),
+        backgroundColor: "#2196f3",
       },
-    },
-    {
-      name: "dead",
-      label: t("dead"),
-      backgroundColor: "#00e676",
-      datalabels: {
-        anchor: "start",
-        align: "start",
+      {
+        name: "transferredIn",
+        label: t("transferredIn"),
+        backgroundColor: "#ff9800",
       },
-    },
-  ];
+      {
+        name: "transferredOut",
+        label: t("transferredOut"),
+        backgroundColor: "#ffca28",
+        datalabels: {
+          anchor: "start",
+          align: "start",
+        },
+      },
+      {
+        name: "lossFollowUp",
+        label: t("lossFollowUp"),
+        backgroundColor: "#40c4ff",
+        datalabels: {
+          anchor: "start",
+          align: "start",
+        },
+      },
+      {
+        name: "dead",
+        label: t("dead"),
+        backgroundColor: "#00e676",
+        datalabels: {
+          anchor: "start",
+          align: "start",
+        },
+      },
+    ],
+    []
+  );
 
   ///
   useEffect(() => {
     (async () => {
       setLoading(true);
+      if (!periodForW3) return;
+      const { year, quarter } = periodForW3;
+
       const result = await pull(
         `/api/analytics.json?dimension=dx:${deIds.join(
           ";"
@@ -127,7 +136,7 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       setData({ resultPepfar, resultOutsidePepfar });
       setBarData(barData);
     })();
-  }, [pepfarProvinces, outsidePepfarProvinces, year, quarter]);
+  }, [pepfarProvinces, outsidePepfarProvinces, periodForW3]);
 
   const chartConfigs = barData
     ? {
@@ -227,7 +236,7 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
               setModalIdxActive(null);
             }}
             barData={modalChartConfigs}
-            title={`${t("HivDashboardWidget3Title", { quarter, year })} - ${t(
+            title={`${t("HivDashboardWidget3Title", periodForW3)} - ${t(
               regionLabels[modalIdxActive]
             )}`}
             w={
@@ -255,4 +264,4 @@ const deIds = [
   "STooCvlxg5S",
 ];
 
-export default withWidgetChildrenLoader(Widget3);
+export default withWidgetChildrenLoader(memo(Widget3));

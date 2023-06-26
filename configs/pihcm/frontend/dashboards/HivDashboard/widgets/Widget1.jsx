@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { regionLabels } from "../constants";
 import { useTranslation } from "react-i18next";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 
 import { pull } from "@/utils/fetch";
 import { calculateAverage, getRowValue, sortArray } from "../utils";
@@ -18,35 +18,41 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
   const [data, setData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIdxActive, setModalIdxActive] = useState(null);
-  const { periodForW1 } = useDashboardStore(
-    (state) => state.additionalState,
+  const periodForW1 = useDashboardStore(
+    (state) => state.additionalState.periodForW1,
     shallow
   );
 
-  const { year, month } = periodForW1;
-  const quarter = getQuarter(new Date().setMonth(month - 1));
-
-  const baseDatasets = [
-    {
-      name: "greenData",
-      label: t("peopleNewHIVStatusUpto", { month, year }),
-      backgroundColor: "#4caf50",
-    },
-    {
-      name: "blueData",
-      label: t("patientsOnART", { quarter, year }),
-      backgroundColor: "#03a9f4",
-    },
-    {
-      name: "redData",
-      label: t("patientsWithSupressedVlResult", { year }),
-      backgroundColor: "#ff9800",
-    },
-  ];
+  const baseDatasets = useMemo(() => {
+    if (!periodForW1) return [];
+    const { year, month } = periodForW1;
+    const quarter = getQuarter(new Date().setMonth(month - 1));
+    return [
+      {
+        name: "greenData",
+        label: t("peopleNewHIVStatusUpto", { month, year }),
+        backgroundColor: "#4caf50",
+      },
+      {
+        name: "blueData",
+        label: t("patientsOnART", { quarter, year }),
+        backgroundColor: "#03a9f4",
+      },
+      {
+        name: "redData",
+        label: t("patientsWithSupressedVlResult", { year }),
+        backgroundColor: "#ff9800",
+      },
+    ];
+  }, [periodForW1]);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
+      if (!periodForW1) return;
+      const { year, month } = periodForW1;
+      const quarter = getQuarter(new Date().setMonth(month - 1));
+
       const [resultFrom2015, resultYearly, resultQuarterly] = await Promise.all(
         [
           pull(
@@ -140,7 +146,7 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       setData({ resultPepfar, resultOutsidePepfar });
       setBarData(barData);
     })();
-  }, [pepfarProvinces, outsidePepfarProvinces, year, month, quarter]);
+  }, [pepfarProvinces, outsidePepfarProvinces, periodForW1]);
 
   const chartConfigs = barData
     ? {
@@ -221,7 +227,7 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
               setModalIdxActive(null);
             }}
             barData={modalChartConfigs}
-            title={`90-90-90 (${month}/${year}) - ${t(
+            title={`90-90-90 (${periodForW1.month}/${periodForW1.year}) - ${t(
               regionLabels[modalIdxActive]
             )}`}
             w={
@@ -249,4 +255,4 @@ const redIds = [
   "ZzGVNzKxZdX.CksScNpnanY",
 ];
 
-export default withWidgetChildrenLoader(Widget1);
+export default withWidgetChildrenLoader(memo(Widget1));
