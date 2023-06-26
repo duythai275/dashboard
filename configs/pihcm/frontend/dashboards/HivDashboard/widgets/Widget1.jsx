@@ -91,9 +91,9 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
           [greenDenominatorId],
           ouId
         );
-        return Math.round(
-          (greenValue / parseInt(denominatorValue[0] || 1)) * 100
-        );
+
+        if (!denominatorValue[0]) return 0;
+        return Math.round((greenValue / parseInt(denominatorValue[0])) * 100);
       };
 
       const calculateBlue = (greenValue, ouId) => {
@@ -102,7 +102,9 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
           [blueNumeratorId],
           ouId
         );
-        return Math.round((parseInt(numeratorValue) / (greenValue || 1)) * 100);
+
+        if (!greenValue) return 0;
+        return Math.round((parseInt(numeratorValue) / greenValue) * 100);
       };
 
       const calculateRed = (ouId) => {
@@ -111,7 +113,8 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
         const denominator =
           parseInt(redValues[2]) + parseInt(redValues[3]) || 1;
 
-        return Math.round((numerator / (denominator || 1)) * 100);
+        if (!denominator) return 0;
+        return Math.round((numerator / denominator) * 100);
       };
 
       const getOuData = (ouList) =>
