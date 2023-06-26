@@ -39,28 +39,26 @@ const Widget4 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       if (!periodForW4) return;
       const { year } = periodForW4;
 
-      const res = await pull(
+      const resultRed = await pull(
         `/api/analytics.json?dimension=dx:${redIds.join(
           ";"
-        )}&dimension=ou:${pepfarProvinces
+        )}&dimension=iuEraM0pUfw:fLesQz5Kzmd&dimension=ou:${pepfarProvinces
           .concat(outsidePepfarProvinces)
           .map(({ id }) => id)
           .join(";")}&filter=pe:${year}`
       );
 
-      const calculateRed = (ou) => {
-        const redValues = getRowValue(res, redIds, ou);
-        return (
-          parseInt(redValues[0]) +
-          parseInt(redValues[1]) -
-          (parseInt(redValues[2]) + parseInt(redValues[3]))
-        );
+      const calculateRed = (ouId) => {
+        const redValues = getRowValue(resultRed, redIds, ouId);
+        const value1 = parseInt(redValues[0]) + parseInt(redValues[1]);
+        const value2 = parseInt(redValues[2]) - parseInt(redValues[3]);
+
+        return value1 - value2;
       };
 
       const resultReduce = features.reduce((result, feature, idx) => {
         const value = calculateRed(feature.id);
-
-        result[feature.id] = Math.round(Math.random() * 100);
+        result[feature.id] = value;
         return result;
       }, {});
 

@@ -379,7 +379,7 @@ const CustomControlForDiseaseBulletin = () => {
           constConvertToDhis2Period(
             {
               year: getYear(new Date()),
-              month: getMonth(new Date()),
+              month: getMonth(new Date()) + 1,
             },
             "Monthly"
           )

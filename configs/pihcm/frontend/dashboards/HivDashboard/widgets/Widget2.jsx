@@ -47,7 +47,7 @@ const Widget2 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
           .join(";")}&filter=pe:${year}`
       );
 
-      const resultReduce = features.reduce((result, feature, idx) => {
+      const resultReduce = features.reduce((result, feature) => {
         const value = getRowValue(res, ["skMWmY6Xh4u"], feature.id);
         result[feature.id] = value * 1;
         return result;

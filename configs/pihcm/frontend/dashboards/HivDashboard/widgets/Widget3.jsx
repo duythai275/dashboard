@@ -88,7 +88,7 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
 
       const getOuData = (ouList) =>
         ouList.map((ou) => {
-          const values = getRowValue(result, deIds, ou);
+          const values = getRowValue(result, deIds, ou.id);
           return { ou: ou.id, name: ou.displayName, values };
         });
 
@@ -97,39 +97,43 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
 
       const barData = resultPepfar.concat(resultOutsidePepfar).reduce(
         (result, { values }, idx) => {
-          result["newArv"][0] += values[0];
-          result["relapse"][0] += values[1];
-          result["transferredIn"][0] += values[2];
-          result["transferredOut"][0] += values[3];
-          result["lossFollowUp"][0] += values[4];
-          result["dead"][0] += values[5];
+          //20 province
+          result["newArv"][0] += values[0] * 1;
+          result["relapse"][0] += values[1] * 1;
+          result["transferredIn"][0] += values[2] * 1;
+          result["transferredOut"][0] += values[3] * 1;
+          result["lossFollowUp"][0] += values[4] * 1;
+          result["dead"][0] += values[5] * 1;
 
+          //7 province
           if (idx < 7) {
-            result["newArv"][1] += values[0];
-            result["relapse"][1] += values[1];
-            result["transferredIn"][1] += values[2];
-            result["transferredOut"][1] += values[3];
-            result["lossFollowUp"][1] += values[4];
-            result["dead"][1] += values[5];
+            result["newArv"][1] += values[0] * 1;
+            result["relapse"][1] += values[1] * 1;
+            result["transferredIn"][1] += values[2] * 1;
+            result["transferredOut"][1] += values[3] * 1;
+            result["lossFollowUp"][1] += values[4] * 1;
+            result["dead"][1] += values[5] * 1;
           }
+
+          //13 province
           if (idx >= 7) {
-            result["newArv"][2] += values[0];
-            result["relapse"][2] += values[1];
-            result["transferredIn"][2] += values[2];
-            result["transferredOut"][2] += values[3];
-            result["lossFollowUp"][2] += values[4];
-            result["dead"][2] += values[5];
+            result["newArv"][2] += values[0] * 1;
+            result["relapse"][2] += values[1] * 1;
+            result["transferredIn"][2] += values[2] * 1;
+            result["transferredOut"][2] += values[3] * 1;
+            result["lossFollowUp"][2] += values[4] * 1;
+            result["dead"][2] += values[5] * 1;
           }
 
           return result;
         },
         {
-          newArv: [],
-          relapse: [],
-          transferredIn: [],
-          transferredOut: [],
-          lossFollowUp: [],
-          dead: [],
+          newArv: [0, 0, 0],
+          relapse: [0, 0, 0],
+          transferredIn: [0, 0, 0],
+          transferredOut: [0, 0, 0],
+          lossFollowUp: [0, 0, 0],
+          dead: [0, 0, 0],
         }
       );
       setLoading(false);
@@ -142,16 +146,13 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
     ? {
         labels: regionLabels.map((label) => t(label)),
         datasets: baseDatasets.map(
-          ({ label, backgroundColor, name, datalabels }, idx) => ({
+          ({ label, backgroundColor, name, datalabels }, datasetIdx) => ({
             label,
             datalabels,
             backgroundColor,
-            data:
-              idx < 3
-                ? regionLabels.map(() => (Math.random(0, 1) * 4000).toFixed())
-                : regionLabels.map(
-                    () => (Math.random(0, 1) * 4000).toFixed() * -1
-                  ),
+            data: barData[name].map((item, idx) => {
+              return datasetIdx >= 3 ? -item : item;
+            }),
           })
         ),
       }
@@ -207,14 +208,13 @@ const Widget3 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
     return {
       labels,
       datasets: baseDatasets.map(
-        ({ label, name, backgroundColor, datalabels }, idx) => ({
+        ({ label, name, backgroundColor, datalabels }, datasetIdx) => ({
           label,
           datalabels,
           backgroundColor,
-          data:
-            idx < 3
-              ? labels.map(() => (Math.random(0, 1) * 4000).toFixed())
-              : labels.map(() => (Math.random(0, 1) * 4000).toFixed() * -1),
+          data: chartData[name].map((item) =>
+            datasetIdx > 2 ? -(item * 1) : item * 1
+          ),
         })
       ),
     };

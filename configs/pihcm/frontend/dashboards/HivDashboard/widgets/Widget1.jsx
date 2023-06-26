@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { memo, useEffect, useMemo, useState } from "react";
 
 import { pull } from "@/utils/fetch";
-import { calculateAverage, getRowValue, sortArray } from "../utils";
+import { getRowValue, sortArray } from "../utils";
 import BarChart from "@/components/Widgets/BarChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { ModalBarChart } from "../components";
@@ -53,8 +53,8 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       const { year, month } = periodForW1;
       const quarter = getQuarter(new Date().setMonth(month - 1));
 
-      const [resultFrom2015, resultYearly, resultQuarterly] = await Promise.all(
-        [
+      const [resultFrom2015, resultYearly, resultQuarterly, resultRed] =
+        await Promise.all([
           pull(
             `/api/analytics.json?dimension=dx:${redIds.join(
               ";"
@@ -64,9 +64,7 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
               .join(";")}&startDate=2015-1-1&endDate=${year}-${month}-1`
           ),
           pull(
-            `/api/analytics.json?dimension=dx:${redIds.join(
-              ";"
-            )};${greenDenominatorId}&dimension=ou:${pepfarProvinces
+            `/api/analytics.json?dimension=dx:${greenDenominatorId}&dimension=ou:${pepfarProvinces
               .concat(outsidePepfarProvinces)
               .map(({ id }) => id)
               .join(";")}&filter=pe:${year}`
@@ -77,34 +75,42 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
               .map(({ id }) => id)
               .join(";")}&filter=pe:${year}Q${quarter}`
           ),
-        ]
-      );
+          pull(
+            `/api/analytics.json?dimension=dx:${redIds.join(
+              ";"
+            )}&dimension=iuEraM0pUfw:fLesQz5Kzmd&dimension=ou:${pepfarProvinces
+              .concat(outsidePepfarProvinces)
+              .map(({ id }) => id)
+              .join(";")}&filter=pe:${year}`
+          ),
+        ]);
 
-      const calculateGreen = (greenValue, ou) => {
+      const calculateGreen = (greenValue, ouId) => {
         const denominatorValue = getRowValue(
           resultYearly,
           [greenDenominatorId],
-          ou
+          ouId
         );
         return Math.round(
           (greenValue / parseInt(denominatorValue[0] || 1)) * 100
         );
       };
 
-      const calculateBlue = (greenValue, ou) => {
+      const calculateBlue = (greenValue, ouId) => {
         const numeratorValue = getRowValue(
           resultQuarterly,
           [blueNumeratorId],
-          ou
+          ouId
         );
         return Math.round((parseInt(numeratorValue) / (greenValue || 1)) * 100);
       };
 
-      const calculateRed = (ou) => {
-        const redValues = getRowValue(resultYearly, redIds, ou);
+      const calculateRed = (ouId) => {
+        const redValues = getRowValue(resultRed, redIds, ouId);
         const numerator = parseInt(redValues[0]) + parseInt(redValues[1]);
         const denominator =
           parseInt(redValues[2]) + parseInt(redValues[3]) || 1;
+
         return Math.round((numerator / (denominator || 1)) * 100);
       };
 
@@ -123,15 +129,19 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
 
       const barData = resultPepfar.concat(resultOutsidePepfar).reduce(
         ({ redData, blueData, greenData }, { green, blue, red }, idx) => {
+          //20 province
           redData[0] += red;
           blueData[0] += blue;
           greenData[0] += green;
 
+          //7 province
           if (idx < 7) {
             redData[1] += red;
             blueData[1] += blue;
             greenData[1] += green;
           }
+
+          //13 province
           if (idx >= 7) {
             redData[2] += red;
             blueData[2] += blue;
@@ -154,11 +164,7 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
         datasets: baseDatasets.map(({ label, backgroundColor, name }) => ({
           label,
           backgroundColor,
-          data: barData[name].map((total, idx) =>
-            name === "greenData"
-              ? calculateAverage(total, idx)
-              : Math.round(Math.random() * 100)
-          ),
+          data: barData[name].map((total) => total),
         })),
       }
     : null;
@@ -204,9 +210,7 @@ const Widget1 = ({ pepfarProvinces, outsidePepfarProvinces, setLoading }) => {
       datasets: baseDatasets.map(({ label, backgroundColor, name }) => ({
         label,
         backgroundColor,
-        data: chartData[name].map((total, idx) =>
-          name === "greenData" ? total : Math.round(Math.random() * 100)
-        ),
+        data: chartData[name].map((total, idx) => total),
       })),
     };
   }, [data, modalIdxActive]);
