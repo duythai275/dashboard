@@ -220,7 +220,7 @@ const CustomControlForDiseaseBulletin = () => {
     }),
     shallow
   );
-  const constConvertToDhis2Period = (period, periodType) => {
+  const convertToDhis2Period = (period, periodType) => {
     let startDate;
     let endDate;
     switch (periodType) {
@@ -354,6 +354,7 @@ const CustomControlForDiseaseBulletin = () => {
         };
     }
   };
+
   useEffect(() => {
     resetAdditionalState([
       "period",
@@ -375,7 +376,7 @@ const CustomControlForDiseaseBulletin = () => {
       case HIV_DASHBOARD_VALUE:
         changeAdditionalStateProperty(
           "periodForW1",
-          constConvertToDhis2Period(
+          convertToDhis2Period(
             {
               year: getYear(new Date()),
               month: getMonth(new Date()),
@@ -385,7 +386,7 @@ const CustomControlForDiseaseBulletin = () => {
         );
         changeAdditionalStateProperty(
           "periodForW2",
-          constConvertToDhis2Period(
+          convertToDhis2Period(
             {
               year: getYear(new Date()),
             },
@@ -394,7 +395,7 @@ const CustomControlForDiseaseBulletin = () => {
         );
         changeAdditionalStateProperty(
           "periodForW3",
-          constConvertToDhis2Period(
+          convertToDhis2Period(
             {
               year: getYear(new Date()),
               quarter: getQuarter(new Date()),
@@ -404,7 +405,7 @@ const CustomControlForDiseaseBulletin = () => {
         );
         changeAdditionalStateProperty(
           "periodForW4",
-          constConvertToDhis2Period(
+          convertToDhis2Period(
             {
               year: getYear(new Date()),
             },
