@@ -112,7 +112,12 @@ const Widget2 = ({ setLoading }) => {
                   gap: "5px",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#118861",
+                  color:
+                    data.trend < 0
+                      ? "#118861"
+                      : data.trend === 0
+                      ? "#F3F3F3"
+                      : "#E61B1B",
                 }}
               >
                 {` ( ${data.trend === 0 ? "-" : Math.abs(data.trend)}%`}

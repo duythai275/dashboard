@@ -4,8 +4,16 @@ const apisDashboard2 = [
   {
     route: `/api/getDashboard2Widget8Data`,
     handler: async (dhis2Apis) => {
+      const pes = [];
+      const month = moment().month() + 1;
+      const year = moment().year();
+      for (let i = 1; i < month; i++) {
+        pes.push(`${year}${i > 9 ? i : `0${i}`}`);
+      }
       const result = await dhis2Apis[0].get(
-        "/api/analytics?dimension=dx:Q21U47uf0xo.REPORTING_RATE;w8XQmI94Spv.REPORTING_RATE;Q21U47uf0xo.REPORTING_RATE_ON_TIME;w8XQmI94Spv.REPORTING_RATE_ON_TIME&filter=pe:THIS_YEAR&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=true&skipData=false&skipMeta=false"
+        `/api/analytics?dimension=dx:Q21U47uf0xo.REPORTING_RATE;w8XQmI94Spv.REPORTING_RATE;Q21U47uf0xo.REPORTING_RATE_ON_TIME;w8XQmI94Spv.REPORTING_RATE_ON_TIME&filter=pe:${pes.join(
+          ";"
+        )}&dimension=ou:IWp9dQGM0bS;OU_GROUP-jblbYwuvO33&includeNumDen=true&skipData=false&skipMeta=false`
       );
       return result.data;
     },

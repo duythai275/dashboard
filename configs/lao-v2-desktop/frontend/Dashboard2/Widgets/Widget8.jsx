@@ -64,7 +64,7 @@ const Widget8 = ({ setLoading }) => {
         label: t(dx),
         data: result.ou.map((ou) => {
           const foundRow = result.data.filter(
-            (row) => row.ou === ou.id && row.dx.includes(dx)
+            (row) => row.ou === ou.id && row.dx.split(".")[1] === dx
           );
 
           return foundRow.length
