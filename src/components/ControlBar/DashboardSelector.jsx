@@ -23,7 +23,7 @@ const DashboardSelector = () => {
     <Autocomplete
       disableClearable={true}
       value={selectedDashboard ? selectedDashboard.label : ""}
-      sx={{ width: 400 }}
+      sx={{ width: { xs: "100%", md: 400 } }}
       options={dashboards.map((d, index) => ({
         value: index,
         label: t(d.name),

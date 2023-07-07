@@ -11,6 +11,32 @@
 .control-bar-container > div:nth-child(2) {
   margin-left: 10px;
 }
-.control-bar-container > div:last-child {
+.control-bar-container > div:nth-child(3) {
   margin-left: auto;
+}
+
+.control-bar-container > div:first-child {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.control-bar-container > div:first-child > button {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .control-bar-container > div:not(:first-child) {
+    display: none;
+  }
+  .control-bar-container > div.visible-in-mobile {
+    display: block;
+  }
+
+  .control-bar-container > div:first-child {
+    flex: 1;
+  }
+  .control-bar-container > div:first-child > button {
+    display: block;
+  }
 }
