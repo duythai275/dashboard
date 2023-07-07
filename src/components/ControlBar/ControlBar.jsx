@@ -51,7 +51,7 @@ const ControlBar = () => {
           sx={{
             position: "absolute",
             width: "100vw",
-            height: "100vh",
+            height: "100%",
             top: 0,
             left: 0,
             transition: "all 0.5s ease-in-out",
@@ -65,9 +65,9 @@ const ControlBar = () => {
           sx={{
             padding: open ? "10px" : "0",
             display: "flex",
-            right: open ? "0" : "-50vw",
+            right: open ? "0" : "-100vw",
             position: "absolute",
-            width: open ? "50vw" : 0,
+            width: open ? "100vw" : 0,
             height: "100%",
             overflow: "hidden",
             top: 0,
