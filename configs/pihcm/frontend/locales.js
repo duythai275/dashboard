@@ -182,6 +182,24 @@ const locales = [
       },
       { key: "dengueSeverer", value: "SXHD/SXHD nặng" },
       { key: "dengueWarning", value: "SXHD/SXHD có cảnh báo" },
+      {
+        key: "widget1InfluenzaDashboardTitle",
+        value: "Phân bố các típ vi rút cúm theo năm qua Hệ thống GSTĐ HCC",
+      },
+      {
+        key: "widget2InfluenzaDashboardTitle",
+        value: "Số ca giám sát trọng điểm cúm theo tuần",
+      },
+      {
+        key: "widget3InfluenzaDashboardTitle",
+        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát",
+      },
+      {
+        key: "widget4InfluenzaDashboardTitle",
+        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát và theo năm",
+      },
+      { key: "influenzaCases", value: "Số ca" },
+      { key: "influenzaTotalCase", value: "Tổng Số ca" },
     ],
   },
   {
@@ -353,6 +371,24 @@ const locales = [
       },
       { key: "dengueSeverer", value: "SXHD/SXHD nặng" },
       { key: "dengueWarning", value: "SXHD/SXHD có cảnh báo" },
+      {
+        key: "widget1InfluenzaDashboardTitle",
+        value: "Phân bố các típ vi rút cúm theo năm qua Hệ thống GSTĐ HCC",
+      },
+      {
+        key: "widget2InfluenzaDashboardTitle",
+        value: "Số ca giám sát trọng điểm cúm theo tuần",
+      },
+      {
+        key: "widget3InfluenzaDashboardTitle",
+        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát",
+      },
+      {
+        key: "widget4InfluenzaDashboardTitle",
+        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát và theo năm",
+      },
+      { key: "influenzaCases", value: "Số ca" },
+      { key: "influenzaTotalCase", value: "Tổng Số ca" },
     ],
   },
 ];

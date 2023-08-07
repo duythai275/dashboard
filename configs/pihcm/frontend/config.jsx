@@ -14,13 +14,14 @@ import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import DengueDashboard from "./dashboards/DengueDashboard";
 import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
 import HivDashboard from "./dashboards/HivDashboard/HivDashboard";
+import InfluenzaDashboard from "./dashboards/InfluenzaDashboard";
 import { getMonth, getQuarter, getYear } from "date-fns";
 import { MONTHS } from "@/components/PeriodSelector/MonthSelector";
 import moment from "moment";
 
 const languages = locales.map((locale) => ({
   name: locale.name,
-  code: locale.code
+  code: locale.code,
 }));
 
 const useDashboardInitialization = () => {
@@ -29,16 +30,24 @@ const useDashboardInitialization = () => {
   });
 
   const selectLanguage = useSelectionStore((state) => state.selectLanguage);
-  const { setMetadata, diseases } = useMetadataStore((state) => ({ diseases: state.diseases, setMetadata: state.setMetadata }), shallow);
+  const { setMetadata, diseases } = useMetadataStore(
+    (state) => ({ diseases: state.diseases, setMetadata: state.setMetadata }),
+    shallow
+  );
   const [ready, setReady] = useState(false);
 
   const { t, i18n } = useTranslation();
-  const { selectedDashboard, initDashboardState, selectDashboard, setDashboards } = useDashboardStore(
+  const {
+    selectedDashboard,
+    initDashboardState,
+    selectDashboard,
+    setDashboards,
+  } = useDashboardStore(
     (state) => ({
       selectedDashboard: state.selectedDashboard,
       initDashboardState: state.initDashboardState,
       selectDashboard: state.selectDashboard,
-      setDashboards: state.setDashboards
+      setDashboards: state.setDashboards,
     }),
     shallow
   );
@@ -49,27 +58,62 @@ const useDashboardInitialization = () => {
       const dashboards = [
         {
           name: "bulletin",
-          dashboard: <BulletinDashboard title="bulletin" />
+          dashboard: <BulletinDashboard title="bulletin" />,
         },
         {
           name: "dengue",
-          dashboard: <DengueDashboard title="dengue" />
+          dashboard: <DengueDashboard title="dengue" />,
         },
         {
           name: "hiv",
-          dashboard: <HivDashboard title="hiv" />
-        }
+          dashboard: <HivDashboard title="hiv" />,
+        },
+        {
+          name: "influenza",
+          dashboard: <InfluenzaDashboard title="influenza" />,
+        },
       ];
       setReady(false);
       const results = await Promise.all([
-        pull("/api/optionSets?filter=id:eq:d5fivOeWHIb&fields=id,name,translations,options[id,name,code,translations"),
-        pull("/api/organisationUnits?fields=id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id,name]&paging=false"),
-        pull("/api/organisationUnits.geojson?level=2&level=3")
+        pull(
+          "/api/optionSets?filter=id:eq:d5fivOeWHIb&fields=id,name,translations,options[id,name,code,translations"
+        ),
+        pull(
+          "/api/organisationUnits?fields=id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id,name]&paging=false"
+        ),
+        pull("/api/organisationUnits.geojson?level=2&level=3"),
+        pull(
+          "/api/programs/H9DEFEUTxGc?fields=organisationUnits[path,children,id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id,name]]&paging=false"
+        ),
+        pull(
+          `/api/optionSets/GceNmNVLH7Y?fields=id,name,options[id,name,code]&paging=false`
+        ),
       ]);
 
       setMetadata("diseases", results[0].optionSets[0].options);
       setMetadata("communes", results[1].organisationUnits);
       setMetadata("orgUnitGeoJson", results[2]);
+      setMetadata("orgUnitInfluenza", results[3].organisationUnits);
+      setMetadata("optionsInfluenza", results[4].options);
+
+      const orgUnitInfluenzaColors = [];
+
+      for (let i = 0; i <= results[3].organisationUnits.length; i++) {
+        const randomColor =
+          "#" + Math.floor(Math.random() * 16777215).toString(16);
+        orgUnitInfluenzaColors.push(randomColor);
+      }
+
+      const optionsInfluenzaColors = [];
+
+      for (let i = 0; i < results[4].options.length; i++) {
+        const randomColor =
+          "#" + Math.floor(Math.random() * 16777215).toString(16);
+        optionsInfluenzaColors.push(randomColor);
+      }
+
+      setMetadata("orgUnitInfluenzaColors", orgUnitInfluenzaColors);
+      setMetadata("optionsInfluenzaColors", optionsInfluenzaColors);
 
       // results[0].optionSets[0].options.forEach((option, index) => {
       //   dashboards.push({
@@ -89,72 +133,88 @@ const useDashboardInitialization = () => {
         {
           widgets: [
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
-            }
-          ]
+              selectedChildren: 0,
+            },
+          ],
         },
         {
           widgets: [
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
-            }
-          ]
+              selectedChildren: 0,
+            },
+          ],
         },
         {
           widgets: [
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
+              selectedChildren: 0,
             },
             {
-              selectedChildren: 0
-            }
-          ]
-        }
+              selectedChildren: 0,
+            },
+          ],
+        },
+        {
+          widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+          ],
+        },
       ]);
       setDashboards(dashboards);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });
@@ -167,37 +227,55 @@ const useDashboardInitialization = () => {
       const dashboards = [
         {
           name: "bulletin",
-          dashboard: <BulletinDashboard title="bulletin" />
+          dashboard: <BulletinDashboard title="bulletin" />,
         },
         {
           name: "dengue",
-          dashboard: <DengueDashboard title="dengue" />
+          dashboard: <DengueDashboard title="dengue" />,
         },
         {
           name: "hiv",
-          dashboard: <HivDashboard title="hiv" />
-        }
+          dashboard: <HivDashboard title="hiv" />,
+        },
+        {
+          name: "influenza",
+          dashboard: <InfluenzaDashboard title="influenza" />,
+        },
       ];
       setDashboards(dashboards);
       selectDashboard({
         value: selectedDashboard.value,
-        label: t(dashboards[selectedDashboard.value].name)
+        label: t(dashboards[selectedDashboard.value].name),
       });
     }
   }, [i18n.language]);
-  changeMapWidgetChildren();
+
+  if (selectDashboard.value !== "3" && selectDashboard.value) {
+    changeMapWidgetChildren();
+  }
   return ready;
 };
 
 const CustomControlForDiseaseBulletin = () => {
   const { t } = useTranslation();
-  const { orgUnits } = useMetadataStore((state) => ({ orgUnits: state.communes }), shallow);
-  const { changeAdditionalStateProperty, additionalState, selectedDashboard, resetAdditionalState } = useDashboardStore(
+  const { orgUnits, orgUnitInfluenza } = useMetadataStore(
+    (state) => ({
+      orgUnits: state.communes,
+      orgUnitInfluenza: state.orgUnitInfluenza,
+    }),
+    shallow
+  );
+  const {
+    changeAdditionalStateProperty,
+    additionalState,
+    selectedDashboard,
+    resetAdditionalState,
+  } = useDashboardStore(
     (state) => ({
       changeAdditionalStateProperty: state.changeAdditionalStateProperty,
       additionalState: state.additionalState,
       selectedDashboard: state.selectedDashboard,
-      resetAdditionalState: state.resetAdditionalState
+      resetAdditionalState: state.resetAdditionalState,
     }),
     shallow
   );
@@ -212,7 +290,7 @@ const CustomControlForDiseaseBulletin = () => {
             dhis2Period: `${period.year}`,
             startDate: `${period.year}-01-01`,
             endDate: `${period.year}-12-31`,
-            periodName: period.year
+            periodName: period.year,
           };
         } else {
           return {
@@ -220,7 +298,7 @@ const CustomControlForDiseaseBulletin = () => {
             dhis2Period: null,
             startDate: "",
             endDate: "",
-            periodName: ""
+            periodName: "",
           };
         }
       case "Monthly":
@@ -233,11 +311,13 @@ const CustomControlForDiseaseBulletin = () => {
             .format("YYYY-MM-DD");
           return {
             ...period,
-            dhis2Period: `${period.year}${period.month < 10 ? "0" + period.month : period.month}`,
+            dhis2Period: `${period.year}${
+              period.month < 10 ? "0" + period.month : period.month
+            }`,
             startDate: startDate,
             endDate: endDate,
             monthName: t(MONTHS[period.month - 1]),
-            periodName: period.monthName + " " + period.year
+            periodName: period.monthName + " " + period.year,
           };
         } else {
           return {
@@ -246,20 +326,26 @@ const CustomControlForDiseaseBulletin = () => {
             startDate: "",
             endDate: "",
             monthName: "",
-            periodName: ""
+            periodName: "",
           };
         }
       case "Quarterly":
         if (period.year && period.quarter) {
-          startDate = moment([period.year]).quarter(period.quarter).startOf("quarter").format("YYYY-MM-DD");
-          endDate = moment([period.year]).quarter(period.quarter).endOf("quarter").format("YYYY-MM-DD");
+          startDate = moment([period.year])
+            .quarter(period.quarter)
+            .startOf("quarter")
+            .format("YYYY-MM-DD");
+          endDate = moment([period.year])
+            .quarter(period.quarter)
+            .endOf("quarter")
+            .format("YYYY-MM-DD");
           return {
             ...period,
             dhis2Period: `${period.year}Q${period.quarter}`,
             startDate,
             endDate,
             quarterName: t("Q" + period.quarter),
-            periodName: period.quarterName + " - " + period.year
+            periodName: period.quarterName + " - " + period.year,
           };
         } else {
           return {
@@ -268,20 +354,26 @@ const CustomControlForDiseaseBulletin = () => {
             startDate: "",
             endDate: "",
             quarterName: "",
-            periodName: ""
+            periodName: "",
           };
         }
       case "Weekly":
         if (period.year && period.week) {
-          startDate = moment([period.year, 1, 1]).isoWeek(period.week).startOf("isoWeek").format("YYYY-MM-DD");
-          endDate = moment([period.year, 1, 1]).isoWeek(period.week).endOf("isoWeek").format("YYYY-MM-DD");
+          startDate = moment([period.year, 1, 1])
+            .isoWeek(period.week)
+            .startOf("isoWeek")
+            .format("YYYY-MM-DD");
+          endDate = moment([period.year, 1, 1])
+            .isoWeek(period.week)
+            .endOf("isoWeek")
+            .format("YYYY-MM-DD");
           return {
             ...period,
             dhis2Period: `${period.year}W${period.week}`,
             startDate,
             endDate,
             weekName: t("week") + " " + period.week,
-            periodName: period.weekName + " - " + period.year
+            periodName: period.weekName + " - " + period.year,
           };
         } else {
           return {
@@ -290,7 +382,7 @@ const CustomControlForDiseaseBulletin = () => {
             startDate: "",
             endDate: "",
             weekName,
-            periodName: ""
+            periodName: "",
           };
         }
       case "Daily":
@@ -300,7 +392,7 @@ const CustomControlForDiseaseBulletin = () => {
             dhis2Period: `${period.date.replace(/-/g, "")}`,
             startDate: period.date,
             endDate: period.date,
-            periodName: period.date
+            periodName: period.date,
           };
         } else {
           return {
@@ -308,7 +400,7 @@ const CustomControlForDiseaseBulletin = () => {
             dhis2Period: null,
             startDate: "",
             endDate: "",
-            periodName: ""
+            periodName: "",
           };
         }
       default:
@@ -317,13 +409,23 @@ const CustomControlForDiseaseBulletin = () => {
           dhis2Period: null,
           startDate: "",
           endDate: "",
-          periodName: ""
+          periodName: "",
         };
     }
   };
 
   useEffect(() => {
-    resetAdditionalState(["period", "selectedOrgUnit", "selectedDisease", "periodForW1", "periodForW2", "periodForW3", "periodForW4"]);
+    resetAdditionalState([
+      "period",
+      "selectedOrgUnit",
+      "selectedOrgUnitInfluenza",
+      "grandTotalName",
+      "selectedDisease",
+      "periodForW1",
+      "periodForW2",
+      "periodForW3",
+      "periodForW4",
+    ]);
     switch (selectedDashboard?.value) {
       case DENGUE_DASHBOARD_VALUE:
         changeAdditionalStateProperty("selectedPeriod", 2023);
@@ -332,13 +434,25 @@ const CustomControlForDiseaseBulletin = () => {
           orgUnits.find((ou) => ou.level === 1)
         );
         break;
+      case INFLUENZA_DASHBOARD_VALUE:
+        changeAdditionalStateProperty("selectedPeriod", 2023);
+        changeAdditionalStateProperty(
+          "selectedOrgUnitInfluenza",
+          orgUnitInfluenza.length > 0 ? orgUnitInfluenza[0] : null
+        );
+        const findRoot = orgUnits.find((e) => e.id === "Vp8x14BDil5");
+        changeAdditionalStateProperty(
+          "grandTotalName",
+          findRoot ? findRoot.displayName : "Grand Total"
+        );
+        break;
       case HIV_DASHBOARD_VALUE:
         changeAdditionalStateProperty(
           "periodForW1",
           convertToDhis2Period(
             {
               year: getYear(new Date()),
-              month: getMonth(new Date()) + 1
+              month: getMonth(new Date()) + 1,
             },
             "Monthly"
           )
@@ -347,7 +461,7 @@ const CustomControlForDiseaseBulletin = () => {
           "periodForW2",
           convertToDhis2Period(
             {
-              year: getYear(new Date())
+              year: getYear(new Date()),
             },
             "Yearly"
           )
@@ -357,7 +471,7 @@ const CustomControlForDiseaseBulletin = () => {
           convertToDhis2Period(
             {
               year: getYear(new Date()),
-              quarter: getQuarter(new Date())
+              quarter: getQuarter(new Date()),
             },
             "Quarterly"
           )
@@ -366,7 +480,7 @@ const CustomControlForDiseaseBulletin = () => {
           "periodForW4",
           convertToDhis2Period(
             {
-              year: getYear(new Date())
+              year: getYear(new Date()),
             },
             "Yearly"
           )
@@ -394,7 +508,9 @@ const CustomControlForDiseaseBulletin = () => {
       <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
         <Autocomplete
           disableClearable={true}
-          value={additionalState.selectedPeriod ? additionalState.selectedPeriod : ""}
+          value={
+            additionalState.selectedPeriod ? additionalState.selectedPeriod : ""
+          }
           sx={{ width: 200 }}
           options={(() => {
             let currentYear = new Date().getFullYear();
@@ -405,7 +521,9 @@ const CustomControlForDiseaseBulletin = () => {
             }
             return result;
           })()}
-          renderInput={(params) => <TextField {...params} placeholder={t("selectYear")} />}
+          renderInput={(params) => (
+            <TextField {...params} placeholder={t("selectYear")} />
+          )}
           onChange={(event, newValue) => {
             if (newValue.callback) {
               newValue.callback();
@@ -415,10 +533,60 @@ const CustomControlForDiseaseBulletin = () => {
           }}
         />
         <OrgUnitSelector
-          orgUnits={orgUnits.filter((ou) => !ou.organisationUnitGroups.find((oug) => oug.id === "GFmTbzHbILH"))}
+          orgUnits={orgUnits.filter(
+            (ou) =>
+              !ou.organisationUnitGroups.find((oug) => oug.id === "GFmTbzHbILH")
+          )}
           initialOrgUnit={orgUnits.find((ou) => ou.level === 1)}
           accept={(orgUnit) => {
             changeAdditionalStateProperty("selectedOrgUnit", orgUnit);
+          }}
+        />
+      </Box>
+    );
+  }
+
+  if (selectedDashboard?.value === INFLUENZA_DASHBOARD_VALUE) {
+    console.log(orgUnitInfluenza);
+    const stringifiedAssignedOrgUnits = orgUnitInfluenza
+      .map((aou) => aou.path)
+      .join(";");
+    const filtered = orgUnits.filter((ou) => {
+      return stringifiedAssignedOrgUnits.includes(ou.id);
+    });
+
+    return (
+      <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <Autocomplete
+          disableClearable={true}
+          value={
+            additionalState.selectedPeriod ? additionalState.selectedPeriod : ""
+          }
+          sx={{ width: 200 }}
+          options={(() => {
+            let currentYear = new Date().getFullYear();
+            let result = [];
+            while (currentYear >= 2011) {
+              result.push(currentYear);
+              currentYear--;
+            }
+            return result;
+          })()}
+          renderInput={(params) => (
+            <TextField {...params} placeholder={t("selectYear")} />
+          )}
+          onChange={(event, newValue) => {
+            if (newValue.callback) {
+              newValue.callback();
+              return;
+            }
+            changeAdditionalStateProperty("selectedPeriod", newValue);
+          }}
+        />
+        <OrgUnitSelector
+          orgUnits={filtered}
+          accept={(orgUnit) => {
+            changeAdditionalStateProperty("selectedOrgUnitInfluenza", orgUnit);
           }}
         />
       </Box>
@@ -447,3 +615,4 @@ export { useDashboardInitialization, languages, customControl };
 const BULLETIN_DASHBOARD_VALUE = 0;
 const DENGUE_DASHBOARD_VALUE = 1;
 const HIV_DASHBOARD_VALUE = 2;
+const INFLUENZA_DASHBOARD_VALUE = 3;
