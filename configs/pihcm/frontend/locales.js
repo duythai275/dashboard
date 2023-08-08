@@ -200,6 +200,7 @@ const locales = [
       },
       { key: "influenzaCases", value: "Số ca" },
       { key: "influenzaTotalCase", value: "Tổng Số ca" },
+      { key: "influenza", value: "Giám sát trọng điểm Cúm" },
     ],
   },
   {
@@ -389,6 +390,7 @@ const locales = [
       },
       { key: "influenzaCases", value: "Số ca" },
       { key: "influenzaTotalCase", value: "Tổng Số ca" },
+      { key: "influenza", value: "Influenza" },
     ],
   },
 ];

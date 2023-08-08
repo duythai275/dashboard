@@ -585,6 +585,7 @@ const CustomControlForDiseaseBulletin = () => {
         />
         <OrgUnitSelector
           orgUnits={filtered}
+          initialOrgUnit={orgUnits.find((ou) => ou.id === "Vp8x14BDil5")}
           accept={(orgUnit) => {
             changeAdditionalStateProperty("selectedOrgUnitInfluenza", orgUnit);
           }}
