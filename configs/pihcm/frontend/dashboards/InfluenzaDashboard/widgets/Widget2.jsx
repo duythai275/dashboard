@@ -48,7 +48,6 @@ const Widget2 = ({ setLoading }) => {
     (async () => {
       try {
         setLoading(true);
-        console.log(orgUnits);
         const result = await pull(
           `/api/analytics/events/aggregate/H9DEFEUTxGc.json?dimension=ou:${orgUnits.join(
             ";"

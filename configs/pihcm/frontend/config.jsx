@@ -547,7 +547,6 @@ const CustomControlForDiseaseBulletin = () => {
   }
 
   if (selectedDashboard?.value === INFLUENZA_DASHBOARD_VALUE) {
-    console.log(orgUnitInfluenza);
     const stringifiedAssignedOrgUnits = orgUnitInfluenza
       .map((aou) => aou.path)
       .join(";");
