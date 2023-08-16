@@ -40,6 +40,18 @@ const generateBasicApi = async (config) => {
   return dhis2Api;
 };
 
+const generatePatApi = async (config) => {
+  const { baseUrl, pat } = config;
+
+  const dhis2Api = axios.create({
+    baseURL: baseUrl,
+    headers: {
+      Authorization: pat
+    }
+  });
+  return dhis2Api;
+};
+
 const getOrgUnits = async (dhis2Api) => {
   const result = await dhis2Api.get("/api/organisationUnits?paging=false&fields=id,name,displayName,parent,path,ancestors,translations");
   return result.data.organisationUnits;
@@ -52,4 +64,4 @@ const getGeoJson = async (dhis2Api) => {
   return orgUnitGeoJsonResult.data;
 };
 
-module.exports = { generateOauth2Api, generateBasicApi, getOrgUnits, getGeoJson };
+module.exports = { generateOauth2Api, generateBasicApi, generatePatApi, getOrgUnits, getGeoJson };
