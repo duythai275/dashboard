@@ -46,7 +46,7 @@ const generatePatApi = async (config) => {
   const dhis2Api = axios.create({
     baseURL: baseUrl,
     headers: {
-      Authorization: pat
+      Authorization: "ApiToken " + pat
     }
   });
   return dhis2Api;
