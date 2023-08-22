@@ -10,6 +10,8 @@
 }
 .control-bar-container > div:nth-child(2) {
   margin-left: 10px;
+  z-index: 1000;
+  align-self: flex-start;
 }
 .control-bar-container > div:nth-child(3) {
   margin-left: auto;

@@ -18,6 +18,7 @@ import InfluenzaDashboard from "./dashboards/InfluenzaDashboard";
 import { getMonth, getQuarter, getYear } from "date-fns";
 import { MONTHS } from "@/components/PeriodSelector/MonthSelector";
 import moment from "moment";
+import HfmdDashboard from "./dashboards/HfmdDashboard";
 
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -72,6 +73,10 @@ const useDashboardInitialization = () => {
           name: "influenza",
           dashboard: <InfluenzaDashboard title="influenza" />,
         },
+        {
+          name: "hfmd",
+          dashboard: <HfmdDashboard title="hfmd" />,
+        },
       ];
       setReady(false);
       const results = await Promise.all([
@@ -88,6 +93,9 @@ const useDashboardInitialization = () => {
         pull(
           `/api/optionSets/GceNmNVLH7Y?fields=id,name,options[id,name,code]&paging=false`
         ),
+        pull(
+          "/api/programs/AczMEDapsFu?fields=organisationUnits[path,children,id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id,name]],programStages[programStageDataElements[dataElement[id,name,optionSet[options[id,name,code,displayName,style]]]]]&paging=false"
+        ),
       ]);
 
       setMetadata("diseases", results[0].optionSets[0].options);
@@ -95,6 +103,13 @@ const useDashboardInitialization = () => {
       setMetadata("orgUnitGeoJson", results[2]);
       setMetadata("orgUnitInfluenza", results[3].organisationUnits);
       setMetadata("optionsInfluenza", results[4].options);
+      setMetadata("orgUnitsHfmd", results[5].organisationUnits);
+      setMetadata(
+        "dataElementsHfmd",
+        results[5].programStages[0].programStageDataElements.map(
+          (item) => item.dataElement
+        )
+      );
 
       const orgUnitInfluenzaColors = [];
 
@@ -215,6 +230,52 @@ const useDashboardInitialization = () => {
             },
           ],
         },
+        {
+          widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+          ],
+        },
       ]);
       setDashboards(dashboards);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });
@@ -240,6 +301,10 @@ const useDashboardInitialization = () => {
         {
           name: "influenza",
           dashboard: <InfluenzaDashboard title="influenza" />,
+        },
+        {
+          name: "hfmd",
+          dashboard: <HfmdDashboard title="hfmd" />,
         },
       ];
       setDashboards(dashboards);
@@ -414,6 +479,11 @@ const CustomControlForDiseaseBulletin = () => {
     }
   };
 
+  const [periodHfmd, setPeriodHfmd] = useState(
+    additionalState.selectedPeriod || []
+  );
+  const [periodHfmdFocus, setPeriodHfmdFocus] = useState(false);
+
   useEffect(() => {
     resetAdditionalState([
       "period",
@@ -445,6 +515,10 @@ const CustomControlForDiseaseBulletin = () => {
           "grandTotalName",
           findRoot ? findRoot.displayName : "Grand Total"
         );
+        break;
+      case HFMD_DASHBOARD_VALUE:
+        setPeriodHfmd([2023]);
+        changeAdditionalStateProperty("selectedPeriod", [2023]);
         break;
       case HIV_DASHBOARD_VALUE:
         changeAdditionalStateProperty(
@@ -594,6 +668,74 @@ const CustomControlForDiseaseBulletin = () => {
   }
 
   if (selectedDashboard?.value === HIV_DASHBOARD_VALUE) return null;
+  if (selectedDashboard?.value === HFMD_DASHBOARD_VALUE) {
+    return (
+      <Box sx={{ alignSelf: "flex-start" }}>
+        <Autocomplete
+          multiple
+          disableClearable={true}
+          value={
+            periodHfmd
+              ? typeof periodHfmd !== "object"
+                ? [periodHfmd]
+                : periodHfmd
+              : []
+          }
+          getOptionDisabled={(option) =>
+            (periodHfmd &&
+              periodHfmd.length === 5 &&
+              !periodHfmd.includes(option)) ||
+            (periodHfmd.length === 1 && periodHfmd.includes(option))
+          }
+          ChipProps={{
+            disabled: periodHfmd.length === 1 ? true : false,
+          }}
+          limitTags={3}
+          sx={{
+            width: 400,
+            "& .MuiInputBase-root": {
+              minHeight: "40px",
+              paddingY: "3px !important",
+            },
+            "& .MuiButtonBase-root": {
+              height: "unset !important",
+            },
+          }}
+          options={(() => {
+            let currentYear = new Date().getFullYear();
+            let result = [];
+            while (currentYear >= 2011) {
+              result.push(currentYear);
+              currentYear--;
+            }
+            return result;
+          })()}
+          renderInput={(params) => (
+            <TextField {...params} placeholder={t("selectYear")} />
+          )}
+          onOpen={() => {
+            setPeriodHfmdFocus(true);
+          }}
+          onChange={(event, newValue) => {
+            if (newValue.callback) {
+              newValue.callback();
+              return;
+            }
+            if (!periodHfmdFocus) {
+              changeAdditionalStateProperty("selectedPeriod", newValue);
+            }
+            setPeriodHfmd(newValue);
+          }}
+          onClose={() => {
+            changeAdditionalStateProperty("selectedPeriod", periodHfmd);
+            setPeriodHfmdFocus(false);
+          }}
+          on
+          disableCloseOnSelect
+        />
+      </Box>
+    );
+  }
 
   return (
     <Button
@@ -616,3 +758,4 @@ const BULLETIN_DASHBOARD_VALUE = 0;
 const DENGUE_DASHBOARD_VALUE = 1;
 const HIV_DASHBOARD_VALUE = 2;
 const INFLUENZA_DASHBOARD_VALUE = 3;
+const HFMD_DASHBOARD_VALUE = 4;
