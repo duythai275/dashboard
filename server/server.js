@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const { generateOauth2Api, generateBasicApi } = require("./src/api.js");
+const { generateOauth2Api, generateBasicApi, generatePatApi } = require("./src/api.js");
 // dotenv.config();
 const { VITE_APP_MODE, VITE_CONFIG_NAME } = process.env;
 const isProduction = VITE_APP_MODE === "production";
@@ -14,8 +14,10 @@ const generateDhis2Apis = async (dhis2ApiConfigs) => {
     dhis2ApiConfigs.map(async (config) => {
       if (config.type === "basic") {
         return generateBasicApi(config);
-      } else {
+      } else if (config.type === "oauth") {
         return generateOauth2Api(config);
+      } else {
+        return generatePatApi(config);
       }
     })
   );
