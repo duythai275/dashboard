@@ -77,6 +77,14 @@ const useDashboardInitialization = () => {
           name: "hfmd",
           dashboard: <HfmdDashboard title="hfmd" />,
         },
+        {
+          name: "variantSarCov2",
+          dashboard: <div />,
+        },
+        {
+          name: "caseCovid19",
+          dashboard: <div />,
+        },
       ];
       setReady(false);
       const results = await Promise.all([
@@ -276,6 +284,12 @@ const useDashboardInitialization = () => {
             },
           ],
         },
+        {
+          widgets: [],
+        },
+        {
+          widgets: [],
+        },
       ]);
       setDashboards(dashboards);
       selectDashboard({ value: 0, label: t(dashboards[0].name) });
@@ -305,6 +319,14 @@ const useDashboardInitialization = () => {
         {
           name: "hfmd",
           dashboard: <HfmdDashboard title="hfmd" />,
+        },
+        {
+          name: "variantSarCov2",
+          dashboard: <div />,
+        },
+        {
+          name: "caseCovid19",
+          dashboard: <div />,
         },
       ];
       setDashboards(dashboards);

@@ -203,6 +203,11 @@ const locales = [
       { key: "influenzaCases", value: "Số ca" },
       { key: "influenzaTotalCase", value: "Tổng Số ca" },
       { key: "influenza", value: "Giám sát trọng điểm Cúm" },
+      {
+        key: "variantSarCov2",
+        value: "Danh sách giảm sát biến thể SARS-CoV-2",
+      },
+      { key: "caseCovid19", value: "Danh sách ca bệnh COVID-19" },
     ],
   },
   {
@@ -394,6 +399,11 @@ const locales = [
       { key: "influenzaCases", value: "Số ca" },
       { key: "influenzaTotalCase", value: "Tổng Số ca" },
       { key: "influenza", value: "Influenza" },
+      {
+        key: "variantSarCov2",
+        value: "Danh sách giảm sát biến thể SARS-CoV-2",
+      },
+      { key: "caseCovid19", value: "Danh sách ca bệnh COVID-19" },
     ],
   },
 ];
