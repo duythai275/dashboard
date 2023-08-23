@@ -19,6 +19,8 @@ import { getMonth, getQuarter, getYear } from "date-fns";
 import { MONTHS } from "@/components/PeriodSelector/MonthSelector";
 import moment from "moment";
 import HfmdDashboard from "./dashboards/HfmdDashboard";
+import CaseCovid19Dashboard from "./dashboards/CaseCovid19Dashboard";
+import VariantSarsCov2Dashboard from "./dashboards/VariantSarsCov2Dashboard";
 
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -78,12 +80,12 @@ const useDashboardInitialization = () => {
           dashboard: <HfmdDashboard title="hfmd" />,
         },
         {
-          name: "variantSarCov2",
-          dashboard: <div />,
+          name: "variantSarsCov2",
+          dashboard: <VariantSarsCov2Dashboard title="variantSarsCov2" />,
         },
         {
           name: "caseCovid19",
-          dashboard: <div />,
+          dashboard: <CaseCovid19Dashboard title="caseCovid19" />,
         },
       ];
       setReady(false);
@@ -285,7 +287,41 @@ const useDashboardInitialization = () => {
           ],
         },
         {
-          widgets: [],
+          widgets: [
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+            {
+              selectedChildren: 0,
+            },
+          ],
         },
         {
           widgets: [],
@@ -321,12 +357,12 @@ const useDashboardInitialization = () => {
           dashboard: <HfmdDashboard title="hfmd" />,
         },
         {
-          name: "variantSarCov2",
-          dashboard: <div />,
+          name: "variantSarsCov2",
+          dashboard: <VariantSarsCov2Dashboard title="variantSarsCov2" />,
         },
         {
           name: "caseCovid19",
-          dashboard: <div />,
+          dashboard: <CaseCovid19Dashboard title="caseCovid19" />,
         },
       ];
       setDashboards(dashboards);
