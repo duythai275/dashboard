@@ -4,6 +4,7 @@ import {
   THIS_WEEK,
   LAST_WEEK,
 } from "./dashboards/BulletinDashboard/constants/constants";
+import { caseCovid19Locales } from "./dashboards/CaseCovid19Dashboard/locales";
 import { hmfdLocale } from "./dashboards/HfmdDashboard/locales";
 import { hivLocales } from "./dashboards/HivDashboard/locales";
 
@@ -14,6 +15,7 @@ const locales = [
     translations: [
       ...hivLocales.vi,
       ...hmfdLocale.vi,
+      ...caseCovid19Locales.vi,
       { key: "hiv", value: "Tổng thể chương trình HIV" },
       {
         key: "dashboard1Title",
@@ -216,6 +218,7 @@ const locales = [
     translations: [
       ...hivLocales.en,
       ...hmfdLocale.en,
+      ...caseCovid19Locales.en,
       { key: "hiv", value: "HIV" },
       {
         key: "dashboard1Title",

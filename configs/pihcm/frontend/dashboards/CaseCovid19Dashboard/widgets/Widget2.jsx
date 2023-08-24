@@ -41,6 +41,12 @@ const Widget2 = ({ setLoading }) => {
     (async () => {
       setLoading(true);
 
+      const res = await pull(
+        `/api/analytics.json?dimension=dx:${covid19caseId}&dimension=ou:${southernRegion
+          .map(({ id }) => id)
+          .join(";")}&filter=pe:${2022}`
+      );
+
       const resultReduce = features.reduce((result, feature, idx) => {
         result[feature.id] = Math.round(Math.random() * 1000);
         return result;
@@ -68,5 +74,7 @@ const Widget2 = ({ setLoading }) => {
     )
   );
 };
+
+const covid19caseId = "waN4A6qQwuE";
 
 export default withWidgetChildrenLoader(memo(Widget2));

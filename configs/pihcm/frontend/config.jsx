@@ -15,7 +15,7 @@ import DengueDashboard from "./dashboards/DengueDashboard";
 import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
 import HivDashboard from "./dashboards/HivDashboard/HivDashboard";
 import InfluenzaDashboard from "./dashboards/InfluenzaDashboard";
-import { getMonth, getQuarter, getYear } from "date-fns";
+import { format, getDay, getMonth, getQuarter, getYear } from "date-fns";
 import { MONTHS } from "@/components/PeriodSelector/MonthSelector";
 import moment from "moment";
 import HfmdDashboard from "./dashboards/HfmdDashboard";
@@ -610,6 +610,39 @@ const CustomControlForDiseaseBulletin = () => {
         );
         changeAdditionalStateProperty(
           "periodForW4",
+          convertToDhis2Period(
+            {
+              year: getYear(new Date()),
+            },
+            "Yearly"
+          )
+        );
+        break;
+      case CASE_COVID19_DASHBOARD_VALUE:
+        changeAdditionalStateProperty("caseCovid19W1Period", {
+          startDate: `${getYear(new Date())}-01-01`,
+          endDate: format(new Date(), "yyyy-MM-dd"),
+        });
+        changeAdditionalStateProperty(
+          "caseCovid19W2Period",
+          convertToDhis2Period(
+            {
+              year: getYear(new Date()),
+            },
+            "Yearly"
+          )
+        );
+        changeAdditionalStateProperty(
+          "caseCovid19W3Period",
+          convertToDhis2Period(
+            {
+              year: getYear(new Date()),
+            },
+            "Yearly"
+          )
+        );
+        changeAdditionalStateProperty(
+          "caseCovid19W4Period",
           convertToDhis2Period(
             {
               year: getYear(new Date()),

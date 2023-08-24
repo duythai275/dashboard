@@ -2,6 +2,7 @@ import BarChart from "@/components/Widgets/BarChart";
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import useMetadataStore from "@/state/metadata";
 import _ from "lodash";
+import { memo } from "react";
 import { shallow } from "zustand/shallow";
 
 const Widget4 = ({ setLoading }) => {
@@ -33,4 +34,4 @@ const Widget4 = ({ setLoading }) => {
   return <BarChart data={barData} />;
 };
 
-export default withWidgetChildrenLoader(Widget4);
+export default withWidgetChildrenLoader(memo(Widget4));
