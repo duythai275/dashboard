@@ -725,7 +725,12 @@ const CustomControlForDiseaseBulletin = () => {
     );
   }
 
-  if (selectedDashboard?.value === HIV_DASHBOARD_VALUE) return null;
+  if (
+    selectedDashboard?.value === HIV_DASHBOARD_VALUE ||
+    selectedDashboard?.value === CASE_COVID19_DASHBOARD_VALUE
+  ) {
+    return null;
+  }
   if (selectedDashboard?.value === HFMD_DASHBOARD_VALUE) {
     return (
       <Box sx={{ alignSelf: "flex-start" }}>
@@ -817,3 +822,4 @@ const DENGUE_DASHBOARD_VALUE = 1;
 const HIV_DASHBOARD_VALUE = 2;
 const INFLUENZA_DASHBOARD_VALUE = 3;
 const HFMD_DASHBOARD_VALUE = 4;
+const CASE_COVID19_DASHBOARD_VALUE = 6;
