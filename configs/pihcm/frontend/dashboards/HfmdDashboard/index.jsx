@@ -21,7 +21,7 @@ const HfmdDashboard = () => {
     (state) => ({ additionalState: state.additionalState }),
     shallow
   );
-  const { selectedOrgUnitInfluenza } = additionalState;
+  const { selectedOrgUnitForHfmdDashboard } = additionalState;
   // console.log(generatePastelColors("#ff0000", 6));
   return (
     <ReactGridLayout
@@ -52,7 +52,9 @@ const HfmdDashboard = () => {
         widgetIndex={0}
         childrenWidgets={[
           {
-            title: t("widget1HfmdDashboardTitle"),
+            title: t("widget1HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <Widget1 />,
           },
         ]}
@@ -63,7 +65,9 @@ const HfmdDashboard = () => {
         widgetIndex={1}
         childrenWidgets={[
           {
-            title: t("widget2HfmdDashboardTitle"),
+            title: t("widget2HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <Widget2 />,
           },
         ]}
@@ -74,7 +78,9 @@ const HfmdDashboard = () => {
         widgetIndex={2}
         childrenWidgets={[
           {
-            title: t("widget3HfmdDashboardTitle"),
+            title: t("widget3HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <Widget3 />,
           },
         ]}
@@ -85,7 +91,9 @@ const HfmdDashboard = () => {
         widgetIndex={3}
         childrenWidgets={[
           {
-            title: t("widget4HfmdDashboardTitle"),
+            title: t("widget4HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <div>widget4</div>,
           },
         ]}
@@ -96,7 +104,9 @@ const HfmdDashboard = () => {
         widgetIndex={4}
         childrenWidgets={[
           {
-            title: t("widget5HfmdDashboardTitle"),
+            title: t("widget5HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <div>widget5</div>,
           },
         ]}
@@ -107,7 +117,9 @@ const HfmdDashboard = () => {
         widgetIndex={5}
         childrenWidgets={[
           {
-            title: t("widget6HfmdDashboardTitle"),
+            title: t("widget6HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <Widget6 />,
           },
         ]}
@@ -120,6 +132,7 @@ const HfmdDashboard = () => {
           {
             title: t("widget7HfmdDashboardTitle", {
               total: additionalState.widget7HfmdDashboardTotal || 0,
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
             }),
             widget: <Widget7 />,
           },
@@ -133,6 +146,7 @@ const HfmdDashboard = () => {
           {
             title: t("widget8HfmdDashboardTitle", {
               total: additionalState.widget8HfmdDashboardTotal || 0,
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
             }),
             widget: <Widget8 />,
           },
@@ -144,7 +158,9 @@ const HfmdDashboard = () => {
         widgetIndex={8}
         childrenWidgets={[
           {
-            title: t("widget9HfmdDashboardTitle"),
+            title: t("widget9HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <Widget9 />,
           },
         ]}
@@ -155,7 +171,9 @@ const HfmdDashboard = () => {
         widgetIndex={9}
         childrenWidgets={[
           {
-            title: t("widget10HfmdDashboardTitle"),
+            title: t("widget10HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <Widget10 />,
           },
         ]}
@@ -166,7 +184,9 @@ const HfmdDashboard = () => {
         widgetIndex={10}
         childrenWidgets={[
           {
-            title: t("widget11HfmdDashboardTitle"),
+            title: t("widget11HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <Widget11 />,
           },
         ]}
@@ -177,7 +197,9 @@ const HfmdDashboard = () => {
         widgetIndex={11}
         childrenWidgets={[
           {
-            title: t("widget12HfmdDashboardTitle"),
+            title: t("widget12HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <Widget12 />,
           },
         ]}
@@ -188,7 +210,9 @@ const HfmdDashboard = () => {
         widgetIndex={12}
         childrenWidgets={[
           {
-            title: t("widget13HfmdDashboardTitle"),
+            title: t("widget13HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <div>widget13</div>,
           },
         ]}
@@ -199,7 +223,9 @@ const HfmdDashboard = () => {
         widgetIndex={13}
         childrenWidgets={[
           {
-            title: t("widget14HfmdDashboardTitle"),
+            title: t("widget14HfmdDashboardTitle", {
+              orgUnit: selectedOrgUnitForHfmdDashboard?.displayName || "",
+            }),
             widget: <div>widget14</div>,
           },
         ]}
