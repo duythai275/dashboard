@@ -2,10 +2,10 @@ import { useTranslation } from "react-i18next";
 import moment from "moment";
 import CustomSelect from "./CustomSelect";
 
-const YearSelector = ({ change, period }) => {
+const YearSelector = ({ change, period, min, max }) => {
   const { t } = useTranslation();
-  const startYear = 1900;
-  const currentYear = moment().year();
+  const startYear = min || 1900;
+  const currentYear = max || moment().year();
   let valueSet = [];
 
   for (let i = currentYear; i >= startYear; i--) {

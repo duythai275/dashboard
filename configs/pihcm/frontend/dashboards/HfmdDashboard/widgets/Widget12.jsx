@@ -24,7 +24,7 @@ const Widget12 = ({ setLoading }) => {
   );
 
   const [data, setData] = useState(null);
-  const { selectedPeriod } = additionalState;
+  const { selectedPeriod, selectedOrgUnitForHfmdDashboard } = additionalState;
 
   const pcrOptions = useMemo(() => {
     if (!dataElementsHfmd) {
@@ -62,7 +62,9 @@ const Widget12 = ({ setLoading }) => {
       const result = await pull(
         `/api/analytics/events/query/AczMEDapsFu.json?dimension=pe:${listPeriod.join(
           ";"
-        )}&dimension=S5NIYcQo2pz.XpCLafoPAhT&stage=S5NIYcQo2pz&displayProperty=NAME&totalPages=false&outputType=EVENT`
+        )}&dimension=ou:${
+          selectedOrgUnitForHfmdDashboard.id
+        }&dimension=S5NIYcQo2pz.XpCLafoPAhT&stage=S5NIYcQo2pz&displayProperty=NAME&paging=false&outputType=EVENT`
       );
       if (result) {
         const pcrIndex = findHeaderIndex(
@@ -74,7 +76,7 @@ const Widget12 = ({ setLoading }) => {
           listWeek.map((week) => {
             const totalInWeek = result.rows
               .map((row) => {
-                if (getISOWeek(row[eventDateIndex]) === week) {
+                if (getISOWeek(new Date(row[eventDateIndex])) === week) {
                   return row;
                 }
                 return null;
@@ -83,8 +85,8 @@ const Widget12 = ({ setLoading }) => {
             const caseValue = result.rows
               .map((row) => {
                 if (
-                  getISOWeek(row[eventDateIndex]) === week &&
-                  getYear(row[pcrIndex]) === option.code
+                  getISOWeek(new Date(row[eventDateIndex])) === week &&
+                  row[pcrIndex] === option.code
                 ) {
                   return row;
                 }
@@ -92,7 +94,10 @@ const Widget12 = ({ setLoading }) => {
               })
               .filter((item) => item);
 
-            return ((caseValue.length / totalInWeek.length) * 100).toFixed(1);
+            return (
+              ((caseValue.length / totalInWeek.length) * 100).toFixed(1) * 1 ||
+              0
+            );
           })
         );
         setData(dataResult);
@@ -105,50 +110,11 @@ const Widget12 = ({ setLoading }) => {
   };
 
   useEffect(() => {
-    if (!selectedPeriod) return;
+    if (!selectedPeriod || !selectedOrgUnitForHfmdDashboard) return;
 
     getData();
-  }, [selectedPeriod]);
-  const dataDummy = useMemo(() => {
-    return pcrOptions
-      .reduce((prev, curr) => {
-        if (prev.length === 0) {
-          let array = [];
+  }, [selectedPeriod, selectedOrgUnitForHfmdDashboard]);
 
-          listWeek.forEach((week) => {
-            array = [...array, _.random(1, 100, true).toFixed(1)];
-          });
-          return [...prev, array];
-        }
-        if (prev.length === pcrOptions.length - 1) {
-          let array = [];
-
-          listWeek.forEach((week, index) => {
-            array = [
-              ...array,
-              (
-                100 - prev.reduce((prev1, curr1) => prev1 + curr1[index] * 1, 0)
-              ).toFixed(1),
-            ];
-          });
-          return [...prev, array];
-        }
-        let array = [];
-
-        listWeek.forEach((week, index) => {
-          array = [
-            ...array,
-            _.random(
-              1,
-              100 - prev.reduce((prev1, curr1) => prev1 + curr1[index] * 1, 0),
-              true
-            ).toFixed(1),
-          ];
-        });
-        return [...prev, array];
-      }, [])
-      .map((item) => item.map((item1) => item1 * 1));
-  }, [pcrOptions, listWeek]);
   if (!data) return null;
   const options = {
     responsive: true,
@@ -208,8 +174,7 @@ const Widget12 = ({ setLoading }) => {
           backgroundColor: pcrOptions[index].style.color,
           borderColor: pcrOptions[index].style.color,
 
-          //   data: data[index],
-          data: dataDummy[index],
+          data: data[index],
         })),
       }}
     />

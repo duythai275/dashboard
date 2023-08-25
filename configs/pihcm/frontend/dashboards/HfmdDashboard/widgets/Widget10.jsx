@@ -1,6 +1,6 @@
 import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenLoader";
 import { pull } from "@/utils/fetch";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useDashboardStore from "@/state/dashboard";
 import { shallow } from "zustand/shallow";
@@ -16,15 +16,29 @@ const Widget10 = ({ setLoading }) => {
     (state) => ({ additionalState: state.additionalState }),
     shallow
   );
-  const { orgUnitsHfmd } = useMetadataStore(
+  const { orgUnits } = useMetadataStore(
     (state) => ({
-      orgUnitsHfmd: state.orgUnitsHfmd,
+      orgUnits: state.communes,
     }),
     shallow
   );
 
   const [data, setData] = useState(null);
-  const { selectedPeriod } = additionalState;
+  const { selectedPeriod, selectedOrgUnitForHfmdDashboard } = additionalState;
+
+  const listOrgUnit = useMemo(() => {
+    if (!selectedOrgUnitForHfmdDashboard || !orgUnits) return null;
+    const result = [];
+    orgUnits.forEach((ou) => {
+      if (ou.parent?.id === selectedOrgUnitForHfmdDashboard.id) {
+        result.push(ou);
+      }
+    });
+    if (!result.length) {
+      return [selectedOrgUnitForHfmdDashboard];
+    }
+    return result;
+  }, [selectedOrgUnitForHfmdDashboard, orgUnits]);
 
   const getData = async () => {
     try {
@@ -47,11 +61,11 @@ const Widget10 = ({ setLoading }) => {
         }
       });
       const result = await pull(
-        `/api/analytics/events/query/AczMEDapsFu.json?dimension=ou:${orgUnitsHfmd
+        `/api/analytics/events/query/AczMEDapsFu.json?dimension=ou:${listOrgUnit
           .map((ou) => ou.id)
           .join(";")}&dimension=pe:${listPeriod.join(
           ";"
-        )}&dimension=S5NIYcQo2pz.Qhl25WHDjxK&stage=S5NIYcQo2pz&displayProperty=NAME&totalPages=false&outputType=EVENT`
+        )}&dimension=S5NIYcQo2pz.Qhl25WHDjxK&stage=S5NIYcQo2pz&displayProperty=NAME&paging=false&outputType=EVENT`
       );
       if (result) {
         const diseaseClassificationIndex = findHeaderIndex(
@@ -63,10 +77,16 @@ const Widget10 = ({ setLoading }) => {
         const rowFiltered = result.rows.filter((row) =>
           ["2B", "3", "4"].includes(row[diseaseClassificationIndex])
         );
-        const dataResult = orgUnitsHfmd.map((ou) => {
+        const dataResult = listOrgUnit.map((ou) => {
           const caseValue = rowFiltered
             .map((row) => {
-              if (row[ouIndex] === ou.id) {
+              const targetOrgUnit = orgUnits.find(
+                (item) => item.id === row[ouIndex]
+              );
+              if (
+                targetOrgUnit.ancestors.find((item) => item.id === ou.id) ||
+                targetOrgUnit.id === ou.id
+              ) {
                 return row;
               }
               return null;
@@ -85,10 +105,10 @@ const Widget10 = ({ setLoading }) => {
   };
 
   useEffect(() => {
-    if (!selectedPeriod) return;
+    if (!selectedPeriod || !listOrgUnit) return;
 
     getData();
-  }, [selectedPeriod]);
+  }, [selectedPeriod, listOrgUnit]);
   if (!data) return null;
   const options = {
     responsive: true,
@@ -121,18 +141,13 @@ const Widget10 = ({ setLoading }) => {
       data={{
         labels: data.length
           ? data.map((item) => item.ou.displayName)
-          : orgUnitsHfmd.map((ou) => ou.displayName),
+          : listOrgUnit.map((ou) => ou.displayName),
         datasets: [
           {
             type: "bar",
             label: "",
             backgroundColor: "#4F81BC",
-            // data: data.map(item => item.case),
-            data: _.orderBy(
-              orgUnitsHfmd.map((ou) => _.random(100)),
-              [],
-              "desc"
-            ),
+            data: data.map((item) => item.case),
           },
         ],
       }}

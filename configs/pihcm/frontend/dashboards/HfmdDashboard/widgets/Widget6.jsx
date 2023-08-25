@@ -17,7 +17,7 @@ const Widget6 = ({ setLoading }) => {
   );
 
   const [data, setData] = useState(null);
-  const { selectedPeriod } = additionalState;
+  const { selectedPeriod, selectedOrgUnitForHfmdDashboard } = additionalState;
 
   const getData = async () => {
     try {
@@ -42,7 +42,9 @@ const Widget6 = ({ setLoading }) => {
       const result = await pull(
         `/api/analytics/events/query/AczMEDapsFu.json?&dimension=pe:${listPeriod.join(
           ";"
-        )}&dimension=cbLhNJnxYzi.FFMXHo13JGY&dimension=cbLhNJnxYzi.pbfShtLC9RH&stage=S5NIYcQo2pz&displayProperty=NAME&totalPages=false&outputType=EVENT`
+        )}&dimension=ou:${
+          selectedOrgUnitForHfmdDashboard.id
+        }&dimension=cbLhNJnxYzi.FFMXHo13JGY&dimension=cbLhNJnxYzi.pbfShtLC9RH&stage=S5NIYcQo2pz&displayProperty=NAME&paging=false&outputType=EVENT`
       );
       if (result) {
         const dateOfSampleIndex = findHeaderIndex(
@@ -103,10 +105,10 @@ const Widget6 = ({ setLoading }) => {
   };
 
   useEffect(() => {
-    if (!selectedPeriod) return;
+    if (!selectedPeriod || !selectedOrgUnitForHfmdDashboard) return;
 
     getData();
-  }, [selectedPeriod]);
+  }, [selectedPeriod, selectedOrgUnitForHfmdDashboard]);
 
   if (!data) return null;
   const options = {
@@ -138,7 +140,7 @@ const Widget6 = ({ setLoading }) => {
     <BarChart
       customOptions={options}
       data={{
-        labels: [1, 2, 3, 4, 5, "5+"].map((item) => `day${item}`),
+        labels: [1, 2, 3, 4, 5, "5+"].map((item) => `${t("day")} ${item}`),
         datasets: [
           {
             type: "bar",
@@ -151,8 +153,7 @@ const Widget6 = ({ setLoading }) => {
               "#DA9795",
               "#604A7B",
             ],
-            // data: [1,2,3,4,5,"5+"].map(item => data[item]),
-            data: [1, 2, 3, 4, 5, "5+"].map((ou) => _.random(50)),
+            data: [1, 2, 3, 4, 5, "5+"].map((item) => data[item]),
             maxBarThickness: 120,
           },
         ],

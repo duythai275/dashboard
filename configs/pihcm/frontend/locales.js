@@ -6,6 +6,7 @@ import {
 } from "./dashboards/BulletinDashboard/constants/constants";
 import { hmfdLocale } from "./dashboards/HfmdDashboard/locales";
 import { hivLocales } from "./dashboards/HivDashboard/locales";
+import { variantSarsCov2Locales } from "./dashboards/VariantSarsCov2Dashboard/locales";
 
 const locales = [
   {
@@ -14,6 +15,7 @@ const locales = [
     translations: [
       ...hivLocales.vi,
       ...hmfdLocale.vi,
+      ...variantSarsCov2Locales.vi,
       { key: "hiv", value: "Tổng thể chương trình HIV" },
       {
         key: "dashboard1Title",
@@ -216,6 +218,7 @@ const locales = [
     translations: [
       ...hivLocales.en,
       ...hmfdLocale.en,
+      ...variantSarsCov2Locales.en,
       { key: "hiv", value: "HIV" },
       {
         key: "dashboard1Title",

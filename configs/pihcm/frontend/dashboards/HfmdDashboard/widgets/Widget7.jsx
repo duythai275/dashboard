@@ -27,7 +27,7 @@ const Widget7 = ({ setLoading }) => {
   );
 
   const [data, setData] = useState(null);
-  const { selectedPeriod } = additionalState;
+  const { selectedPeriod, selectedOrgUnitForHfmdDashboard } = additionalState;
 
   const diseaseClassificationOptions = useMemo(() => {
     if (!dataElementsHfmd) {
@@ -60,7 +60,9 @@ const Widget7 = ({ setLoading }) => {
       const result = await pull(
         `/api/analytics/events/query/AczMEDapsFu.json?dimension=pe:${listPeriod.join(
           ";"
-        )}&dimension=S5NIYcQo2pz.Qhl25WHDjxK&stage=S5NIYcQo2pz&displayProperty=NAME&totalPages=false&outputType=EVENT`
+        )}&dimension=ou:${
+          selectedOrgUnitForHfmdDashboard.id
+        }&dimension=S5NIYcQo2pz.Qhl25WHDjxK&stage=S5NIYcQo2pz&displayProperty=NAME&paging=false&outputType=EVENT`
       );
       if (result) {
         const diseaseClassificationIndex = findHeaderIndex(
@@ -79,7 +81,9 @@ const Widget7 = ({ setLoading }) => {
 
           return {
             option,
-            case: ((caseValue.length / result.rows.length) * 100).toFixed(1),
+            case:
+              ((caseValue.length / result.rows.length) * 100).toFixed(1) * 1 ||
+              0,
           };
         });
 
@@ -97,9 +101,9 @@ const Widget7 = ({ setLoading }) => {
   };
 
   useEffect(() => {
-    if (!selectedPeriod) return;
+    if (!selectedPeriod || !selectedOrgUnitForHfmdDashboard) return;
     getData();
-  }, [selectedPeriod]);
+  }, [selectedPeriod, selectedOrgUnitForHfmdDashboard]);
 
   if (!data) return null;
   const options = {
@@ -153,28 +157,7 @@ const Widget7 = ({ setLoading }) => {
             backgroundColor: diseaseClassificationOptions.map(
               (item) => item.style.color
             ),
-            // data: data.map(item => item.case),
-            data: diseaseClassificationOptions
-              .reduce((prev, curr) => {
-                if (prev.length === 0) {
-                  return [...prev, _.random(1, 100, true)];
-                }
-                if (prev.length === diseaseClassificationOptions.length - 1) {
-                  return [
-                    ...prev,
-                    100 - prev.reduce((prev1, curr1) => prev1 + curr1, 0),
-                  ];
-                }
-                return [
-                  ...prev,
-                  _.random(
-                    1,
-                    100 - prev.reduce((prev1, curr1) => prev1 + curr1, 0),
-                    true
-                  ),
-                ];
-              }, [])
-              .map((item) => item.toFixed(1)),
+            data: data.map((item) => item.case),
           },
         ],
       }}

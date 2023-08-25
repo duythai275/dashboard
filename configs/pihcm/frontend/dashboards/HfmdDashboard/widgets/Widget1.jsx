@@ -17,7 +17,7 @@ const Widget1 = ({ setLoading }) => {
   );
   const [data, setData] = useState(null);
 
-  const { selectedPeriod } = additionalState;
+  const { selectedPeriod, selectedOrgUnitForHfmdDashboard } = additionalState;
 
   const getData = async () => {
     try {
@@ -45,35 +45,43 @@ const Widget1 = ({ setLoading }) => {
       const result = await pull(
         `/api/analytics/events/query/AczMEDapsFu.json?dimension=pe:${listPeriod.join(
           ";"
-        )}&dimension=S5NIYcQo2pz.Tfrvuy0pKlb&stage=S5NIYcQo2pz&displayProperty=NAME&totalPages=false&outputType=EVENT`
+        )}&dimension=ou:${
+          selectedOrgUnitForHfmdDashboard.id
+        }&dimension=S5NIYcQo2pz.Tfrvuy0pKlb&stage=S5NIYcQo2pz&displayProperty=NAME&paging=false&outputType=EVENT`
       );
       if (result) {
-        const eventDateIndex = findHeaderIndex(result.headers, "eventDate");
+        const eventDateIndex = findHeaderIndex(result.headers, "eventdate");
         const statusIndex = findHeaderIndex(
           result.headers,
           "S5NIYcQo2pz.Tfrvuy0pKlb"
         );
-        const dataResult = listPeriod.map((period) => {
-          const caseValue = result.rows
-            .map((row) => {
-              const transformedEventDate = transformDate(row[eventDateIndex]);
-              if (transformedEventDate === period) {
-                return row;
-              }
-              return null;
-            })
-            .filter((item) => item);
-          const deathValue = result.rows
-            .map((row) => {
-              const transformedEventDate = transformDate(row[eventDateIndex]);
-              if (transformedEventDate === period && row[statusIndex] === "2") {
-                return row;
-              }
-              return null;
-            })
-            .filter((item) => item);
-          return { case: caseValue.length, death: deathValue.length };
-        });
+
+        const dataResult = Array(12)
+          .fill(0)
+          .map((item, index) => index)
+          .map((period) => {
+            const caseValue = result.rows
+              .map((row) => {
+                const month = new Date(row[eventDateIndex]).getMonth();
+
+                if (month === period) {
+                  return row;
+                }
+                return null;
+              })
+              .filter((item) => item);
+            const deathValue = result.rows
+              .map((row) => {
+                const month = new Date(row[eventDateIndex]).getMonth();
+
+                if (month === period && row[statusIndex] === "2") {
+                  return row;
+                }
+                return null;
+              })
+              .filter((item) => item);
+            return { case: caseValue.length, death: deathValue.length };
+          });
         setData(dataResult);
       }
     } catch (error) {
@@ -84,10 +92,10 @@ const Widget1 = ({ setLoading }) => {
   };
 
   useEffect(() => {
-    if (!selectedPeriod) return;
+    if (!selectedPeriod || !selectedOrgUnitForHfmdDashboard) return;
 
     getData();
-  }, [selectedPeriod]);
+  }, [selectedPeriod, selectedOrgUnitForHfmdDashboard]);
 
   if (!data) return null;
   const options = {
@@ -158,8 +166,7 @@ const Widget1 = ({ setLoading }) => {
             type: "line",
             label: t("deathCase"),
             backgroundColor: "#BF4F47",
-            // data: data.death,
-            data: months.map((month) => _.random(100)),
+            data: data.map((item) => item.death),
             borderColor: "#BF4F47",
             borderWidth: 4,
           },
@@ -167,8 +174,7 @@ const Widget1 = ({ setLoading }) => {
             type: "bar",
             label: t("case"),
             backgroundColor: "#4F81BC",
-            // data: data.case,
-            data: months.map((month) => _.random(1000)),
+            data: data.map((item) => item.case),
             yAxisID: "y1",
           },
         ],

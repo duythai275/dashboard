@@ -8,14 +8,13 @@ import { useEffect, useMemo } from "react";
 import { getISOWeek } from "date-fns";
 import { Box } from "@mui/material";
 import useDashboardStore from "@/state/dashboard";
+import Widget1 from "./widgets/Widget1";
+import Widget2 from "./widgets/Widget2";
+import Widget3 from "./widgets/Widget3";
+import Widget4 from "./widgets/Widget4";
 
 const VariantSarsCov2Dashboard = () => {
   const { t } = useTranslation();
-  const { additionalState } = useDashboardStore(
-    (state) => ({ additionalState: state.additionalState }),
-    shallow
-  );
-  const { selectedOrgUnitInfluenza } = additionalState;
   return (
     <ReactGridLayout
       isDraggable={false}
@@ -24,13 +23,6 @@ const VariantSarsCov2Dashboard = () => {
         { i: "2", x: 0, y: 50, w: 12, h: 50 },
         { i: "3", x: 0, y: 100, w: 12, h: 50 },
         { i: "4", x: 0, y: 150, w: 12, h: 50 },
-        { i: "5", x: 0, y: 200, w: 12, h: 50 },
-        { i: "6", x: 0, y: 250, w: 12, h: 50 },
-        { i: "7", x: 0, y: 300, w: 12, h: 50 },
-        { i: "8", x: 0, y: 350, w: 12, h: 50 },
-        { i: "9", x: 0, y: 400, w: 12, h: 50 },
-        { i: "10", x: 0, y: 450, w: 12, h: 50 },
-        { i: "11", x: 0, y: 500, w: 12, h: 50 },
       ]}
       cols={12}
       rowHeight={1}
@@ -43,7 +35,7 @@ const VariantSarsCov2Dashboard = () => {
         childrenWidgets={[
           {
             title: t("widget1VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget1</div>,
+            widget: <Widget1 />,
           },
         ]}
       />
@@ -54,7 +46,7 @@ const VariantSarsCov2Dashboard = () => {
         childrenWidgets={[
           {
             title: t("widget2VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget2</div>,
+            widget: <Widget2 />,
           },
         ]}
       />
@@ -65,7 +57,7 @@ const VariantSarsCov2Dashboard = () => {
         childrenWidgets={[
           {
             title: t("widget3VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget3</div>,
+            widget: <Widget3 />,
           },
         ]}
       />
@@ -76,84 +68,7 @@ const VariantSarsCov2Dashboard = () => {
         childrenWidgets={[
           {
             title: t("widget4VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget4</div>,
-          },
-        ]}
-      />
-      <WidgetContainer
-        key="5"
-        dashboardIndex={5}
-        widgetIndex={4}
-        childrenWidgets={[
-          {
-            title: t("widget5VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget5</div>,
-          },
-        ]}
-      />
-      <WidgetContainer
-        key="6"
-        dashboardIndex={5}
-        widgetIndex={5}
-        childrenWidgets={[
-          {
-            title: t("widget6VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget6</div>,
-          },
-        ]}
-      />
-      <WidgetContainer
-        key="7"
-        dashboardIndex={5}
-        widgetIndex={6}
-        childrenWidgets={[
-          {
-            title: t("widget7VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget7</div>,
-          },
-        ]}
-      />
-      <WidgetContainer
-        key="8"
-        dashboardIndex={5}
-        widgetIndex={7}
-        childrenWidgets={[
-          {
-            title: t("widget8VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget8</div>,
-          },
-        ]}
-      />
-      <WidgetContainer
-        key="9"
-        dashboardIndex={5}
-        widgetIndex={8}
-        childrenWidgets={[
-          {
-            title: t("widget9VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget9</div>,
-          },
-        ]}
-      />
-      <WidgetContainer
-        key="10"
-        dashboardIndex={5}
-        widgetIndex={9}
-        childrenWidgets={[
-          {
-            title: t("widget10VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget10</div>,
-          },
-        ]}
-      />
-      <WidgetContainer
-        key="11"
-        dashboardIndex={5}
-        widgetIndex={10}
-        childrenWidgets={[
-          {
-            title: t("widget11VariantSarsCov2DashboardTitle"),
-            widget: <div>Widget11</div>,
+            widget: <Widget4 />,
           },
         ]}
       />

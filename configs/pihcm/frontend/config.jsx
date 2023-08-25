@@ -21,6 +21,7 @@ import moment from "moment";
 import HfmdDashboard from "./dashboards/HfmdDashboard";
 import CaseCovid19Dashboard from "./dashboards/CaseCovid19Dashboard";
 import VariantSarsCov2Dashboard from "./dashboards/VariantSarsCov2Dashboard";
+import WeekRangeSelector from "./dashboards/VariantSarsCov2Dashboard/Components/WeekRangeSelector";
 
 const languages = locales.map((locale) => ({
   name: locale.name,
@@ -106,6 +107,9 @@ const useDashboardInitialization = () => {
         pull(
           "/api/programs/AczMEDapsFu?fields=organisationUnits[path,children,id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id,name]],programStages[programStageDataElements[dataElement[id,name,optionSet[options[id,name,code,displayName,style]]]]]&paging=false"
         ),
+        pull(
+          "/api/programs/E1Vl6am7tTX?fields=organisationUnits[path,children,id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id,name]],programStages[programStageDataElements[dataElement[id,name,optionSet[options[id,name,code,displayName,style]]]]]&paging=false"
+        ),
       ]);
 
       setMetadata("diseases", results[0].optionSets[0].options);
@@ -117,6 +121,12 @@ const useDashboardInitialization = () => {
       setMetadata(
         "dataElementsHfmd",
         results[5].programStages[0].programStageDataElements.map(
+          (item) => item.dataElement
+        )
+      );
+      setMetadata(
+        "dataElementsVariantSarsCov2",
+        results[6].programStages[0].programStageDataElements.map(
           (item) => item.dataElement
         )
       );
@@ -300,27 +310,6 @@ const useDashboardInitialization = () => {
             {
               selectedChildren: 0,
             },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
-            {
-              selectedChildren: 0,
-            },
           ],
         },
         {
@@ -381,10 +370,11 @@ const useDashboardInitialization = () => {
 
 const CustomControlForDiseaseBulletin = () => {
   const { t } = useTranslation();
-  const { orgUnits, orgUnitInfluenza } = useMetadataStore(
+  const { orgUnits, orgUnitInfluenza, orgUnitsHfmd } = useMetadataStore(
     (state) => ({
       orgUnits: state.communes,
       orgUnitInfluenza: state.orgUnitInfluenza,
+      orgUnitsHfmd: state.orgUnitsHfmd,
     }),
     shallow
   );
@@ -577,6 +567,32 @@ const CustomControlForDiseaseBulletin = () => {
       case HFMD_DASHBOARD_VALUE:
         setPeriodHfmd([2023]);
         changeAdditionalStateProperty("selectedPeriod", [2023]);
+        changeAdditionalStateProperty(
+          "selectedOrgUnitForHfmdDashboard",
+          orgUnits.length ? orgUnits.find((ou) => ou.level === 1) : null
+        );
+        break;
+      case VARIANT_SARS_COV_2_DASHBOARD_VALUE:
+        changeAdditionalStateProperty(
+          "selectedPeriodForVariantSarsCov2Dashboard",
+          {
+            start: {
+              year: moment().year(),
+              week: 1,
+              weekName: t("week") + " " + 1,
+            },
+            end: {
+              year: moment().year(),
+              week: moment().week(),
+              weekName: t("week") + " " + moment().week(),
+            },
+          }
+        );
+        changeAdditionalStateProperty(
+          "selectedOrgUnitForVariantSarsCov2Dashboard",
+          orgUnits.length ? orgUnits.find((ou) => ou.level === 1) : null
+        );
+
         break;
       case HIV_DASHBOARD_VALUE:
         changeAdditionalStateProperty(
@@ -727,8 +743,24 @@ const CustomControlForDiseaseBulletin = () => {
 
   if (selectedDashboard?.value === HIV_DASHBOARD_VALUE) return null;
   if (selectedDashboard?.value === HFMD_DASHBOARD_VALUE) {
+    const stringifiedAssignedOrgUnits = orgUnitsHfmd
+      .map((aou) => aou.path)
+      .join(";");
+    const filtered = orgUnits.filter((ou) => {
+      return stringifiedAssignedOrgUnits.includes(ou.id);
+    });
     return (
-      <Box sx={{ alignSelf: "flex-start" }}>
+      <Box sx={{ alignSelf: "flex-start", display: "flex", gap: "10px" }}>
+        <OrgUnitSelector
+          orgUnits={filtered}
+          initialOrgUnit={filtered.find((ou) => ou.level === 1)}
+          accept={(orgUnit) => {
+            changeAdditionalStateProperty(
+              "selectedOrgUnitForHfmdDashboard",
+              orgUnit
+            );
+          }}
+        />
         <Autocomplete
           multiple
           disableClearable={true}
@@ -794,6 +826,23 @@ const CustomControlForDiseaseBulletin = () => {
       </Box>
     );
   }
+  if (selectedDashboard?.value === VARIANT_SARS_COV_2_DASHBOARD_VALUE) {
+    return (
+      <Box sx={{ display: "flex", gap: "10px" }}>
+        <OrgUnitSelector
+          orgUnits={orgUnits.filter((ou) => ou.level === 1 || ou.level === 2)}
+          initialOrgUnit={orgUnits.find((ou) => ou.level === 1)}
+          accept={(orgUnit) => {
+            changeAdditionalStateProperty(
+              "selectedOrgUnitForVariantSarsCov2Dashboard",
+              orgUnit
+            );
+          }}
+        />
+        <WeekRangeSelector initValue="selectedPeriodForVariantSarsCov2Dashboard" />
+      </Box>
+    );
+  }
 
   return (
     <Button
@@ -817,3 +866,4 @@ const DENGUE_DASHBOARD_VALUE = 1;
 const HIV_DASHBOARD_VALUE = 2;
 const INFLUENZA_DASHBOARD_VALUE = 3;
 const HFMD_DASHBOARD_VALUE = 4;
+const VARIANT_SARS_COV_2_DASHBOARD_VALUE = 5;

@@ -17,7 +17,7 @@ const Widget9 = ({ setLoading }) => {
   );
 
   const [data, setData] = useState(null);
-  const { selectedPeriod } = additionalState;
+  const { selectedPeriod, selectedOrgUnitForHfmdDashboard } = additionalState;
 
   const listWeek = useMemo(() => {
     return getListWeek(selectedPeriod).map((item) => item + 1);
@@ -46,7 +46,9 @@ const Widget9 = ({ setLoading }) => {
       const result = await pull(
         `/api/analytics/events/query/AczMEDapsFu.json?dimension=pe:${listPeriod.join(
           ";"
-        )}&dimension=S5NIYcQo2pz.Qhl25WHDjxK&stage=S5NIYcQo2pz&displayProperty=NAME&totalPages=false&outputType=EVENT`
+        )}&dimension=ou:${
+          selectedOrgUnitForHfmdDashboard.id
+        }&dimension=S5NIYcQo2pz.Qhl25WHDjxK&stage=S5NIYcQo2pz&displayProperty=NAME&paging=false&outputType=EVENT`
       );
       if (result) {
         const diseaseClassificationIndex = findHeaderIndex(
@@ -72,8 +74,8 @@ const Widget9 = ({ setLoading }) => {
               const caseValue = rowFiltered
                 .map((row) => {
                   if (
-                    getISOWeek(row[eventDateIndex]) === week &&
-                    getYear(row[eventDateIndex]) === period
+                    getISOWeek(new Date(row[eventDateIndex])) === week &&
+                    getYear(new Date(row[eventDateIndex])) === period
                   ) {
                     return row;
                   }
@@ -95,10 +97,10 @@ const Widget9 = ({ setLoading }) => {
   };
 
   useEffect(() => {
-    if (!selectedPeriod) return;
+    if (!selectedPeriod || !selectedOrgUnitForHfmdDashboard) return;
 
     getData();
-  }, [selectedPeriod]);
+  }, [selectedPeriod, selectedOrgUnitForHfmdDashboard]);
   if (!data) return null;
   const options = {
     responsive: true,
@@ -137,21 +139,7 @@ const Widget9 = ({ setLoading }) => {
           backgroundColor: COLORS[index],
           borderColor: COLORS[index],
 
-          // data: data[index],
-          data: listWeek
-            .map((week) => {
-              if (
-                period === new Date().getFullYear() &&
-                week > getISOWeek(new Date())
-              ) {
-                return null;
-              }
-              if (getISOWeeksInYear(period) < week) {
-                return null;
-              }
-              return _.random(100);
-            })
-            .filter((item) => item === 0 || item),
+          data: data[index],
         })),
       }}
     />
