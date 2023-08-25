@@ -15,7 +15,7 @@ import DengueDashboard from "./dashboards/DengueDashboard";
 import OrgUnitSelector from "@/components/OrgUnitSelector/OrgUnitSelector";
 import HivDashboard from "./dashboards/HivDashboard/HivDashboard";
 import InfluenzaDashboard from "./dashboards/InfluenzaDashboard";
-import { getMonth, getQuarter, getYear } from "date-fns";
+import { format, getDay, getMonth, getQuarter, getYear } from "date-fns";
 import { MONTHS } from "@/components/PeriodSelector/MonthSelector";
 import moment from "moment";
 import HfmdDashboard from "./dashboards/HfmdDashboard";
@@ -634,6 +634,39 @@ const CustomControlForDiseaseBulletin = () => {
           )
         );
         break;
+      case CASE_COVID19_DASHBOARD_VALUE:
+        changeAdditionalStateProperty("caseCovid19W1Period", {
+          startDate: `${getYear(new Date())}-01-01`,
+          endDate: format(new Date(), "yyyy-MM-dd"),
+        });
+        changeAdditionalStateProperty(
+          "caseCovid19W2Period",
+          convertToDhis2Period(
+            {
+              year: getYear(new Date()),
+            },
+            "Yearly"
+          )
+        );
+        changeAdditionalStateProperty(
+          "caseCovid19W3Period",
+          convertToDhis2Period(
+            {
+              year: getYear(new Date()),
+            },
+            "Yearly"
+          )
+        );
+        changeAdditionalStateProperty(
+          "caseCovid19W4Period",
+          convertToDhis2Period(
+            {
+              year: getYear(new Date()),
+            },
+            "Yearly"
+          )
+        );
+        break;
       default:
         break;
     }
@@ -741,7 +774,12 @@ const CustomControlForDiseaseBulletin = () => {
     );
   }
 
-  if (selectedDashboard?.value === HIV_DASHBOARD_VALUE) return null;
+  if (
+    selectedDashboard?.value === HIV_DASHBOARD_VALUE ||
+    selectedDashboard?.value === CASE_COVID19_DASHBOARD_VALUE
+  ) {
+    return null;
+  }
   if (selectedDashboard?.value === HFMD_DASHBOARD_VALUE) {
     const stringifiedAssignedOrgUnits = orgUnitsHfmd
       .map((aou) => aou.path)
@@ -867,3 +905,4 @@ const HIV_DASHBOARD_VALUE = 2;
 const INFLUENZA_DASHBOARD_VALUE = 3;
 const HFMD_DASHBOARD_VALUE = 4;
 const VARIANT_SARS_COV_2_DASHBOARD_VALUE = 5;
+const CASE_COVID19_DASHBOARD_VALUE = 6;
