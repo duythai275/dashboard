@@ -26,21 +26,37 @@ const HfmdDashboard = () => {
   return (
     <ReactGridLayout
       isDraggable={false}
+      // layout={[
+      //   { i: "1", x: 0, y: 0, w: 12, h: 50 },
+      //   { i: "2", x: 0, y: 50, w: 12, h: 50 },
+      //   { i: "3", x: 0, y: 100, w: 12, h: 50 },
+      //   { i: "4", x: 0, y: 150, w: 6, h: 50 },
+      //   { i: "5", x: 6, y: 150, w: 6, h: 50 },
+      //   { i: "6", x: 0, y: 200, w: 12, h: 50 },
+      //   { i: "7", x: 0, y: 250, w: 6, h: 50 },
+      //   { i: "8", x: 6, y: 250, w: 6, h: 50 },
+      //   { i: "9", x: 0, y: 300, w: 12, h: 50 },
+      //   { i: "10", x: 0, y: 350, w: 12, h: 50 },
+      //   { i: "11", x: 0, y: 400, w: 12, h: 50 },
+      //   { i: "12", x: 0, y: 450, w: 12, h: 50 },
+      //   { i: "13", x: 0, y: 500, w: 6, h: 50 },
+      //   { i: "14", x: 6, y: 500, w: 6, h: 50 },
+      // ]}
       layout={[
         { i: "1", x: 0, y: 0, w: 12, h: 50 },
         { i: "2", x: 0, y: 50, w: 12, h: 50 },
         { i: "3", x: 0, y: 100, w: 12, h: 50 },
-        { i: "4", x: 0, y: 150, w: 6, h: 50 },
-        { i: "5", x: 6, y: 150, w: 6, h: 50 },
-        { i: "6", x: 0, y: 200, w: 12, h: 50 },
-        { i: "7", x: 0, y: 250, w: 6, h: 50 },
-        { i: "8", x: 6, y: 250, w: 6, h: 50 },
-        { i: "9", x: 0, y: 300, w: 12, h: 50 },
-        { i: "10", x: 0, y: 350, w: 12, h: 50 },
-        { i: "11", x: 0, y: 400, w: 12, h: 50 },
-        { i: "12", x: 0, y: 450, w: 12, h: 50 },
-        { i: "13", x: 0, y: 500, w: 6, h: 50 },
-        { i: "14", x: 6, y: 500, w: 6, h: 50 },
+        // { i: "4", x: 0, y: 150, w: 6, h: 50 },
+        // { i: "5", x: 6, y: 150, w: 6, h: 50 },
+        { i: "4", x: 0, y: 150, w: 12, h: 50 },
+        { i: "5", x: 0, y: 200, w: 6, h: 50 },
+        { i: "6", x: 6, y: 200, w: 6, h: 50 },
+        { i: "7", x: 0, y: 250, w: 12, h: 50 },
+        { i: "8", x: 0, y: 300, w: 12, h: 50 },
+        { i: "9", x: 0, y: 350, w: 12, h: 50 },
+        { i: "10", x: 0, y: 400, w: 12, h: 50 },
+        // { i: "13", x: 0, y: 500, w: 6, h: 50 },
+        // { i: "14", x: 6, y: 500, w: 6, h: 50 },
       ]}
       cols={12}
       rowHeight={1}
@@ -85,7 +101,7 @@ const HfmdDashboard = () => {
           },
         ]}
       />
-      <WidgetContainer
+      {/* <WidgetContainer
         key="4"
         dashboardIndex={4}
         widgetIndex={3}
@@ -110,11 +126,11 @@ const HfmdDashboard = () => {
             widget: <div>widget5</div>,
           },
         ]}
-      />
+      /> */}
       <WidgetContainer
-        key="6"
+        key="4"
         dashboardIndex={4}
-        widgetIndex={5}
+        widgetIndex={3}
         childrenWidgets={[
           {
             title: t("widget6HfmdDashboardTitle", {
@@ -125,9 +141,9 @@ const HfmdDashboard = () => {
         ]}
       />
       <WidgetContainer
-        key="7"
+        key="5"
         dashboardIndex={4}
-        widgetIndex={6}
+        widgetIndex={4}
         childrenWidgets={[
           {
             title: t("widget7HfmdDashboardTitle", {
@@ -139,9 +155,9 @@ const HfmdDashboard = () => {
         ]}
       />
       <WidgetContainer
-        key="8"
+        key="6"
         dashboardIndex={4}
-        widgetIndex={7}
+        widgetIndex={5}
         childrenWidgets={[
           {
             title: t("widget8HfmdDashboardTitle", {
@@ -153,9 +169,9 @@ const HfmdDashboard = () => {
         ]}
       />
       <WidgetContainer
-        key="9"
+        key="7"
         dashboardIndex={4}
-        widgetIndex={8}
+        widgetIndex={6}
         childrenWidgets={[
           {
             title: t("widget9HfmdDashboardTitle", {
@@ -166,9 +182,9 @@ const HfmdDashboard = () => {
         ]}
       />
       <WidgetContainer
-        key="10"
+        key="8"
         dashboardIndex={4}
-        widgetIndex={9}
+        widgetIndex={7}
         childrenWidgets={[
           {
             title: t("widget10HfmdDashboardTitle", {
@@ -179,9 +195,9 @@ const HfmdDashboard = () => {
         ]}
       />
       <WidgetContainer
-        key="11"
+        key="9"
         dashboardIndex={4}
-        widgetIndex={10}
+        widgetIndex={8}
         childrenWidgets={[
           {
             title: t("widget11HfmdDashboardTitle", {
@@ -192,9 +208,9 @@ const HfmdDashboard = () => {
         ]}
       />
       <WidgetContainer
-        key="12"
+        key="10"
         dashboardIndex={4}
-        widgetIndex={11}
+        widgetIndex={9}
         childrenWidgets={[
           {
             title: t("widget12HfmdDashboardTitle", {
@@ -204,7 +220,7 @@ const HfmdDashboard = () => {
           },
         ]}
       />
-      <WidgetContainer
+      {/* <WidgetContainer
         key="13"
         dashboardIndex={4}
         widgetIndex={12}
@@ -229,7 +245,7 @@ const HfmdDashboard = () => {
             widget: <div>widget14</div>,
           },
         ]}
-      />
+      /> */}
     </ReactGridLayout>
   );
 };
