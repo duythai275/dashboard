@@ -99,10 +99,7 @@ const useDashboardInitialization = () => {
         ),
         pull("/api/organisationUnits.geojson?level=2&level=3"),
         pull(
-          "/api/programs/H9DEFEUTxGc?fields=organisationUnits[path,children,id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id,name]]&paging=false"
-        ),
-        pull(
-          `/api/optionSets/GceNmNVLH7Y?fields=id,name,options[id,name,code]&paging=false`
+          "/api/programs/H9DEFEUTxGc?fields=programStages[programStageDataElements[dataElement[id,name,optionSet[options[id,name,code,displayName,style]]]]],organisationUnits[path,children,id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id,name]]&paging=false"
         ),
         pull(
           "/api/programs/AczMEDapsFu?fields=organisationUnits[path,children,id,name,displayName,level,parent,ancestors[id,name,level],organisationUnitGroups[id,name]],programStages[programStageDataElements[dataElement[id,name,optionSet[options[id,name,code,displayName,style]]]]]&paging=false"
@@ -116,17 +113,22 @@ const useDashboardInitialization = () => {
       setMetadata("communes", results[1].organisationUnits);
       setMetadata("orgUnitGeoJson", results[2]);
       setMetadata("orgUnitInfluenza", results[3].organisationUnits);
-      setMetadata("optionsInfluenza", results[4].options);
-      setMetadata("orgUnitsHfmd", results[5].organisationUnits);
+      setMetadata(
+        "optionsInfluenza",
+        results[3].programStages[0].programStageDataElements.find(
+          (item) => item.dataElement.id === "LPXRRN8Uvnj"
+        )
+      );
+      setMetadata("orgUnitsHfmd", results[4].organisationUnits);
       setMetadata(
         "dataElementsHfmd",
-        results[5].programStages[0].programStageDataElements.map(
+        results[4].programStages[0].programStageDataElements.map(
           (item) => item.dataElement
         )
       );
       setMetadata(
         "dataElementsVariantSarsCov2",
-        results[6].programStages[0].programStageDataElements.map(
+        results[5].programStages[0].programStageDataElements.map(
           (item) => item.dataElement
         )
       );
@@ -141,7 +143,14 @@ const useDashboardInitialization = () => {
 
       const optionsInfluenzaColors = [];
 
-      for (let i = 0; i < results[4].options.length; i++) {
+      for (
+        let i = 0;
+        i <
+        results[3].programStages[0].programStageDataElements.find(
+          (item) => item.dataElement.id === "LPXRRN8Uvnj"
+        ).dataElement.optionSet.options.length;
+        i++
+      ) {
         const randomColor =
           "#" + Math.floor(Math.random() * 16777215).toString(16);
         optionsInfluenzaColors.push(randomColor);

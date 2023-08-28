@@ -16,7 +16,7 @@ const Widget1 = ({ setLoading }) => {
   const { optionsInfluenza, optionsInfluenzaColors } = useMetadataStore(
     (state) => ({
       optionsInfluenza: state.optionsInfluenza,
-      optionsInfluenzaColors: state.optionsInfluenzaColors
+      optionsInfluenzaColors: state.optionsInfluenzaColors,
     }),
     shallow
   );
@@ -39,7 +39,13 @@ const Widget1 = ({ setLoading }) => {
   }, [selectedPeriod]);
 
   useEffect(() => {
-    if (!listLast10Years || !selectedOrgUnitInfluenza || !optionsInfluenzaColors) return;
+    if (
+      !listLast10Years ||
+      !selectedOrgUnitInfluenza ||
+      !optionsInfluenzaColors
+    )
+      return;
+
     (async () => {
       try {
         setLoading(true);
@@ -105,18 +111,25 @@ const Widget1 = ({ setLoading }) => {
       <LineChart
         data={{
           labels: listLast10Years.map((year) => year),
-          datasets: optionsInfluenza.map((option, index) => ({
-            type: "line",
-            label: option.name,
-            data: listLast10Years.map((year) => {
-              const foundData = data.find(
-                (item) => item.period === `${year}` && item.code === option.code
-              );
-              return foundData?.value || 0;
-            }),
-            backgroundColor: optionsInfluenzaColors[index],
-            borderColor: optionsInfluenzaColors[index],
-          })),
+          datasets: optionsInfluenza.dataElement.optionSet.options.map(
+            (option, index) => ({
+              type: "line",
+              label: option.name,
+              data: listLast10Years.map((year) => {
+                const foundData = data.find(
+                  (item) =>
+                    item.period === `${year}` && item.code === option.code
+                );
+                return foundData?.value || 0;
+              }),
+              backgroundColor: option.style
+                ? option.style.color
+                : optionsInfluenzaColors[index],
+              borderColor: option.style
+                ? option.style.color
+                : optionsInfluenzaColors[index],
+            })
+          ),
         }}
         customOptions={options}
       />
