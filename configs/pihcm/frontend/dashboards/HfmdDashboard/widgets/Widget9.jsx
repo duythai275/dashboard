@@ -48,12 +48,16 @@ const Widget9 = ({ setLoading }) => {
           ";"
         )}&dimension=ou:${
           selectedOrgUnitForHfmdDashboard.id
-        }&dimension=S5NIYcQo2pz.Qhl25WHDjxK&stage=S5NIYcQo2pz&displayProperty=NAME&paging=false&outputType=EVENT`
+        }&dimension=S5NIYcQo2pz.Qhl25WHDjxK&dimension=S5NIYcQo2pz.DzVAaetMCNv&stage=S5NIYcQo2pz&displayProperty=NAME&paging=false&outputType=EVENT`
       );
       if (result) {
         const diseaseClassificationIndex = findHeaderIndex(
           result.headers,
           "S5NIYcQo2pz.Qhl25WHDjxK"
+        );
+        const weekIndex = findHeaderIndex(
+          result.headers,
+          "S5NIYcQo2pz.DzVAaetMCNv"
         );
         const eventDateIndex = findHeaderIndex(result.headers, "eventdate");
         const rowFiltered = result.rows.filter((row) =>
@@ -74,7 +78,7 @@ const Widget9 = ({ setLoading }) => {
               const caseValue = rowFiltered
                 .map((row) => {
                   if (
-                    getISOWeek(new Date(row[eventDateIndex])) === week &&
+                    Number(row[weekIndex]) === week &&
                     getYear(new Date(row[eventDateIndex])) === period
                   ) {
                     return row;

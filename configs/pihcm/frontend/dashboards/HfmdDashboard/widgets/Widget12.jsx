@@ -64,19 +64,23 @@ const Widget12 = ({ setLoading }) => {
           ";"
         )}&dimension=ou:${
           selectedOrgUnitForHfmdDashboard.id
-        }&dimension=S5NIYcQo2pz.XpCLafoPAhT&stage=S5NIYcQo2pz&displayProperty=NAME&paging=false&outputType=EVENT`
+        }&dimension=S5NIYcQo2pz.XpCLafoPAhT&dimension=S5NIYcQo2pz.DzVAaetMCNv&stage=S5NIYcQo2pz&displayProperty=NAME&paging=false&outputType=EVENT`
       );
       if (result) {
         const pcrIndex = findHeaderIndex(
           result.headers,
           "S5NIYcQo2pz.XpCLafoPAhT"
         );
+        const weekIndex = findHeaderIndex(
+          result.headers,
+          "S5NIYcQo2pz.DzVAaetMCNv"
+        );
         const eventDateIndex = findHeaderIndex(result.headers, "eventdate");
         const dataResult = pcrOptions.map((option) =>
           listWeek.map((week) => {
             const totalInWeek = result.rows
               .map((row) => {
-                if (getISOWeek(new Date(row[eventDateIndex])) === week) {
+                if (Number(row[weekIndex]) === week) {
                   return row;
                 }
                 return null;
@@ -85,7 +89,7 @@ const Widget12 = ({ setLoading }) => {
             const caseValue = result.rows
               .map((row) => {
                 if (
-                  getISOWeek(new Date(row[eventDateIndex])) === week &&
+                  Number(row[weekIndex]) === week &&
                   row[pcrIndex] === option.code
                 ) {
                   return row;

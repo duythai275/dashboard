@@ -190,19 +190,19 @@ const locales = [
       { key: "dengueWarning", value: "SXHD/SXHD có cảnh báo" },
       {
         key: "widget1InfluenzaDashboardTitle",
-        value: "Phân bố các típ vi rút cúm theo năm qua Hệ thống GSTĐ HCC",
+        value: "Phân bố các típ vi rút cúm theo năm qua Hệ thống GSTĐ HCC tại {{orgUnit}}, {{period}}",
       },
       {
         key: "widget2InfluenzaDashboardTitle",
-        value: "Số ca giám sát trọng điểm cúm theo tuần",
+        value: "Số ca giám sát trọng điểm cúm theo tuần, {{period}}",
       },
       {
         key: "widget3InfluenzaDashboardTitle",
-        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát",
+        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát, {{period}}",
       },
       {
         key: "widget4InfluenzaDashboardTitle",
-        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát và theo năm",
+        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát và theo năm {{period}}",
       },
       { key: "influenzaCases", value: "Số ca" },
       { key: "influenzaTotalCase", value: "Tổng Số ca" },
@@ -388,19 +388,19 @@ const locales = [
       { key: "dengueWarning", value: "SXHD/SXHD có cảnh báo" },
       {
         key: "widget1InfluenzaDashboardTitle",
-        value: "Phân bố các típ vi rút cúm theo năm qua Hệ thống GSTĐ HCC",
+        value: "Phân bố các típ vi rút cúm theo năm qua Hệ thống GSTĐ HCC tại {{orgUnit}}, {{period}}",
       },
       {
         key: "widget2InfluenzaDashboardTitle",
-        value: "Số ca giám sát trọng điểm cúm theo tuần",
+        value: "Số ca giám sát trọng điểm cúm theo tuần, {{period}}",
       },
       {
         key: "widget3InfluenzaDashboardTitle",
-        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát",
+        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát, {{period}}",
       },
       {
         key: "widget4InfluenzaDashboardTitle",
-        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát và theo năm",
+        value: "Số ca giám sát trọng điểm cúm theo điểm giám sát và theo năm {{period}}",
       },
       { key: "influenzaCases", value: "Số ca" },
       { key: "influenzaTotalCase", value: "Tổng Số ca" },

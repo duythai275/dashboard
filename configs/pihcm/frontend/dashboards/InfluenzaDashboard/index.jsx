@@ -19,7 +19,7 @@ const InfluenzaDashboard = () => {
     (state) => ({ additionalState: state.additionalState }),
     shallow
   );
-  const { selectedOrgUnitInfluenza } = additionalState;
+  const { selectedOrgUnitInfluenza, selectedPeriod } = additionalState;
   return (
     <ReactGridLayout
       isDraggable={false}
@@ -41,6 +41,7 @@ const InfluenzaDashboard = () => {
           {
             title: t("widget1InfluenzaDashboardTitle", {
               orgUnit: selectedOrgUnitInfluenza?.displayName,
+              period: selectedPeriod,
             }),
             widget: <Widget1 />,
           },
@@ -53,7 +54,7 @@ const InfluenzaDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget2InfluenzaDashboardTitle", {
-              orgUnit: selectedOrgUnitInfluenza?.displayName,
+              period: selectedPeriod,
             }),
             widget: <Widget2 />,
           },
@@ -66,7 +67,7 @@ const InfluenzaDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget3InfluenzaDashboardTitle", {
-              orgUnit: selectedOrgUnitInfluenza?.displayName,
+              period: selectedPeriod,
             }),
             widget: <Widget3 />,
           },
@@ -79,7 +80,7 @@ const InfluenzaDashboard = () => {
         childrenWidgets={[
           {
             title: t("widget4InfluenzaDashboardTitle", {
-              orgUnit: selectedOrgUnitInfluenza?.displayName,
+              period: selectedPeriod,
             }),
             widget: <Widget4 />,
           },
