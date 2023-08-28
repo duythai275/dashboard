@@ -21,33 +21,25 @@ const DateRangeInput = ({ onChange, additionalStateKey }) => {
           p: 1,
           display: "flex",
           justifyContent: "center",
-          alignItems: "end",
+          alignItems: "center",
           gap: 1,
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <Typography variant="inputFieldLabel">{t("startDate")}</Typography>
-          <DateInput
-            value={value.startDate}
-            accept={(newValue) => {
-              setValue((prev) => ({ ...prev, startDate: newValue }));
-            }}
-          />
-        </div>
-        <div style={{ height: 40, display: "flex", alignItems: "center" }}>
-          -
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <Typography variant="inputFieldLabel">{t("endDate")}</Typography>
-          <DateInput
-            value={value.endDate}
-            accept={(newValue) => {
-              setValue((prev) => ({ ...prev, endDate: newValue }));
-            }}
-          />
-        </div>
+        <DateInput
+          value={value.startDate}
+          accept={(newValue) => {
+            setValue((prev) => ({ ...prev, startDate: newValue }));
+          }}
+        />
+        -
+        <DateInput
+          value={value.endDate}
+          accept={(newValue) => {
+            setValue((prev) => ({ ...prev, endDate: newValue }));
+          }}
+        />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", p: 1, pt: 0 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", p: 1, pt: 0 }}>
         <Button variant="contained" onClick={() => onChange(value)}>
           {t("apply")}
         </Button>

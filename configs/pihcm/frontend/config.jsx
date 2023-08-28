@@ -646,6 +646,10 @@ const CustomControlForDiseaseBulletin = () => {
         );
         break;
       case CASE_COVID19_DASHBOARD_VALUE:
+        changeAdditionalStateProperty(
+          "selectedOrgUnitForCovid19Dashboard",
+          orgUnits.find((ou) => ou.level === 1)
+        );
         changeAdditionalStateProperty("caseCovid19W1Period", {
           startDate: `${getYear(new Date())}-01-01`,
           endDate: format(new Date(), "yyyy-MM-dd"),
@@ -785,12 +789,8 @@ const CustomControlForDiseaseBulletin = () => {
     );
   }
 
-  if (
-    selectedDashboard?.value === HIV_DASHBOARD_VALUE ||
-    selectedDashboard?.value === CASE_COVID19_DASHBOARD_VALUE
-  ) {
-    return null;
-  }
+  if (selectedDashboard?.value === HIV_DASHBOARD_VALUE) return null;
+
   if (selectedDashboard?.value === HFMD_DASHBOARD_VALUE) {
     const stringifiedAssignedOrgUnits = orgUnitsHfmd
       .map((aou) => aou.path)
@@ -889,6 +889,23 @@ const CustomControlForDiseaseBulletin = () => {
           }}
         />
         <WeekRangeSelector initValue="selectedPeriodForVariantSarsCov2Dashboard" />
+      </Box>
+    );
+  }
+
+  if (selectedDashboard?.value === CASE_COVID19_DASHBOARD_VALUE) {
+    return (
+      <Box key={"CASE_COVID19_DASHBOARD"} sx={{ display: "flex", gap: "10px" }}>
+        <OrgUnitSelector
+          orgUnits={orgUnits.filter((ou) => ou.level === 1 || ou.level === 2)}
+          initialOrgUnit={orgUnits.find((ou) => ou.level === 1)}
+          accept={(orgUnit) => {
+            changeAdditionalStateProperty(
+              "selectedOrgUnitForCovid19Dashboard",
+              orgUnit
+            );
+          }}
+        />
       </Box>
     );
   }

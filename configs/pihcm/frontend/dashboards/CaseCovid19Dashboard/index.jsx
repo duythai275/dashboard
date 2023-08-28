@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IconButton } from "@mui/material";
 import RGL, { WidthProvider } from "react-grid-layout";
@@ -16,6 +16,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import PeriodSelector from "@/components/PeriodSelector/PeriodSelector";
 import DateRangeInput from "./components/DateRangeInput";
+import useMetadataStore from "@/state/metadata";
+import { sortOu } from "./utils";
 
 const WidgetControlButton = ({ periodType, additionalStateKey }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -67,6 +69,26 @@ const WidgetControlButton = ({ periodType, additionalStateKey }) => {
 
 const CaseCovid19Dashboard = () => {
   const { t } = useTranslation();
+  const orgUnits = useMetadataStore((state) => state.communes, shallow);
+  const selectedOrgUnitForCovid19Dashboard = useDashboardStore(
+    (state) => state.additionalState.selectedOrgUnitForCovid19Dashboard,
+    shallow
+  );
+
+  const listOu = useMemo(() => {
+    if (!selectedOrgUnitForCovid19Dashboard || !orgUnits) return [];
+    const result = [];
+    orgUnits.forEach((ou) => {
+      if (ou.parent?.id === selectedOrgUnitForCovid19Dashboard.id) {
+        result.push(ou);
+      }
+    });
+    if (!result.length) {
+      return [selectedOrgUnitForCovid19Dashboard];
+    }
+    const sorted = sortOu(result);
+    return sorted;
+  }, [selectedOrgUnitForCovid19Dashboard, orgUnits]);
 
   return (
     <ReactGridLayout
@@ -88,7 +110,7 @@ const CaseCovid19Dashboard = () => {
         childrenWidgets={[
           {
             title: t("widget1CaseCovid19DashboardTitle"),
-            widget: <Widget1 />,
+            widget: <Widget1 listOu={listOu} />,
           },
         ]}
         controlButtons={[
@@ -105,7 +127,7 @@ const CaseCovid19Dashboard = () => {
         childrenWidgets={[
           {
             title: t("widget2CaseCovid19DashboardTitle"),
-            widget: <Widget2 />,
+            widget: <Widget2 listOu={listOu} />,
           },
         ]}
         controlButtons={[
@@ -122,13 +144,13 @@ const CaseCovid19Dashboard = () => {
         childrenWidgets={[
           {
             title: t("widget3CaseCovid19DashboardTitle"),
-            widget: <Widget3 />,
+            widget: <Widget3 listOu={listOu} />,
           },
         ]}
         controlButtons={[
           <WidgetControlButton
             periodType="Yearly"
-            additionalStateKey="caseCovid19W2Period"
+            additionalStateKey="caseCovid19W3Period"
           />,
         ]}
       />
@@ -139,13 +161,13 @@ const CaseCovid19Dashboard = () => {
         childrenWidgets={[
           {
             title: t("widget4CaseCovid19DashboardTitle"),
-            widget: <Widget4 />,
+            widget: <Widget4 listOu={listOu} />,
           },
         ]}
         controlButtons={[
           <WidgetControlButton
             periodType="Yearly"
-            additionalStateKey="caseCovid19W2Period"
+            additionalStateKey="caseCovid19W4Period"
           />,
         ]}
       />

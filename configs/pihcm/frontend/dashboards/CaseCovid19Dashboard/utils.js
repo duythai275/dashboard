@@ -12,11 +12,13 @@ export const sortOu = (ouList, property) =>
     return 0;
   });
 
-export const getRowValue = (result, listId, ou) => {
+export const getRowValue = (result, listId, ou, customDxName) => {
   let returnData;
   try {
     const ouIdx = result.headers.findIndex((item) => item.name === "ou");
-    const dxIdx = result.headers.findIndex((item) => item.name === "dx");
+    const dxIdx = result.headers.findIndex(
+      (item) => item.name === "dx" || item.name === customDxName
+    );
     const valueIdx = result.headers.findIndex((item) => item.name === "value");
     returnData = listId.map((id) => {
       const foundValue = result.rows.find(
