@@ -76,7 +76,8 @@ const Widget4 = ({ setLoading }) => {
                 const foundValue = result.rows.find(
                   (row) => row[periodIndex] === pe && row[ouIndex] === ou.id
                 );
-                total[index] += foundValue ? foundValue[valueIndex] : 0;
+                total[index] += foundValue ? foundValue[valueIndex] * 1 : 0;
+                
                 return foundValue ? foundValue[valueIndex] : 0;
               }),
             };

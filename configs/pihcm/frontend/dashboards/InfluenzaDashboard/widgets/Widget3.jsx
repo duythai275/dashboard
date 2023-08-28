@@ -44,6 +44,7 @@ const Widget3 = ({ setLoading }) => {
             ";"
           )};Vp8x14BDil5&dimension=pe:${selectedPeriod}&stage=cbLhNJnxYzi&displayProperty=NAME&totalPages=false&outputType=EVENT`
         );
+        console.log(result)
         if (result) {
           const periodIndex = findHeaderIndex(result.headers, "pe");
           const valueIndex = findHeaderIndex(result.headers, "value");

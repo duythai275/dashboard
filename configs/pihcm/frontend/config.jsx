@@ -556,7 +556,9 @@ const CustomControlForDiseaseBulletin = () => {
         changeAdditionalStateProperty("selectedPeriod", 2023);
         changeAdditionalStateProperty(
           "selectedOrgUnitInfluenza",
-          orgUnitInfluenza.length > 0 ? orgUnitInfluenza[0] : null
+          orgUnitInfluenza.length > 0
+            ? orgUnits.find((ou) => ou.level === 1)
+            : null
         );
         const findRoot = orgUnits.find((e) => e.id === "Vp8x14BDil5");
         changeAdditionalStateProperty(
@@ -765,7 +767,7 @@ const CustomControlForDiseaseBulletin = () => {
         />
         <OrgUnitSelector
           orgUnits={filtered}
-          initialOrgUnit={orgUnits.find((ou) => ou.id === "Vp8x14BDil5")}
+          initialOrgUnit={orgUnits.find((ou) => ou.level === 1)}
           accept={(orgUnit) => {
             changeAdditionalStateProperty("selectedOrgUnitInfluenza", orgUnit);
           }}
