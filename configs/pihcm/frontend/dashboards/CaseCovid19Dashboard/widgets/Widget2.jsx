@@ -8,22 +8,17 @@ import withWidgetChildrenLoader from "@/hocs/WidgetContainer/withWidgetChildrenL
 import useMetadataStore from "@/state/metadata";
 import useDashboardStore from "@/state/dashboard";
 
-const Widget2 = ({ setLoading }) => {
+const Widget2 = ({ setLoading, listOu }) => {
+  const [data, setData] = useState(null);
+
   const orgUnitGeoJson = useMetadataStore(
     (state) => state.orgUnitGeoJson,
     shallow
   );
-  const southernRegion = useMetadataStore(
-    (state) => state.orgUnitsHfmd,
+  const period = useDashboardStore(
+    (state) => state.additionalState.caseCovid19W2Period,
     shallow
   );
-
-  /* const periodForW4 = useDashboardStore(
-    (state) => state.additionalState.periodForW4,
-    shallow
-  ); */
-
-  const [data, setData] = useState(null);
 
   const features = useMemo(() => {
     const converted = orgUnitGeoJson.features.reduce(
@@ -34,18 +29,21 @@ const Widget2 = ({ setLoading }) => {
       {}
     );
 
-    return southernRegion.map(({ id }) => converted[id]);
-  }, [orgUnitGeoJson]);
+    return listOu.map(({ id }) => converted[id]);
+  }, [orgUnitGeoJson, listOu]);
 
   useEffect(() => {
     (async () => {
+      if (!period) return;
+      const { year } = period;
       setLoading(true);
 
       const res = await pull(
-        `/api/analytics.json?dimension=dx:${covid19caseId}&dimension=ou:${southernRegion
+        `/api/analytics.json?dimension=ou:${listOu
           .map(({ id }) => id)
-          .join(";")}&filter=pe:${2022}`
+          .join(";")}&dimension=dx:${covid19caseId}&filter=pe:${year}`
       );
+      // console.log(res);
 
       const resultReduce = features.reduce((result, feature, idx) => {
         result[feature.id] = Math.round(Math.random() * 1000);
@@ -55,7 +53,7 @@ const Widget2 = ({ setLoading }) => {
       setData(resultReduce);
       setLoading(false);
     })();
-  }, [features]);
+  }, [features, period]);
 
   return (
     data && (

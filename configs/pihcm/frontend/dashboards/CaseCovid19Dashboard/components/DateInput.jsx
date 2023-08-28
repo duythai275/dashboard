@@ -26,13 +26,13 @@ const DateInput = ({
   blur,
 }) => {
   const { t, i18n } = useTranslation();
-  const [anchorEl, setAnchorEl] = useState(null);
   const locale = i18n.language;
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const open = Boolean(anchorEl);
 
   return (
     <>
@@ -40,7 +40,7 @@ const DateInput = ({
         onClick={(event) => {
           !disabled && setAnchorEl(event.currentTarget);
         }}
-        sx={{ width: 200 }}
+        sx={{ width: 150 }}
         onFocus={focus}
         onBlur={blur}
         size="small"
