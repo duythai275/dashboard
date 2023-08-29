@@ -4,10 +4,10 @@ import useSelectionStore from "@/state/selection";
 import { pull } from "@/utils/fetch";
 import { shallow } from "zustand/shallow";
 import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Autocomplete, Box, TextField } from "@mui/material";
 
 import Dashboard1 from "./dashboards/Dashboard1/Dashboard1";
-import Dashboard2 from "./dashboards/Dashboard1/Dashboard1";
+import Dashboard2 from "./dashboards/Dashboard2/Dashboard2";
 
 const useDashboardInitialization = () => {
     const [ready, setReady] = useState(false);
@@ -20,12 +20,14 @@ const useDashboardInitialization = () => {
     const {
         initDashboardState,
         selectDashboard,
-        setDashboards
+        setDashboards,
+        changeAdditionalStateProperty
     } = useDashboardStore(
         (state) => ({
             initDashboardState: state.initDashboardState,
             selectDashboard: state.selectDashboard,
-            setDashboards: state.setDashboards
+            setDashboards: state.setDashboards,
+            changeAdditionalStateProperty: state.changeAdditionalStateProperty
         }),
         shallow
     );
@@ -33,10 +35,11 @@ const useDashboardInitialization = () => {
     useEffect(() => {
         selectLanguage("en");
         ( async () => {
-            // const results = await Promise.all([
-            //     pull("/api/organisationUnits.geojson?level=2&level=3")
-            // ]);
-            // setMetadata("orgUnitGeoJson", results[0]);
+            const results = await Promise.all([
+                pull("/api/organisationUnits.geojson?level=2&level=3")
+            ]);
+            setMetadata("orgUnitGeoJson", results[0]);
+            changeAdditionalStateProperty("periodForW1","");
             initDashboardState([
                 {
                     widgets: [{
@@ -85,8 +88,26 @@ const CustomControl = () => {
         }),
         shallow
       );
-    return selectedDashboard?.value === "" ? 
-    <></>
+    return selectedDashboard?.value === 1 ? 
+    <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <Autocomplete
+          disableClearable={true}
+          value={""}
+          sx={{ width: 200 }}
+          options={(() => {
+            let currentYear = new Date().getFullYear();
+            let result = [];
+            while (currentYear >= 2011) {
+              result.push(currentYear);
+              currentYear--;
+            }
+            return result;
+          })()}
+          renderInput={(params) => (
+            <TextField {...params} placeholder={"Select Year"} />
+          )}
+        />
+    </Box>
     :
     <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}>
         <div

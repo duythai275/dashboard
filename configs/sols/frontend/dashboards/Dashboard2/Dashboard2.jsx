@@ -4,14 +4,14 @@ const ReactGridLayout = WidthProvider(RGL);
 import WidgetContainer from "@/components/WidgetContainer/WidgetContainer";
 import { Widget1 } from "./widgets";
 
+import "./index.css";
+
 const Dashboard2 = () => {
     return (
         <ReactGridLayout
             isDraggable={false}
             layout={[
-              { i: "1", x: 0, y: 0, w: 6, h: 50 },
-            //   { i: "3", x: 0, y: 50, w: 6, h: 50 },
-            //   { i: "4", x: 6, y: 50, w: 6, h: 50 },
+              { i: "1", x: 0, y: 0, w: 6, h: 50 }
             ]}
             cols={12}
             rowHeight={1}
@@ -20,7 +20,7 @@ const Dashboard2 = () => {
             <WidgetContainer
                 key="1"
                 widgetIndex={0}
-                dashboardIndex={0}
+                dashboardIndex={1}
                 childrenWidgets={[
                     { title: "Widget 1", widget: <Widget1 /> },
                 ]}

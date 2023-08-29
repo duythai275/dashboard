@@ -56,9 +56,7 @@ const Dashboard1 = () => {
             isDraggable={false}
             layout={[
               { i: "1", x: 0, y: 0, w: 6, h: 50 },
-              { i: "2", x: 6, y: 0, w: 6, h: 50 },
-            //   { i: "3", x: 0, y: 50, w: 6, h: 50 },
-            //   { i: "4", x: 6, y: 50, w: 6, h: 50 },
+              { i: "2", x: 6, y: 0, w: 6, h: 50 }
             ]}
             cols={12}
             rowHeight={1}
@@ -87,28 +85,6 @@ const Dashboard1 = () => {
                     />
                 ]}
             />
-            {/* <WidgetContainer
-                key="3"
-                widgetIndex={2}
-                dashboardIndex={0}
-                childrenWidgets={[
-                    {
-                        title: "Widget 3",
-                        widget: <></>
-                    }
-                ]}
-            />
-            <WidgetContainer
-                key="4"
-                widgetIndex={3}
-                dashboardIndex={0}
-                childrenWidgets={[
-                    {
-                        title: "Widget 4",
-                        widget: <></>
-                    }
-                ]}
-            /> */}
         </ReactGridLayout>
     )
 }
