@@ -16,7 +16,9 @@ const ExternalContainer = () => {
     <div className="external-container">
       <ControlBar />
       <div className="external-dashboard-content">
-        <Dashboard />
+        {
+          Dashboard
+        }
       </div>
     </div>
   ) : (
