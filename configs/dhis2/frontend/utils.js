@@ -31,7 +31,8 @@ const getLast12Weeks = (weekStr) => {
     const yearStart = new Date(temp.getFullYear(), 0, 1);
     const weekNo = Math.ceil(((temp - yearStart) / 86400000 + 1) / 7);
 
-    result.push(`${temp.getFullYear()}W${String(weekNo).padStart(2, "0")}`);
+    // result.push(`${temp.getFullYear()}W${String(weekNo).padStart(2, "0")}`);
+    result.push(`${temp.getFullYear()}W${String(weekNo)}`);
   }
 
   return result;
